@@ -1,0 +1,8 @@
+
+
+show_blobs
+=========================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: show_blobs

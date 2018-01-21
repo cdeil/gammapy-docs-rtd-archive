@@ -1,0 +1,44 @@
+
+
+GaussCatalog
+===============================
+
+.. currentmodule:: gammapy.morphology
+
+.. autoclass:: GaussCatalog
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~GaussCatalog.set
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: set
+
+   
+   

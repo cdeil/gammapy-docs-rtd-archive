@@ -1,0 +1,8 @@
+
+
+galactic_to_radec
+===========================================
+
+.. currentmodule:: gammapy.utils.coordinates
+
+.. autofunction:: galactic_to_radec

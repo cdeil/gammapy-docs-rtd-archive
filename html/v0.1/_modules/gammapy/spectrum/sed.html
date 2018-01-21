@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.sed &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/spectrum/sed.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/spectrum/sed",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/spectrum/sed";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.spectrum.sed</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Interface to the Fermi and HESS catalogs.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">..spectrum</span> <span class="kn">import</span> <span class="n">compute_differential_flux_points</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;SEDComponent&#39;</span><span class="p">,</span>
+           <span class="s">&#39;SED&#39;</span><span class="p">,</span>
+           <span class="s">&#39;cube_sed&#39;</span><span class="p">,</span>
+           <span class="s">&#39;add_spec&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+<span class="n">MeV_to_GeV</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="s">&#39;GeV&#39;</span><span class="p">))</span>
+<span class="n">MeV_to_erg</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="s">&#39;erg&#39;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="SEDComponent"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SEDComponent.html#gammapy.spectrum.SEDComponent">[docs]</a><span class="k">class</span> <span class="nc">SEDComponent</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Uniform interface to SED components for the SED class</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        @param name: str</span>
+<span class="sd">        @type model: spec.spectrum.Spectrum</span>
+<span class="sd">        @type points: spec.data.FluxPoints&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+
+<div class="viewcode-block" id="SEDComponent.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SEDComponent.html#gammapy.spectrum.SEDComponent.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">butterfly</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">butterfly</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_butterfly</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">model</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_model</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">points</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="SEDComponent.plot_model"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SEDComponent.html#gammapy.spectrum.SEDComponent.plot_model">[docs]</a>    <span class="k">def</span> <span class="nf">plot_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;{0}: No model available.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">points</span><span class="p">(</span><span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">MeV_to_GeV</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">MeV_to_erg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SEDComponent.plot_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SEDComponent.html#gammapy.spectrum.SEDComponent.plot_points">[docs]</a>    <span class="k">def</span> <span class="nf">plot_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">,</span> <span class="n">markerfacecolor</span><span class="o">=</span><span class="s">&#39;black&#39;</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;{0}: No points available.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span>
+        <span class="c"># @note We plot each point individually because anyway</span>
+        <span class="c"># upper limits have to be plotted differently which I</span>
+        <span class="c"># think is not possible because the marker argument doesn&#39;t</span>
+        <span class="c"># take arrays.</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">)):</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">exl</span><span class="p">,</span> <span class="n">exh</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">eyl</span><span class="p">,</span> <span class="n">eyh</span><span class="p">,</span> <span class="n">ul</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">ul</span><span class="p">:</span>
+                <span class="n">marker</span> <span class="o">=</span> <span class="s">&#39; &#39;</span>
+                <span class="n">lolims</span> <span class="o">=</span> <span class="bp">True</span>
+                <span class="n">eyl</span><span class="p">,</span> <span class="n">eyh</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">/</span> <span class="mf">10.</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">marker</span> <span class="o">=</span> <span class="s">&#39;o&#39;</span>
+                <span class="n">lolims</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">MeV_to_GeV</span> <span class="o">*</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">eyl</span><span class="p">,</span> <span class="n">eyh</span><span class="p">],</span> <span class="p">[</span><span class="n">exl</span><span class="p">,</span> <span class="n">exh</span><span class="p">],</span> <span class="n">lolims</span><span class="o">=</span><span class="n">lolims</span><span class="p">,</span>
+                         <span class="n">marker</span><span class="o">=</span><span class="n">marker</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                         <span class="n">markerfacecolor</span><span class="o">=</span><span class="n">markerfacecolor</span><span class="p">,</span>
+                         <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SEDComponent.plot_butterfly"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SEDComponent.html#gammapy.spectrum.SEDComponent.plot_butterfly">[docs]</a>    <span class="k">def</span> <span class="nf">plot_butterfly</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+</div></div>
+<div class="viewcode-block" id="SED"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED">[docs]</a><span class="k">class</span> <span class="nc">SED</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to plot GeV -- TeV SEDs</span>
+
+<span class="sd">    Internally the same units as in the Fermi catalog are used:</span>
+<span class="sd">    - Energies in MeV</span>
+<span class="sd">    - Flux densities in cm^-2 s^-2 MeV^-1</span>
+<span class="sd">    - Fluxes in cm^-2 s^-1</span>
+<span class="sd">    - Energy fluxes in erg cm^-2 s^-1&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    def add_Fermi(self, name):</span>
+<span class="sd">        try:</span>
+<span class="sd">            self._fermi</span>
+<span class="sd">            self.append(self._fermi.sed_component(name))</span>
+<span class="sd">        except</span>
+<span class="sd">        component = catalog.sed_component(name)</span>
+<span class="sd">        self.append(component)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="SED.add"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">names</span><span class="p">,</span> <span class="n">catalogs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">names</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">catalog</span> <span class="ow">in</span> <span class="n">catalogs</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="n">component</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">sed_component</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">component</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> found in </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span>
+                                 <span class="n">name</span><span class="p">,</span> <span class="n">catalog</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">table_name</span><span class="p">)</span>
+                <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;</span><span class="si">%s</span><span class="s"> not found in </span><span class="si">%s</span><span class="s">&#39;</span><span class="p">,</span>
+                                    <span class="n">name</span><span class="p">,</span> <span class="n">catalog</span><span class="o">.</span><span class="n">table</span><span class="o">.</span><span class="n">table_name</span><span class="p">)</span>
+                    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="SED.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&#39;sed.png&#39;</span><span class="p">,</span> <span class="n">xlim</span><span class="o">=</span><span class="p">(</span><span class="mf">8e-2</span><span class="p">,</span> <span class="mf">2e5</span><span class="p">),</span> <span class="n">ylim</span><span class="o">=</span><span class="p">(</span><span class="mf">1e-14</span><span class="p">,</span> <span class="mf">1e-8</span><span class="p">)):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">r&#39;E$^2$ dF/DE (erg cm$^{-2}$ s$^{-1}$)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Energy (GeV)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Plotting {0} components in SED&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">component</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Writing {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SED.add_component"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED.add_component">[docs]</a>    <span class="k">def</span> <span class="nf">add_component</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">catalog_format</span><span class="p">,</span> <span class="n">catalog_name</span><span class="p">,</span>
+                      <span class="n">object_name</span><span class="p">,</span> <span class="n">plot_pivot</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="o">**</span><span class="n">ecpl_params</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Read necessary parameters from FITS file and plot butterfly</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        catalog_format = &#39;hess&#39;, &#39;fermi&#39;</span>
+<span class="sd">        catalog_name = FITS file name</span>
+<span class="sd">        object_name  = object name string in &#39;name&#39; column</span>
+
+<span class="sd">        Note: Since every catalog has columns with different</span>
+<span class="sd">        names and units, a general SED plotting is not possible.</span>
+<span class="sd">        Instead for each catalog type a handler function that</span>
+<span class="sd">        deals converts to a standard format is called.</span>
+
+<span class="sd">        @todo: Possibly pass plotting parameters along here by</span>
+<span class="sd">        appending them to the ecpl_params dictionary</span>
+<span class="sd">        -&gt; I don&#39;t think this works at the moment!!!&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">atpy</span> <span class="kn">import</span> <span class="n">Table</span>
+        <span class="c"># Get the catalog from file and initialize some things</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog_format</span> <span class="o">=</span> <span class="n">catalog_format</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog_name</span> <span class="o">=</span> <span class="n">catalog_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object_name</span> <span class="o">=</span> <span class="n">object_name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">catalog_name</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+        <span class="c"># Build a dictionary of parameters needed for the plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span> <span class="o">=</span> <span class="n">ecpl_params</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">get_ecpl_params</span><span class="p">()</span>
+        <span class="c"># Plot curve</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_ecpl</span><span class="p">(</span><span class="n">plot_pivot</span><span class="o">=</span><span class="n">plot_pivot</span><span class="p">,</span> <span class="o">**</span><span class="n">ecpl_params</span><span class="p">)</span>
+        <span class="c"># Plot points if present</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># Get the values needed for plotting</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">f_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">e_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">is_ul</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">plot_point</span><span class="p">(</span><span class="n">e</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">f</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span>
+                                <span class="n">f_err</span><span class="o">=</span><span class="n">f_err</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span>
+                                <span class="n">e_err</span><span class="o">=</span><span class="p">[[</span><span class="n">e_err</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">ii</span><span class="p">]],</span> <span class="p">[</span><span class="n">e_err</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">ii</span><span class="p">]]],</span>
+                                <span class="n">ul</span><span class="o">=</span><span class="n">is_ul</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+            <span class="c"># Remove so that it doesn&#39;t get plotted again.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span> <span class="o">=</span> <span class="bp">None</span>
+</div>
+<div class="viewcode-block" id="SED.get_ecpl_params"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED.get_ecpl_params">[docs]</a>    <span class="k">def</span> <span class="nf">get_ecpl_params</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Build self.ecpl_params dictionary</span>
+<span class="sd">        by parsing one of the supported catalogs&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_format</span> <span class="o">==</span> <span class="s">&#39;hess&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_ecpl_params_hess_cat</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog_format</span> <span class="o">==</span> <span class="s">&#39;fermi&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_ecpl_params_fermi_cat</span><span class="p">()</span>
+        <span class="c"># Change numpy types to regular types</span>
+        <span class="c"># and replace nan values with 0</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">int16</span><span class="p">):</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SED.get_ecpl_params_fermi_cat"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED.get_ecpl_params_fermi_cat">[docs]</a>    <span class="k">def</span> <span class="nf">get_ecpl_params_fermi_cat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Build self.ecpl_params dictionary from Fermi catalog fields &quot;&quot;&quot;</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">find_object_index</span><span class="p">(</span><span class="s">&#39;source_name&#39;</span><span class="p">)</span>
+        <span class="c"># Set all plot parameters:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;e_pivot&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;Pivot_Energy&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;e_min&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;e_max&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1e5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;e_cut&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;e_cut_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;e_scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;Flux_Density&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;norm_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;Unc_Flux_Density&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;norm_scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;Spectral_Index&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;index_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;Unc_Spectral_Index&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;green&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ecpl_params</span><span class="p">[</span><span class="s">&#39;butterfly&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c"># Set flux point data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_flux_points_fermi</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="c"># Add text label</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;</span><span class="si">%s</span><span class="se">\n</span><span class="si">%s</span><span class="s">, </span><span class="si">%s</span><span class="se">\n</span><span class="s">&#39;</span> <span class="o">+</span> \
+            <span class="s">r&#39;S = </span><span class="si">%3.1f</span><span class="s">, C = </span><span class="si">%3.1f</span><span class="s">, $\Gamma = </span><span class="si">%1.2f</span><span class="s"> \pm </span><span class="si">%1.2f</span><span class="s">$&#39;</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object_name</span><span class="p">,</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;class1&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;assoc1&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;signif_avg&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;curvature_index&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;spectral_index&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">],</span>
+                  <span class="bp">self</span><span class="o">.</span><span class="n">catalog</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;unc_spectral_index&#39;</span><span class="p">)[</span><span class="n">i</span><span class="p">]</span>
+                  <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">%</span> <span class="n">values</span><span class="p">,</span>
+                     <span class="n">horizontalalignment</span><span class="o">=</span><span class="s">&#39;left&#39;</span><span class="p">,</span>
+                     <span class="n">verticalalignment</span><span class="o">=</span><span class="s">&#39;top&#39;</span><span class="p">,</span>
+                     <span class="n">transform</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">transAxes</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="add_spec"><a class="viewcode-back" href="../../../api/gammapy.spectrum.add_spec.html#gammapy.spectrum.add_spec">[docs]</a><span class="k">def</span> <span class="nf">add_spec</span><span class="p">(</span><span class="n">frame</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_params</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add a spectral component to a frame.</span>
+
+<span class="sd">    frame = matplotlib.Axes object</span>
+<span class="sd">    model = [function, parameters, constants]</span>
+<span class="sd">    xlim  = [xmin, xmax]&quot;&quot;&quot;</span>
+    <span class="c"># Unpack model</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="c"># Compute x and y values</span>
+    <span class="n">logx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">logx</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">frame</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">plot_params</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">add_crab</span><span class="p">(</span><span class="n">ax</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Add the Fermi and HESS Crab SED to test scaling.&quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+    <span class="c"># The HESS butterfly</span>
+    <span class="c"># Note: The HESS catalog contains energies in TeV and flux norm in 1e-12 cm^-2 s^-1 TeV^-1</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    add_sed_component(ax, e0 = 1, e1 = 1e-2, e2 = 1e2,</span>
+<span class="sd">                      norm = 10, norm_err = 0, index = 2., index_err = 0.0,</span>
+<span class="sd">                      e_scale = 1e12, norm_scale = 1e-12 * 1e-12, e_cut = 10, e_cut_err = 3,</span>
+<span class="sd">                      color=&#39;b&#39;, butterfly = True)</span>
+<span class="sd">    # The Fermi butterfly</span>
+<span class="sd">    add__sed_component(ax, e0 = 494, e1 = 1e2, e2 = 1e6,</span>
+<span class="sd">                       norm = 1e-9, norm_err = 6.7e-11, index = 2.3, index_err = 0.1,</span>
+<span class="sd">                       e_scale = 1e6, norm_scale = 1e-6, color=&#39;g&#39;, butterfly = True)</span>
+<span class="sd">    # Add published fermi result</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+
+<div class="viewcode-block" id="cube_sed"><a class="viewcode-back" href="../../../api/gammapy.spectrum.cube_sed.html#gammapy.spectrum.cube_sed">[docs]</a><span class="k">def</span> <span class="nf">cube_sed</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">flux_type</span><span class="o">=</span><span class="s">&#39;differential&#39;</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+             <span class="n">errors</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">standard_error</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">spectral_index</span><span class="o">=</span><span class="mf">2.3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates SED from SpectralCube within given lat and lon range.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube : `~gammapy.data.SpectralCube`</span>
+<span class="sd">        Spectral cube of either differential or integral fluxes (specified</span>
+<span class="sd">        with flux_type)</span>
+<span class="sd">    mask : array_like, optional</span>
+<span class="sd">        2D mask array, matching spatial dimensions of input cube.</span>
+<span class="sd">        A mask value of True indicates a value that should be ignored, </span>
+<span class="sd">        while a mask value of False indicates a valid value.</span>
+<span class="sd">    flux_type : {&#39;differential&#39;, &#39;integral&#39;}</span>
+<span class="sd">        Specify whether input cube includes differential or integral fluxes.</span>
+<span class="sd">    counts :  `~gammapy.data.SpectralCube`, optional</span>
+<span class="sd">        Counts cube to allow Poisson errors to be calculated. If not provided,</span>
+<span class="sd">        a standard_error should be provided, or zero errors will be returned.</span>
+<span class="sd">    errors : bool</span>
+<span class="sd">        If True, computes errors, if possible, according to provided inputs.</span>
+<span class="sd">        If False (default), returns all errors as zero.</span>
+<span class="sd">    standard_error : float</span>
+<span class="sd">        If counts cube not provided, but error values required, this specifies</span>
+<span class="sd">        a standard fractional error to be applied to values. Default = 0.1.</span>
+<span class="sd">    spectral_index : float</span>
+<span class="sd">        If integral flux is provided, this is used to calculate differential</span>
+<span class="sd">        fluxes and energies (according to the Lafferty &amp; Wyatt model-based</span>
+<span class="sd">        method, assuming a power-law model).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    table : `~astropy.table.Table`</span>
+<span class="sd">        A spectral energy table of energies, differential fluxes and</span>
+<span class="sd">        differential flux errors. Units as those input.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">spatial_coordinate_images</span>
+
+    <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="nb">bin</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">bin</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">bin</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">errors</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">counts</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># Counts cube required to calculate poisson errors</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">([</span><span class="n">values</span><span class="p">])</span> <span class="o">*</span> <span class="n">standard_error</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="nb">bin</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">bin</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+                <span class="n">r_error</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">bin</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+                <span class="n">errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_error</span><span class="p">)</span>
+            <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">errors</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">errors</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">([</span><span class="n">values</span><span class="p">])</span>
+
+    <span class="k">if</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="s">&#39;differential&#39;</span><span class="p">:</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">energy</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+        <span class="n">table</span><span class="p">[</span><span class="s">&#39;ENERGY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy</span><span class="p">,</span>
+        <span class="n">table</span><span class="p">[</span><span class="s">&#39;DIFF_FLUX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">unit</span><span class="p">),</span>
+        <span class="n">table</span><span class="p">[</span><span class="s">&#39;DIFF_FLUX_ERR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">errors</span> <span class="o">*</span> <span class="n">values</span><span class="p">,</span> <span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">flux_type</span> <span class="o">==</span> <span class="s">&#39;integral&#39;</span><span class="p">:</span>
+
+        <span class="n">emins</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">energy</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">emaxs</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">energy</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">compute_differential_flux_points</span><span class="p">(</span><span class="n">x_method</span><span class="o">=</span><span class="s">&#39;lafferty&#39;</span><span class="p">,</span>
+                                                 <span class="n">y_method</span><span class="o">=</span><span class="s">&#39;power_law&#39;</span><span class="p">,</span>
+                                                 <span class="n">spectral_index</span><span class="o">=</span><span class="n">spectral_index</span><span class="p">,</span>
+                                                 <span class="n">energy_min</span><span class="o">=</span><span class="n">emins</span><span class="p">,</span> <span class="n">energy_max</span><span class="o">=</span><span class="n">emaxs</span><span class="p">,</span>
+                                                 <span class="n">int_flux</span><span class="o">=</span><span class="n">values</span><span class="p">,</span> 
+                                                 <span class="n">int_flux_err</span><span class="o">=</span><span class="n">errors</span> <span class="o">*</span> <span class="n">values</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unknown flux_type: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux_type</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">table</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="sed.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

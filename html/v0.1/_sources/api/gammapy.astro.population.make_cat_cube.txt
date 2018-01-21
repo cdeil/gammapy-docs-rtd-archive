@@ -1,0 +1,8 @@
+
+
+make_cat_cube
+======================================
+
+.. currentmodule:: gammapy.astro.population
+
+.. autofunction:: make_cat_cube

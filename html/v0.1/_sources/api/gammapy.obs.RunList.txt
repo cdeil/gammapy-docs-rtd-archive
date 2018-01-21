@@ -1,0 +1,27 @@
+
+
+RunList
+===================
+
+.. currentmodule:: gammapy.obs
+
+.. autoclass:: RunList
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

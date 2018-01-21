@@ -1,0 +1,56 @@
+
+
+EffectiveAreaTable
+==============================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EffectiveAreaTable
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EffectiveAreaTable.effective_area_at_energy
+      ~EffectiveAreaTable.from_fits
+      ~EffectiveAreaTable.info
+      ~EffectiveAreaTable.plot_area_vs_energy
+      ~EffectiveAreaTable.read
+      ~EffectiveAreaTable.to_fits
+      ~EffectiveAreaTable.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: effective_area_at_energy
+   .. automethod:: from_fits
+   .. automethod:: info
+   .. automethod:: plot_area_vs_energy
+   .. automethod:: read
+   .. automethod:: to_fits
+   .. automethod:: write
+
+   
+   

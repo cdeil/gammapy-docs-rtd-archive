@@ -1,0 +1,237 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="index.html" />
+    <link rel="next" title="Command line tools" href="scripts/index.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/introduction.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "introduction",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "introduction";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="scripts/index.html" title="Command line tools">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="install.html" title="Installation">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      
+      <li>Introduction</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>Introduction<a class="headerlink" href="introduction.html#introduction" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="show-me-some-code">
+<h2>Show me some code!<a class="headerlink" href="introduction.html#show-me-some-code" title="Permalink to this headline">¶</a></h2>
+<p>Gammapy gives you easy access to some frequently used methods in TeV gamma-ray astronomy from Python.</p>
+<p>What&#8217;s the statistical significance when 10 events have been observed with a known background level of 4.2
+according to <a class="reference internal" href="references.html#lima1983" id="id2">[LiMa1983]</a>?</p>
+<p>Call the <a class="reference internal" href="api/gammapy.stats.significance.html#gammapy.stats.significance" title="gammapy.stats.significance"><tt class="xref py py-obj docutils literal"><span class="pre">significance</span></tt></a> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.stats</span> <span class="kn">import</span> <span class="n">significance</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">significance</span><span class="p">(</span><span class="n">n_observed</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">mu_background</span><span class="o">=</span><span class="mf">4.2</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;lima&#39;</span><span class="p">)</span>
+<span class="go">2.3979181291475453</span>
+</pre></div>
+</div>
+<p>What&#8217;s the differential gamma-ray flux and spectral index of the Crab nebula at 3 TeV
+according to <a class="reference internal" href="references.html#meyer2010" id="id3">[Meyer2010]</a>?</p>
+<p>Call the <a class="reference internal" href="api/gammapy.spectrum.crab_flux.html#gammapy.spectrum.crab_flux" title="gammapy.spectrum.crab_flux"><tt class="xref py py-obj docutils literal"><span class="pre">crab_flux</span></tt></a> and <a class="reference internal" href="api/gammapy.spectrum.crab_spectral_index.html#gammapy.spectrum.crab_spectral_index" title="gammapy.spectrum.crab_spectral_index"><tt class="xref py py-obj docutils literal"><span class="pre">crab_spectral_index</span></tt></a> functions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">crab_flux</span><span class="p">,</span> <span class="n">crab_spectral_index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">energy</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crab_flux</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="s">&#39;meyer&#39;</span><span class="p">)</span>
+<span class="go">1.8993523278650278e-12</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">crab_spectral_index</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="s">&#39;meyer&#39;</span><span class="p">)</span>
+<span class="go">2.6763224503600429</span>
+</pre></div>
+</div>
+<p>All functionality is in subpackages (e.g. <a class="reference internal" href="stats/index.html#module-gammapy.stats" title="gammapy.stats"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.stats</span></tt></a> or <a class="reference internal" href="spectrum/index.html#module-gammapy.spectrum" title="gammapy.spectrum"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum</span></tt></a>) ...
+browse their docs to see if it contains the methods you want.</p>
+</div>
+<div class="section" id="but-i-don-t-know-how-to-code-in-python">
+<h2>But I don&#8217;t know how to code in Python!<a class="headerlink" href="introduction.html#but-i-don-t-know-how-to-code-in-python" title="Permalink to this headline">¶</a></h2>
+<p>Hmm ... OK.</p>
+<p>Some of the Gammapy functionality can be called from command line tools.</p>
+<p>But, to be honest, if you&#8217;re an astronomer, you should learn to code in Python.
+Start at <a class="reference external" href="http://python4astronomers.github.io">http://python4astronomers.github.io</a> or <a class="reference external" href="http://www.astropy.org">here</a></p>
+<p>For example, if you have a counts and background model image and would like to compute
+a significance image with a correlation radius of 0.1 deg:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gammapy-make-derived-maps --in counts.fits background.fits \
+                            --meaning counts background \
+                            --out significance.fits \
+                            --correlation_radius 0.1 \
+</pre></div>
+</div>
+<p>Say you have an image that contains the
+<a class="reference external" href="http://en.wikipedia.org/wiki/Crab_Nebula">Crab nebula</a>
+and want to look up the map value at the Crab position
+(name lookup is done with <a class="reference external" href="http://simbad.u-strasbg.fr/simbad/">SIMBAD</a>):</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gammapy-lookup-map-values crab_image.fits --object &quot;Crab&quot;
+</pre></div>
+</div>
+<p>You can call <tt class="docutils literal"><span class="pre">gammapy-tool-name</span> <span class="pre">--help</span></tt> or <tt class="docutils literal"><span class="pre">gammapy-tool-name</span> <span class="pre">-h</span></tt> for any tool.</p>
+<p>A full list of available command line tools can be found in TODO: <tt class="docutils literal"><span class="pre">tools</span></tt>.</p>
+</div>
+<div class="section" id="other-related-packages">
+<h2>Other related packages<a class="headerlink" href="introduction.html#other-related-packages" title="Permalink to this headline">¶</a></h2>
+<p>Make sure to also check out the following packages that contain very useful functionality for gamma-ray astronomy:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://cxc.cfa.harvard.edu/sherpa/">Sherpa</a> &#8212; X-ray modeling and fitting package</li>
+<li><a class="reference external" href="http://gammalib.sourceforge.net">gammalib</a> and <a class="reference external" href="http://cta.irap.omp.eu/ctools/">ctools</a> &#8212; Gamma-ray data analysis library and tools by Jürgen Knödlseder</li>
+<li><a class="reference external" href="https://github.com/zblz/gammafit">gammafit</a> &#8212; an SED modeling and fitting package by Victor Zabalza</li>
+</ul>
+<p>Some other projects:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://bitbucket.org/kosack/act-analysis">act-analysis</a> &#8212; Python scripts and Makefiles for some common gamma-ray data analysis tasks by Karl Kosack</li>
+<li><a class="reference external" href="https://github.com/kialio/VHEObserverTools">VHEObserverTools</a> &#8212; tools to predict detectability at VHE by Jeremy Perkins</li>
+<li><a class="reference external" href="http://yt-project.org/doc/analyzing/analysis_modules/photon_simulator.html">photon_simulator</a> &#8212; Python code to simulate X-ray observations</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="introduction.html#">Introduction</a><ul>
+<li><a class="reference internal" href="introduction.html#show-me-some-code">Show me some code!</a></li>
+<li><a class="reference internal" href="introduction.html#but-i-don-t-know-how-to-code-in-python">But I don&#8217;t know how to code in Python!</a></li>
+<li><a class="reference internal" href="introduction.html#other-related-packages">Other related packages</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/introduction.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="introduction.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+
+
+ts_image
+=======================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: ts_image

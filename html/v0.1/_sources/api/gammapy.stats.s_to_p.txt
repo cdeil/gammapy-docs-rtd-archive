@@ -1,0 +1,8 @@
+
+
+s_to_p
+====================
+
+.. currentmodule:: gammapy.stats
+
+.. autofunction:: s_to_p

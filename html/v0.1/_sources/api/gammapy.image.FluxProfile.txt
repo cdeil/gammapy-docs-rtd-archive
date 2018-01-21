@@ -1,0 +1,48 @@
+
+
+FluxProfile
+=========================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: FluxProfile
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~FluxProfile.compute
+      ~FluxProfile.plot
+      ~FluxProfile.save
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute
+   .. automethod:: plot
+   .. automethod:: save
+
+   
+   

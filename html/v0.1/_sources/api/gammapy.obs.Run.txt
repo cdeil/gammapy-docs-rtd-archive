@@ -1,0 +1,44 @@
+
+
+Run
+===============
+
+.. currentmodule:: gammapy.obs
+
+.. autoclass:: Run
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Run.wcs_header
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: wcs_header
+
+   
+   

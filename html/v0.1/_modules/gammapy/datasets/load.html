@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.datasets.load &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/datasets/load.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/datasets/load",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/datasets/load";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.datasets.load</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Example and test datasets.</span>
+
+<span class="sd">Example how to load a dataset from file::</span>
+
+<span class="sd">    from gammapy import datasets</span>
+<span class="sd">    image = datasets.poisson_stats_image()</span>
+
+<span class="sd">To get a summary table of available datasets::</span>
+
+<span class="sd">    from gammapy import datasets</span>
+<span class="sd">    datasets.list_datasets()</span>
+
+<span class="sd">To download all datasets into a local cache::</span>
+
+<span class="sd">    from gammapy import datasets</span>
+<span class="sd">    datasets.download_datasets()</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">get_pkg_data_filename</span><span class="p">,</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">SpectralCube</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;get_path&#39;</span><span class="p">,</span>
+           <span class="c">#&#39;list_datasets&#39;,</span>
+           <span class="c">#&#39;download_datasets&#39;,</span>
+           <span class="s">&#39;load_poisson_stats_image&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_tev_spectrum&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_crab_flux_points&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_diffuse_gamma_spectrum&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_electron_spectrum&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_arf_fits_table&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_psf_fits_table&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_atnf_sample&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<span class="c"># TODO: implement or remove</span>
+<span class="k">def</span> <span class="nf">list_datasets</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;List available datasets.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">datasets</span><span class="p">:</span>
+        <span class="n">docstring</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;{0}.__doc__&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">summary</span> <span class="o">=</span> <span class="n">docstring</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;{0:&gt;25s} : {1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">summary</span><span class="p">))</span>
+
+
+<span class="c"># TODO: implement or remove</span>
+<span class="k">def</span> <span class="nf">download_datasets</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Download all datasets in to a local cache.</span>
+
+<span class="sd">    TODO: set this up and test</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">remote_datasets</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="c"># Check if available in cache</span>
+        <span class="c"># if not download to cache</span>
+
+
+<div class="viewcode-block" id="get_path"><a class="viewcode-back" href="../../../api/gammapy.datasets.get_path.html#gammapy.datasets.get_path">[docs]</a><span class="k">def</span> <span class="nf">get_path</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;local&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get path (location on your disk) for a given file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        File name in the local or remote data folder</span>
+<span class="sd">    location : {&#39;local&#39;, &#39;remote&#39;}</span>
+<span class="sd">        File location.</span>
+<span class="sd">        ``&#39;local&#39;`` means bundled with ``gammapy``.</span>
+<span class="sd">        ``&#39;remote&#39;`` means in the ``gammapy-extra`` repo in the ``datasets`` folder.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    path : str</span>
+<span class="sd">        Path (location on your disk) of the file.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy import datasets</span>
+<span class="sd">    &gt;&gt;&gt; datasets.get_path(&#39;fermi/fermi_counts.fits.gz&#39;)</span>
+<span class="sd">    &#39;/Users/deil/code/gammapy/gammapy/datasets/data/fermi/fermi_counts.fits.gz&#39;</span>
+<span class="sd">    &gt;&gt;&gt; datasets.get_path(&#39;vela_region/counts_vela.fits&#39;, location=&#39;remote&#39;)</span>
+<span class="sd">    &#39;/Users/deil/.astropy/cache/download/ce2456b0c9d1476bfd342eb4148144dd&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">location</span> <span class="o">==</span> <span class="s">&#39;local&#39;</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">get_pkg_data_filename</span><span class="p">(</span><span class="s">&#39;data/&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">location</span> <span class="o">==</span> <span class="s">&#39;remote&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;https://github.com/gammapy/gammapy-extra/blob/master/datasets/&#39;</span>
+               <span class="s">&#39;{0}?raw=true&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid location: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">location</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">path</span>
+
+</div>
+<div class="viewcode-block" id="load_atnf_sample"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_atnf_sample.html#gammapy.datasets.load_atnf_sample">[docs]</a><span class="k">def</span> <span class="nf">load_atnf_sample</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load part of the ATNF pulsar catalog.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Some rows from the ATNF pulsar catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;atnf/atnf_sample.txt&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii.csv&#39;</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39; &#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_arf_fits_table"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_arf_fits_table.html#gammapy.datasets.load_arf_fits_table">[docs]</a><span class="k">def</span> <span class="nf">load_arf_fits_table</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load an example ARF FITS table.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        ARF file contents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;irfs/arf.fits&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_psf_fits_table"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_psf_fits_table.html#gammapy.datasets.load_psf_fits_table">[docs]</a><span class="k">def</span> <span class="nf">load_psf_fits_table</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load an example PSF FITS file..</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        ARF file contents.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;irfs/psf.fits&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_poisson_stats_image"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_poisson_stats_image.html#gammapy.datasets.load_poisson_stats_image">[docs]</a><span class="k">def</span> <span class="nf">load_poisson_stats_image</span><span class="p">(</span><span class="n">extra_info</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">return_filenames</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load Poisson statistics counts image of a Gaussian source on flat background.</span>
+
+<span class="sd">    See poissson_stats_image/README.md for further info.</span>
+<span class="sd">    TODO: add better description (extract from README?)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    extra_info : bool</span>
+<span class="sd">        If true, a dict of images is returned.</span>
+<span class="sd">    return_filenames : bool</span>
+<span class="sd">        If true, return filenames instead of images</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : numpy array or dict of arrays or filenames</span>
+<span class="sd">        Depending on the ``extra_info`` and ``return_filenames`` options.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">extra_info</span><span class="p">:</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;counts&#39;</span><span class="p">,</span> <span class="s">&#39;model&#39;</span><span class="p">,</span> <span class="s">&#39;source&#39;</span><span class="p">,</span> <span class="s">&#39;background&#39;</span><span class="p">]:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;poisson_stats_image/{0}.fits.gz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">return_filenames</span><span class="p">:</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+                <span class="n">out</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;poisson_stats_image/counts.fits.gz&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_filenames</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">out</span>
+
+</div>
+<div class="viewcode-block" id="load_tev_spectrum"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_tev_spectrum.html#gammapy.datasets.load_tev_spectrum">[docs]</a><span class="k">def</span> <span class="nf">load_tev_spectrum</span><span class="p">(</span><span class="n">source_name</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load published TeV flux point measurements.</span>
+
+<span class="sd">    TODO: give references to publications and describe the returned table.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source_name : str</span>
+<span class="sd">        Source name</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    spectrum : `~astropy.table.Table`</span>
+<span class="sd">        Energy spectrum as a table (one flux point per row).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">source_name</span> <span class="o">==</span> <span class="s">&#39;crab&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;tev_spectra/crab_hess_spec.txt&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Data not available for source: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_name</span><span class="p">))</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pkg_data_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii&#39;</span><span class="p">,</span>
+                       <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">,</span> <span class="s">&#39;flux&#39;</span><span class="p">,</span> <span class="s">&#39;flux_lo&#39;</span><span class="p">,</span> <span class="s">&#39;flux_hi&#39;</span><span class="p">])</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_lo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_hi&#39;</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">table</span>
+
+</div>
+<div class="viewcode-block" id="load_crab_flux_points"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_crab_flux_points.html#gammapy.datasets.load_crab_flux_points">[docs]</a><span class="k">def</span> <span class="nf">load_crab_flux_points</span><span class="p">(</span><span class="n">component</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">,</span> <span class="n">with_fermi_flare</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load published Crab pulsar and nebula flux points.</span>
+
+<span class="sd">    Besides the usual flux point columns, this table contains</span>
+<span class="sd">    the following two columns:</span>
+
+<span class="sd">    * component : {&#39;pulsar&#39;, &#39;nebula&#39;}</span>
+<span class="sd">    * paper : Short string describing which point originates from which paper.</span>
+
+<span class="sd">    TODO:</span>
+
+<span class="sd">    * Add link to Crab flux point tutorial in Gammapy where these points are plotted.</span>
+<span class="sd">    * Add html links to ADS directly in the docstring and as a table column.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    component : {&#39;pulsar&#39;, &#39;nebula&#39;, &#39;both&#39;}</span>
+<span class="sd">        Which emission component to include</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flux_points : `~astropy.table.Table`</span>
+<span class="sd">        Flux point table</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This data compilation is from Buehler and Blandford, Rep. Prog. Phys. 77, 2014.</span>
+<span class="sd">    It was contributed to Gammapy directly by Rolf Buehler via a pull request.</span>
+
+<span class="sd">    The data for the nebula were taken from Meyer et al. Astron. Astrophys. 523 2010</span>
+<span class="sd">    with the addition of the Fermi-LAT measurement reported in Buehler et al. ApJ 749 2012.</span>
+
+<span class="sd">    The pulsar spectrum is reproduced from Kuiper et al Astron. Astrophys. 378 2001 .</span>
+<span class="sd">    Additionally shown are infrared measurements reported in Sollerman et al. ApJ 537 2000</span>
+<span class="sd">    and Tziamtzis et al. Astron. Astrophys. 508 2009, radio measurements referenced in</span>
+<span class="sd">    Thompson et al. ApJ 516 1999 and gamma-ray measurements referenced in</span>
+<span class="sd">    Aleksic et al. ApJ 742 2011, Aliu et al. Science 334 2011,</span>
+<span class="sd">    Aleksic et al. Astron. Astrophys. 540 2012</span>
+<span class="sd">    and Abdo et al. Astrophys. J. Suppl. Ser. 208 2013.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;data/tev_spectra/crab_mwl.fits.gz&#39;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pkg_data_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&#39;pulsar&#39;</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;component&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;pulsar&#39;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&#39;nebula&#39;</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;component&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;nebula&#39;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&#39;both&#39;</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid component: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">component</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+
+</div>
+<div class="viewcode-block" id="load_diffuse_gamma_spectrum"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_diffuse_gamma_spectrum.html#gammapy.datasets.load_diffuse_gamma_spectrum">[docs]</a><span class="k">def</span> <span class="nf">load_diffuse_gamma_spectrum</span><span class="p">(</span><span class="n">reference</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load published diffuse gamma-ray spectrum.</span>
+
+<span class="sd">    TODO: give references to publications and describe the returned table.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    reference : {&#39;Fermi&#39;, &#39;Fermi2&#39;}</span>
+<span class="sd">        Which publication.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    spectrum : `~astropy.table.Table`</span>
+<span class="sd">        Energy spectrum as a table (one flux point per row).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;Fermi&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;data/tev_spectra/diffuse_isotropic_gamma_spectrum_fermi.txt&#39;</span>
+    <span class="k">elif</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;Fermi2&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;data/tev_spectra/diffuse_isotropic_gamma_spectrum_fermi2.txt&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Data not available for reference: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">_read_diffuse_gamma_spectrum_fermi</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_read_diffuse_gamma_spectrum_fermi</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pkg_data_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii&#39;</span><span class="p">,</span>
+                       <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">,</span> <span class="s">&#39;flux&#39;</span><span class="p">,</span> <span class="s">&#39;flux_hi&#39;</span><span class="p">,</span> <span class="s">&#39;flux_lo&#39;</span><span class="p">])</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_lo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_hi&#39;</span><span class="p">])</span>
+
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">],</span> <span class="s">&#39;MeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">colname</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;flux&#39;</span> <span class="ow">in</span> <span class="n">colname</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+            <span class="n">energy2_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">],</span> <span class="s">&#39;MeV cm^-2 s^-1 sr^-1&#39;</span><span class="p">)</span>
+            <span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">energy2_flux</span> <span class="o">/</span> <span class="n">energy</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^-2 s^-1 TeV^-1 sr^-1&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<div class="viewcode-block" id="load_electron_spectrum"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_electron_spectrum.html#gammapy.datasets.load_electron_spectrum">[docs]</a><span class="k">def</span> <span class="nf">load_electron_spectrum</span><span class="p">(</span><span class="n">reference</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load published electron spectrum.</span>
+
+<span class="sd">    TODO: give references to publications and describe the returned table.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    reference : {&#39;HESS&#39;, &#39;HESS low energy&#39;, &#39;Fermi&#39;}</span>
+<span class="sd">        Which publication.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    spectrum : `~astropy.table.Table`</span>
+<span class="sd">        Energy spectrum as a table (one flux point per row).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;HESS&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;data/tev_spectra/electron_spectrum_hess.txt&#39;</span>
+        <span class="k">return</span> <span class="n">_read_electron_spectrum_hess</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;HESS low energy&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;data/tev_spectra/electron_spectrum_hess_low_energy.txt&#39;</span>
+        <span class="k">return</span> <span class="n">_read_electron_spectrum_hess</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;Fermi&#39;</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;data/tev_spectra/electron_spectrum_fermi.txt&#39;</span>
+        <span class="k">return</span> <span class="n">_read_electron_spectrum_fermi</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Data not available for reference: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">))</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_read_electron_spectrum_hess</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pkg_data_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii&#39;</span><span class="p">,</span>
+                       <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">,</span> <span class="s">&#39;flux&#39;</span><span class="p">,</span> <span class="s">&#39;flux_lo&#39;</span><span class="p">,</span> <span class="s">&#39;flux_hi&#39;</span><span class="p">])</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_lo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_hi&#39;</span><span class="p">])</span>
+
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">],</span> <span class="s">&#39;GeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+
+    <span class="c"># The ascii files store fluxes as (E ** 3) * dN / dE.</span>
+    <span class="c"># Here we change this to dN / dE.</span>
+    <span class="k">for</span> <span class="n">colname</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s">&#39;flux&#39;</span> <span class="ow">in</span> <span class="n">colname</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+            <span class="n">energy3_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">],</span> <span class="s">&#39;GeV^2 m^-2 s^-1 sr^-1&#39;</span><span class="p">)</span>
+            <span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">energy3_flux</span> <span class="o">/</span> <span class="n">energy</span> <span class="o">**</span> <span class="mi">3</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^-2 s^-1 TeV^-1 sr^-1&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<span class="k">def</span> <span class="nf">_read_electron_spectrum_fermi</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_pkg_data_filename</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii&#39;</span><span class="p">)</span>
+
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;E&#39;</span><span class="p">],</span> <span class="s">&#39;GeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;y&#39;</span><span class="p">],</span> <span class="s">&#39;m^-2 s^-1 GeV^-1 sr^-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^-2 s^-1 TeV^-1 sr^-1&#39;</span><span class="p">)</span>
+    <span class="n">flux_err</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="s">&#39;yerrtot_lo&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">t</span><span class="p">[</span><span class="s">&#39;yerrtot_up&#39;</span><span class="p">])</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;flux_err&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">flux_err</span><span class="p">,</span> <span class="s">&#39;m^-2 s^-1 GeV^-1 sr^-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^-2 s^-1 TeV^-1 sr^-1&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="load.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+
+
+PoissonLikelihoodFitter
+=====================================
+
+.. currentmodule:: gammapy.stats
+
+.. autoclass:: PoissonLikelihoodFitter
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~PoissonLikelihoodFitter.FIT_STATISTICS
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PoissonLikelihoodFitter.__call__
+      ~PoissonLikelihoodFitter.errorfunc
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: FIT_STATISTICS
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: __call__
+   .. automethod:: errorfunc
+
+   
+   

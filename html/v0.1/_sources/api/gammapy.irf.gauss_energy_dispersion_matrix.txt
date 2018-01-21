@@ -1,0 +1,8 @@
+
+
+gauss_energy_dispersion_matrix
+==========================================
+
+.. currentmodule:: gammapy.irf
+
+.. autofunction:: gauss_energy_dispersion_matrix

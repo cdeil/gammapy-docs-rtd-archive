@@ -1,0 +1,724 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.morphology.overlap &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/morphology/overlap.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/morphology/overlap",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/morphology/overlap";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.morphology.overlap</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Source overlap tools.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">exp</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">sqrt</span>
+<span class="kn">from</span> <span class="nn">astropy.extern.configobj</span> <span class="kn">import</span> <span class="n">configobj</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span><span class="p">,</span> <span class="n">ascii</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+
+<span class="c"># TODO: add what is publicly used here</span>
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;read_model_components&#39;</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">write_test_cfg_file</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">2.</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write test fit.cfg file with 7 sources on a hexagonal grid.</span>
+
+<span class="sd">    Please specify sigma, excess in fit.cfg and spacing of the sources.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">configobj</span><span class="o">.</span><span class="n">ConfigObj</span><span class="p">(</span><span class="s">&#39;fit.cfg&#39;</span><span class="p">)</span>
+
+    <span class="c"># Hexgonal test grid</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]])</span> <span class="o">*</span> <span class="n">spacing</span> 
+
+    <span class="c"># Set source parameters</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">positions</span><span class="p">):</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;Source{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;Source{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="s">&#39;Type&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;Gaussian&#39;</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;Source{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="s">&#39;GLON&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">180</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;Source{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="s">&#39;GLAT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;Source{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="s">&#39;Sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+        <span class="n">cfg</span><span class="p">[</span><span class="s">&#39;Source{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">)][</span><span class="s">&#39;Norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">cfg</span><span class="o">.</span><span class="n">write</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">write_test_region_file</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write ds9 region file with source names and R80 containment radii.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">reg_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&#39;fit.reg&#39;</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">component</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">]):</span>
+        <span class="n">glon_pos</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">glat_pos</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">r_containment</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mf">0.8</span><span class="p">)))</span> <span class="o">*</span> <span class="n">sigma</span>
+        <span class="n">reg_string</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;galactic;circle({0},{1},{2}) # color={{green}} width=2 text={{{3}}}&#39;</span>
+                      <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">glon_pos</span><span class="p">,</span> <span class="n">glat_pos</span><span class="p">,</span> <span class="n">r_containment</span><span class="p">,</span> <span class="n">component</span><span class="p">))</span>
+        <span class="n">reg_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">reg_string</span> <span class="o">+</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">)</span>
+    <span class="n">reg_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+
+<span class="k">def</span> <span class="nf">write_region_file</span><span class="p">(</span><span class="n">q_table</span><span class="p">,</span> <span class="n">c_table</span><span class="p">,</span> <span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write region file to display Q and C factors in ds9.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>  <span class="c"># Would be nice but actually not necessary</span>
+
+
+<span class="k">def</span> <span class="nf">write_test_model_components</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write test model components fits.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;model_components&#39;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="s">&#39;model_components&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">gauss2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">excess</span><span class="p">,</span> <span class="n">sigma</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;A 2D Gaussian with integral given by the excess parameter&quot;&quot;&quot;</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">xpos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">ypos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">exponent</span> <span class="o">=</span> <span class="o">-</span><span class="n">r2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="n">excess</span>  <span class="c"># / (2 * pi * sigma ** 2) #What makes sense here?</span>
+        <span class="k">return</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="n">exponent</span><span class="p">)</span>
+
+    <span class="c"># Set up fits header</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">naxis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crpix</span> <span class="o">=</span> <span class="p">[</span><span class="mi">200</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">])</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crval</span> <span class="o">=</span> <span class="p">[</span><span class="mi">180</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">w</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;GLON-CAR&quot;</span><span class="p">,</span> <span class="s">&quot;GLAT-CAR&quot;</span><span class="p">]</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="mi">401</span><span class="p">,</span> <span class="mi">401</span><span class="p">))</span>
+    <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># All source components added</span>
+    <span class="n">all_components</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">component</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">]):</span>
+        <span class="n">glon_pos</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">glat_pos</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Norm&#39;</span><span class="p">][</span><span class="n">row</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">gauss2d</span><span class="p">(</span><span class="n">glon</span><span class="p">,</span> <span class="n">glat</span><span class="p">,</span> <span class="n">glon_pos</span><span class="p">,</span> <span class="n">glat_pos</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">sigma</span><span class="p">)</span>
+        <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+        <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+        <span class="n">hdulist</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s">&#39;model_components/{0}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">component</span><span class="p">),</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">all_components</span> <span class="o">+=</span> <span class="n">data</span>
+
+    <span class="c"># Write Fits file with all components</span>
+    <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">all_components</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+    <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+    <span class="n">hdulist</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s">&#39;model_components/all.fits&#39;</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># Write dummy counts.fits just for the wcs header</span>
+    <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">all_components</span><span class="p">,</span> <span class="n">header</span><span class="p">)</span>
+    <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+    <span class="n">hdulist</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s">&#39;../counts.fits&#39;</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="read_model_components"><a class="viewcode-back" href="../../../api/gammapy.morphology.read_model_components.html#gammapy.morphology.read_model_components">[docs]</a><span class="k">def</span> <span class="nf">read_model_components</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read model components from ``model_components/*.fits`` and return</span>
+<span class="sd">    a list of 2D component images with containment masks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">cfg</span> <span class="o">=</span> <span class="n">configobj</span><span class="o">.</span><span class="n">ConfigObj</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">)</span>
+    <span class="n">column_names</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;Name&#39;</span><span class="p">,</span> <span class="s">&#39;Type&#39;</span><span class="p">,</span> <span class="s">&#39;GLON&#39;</span><span class="p">,</span> <span class="s">&#39;GLAT&#39;</span><span class="p">,</span> <span class="s">&#39;Sigma&#39;</span><span class="p">,</span> <span class="s">&#39;Norm&#39;</span><span class="p">)</span>
+    <span class="n">column_types</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;S25&#39;</span><span class="p">,</span> <span class="s">&#39;S25&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span>
+    <span class="n">component_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">column_types</span><span class="p">)</span>
+
+    <span class="c"># Build data table</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">type_</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;Type&#39;</span><span class="p">]</span>
+        <span class="n">glon</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;GLON&#39;</span><span class="p">]</span>
+        <span class="n">glat</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;GLAT&#39;</span><span class="p">]</span>
+        <span class="n">sigma</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;Sigma&#39;</span><span class="p">]</span>
+        <span class="n">norm</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;Norm&#39;</span><span class="p">]</span>
+        <span class="n">component_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">([</span><span class="n">component</span><span class="p">,</span> <span class="n">type_</span><span class="p">,</span> <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">norm</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;model_components/&#39;</span><span class="p">):</span>
+        <span class="n">read_fits_files</span><span class="p">(</span><span class="n">component_table</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;No model components found. Please reuse morph_fit.&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s">&#39;fit.reg&#39;</span><span class="p">):</span>
+        <span class="n">read_region_file</span><span class="p">(</span><span class="n">component_table</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">compute_containment_radius</span><span class="p">(</span><span class="n">component_table</span><span class="p">)</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Computing containment radii&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">component_table</span>
+
+</div>
+<span class="k">def</span> <span class="nf">compute_containment_radius</span><span class="p">(</span><span class="n">component_table</span><span class="p">,</span> <span class="n">frac</span><span class="o">=</span><span class="mf">0.8</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute containment radius from sigma.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">r_containment_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">sigma</span> <span class="ow">in</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;sigma&#39;</span><span class="p">]:</span>
+        <span class="n">r_containment</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">frac</span><span class="p">)))</span> <span class="o">*</span> <span class="n">sigma</span>  <span class="c"># TODO: Has to be tested!</span>
+        <span class="n">r_containment_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_containment</span><span class="p">)</span>
+
+    <span class="n">component_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">r_containment_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Containment Radii R80&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">read_region_file</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read region file to get the containment radii.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">pyregion</span>
+    <span class="n">region_list</span> <span class="o">=</span> <span class="n">pyregion</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;fit.reg&#39;</span><span class="p">)</span>
+    <span class="n">r_containment_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">region_list</span><span class="p">:</span>
+        <span class="n">r_containment</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">(</span><span class="n">component</span><span class="o">.</span><span class="n">coord_list</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">r_containment_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">r_containment</span><span class="p">)</span>
+    <span class="n">component_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">r_containment_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Containment Radii R80&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">read_fits_files</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read model component FITS files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">image_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">]:</span>
+        <span class="n">component_fits</span> <span class="o">=</span> <span class="n">component</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;p&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;.fits&#39;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s">&#39;model_components/&#39;</span> <span class="o">+</span> <span class="n">component_fits</span><span class="p">)</span>
+        <span class="n">image_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">component_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">image_data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;ImageData&#39;</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">get_containment_mask</span><span class="p">(</span><span class="n">glon_pos</span><span class="p">,</span> <span class="n">glat_pos</span><span class="p">,</span> <span class="n">r_containment</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Get mask from pre-computed containment radius.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;../counts.fits&#39;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Fix glon and glon_pos</span>
+    <span class="n">glon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">glon</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">,</span> <span class="n">glon</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="p">],</span> <span class="p">[</span><span class="n">glon</span> <span class="o">-</span> <span class="mi">360</span><span class="p">,</span> <span class="n">glon</span><span class="p">])</span>
+    <span class="n">glon_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">glon_pos</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">,</span> <span class="n">glon_pos</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="p">],</span> <span class="p">[</span><span class="n">glon_pos</span> <span class="o">-</span> <span class="mi">360</span><span class="p">,</span> <span class="n">glon_pos</span><span class="p">])</span>
+
+    <span class="c"># Compute containment radius</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">glon</span> <span class="o">-</span> <span class="n">glon_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">glat</span> <span class="o">-</span> <span class="n">glat_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">r_containment</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">get_containment_mask_from_sigma</span><span class="p">(</span><span class="n">glon_pos</span><span class="p">,</span> <span class="n">glat_pos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">frac</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute mask for the containment radius.</span>
+
+<span class="sd">    Works only for a symmetric Gaussian.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Setup wcs coordinate transformation</span>
+    <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;../counts.fits&#39;</span><span class="p">)</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Compute containment radius</span>
+    <span class="n">r_containment</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">frac</span><span class="p">)))</span> <span class="o">*</span> <span class="n">sigma</span>  <span class="c"># Has to be tested!</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">glon</span> <span class="o">-</span> <span class="n">glon_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">glat</span> <span class="o">-</span> <span class="n">glat_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">r_containment</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">shape</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">compute_circular_masks</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">shape</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute a 3D array of circular masks.</span>
+
+<span class="sd">    with increasing radius at position x_max, y_max of given shape.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># TODO: Not used ... remove?</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">shape</span>
+    <span class="n">r_max</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mgrid</span><span class="p">[</span><span class="o">-</span><span class="n">y_max</span><span class="p">:</span><span class="n">height</span> <span class="o">-</span> <span class="n">y_max</span><span class="p">,</span> <span class="o">-</span><span class="n">x_max</span><span class="p">:</span><span class="n">width</span> <span class="o">-</span> <span class="n">x_max</span><span class="p">]</span>
+    <span class="n">circular_masks</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">radius</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">r_max</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">x</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">y</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span> <span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">circular_masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">circular_masks</span>
+
+
+<span class="k">def</span> <span class="nf">containment_fraction</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">frac</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute containment fraction and return the corresponding mask.</span>
+
+<span class="sd">    Does not interpolate.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Not used</span>
+    <span class="n">y_max</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">A</span><span class="p">),</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="n">A_norm</span> <span class="o">=</span> <span class="n">A</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">circular_masks</span> <span class="o">=</span> <span class="n">compute_circular_masks</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="n">A</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">circular_masks</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">A_norm</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span> <span class="o">&gt;=</span> <span class="n">frac</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">mask</span>
+
+
+<span class="k">def</span> <span class="nf">contamination</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="n">excess_all</span><span class="p">,</span> <span class="n">mask_A</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute contamination between A and B.</span>
+
+<span class="sd">    I.e. fraction of B in a given containment region around A.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># mask = np.ones_like(A) #test hack</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Excess of B in region A: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="n">B</span> <span class="o">*</span> <span class="n">mask_A</span><span class="p">))))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Total excess in region A: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">((</span><span class="n">excess_all</span> <span class="o">*</span> <span class="n">mask_A</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">B</span> <span class="o">*</span> <span class="n">mask_A</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">excess_all</span> <span class="o">*</span> <span class="n">mask_A</span><span class="p">)</span>
+    
+
+<span class="k">def</span> <span class="nf">Q_factor</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute the &quot;overlap&quot; between the images A and B.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">A</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">B_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">B</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.5</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="p">(</span><span class="n">A</span> <span class="o">/</span> <span class="n">A_norm</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">B</span> <span class="o">/</span> <span class="n">B_norm</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">Q_factor_analytical</span><span class="p">(</span><span class="n">sigma_A</span><span class="p">,</span> <span class="n">sigma_B</span><span class="p">,</span> <span class="n">x_A</span><span class="p">,</span> <span class="n">y_A</span><span class="p">,</span> <span class="n">x_B</span><span class="p">,</span> <span class="n">y_B</span><span class="p">,</span> <span class="n">sigma_PSF</span><span class="o">=</span><span class="mf">0.0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute overlap Q factor analytically by means of the given model parameters.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Compute convolved sigma </span>
+    <span class="n">sigma_A</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_A</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">sigma_B</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_B</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c"># sigma_AB squared</span>
+    <span class="n">sigma_AB2</span> <span class="o">=</span> <span class="n">sigma_A</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_B</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="c"># displacement x_AB squared</span>
+    <span class="n">x_AB2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_A</span> <span class="o">-</span> <span class="n">x_B</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_A</span> <span class="o">-</span> <span class="n">y_B</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="c"># Normalization constant</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">sigma_A</span> <span class="o">*</span> <span class="n">sigma_B</span> <span class="o">/</span> <span class="n">sigma_AB2</span>
+    <span class="k">return</span> <span class="n">N</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x_AB2</span> <span class="o">/</span> <span class="n">sigma_AB2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">gaussian_product_integral</span><span class="p">(</span><span class="n">parameters_A</span><span class="p">,</span> <span class="n">parameters_B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes the analytical result of \int A \cdot B d^2x integrated from -inf to inf.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x_A</span><span class="p">,</span> <span class="n">y_A</span><span class="p">,</span> <span class="n">sigma_A</span><span class="p">,</span> <span class="n">N_A</span> <span class="o">=</span> <span class="n">parameters_A</span>
+    <span class="n">x_B</span><span class="p">,</span> <span class="n">y_B</span><span class="p">,</span> <span class="n">sigma_B</span><span class="p">,</span> <span class="n">N_B</span> <span class="o">=</span> <span class="n">parameters_B</span>
+
+    <span class="c"># Sigma_AB squared</span>
+    <span class="n">sigma_AB2</span> <span class="o">=</span> <span class="n">sigma_A</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_B</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="c"># Displacement x_AB squared</span>
+    <span class="n">x_AB2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_A</span> <span class="o">-</span> <span class="n">x_B</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y_A</span> <span class="o">-</span> <span class="n">y_B</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="c"># Prefactor</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="n">N_A</span> <span class="o">*</span> <span class="n">N_B</span> <span class="o">*</span> <span class="n">sigma_A</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma_B</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma_AB2</span>
+    <span class="k">return</span> <span class="n">N</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x_AB2</span> <span class="o">/</span> <span class="n">sigma_AB2</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">compute_Q_matrix</span><span class="p">(</span><span class="n">components_A</span><span class="p">,</span> <span class="n">components_B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute matrix of pairwise Q_factors weighted with N and sigma.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q_AB_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">components_A</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">components_B</span><span class="p">)))</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">A</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components_A</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">B</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">components_B</span><span class="p">):</span>
+            <span class="n">Q_AB_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">gaussian_product_integral</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Q_AB_matrix</span>
+
+
+<span class="k">def</span> <span class="nf">compute_Q_from_components</span><span class="p">(</span><span class="n">components_A</span><span class="p">,</span> <span class="n">components_B</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute Q factor for sources A and B with several components.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">Q_AB_matrix</span> <span class="o">=</span> <span class="n">compute_Q_matrix</span><span class="p">(</span><span class="n">components_A</span><span class="p">,</span> <span class="n">components_B</span><span class="p">)</span>
+    <span class="n">Q_AA_matrix</span> <span class="o">=</span> <span class="n">compute_Q_matrix</span><span class="p">(</span><span class="n">components_A</span><span class="p">,</span> <span class="n">components_A</span><span class="p">)</span>
+    <span class="n">Q_BB_matrix</span> <span class="o">=</span> <span class="n">compute_Q_matrix</span><span class="p">(</span><span class="n">components_B</span><span class="p">,</span> <span class="n">components_B</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Q_AB_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Q_AA_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">Q_BB_matrix</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+
+
+<span class="k">def</span> <span class="nf">apply_PSF</span><span class="p">(</span><span class="n">components</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a list of Gaussian input components the PSF is applied analytically.&quot;&quot;&quot;</span>
+    <span class="c"># Does not work yet, but could be useful</span>
+    <span class="n">sigma_PSF_1</span><span class="p">,</span> <span class="n">N_PSF_1</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span>
+    <span class="n">sigma_PSF_2</span><span class="p">,</span> <span class="n">N_PSF_2</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span>
+    <span class="n">sigma_PSF_3</span><span class="p">,</span> <span class="n">N_PSF_3</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span>
+
+    <span class="n">components_PSF_applied</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="n">components</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">N</span> <span class="o">=</span> <span class="n">component</span>
+
+        <span class="n">sigma_1</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF_1</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">sigma_2</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF_2</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">sigma_3</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF_3</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">N_1</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">N</span> <span class="o">*</span> <span class="n">N_PSF_1</span> <span class="o">*</span> <span class="n">sigma_PSF_1</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma_1</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">N_2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">N</span> <span class="o">*</span> <span class="n">N_PSF_2</span> <span class="o">*</span> <span class="n">sigma_PSF_2</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma_2</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">N_3</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span> <span class="o">*</span> <span class="n">N</span> <span class="o">*</span> <span class="n">N_PSF_3</span> <span class="o">*</span> <span class="n">sigma_PSF_3</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">sigma_3</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">components_PSF_applied</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma_1</span><span class="p">,</span> <span class="n">N_1</span><span class="p">])</span>
+        <span class="n">components_PSF_applied</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma_2</span><span class="p">,</span> <span class="n">N_2</span><span class="p">])</span>
+        <span class="n">components_PSF_applied</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sigma_3</span><span class="p">,</span> <span class="n">N_3</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">components_PSF_applied</span>
+
+
+<span class="k">def</span> <span class="nf">compute_Q_analytical</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute Q factors analytically.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+    <span class="n">q_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Q_AB&#39;</span><span class="p">))</span>
+
+    <span class="n">Q_all_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;All others&#39;</span><span class="p">]</span>
+
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+        <span class="c"># Get parameters A</span>
+        <span class="n">row_A</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+        <span class="n">x_A</span><span class="p">,</span> <span class="n">y_A</span><span class="p">,</span> <span class="n">sigma_A</span><span class="p">,</span> <span class="n">N_A</span> <span class="o">=</span> <span class="n">row_A</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">],</span> <span class="n">row_A</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">],</span> <span class="n">row_A</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">],</span> <span class="n">row_A</span><span class="p">[</span><span class="s">&#39;Norm&#39;</span><span class="p">]</span>
+
+        <span class="c"># Compute Q_factor all others</span>
+        <span class="n">components_all</span> <span class="o">=</span> <span class="p">[[</span><span class="n">row</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s">&#39;Norm&#39;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">component_table</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">row</span> <span class="o">==</span> <span class="n">row_A</span><span class="p">]</span>
+        <span class="n">Q_All</span> <span class="o">=</span> <span class="n">compute_Q_from_components</span><span class="p">([[</span><span class="n">x_A</span><span class="p">,</span> <span class="n">y_A</span><span class="p">,</span> <span class="n">sigma_A</span><span class="p">,</span> <span class="n">N_A</span><span class="p">]],</span> <span class="n">components_all</span><span class="p">)</span>
+        <span class="n">Q_all_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Q_All</span><span class="p">)</span>
+
+        <span class="c"># Compute Q factors pairwise</span>
+        <span class="n">Q_AB_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row_B</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+            <span class="c"># Get parameters B</span>
+            <span class="n">x_B</span><span class="p">,</span> <span class="n">y_B</span><span class="p">,</span> <span class="n">sigma_B</span><span class="p">,</span> <span class="n">N_B</span> <span class="o">=</span> <span class="n">row_B</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">],</span> <span class="n">row_B</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">],</span> <span class="n">row_B</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">],</span> <span class="n">row_B</span><span class="p">[</span><span class="s">&#39;Norm&#39;</span><span class="p">]</span>
+
+            <span class="c"># Compute Q_factor</span>
+            <span class="n">Q_AB</span> <span class="o">=</span> <span class="n">Q_factor_analytical</span><span class="p">(</span><span class="n">sigma_A</span><span class="p">,</span> <span class="n">sigma_B</span><span class="p">,</span> <span class="n">x_A</span><span class="p">,</span> <span class="n">y_A</span><span class="p">,</span> <span class="n">x_B</span><span class="p">,</span> <span class="n">y_B</span><span class="p">)</span>
+            <span class="n">Q_AB_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q_AB</span>
+        <span class="n">q_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">Q_AB_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">row_A</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">]))</span>
+    <span class="n">q_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">Q_all_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q_table</span>
+
+
+<span class="k">def</span> <span class="nf">compute_Q</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute Q factors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+    <span class="n">q_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Q_AB&#39;</span><span class="p">))</span>
+
+    <span class="n">Q_all_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;All others&#39;</span><span class="p">]</span>
+    <span class="n">excess_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>  <span class="c"># Total excess</span>
+
+    <span class="k">for</span> <span class="n">row_A</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+        <span class="c"># Compute q factors all others</span>
+        <span class="n">Q_All</span> <span class="o">=</span> <span class="n">Q_factor</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">],</span> <span class="n">excess_all</span> <span class="o">-</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">])</span>
+        <span class="n">Q_all_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Q_All</span><span class="p">)</span>
+
+        <span class="c"># Compute Q factors pairwise</span>
+        <span class="n">Q_AB_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">row_B</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+            <span class="n">Q_AB</span> <span class="o">=</span> <span class="n">Q_factor</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">],</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_B</span><span class="p">])</span>
+            <span class="n">Q_AB_list</span><span class="p">[</span><span class="n">row_B</span><span class="p">]</span> <span class="o">=</span> <span class="n">Q_AB</span>
+        <span class="n">q_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">Q_AB_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]))</span>
+    <span class="n">q_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">Q_all_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q_table</span>
+
+
+<span class="k">def</span> <span class="nf">compute_contamination</span><span class="p">(</span><span class="n">component_table</span><span class="p">,</span> <span class="n">store_mask</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute contamination.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">q_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+    <span class="n">q_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">],</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Contamination&#39;</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">C_all_list</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;All others&#39;</span><span class="p">]</span>
+    <span class="n">excess_all</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c"># Compute contamination factors</span>
+    <span class="k">for</span> <span class="n">row_A</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+        <span class="c"># Get source component parameters for containment mask</span>
+        <span class="n">glon_pos</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]</span>
+        <span class="n">glat_pos</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]</span>
+        <span class="c"># sigma = component_table[&#39;Sigma&#39;][row_A]    </span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">r_containment</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Containment Radii R80&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]</span>
+        <span class="n">containment_mask_A</span> <span class="o">=</span> <span class="n">get_containment_mask</span><span class="p">(</span><span class="n">glon_pos</span><span class="p">,</span> <span class="n">glat_pos</span><span class="p">,</span> <span class="n">r_containment</span><span class="p">,</span> <span class="n">shape</span><span class="p">)</span>
+
+
+        <span class="c"># Store mask for debugging</span>
+        <span class="k">if</span> <span class="n">store_mask</span><span class="p">:</span>
+            <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="n">containment_mask_A</span><span class="p">)</span>
+            <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">hdu</span><span class="p">])</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39; &#39;</span><span class="p">,</span> <span class="s">&#39;_&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;-&#39;</span><span class="p">,</span> <span class="s">&#39;m&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="s">&#39;p&#39;</span><span class="p">)</span>
+            <span class="n">hdulist</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="s">&#39;model_components/mask_{0}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">),</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="c"># Compute contamination all others</span>
+        <span class="n">C_All</span> <span class="o">=</span> <span class="n">contamination</span><span class="p">(</span><span class="n">excess_all</span> <span class="o">-</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">],</span> <span class="n">excess_all</span><span class="p">,</span> <span class="n">containment_mask_A</span><span class="p">)</span>
+        <span class="n">C_all_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">C_All</span><span class="p">)</span>
+
+        <span class="c"># Compute pairwise contamination</span>
+        <span class="n">C_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">row_B</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+            <span class="n">C_AB</span> <span class="o">=</span> <span class="n">contamination</span><span class="p">(</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_B</span><span class="p">],</span> <span class="n">excess_all</span><span class="p">,</span> <span class="n">containment_mask_A</span><span class="p">)</span>
+            <span class="n">C_list</span><span class="p">[</span><span class="n">row_B</span><span class="p">]</span> <span class="o">=</span> <span class="n">C_AB</span>
+        <span class="n">q_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">C_list</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]))</span>
+    <span class="n">q_table</span><span class="o">.</span><span class="n">add_row</span><span class="p">(</span><span class="n">C_all_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">q_table</span>
+
+
+<span class="k">def</span> <span class="nf">write_json_fit</span><span class="p">(</span><span class="n">q_table</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write Q and C factors in fit.json file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="c"># Check if key &quot;overlap&quot; is already there</span>
+    <span class="k">if</span> <span class="s">&#39;overlap&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;overlap&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="c"># Write table to json file</span>
+    <span class="n">overlap</span><span class="p">,</span> <span class="n">columns_names</span> <span class="o">=</span> <span class="n">q_table</span><span class="o">.</span><span class="n">colnames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q_table</span><span class="o">.</span><span class="n">colnames</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">data</span><span class="p">[</span><span class="s">&#39;overlap&#39;</span><span class="p">][</span><span class="n">overlap</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">source_1</span> <span class="ow">in</span> <span class="n">columns_names</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="s">&#39;overlap&#39;</span><span class="p">][</span><span class="n">overlap</span><span class="p">][</span><span class="n">source_1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">overlap</span><span class="p">])):</span>
+            <span class="n">data</span><span class="p">[</span><span class="s">&#39;overlap&#39;</span><span class="p">][</span><span class="n">overlap</span><span class="p">][</span><span class="n">source_1</span><span class="p">][</span><span class="n">q_table</span><span class="p">[</span><span class="n">overlap</span><span class="p">][</span><span class="n">row</span><span class="p">]]</span> <span class="o">=</span> <span class="n">q_table</span><span class="p">[</span><span class="n">source_1</span><span class="p">][</span><span class="n">row</span><span class="p">]</span> 
+
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">),</span>
+                      <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">write_json</span><span class="p">(</span><span class="n">q_table</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s">&#39;overlap.json&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write Q and C factors in overlap.json file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="c"># Write table to json file</span>
+    <span class="n">overlap</span><span class="p">,</span> <span class="n">columns_names</span> <span class="o">=</span> <span class="n">q_table</span><span class="o">.</span><span class="n">colnames</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">q_table</span><span class="o">.</span><span class="n">colnames</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">overlap</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span> 
+    <span class="k">for</span> <span class="n">source_1</span> <span class="ow">in</span> <span class="n">columns_names</span><span class="p">:</span>
+        <span class="n">data</span><span class="p">[</span><span class="n">overlap</span><span class="p">][</span><span class="n">source_1</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">q_table</span><span class="p">[</span><span class="n">overlap</span><span class="p">])):</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">overlap</span><span class="p">][</span><span class="n">source_1</span><span class="p">][</span><span class="n">q_table</span><span class="p">[</span><span class="n">overlap</span><span class="p">][</span><span class="n">row</span><span class="p">]]</span> <span class="o">=</span> <span class="n">q_table</span><span class="p">[</span><span class="n">source_1</span><span class="p">][</span><span class="n">row</span><span class="p">]</span> 
+
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">),</span>
+                      <span class="n">sort_keys</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">write_pretty_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">column_width</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Format and write pretty table to ascii file.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">formats</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c"># Format header</span>
+    <span class="n">colnames</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;{0:&gt;{width}} &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">column_width</span><span class="p">)</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">]</span>
+
+    <span class="c"># Format columns</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">colnames</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="s">&#39;&gt;S25&#39;</span><span class="p">:</span>  <span class="c"># Strings have to be stored in S25 format! Otherwise the formatting will be wrong...</span>
+            <span class="n">formats</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;{:&gt;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;} &#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formats</span><span class="p">[</span><span class="n">column</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;{:&gt;&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">column_width</span><span class="p">)</span> <span class="o">+</span> <span class="s">&#39;.2%} &#39;</span>
+
+    <span class="c"># Write table</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii&#39;</span><span class="p">,</span> <span class="n">Writer</span><span class="o">=</span><span class="n">ascii</span><span class="o">.</span><span class="n">FixedWidthTwoLine</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;|&#39;</span><span class="p">,</span>
+                                    <span class="n">position_char</span><span class="o">=</span><span class="s">&#39;=&#39;</span><span class="p">,</span> <span class="n">formats</span><span class="o">=</span><span class="n">formats</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">colnames</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Wrote table to file: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">compare_Q_contamination</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compare the values of the Q factor and contamination.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Q Factors</span>
+    <span class="n">q_table</span> <span class="o">=</span> <span class="n">compute_Q</span><span class="p">(</span><span class="n">component_table</span><span class="p">)</span>
+    <span class="n">write_pretty_table</span><span class="p">(</span><span class="n">q_table</span><span class="p">,</span> <span class="s">&#39;q_factors.txt&#39;</span><span class="p">)</span>
+    <span class="n">write_json</span><span class="p">(</span><span class="n">q_table</span><span class="p">)</span>
+
+    <span class="c"># Q Factors analytical</span>
+    <span class="c"># q_table = compute_Q_analytical(component_table)</span>
+    <span class="c"># write_pretty_table(q_table, &#39;q_factors_analytical.txt&#39;)</span>
+
+    <span class="c"># Contamination</span>
+    <span class="n">c_table</span> <span class="o">=</span> <span class="n">compute_contamination</span><span class="p">(</span><span class="n">component_table</span><span class="p">)</span>
+    <span class="n">write_pretty_table</span><span class="p">(</span><span class="n">c_table</span><span class="p">,</span> <span class="s">&#39;contamination.txt&#39;</span><span class="p">)</span>
+    <span class="n">write_json</span><span class="p">(</span><span class="n">c_table</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">compare_real_and_model_excess</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compare real and model excess by calculating the ratio.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Read fits files</span>
+    <span class="n">roi</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s">&#39;../roi.fits&#39;</span><span class="p">)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s">&#39;../counts.fits&#39;</span><span class="p">)</span>
+    <span class="n">background</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s">&#39;../background.fits&#39;</span><span class="p">)</span>
+    <span class="n">real_excess</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">-</span> <span class="n">background</span>
+    <span class="n">model_excess</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="s">&#39;model.fits&#39;</span><span class="p">)</span>
+
+    <span class="c"># Compute total excess</span>
+    <span class="n">total_real_excess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">roi</span> <span class="o">*</span> <span class="n">real_excess</span><span class="p">)</span>
+    <span class="n">total_model_excess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">(</span><span class="n">roi</span> <span class="o">*</span> <span class="n">model_excess</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Total model excess: {0:02.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_model_excess</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Total real excess: {0:02.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_real_excess</span><span class="p">))</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Ratio: {0:02.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">total_model_excess</span> <span class="o">/</span> <span class="n">total_real_excess</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">overlap_plot</span><span class="p">(</span><span class="n">profile_A</span><span class="p">,</span> <span class="n">profile_B</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">y_slice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make nice overlap plots.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mf">0.001</span><span class="p">)</span>
+
+    <span class="n">norm_product_AB</span> <span class="o">=</span> <span class="n">profile_A</span> <span class="o">*</span> <span class="n">profile_B</span>
+    <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">profile_A</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Source A&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;b&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">profile_B</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Source B&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;g&#39;</span><span class="p">)</span>
+    <span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s">&#39;major&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+    <span class="n">ax2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">norm_product_AB</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s">&#39;Product&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+    <span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s">&#39;both&#39;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s">&#39;major&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">profile_A</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>
+    <span class="n">y_labels</span><span class="p">,</span> <span class="n">x_labels</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span> <span class="o">*</span> <span class="n">y_slice</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">x_labels</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax1</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">visible</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="c"># plt.show()</span>
+
+
+<span class="k">def</span> <span class="nf">make_example_plots</span><span class="p">(</span><span class="n">component_table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make some example plots from a `fake.cfg`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s">&#39;../exposure.fits&#39;</span><span class="p">)</span>
+
+    <span class="c"># Parse the WCS keywords in the primary HDU</span>
+    <span class="n">w</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">hdulist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+
+    <span class="c"># Slice through center</span>
+    <span class="n">y_slice</span><span class="p">,</span> <span class="n">x_slice</span> <span class="o">=</span> <span class="n">w</span><span class="o">.</span><span class="n">wcs_world2pix</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">row_A</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">row_B</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">component_table</span><span class="p">)):</span>
+            <span class="n">profile_A</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">][</span><span class="n">y_slice</span><span class="p">][:]</span>
+            <span class="n">profile_B</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;ImageData&#39;</span><span class="p">][</span><span class="n">row_B</span><span class="p">][</span><span class="n">y_slice</span><span class="p">][:]</span>
+            <span class="n">overlap_plot</span><span class="p">(</span><span class="n">profile_A</span><span class="p">,</span> <span class="n">profile_B</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">y_slice</span><span class="p">)</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">][</span><span class="n">row_A</span><span class="p">]</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">component_table</span><span class="p">[</span><span class="s">&#39;Name&#39;</span><span class="p">][</span><span class="n">row_B</span><span class="p">]</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s">&quot;OverlapPlot{0}{1}.png&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">160</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="overlap.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

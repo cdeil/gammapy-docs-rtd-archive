@@ -1,0 +1,8 @@
+
+
+plot_fit
+=======================================
+
+.. currentmodule:: gammapy.spectrum.fitting_utils
+
+.. autofunction:: plot_fit

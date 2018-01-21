@@ -1,0 +1,8 @@
+
+
+detect_peaks
+===========================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: detect_peaks

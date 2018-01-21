@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.background.ring &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/background/ring.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/background/ring",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/background/ring";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.background.ring</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Ring background estimation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">ring_correlate</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;ring_correlate_off_maps&#39;</span><span class="p">,</span> <span class="s">&#39;RingBgMaker&#39;</span><span class="p">,</span>
+           <span class="s">&#39;ring_r_out&#39;</span><span class="p">,</span> <span class="s">&#39;ring_area_factor&#39;</span><span class="p">,</span> <span class="s">&#39;ring_alpha&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="RingBgMaker"><a class="viewcode-back" href="../../../api/gammapy.background.RingBgMaker.html#gammapy.background.RingBgMaker">[docs]</a><span class="k">class</span> <span class="nc">RingBgMaker</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ring background method for cartesian coordinates.</span>
+
+<span class="sd">    Step 1: apply exclusion mask</span>
+<span class="sd">    Step 2: ring-correlate</span>
+<span class="sd">    Step 3: apply psi cut</span>
+
+<span class="sd">    TODO: add method to apply the psi cut</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r_in : float</span>
+<span class="sd">        Inner ring radius (deg)</span>
+<span class="sd">    r_out : float</span>
+<span class="sd">        Outer ring radius (deg)</span>
+<span class="sd">    pixscale : float</span>
+<span class="sd">        degrees per pixel</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">r_in</span><span class="p">,</span> <span class="n">r_out</span><span class="p">,</span> <span class="n">pixscale</span><span class="o">=</span><span class="mf">0.01</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">pixscale</span><span class="p">)</span>
+        <span class="c"># Note: internally all computations are in pixels,</span>
+        <span class="c"># so convert deg to pix here:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_in</span> <span class="o">=</span> <span class="n">r_in</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">r_out</span> <span class="o">=</span> <span class="n">r_out</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span>
+
+<div class="viewcode-block" id="RingBgMaker.info"><a class="viewcode-back" href="../../../api/gammapy.background.RingBgMaker.html#gammapy.background.RingBgMaker.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print some basic parameter info.&quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;RingBgMaker parameters:&#39;</span><span class="p">)</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;r_in: {0} pix = {1} deg&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_in</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span><span class="p">))</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;r_out: {0} pix = {1} deg&#39;</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">r_out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_out</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;pixscale: {0} deg/pix&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pixscale</span><span class="p">))</span>
+        <span class="k">print</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="RingBgMaker.correlate"><a class="viewcode-back" href="../../../api/gammapy.background.RingBgMaker.html#gammapy.background.RingBgMaker.correlate">[docs]</a>    <span class="k">def</span> <span class="nf">correlate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Ring-correlate a given image.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ring_correlate</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_in</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">r_out</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="RingBgMaker.correlate_maps"><a class="viewcode-back" href="../../../api/gammapy.background.RingBgMaker.html#gammapy.background.RingBgMaker.correlate_maps">[docs]</a>    <span class="k">def</span> <span class="nf">correlate_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maps</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute off maps as ring-correlated versions of the on maps.</span>
+
+<span class="sd">        The exclusion map is taken into account.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        maps : gammapy.background.maps.Maps</span>
+<span class="sd">            Input maps (is modified in-place)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Note: maps[&#39;on&#39;] returns a copy of the HDU,</span>
+        <span class="c"># so assigning to on would be pointless.</span>
+        <span class="n">n_on</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="s">&#39;n_on&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">a_on</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="s">&#39;a_on&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">exclusion</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="s">&#39;exclusion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s">&#39;n_off&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">n_on</span> <span class="o">*</span> <span class="n">exclusion</span><span class="p">)</span>
+        <span class="n">maps</span><span class="p">[</span><span class="s">&#39;a_off&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">correlate</span><span class="p">(</span><span class="n">a_on</span> <span class="o">*</span> <span class="n">exclusion</span><span class="p">)</span>
+        <span class="n">maps</span><span class="o">.</span><span class="n">is_off_correlated</span> <span class="o">=</span> <span class="bp">True</span>
+
+</div></div>
+<div class="viewcode-block" id="ring_correlate_off_maps"><a class="viewcode-back" href="../../../api/gammapy.background.ring_correlate_off_maps.html#gammapy.background.ring_correlate_off_maps">[docs]</a><span class="k">def</span> <span class="nf">ring_correlate_off_maps</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">r_in</span><span class="p">,</span> <span class="n">r_out</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Ring-correlate the basic off maps.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    maps : gammapy.background.maps.Maps</span>
+<span class="sd">        Maps container</span>
+<span class="sd">    r_in : float</span>
+<span class="sd">        Inner ring radius (deg)</span>
+<span class="sd">    r_out : float</span>
+<span class="sd">        Outer ring radius (deg)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pixscale</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="s">&#39;n_on&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;CDELT2&#39;</span><span class="p">]</span>
+    <span class="n">ring_bg_maker</span> <span class="o">=</span> <span class="n">RingBgMaker</span><span class="p">(</span><span class="n">r_in</span><span class="p">,</span> <span class="n">r_out</span><span class="p">,</span> <span class="n">pixscale</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ring_bg_maker</span><span class="o">.</span><span class="n">correlate_maps</span><span class="p">(</span><span class="n">maps</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="ring_r_out"><a class="viewcode-back" href="../../../api/gammapy.background.ring_r_out.html#gammapy.background.ring_r_out">[docs]</a><span class="k">def</span> <span class="nf">ring_r_out</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">r_in</span><span class="p">,</span> <span class="n">area_factor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute ring outer radius.</span>
+
+<span class="sd">    The determining equation is:</span>
+<span class="sd">        area_factor =</span>
+<span class="sd">        off_area / on_area =</span>
+<span class="sd">        (pi (r_out**2 - r_in**2)) / (pi * theta**2 )</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        On region radius</span>
+<span class="sd">    r_in : float</span>
+<span class="sd">        Inner ring radius</span>
+<span class="sd">    area_factor : float</span>
+<span class="sd">        Desired off / on area ratio</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    r_out : float</span>
+<span class="sd">        Outer ring radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">area_factor</span> <span class="o">*</span> <span class="n">theta</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">r_in</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="ring_area_factor"><a class="viewcode-back" href="../../../api/gammapy.background.ring_area_factor.html#gammapy.background.ring_area_factor">[docs]</a><span class="k">def</span> <span class="nf">ring_area_factor</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">r_in</span><span class="p">,</span> <span class="n">r_out</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute ring area factor.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        On region radius</span>
+<span class="sd">    r_in : float</span>
+<span class="sd">        Inner ring radius</span>
+<span class="sd">    r_out : float</span>
+<span class="sd">        Outer ring radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">r_out</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">r_in</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="n">theta</span> <span class="o">**</span> <span class="mi">2</span>
+
+</div>
+<div class="viewcode-block" id="ring_alpha"><a class="viewcode-back" href="../../../api/gammapy.background.ring_alpha.html#gammapy.background.ring_alpha">[docs]</a><span class="k">def</span> <span class="nf">ring_alpha</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">r_in</span><span class="p">,</span> <span class="n">r_out</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute ring alpha, the inverse area factor.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        On region radius</span>
+<span class="sd">    r_in : float</span>
+<span class="sd">        Inner ring radius</span>
+<span class="sd">    r_out : float</span>
+<span class="sd">        Outer ring radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">ring_area_factor</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">r_in</span><span class="p">,</span> <span class="n">r_out</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="ring.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

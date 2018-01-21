@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>fetch_fermi_catalog &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="up" title="Access datasets (gammapy.datasets)" href="../datasets/index.html" />
+    <link rel="next" title="fetch_fermi_diffuse_background_model" href="gammapy.datasets.fetch_fermi_diffuse_background_model.html" />
+    <link rel="prev" title="FermiVelaRegion" href="gammapy.datasets.FermiVelaRegion.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.datasets.fetch_fermi_catalog.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "api/gammapy.datasets.fetch_fermi_catalog",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.datasets.fetch_fermi_catalog";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.datasets.fetch_fermi_diffuse_background_model.html" title="fetch_fermi_diffuse_background_model">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.datasets.FermiVelaRegion.html" title="FermiVelaRegion">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../datasets/index.html" accesskey="U">Access datasets (<tt class="docutils literal"><span class="pre">gammapy.datasets</span></tt>)</a> &raquo;</li>
+      
+      <li>fetch_fermi_catalog</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fetch-fermi-catalog">
+<h1>fetch_fermi_catalog<a class="headerlink" href="gammapy.datasets.fetch_fermi_catalog.html#fetch-fermi-catalog" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.datasets.fetch_fermi_catalog">
+<tt class="descclassname">gammapy.datasets.</tt><tt class="descname">fetch_fermi_catalog</tt><big>(</big><em>catalog</em>, <em>extension=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#fetch_fermi_catalog"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.fetch_fermi_catalog.html#gammapy.datasets.fetch_fermi_catalog" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch Fermi catalog data.</p>
+<p>Reference: <a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/access/lat/">http://fermi.gsfc.nasa.gov/ssc/data/access/lat/</a>.</p>
+<p>The Fermi catalogs contain the following relevant catalog HDUs:</p>
+<ul>
+<li><dl class="first docutils">
+<dt>2FGL Catalog <span class="classifier-delimiter">:</span> <span class="classifier">LAT 2-year Point Source Catalog</span></dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">LAT_Point_Source_Catalog</span></tt> Point Source Catalog Table.</li>
+<li><tt class="docutils literal"><span class="pre">ExtendedSources</span></tt> Extended Source Catalog Table.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>1FGL Catalog <span class="classifier-delimiter">:</span> <span class="classifier">LAT 1-year Point Source Catalog</span></dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">LAT_Point_Source_Catalog</span></tt> Point Source Catalog Table.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>1FHL Catalog <span class="classifier-delimiter">:</span> <span class="classifier">First Fermi-LAT Catalog of Sources above 10 GeV</span></dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">LAT_Point_Source_Catalog</span></tt> Point Source Catalog Table.</li>
+<li><tt class="docutils literal"><span class="pre">ExtendedSources</span></tt> Extended Source Catalog Table.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>2PC Catalog <span class="classifier-delimiter">:</span> <span class="classifier">LAT Second Catalog of Gamma-ray Pulsars</span></dt>
+<dd><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">PULSAR_CATALOG</span></tt> Pulsar Catalog Table.</li>
+<li><tt class="docutils literal"><span class="pre">SPECTRAL</span></tt> Table of Pulsar Spectra Parameters.</li>
+<li><tt class="docutils literal"><span class="pre">OFF_PEAK</span></tt> Table for further Spectral and Flux data for the Catalog.</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>catalog</strong> : {&#8216;2FGL&#8217;, &#8216;1FGL&#8217;, &#8216;1FHL&#8217;, &#8216;2PC&#8217;}</p>
+<blockquote>
+<div><p>Specifies which catalog to display.</p>
+</div></blockquote>
+<p><strong>extension</strong> : str</p>
+<blockquote>
+<div><p>Specifies which catalog HDU to provide as a table (optional).
+See list of catalog HDUs above.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hdu_list (Default)</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a></p>
+<blockquote>
+<div><p>Catalog FITS HDU list (for access to full catalog dataset).</p>
+</div></blockquote>
+<p><strong>catalog_table</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">Table</span></tt></a></p>
+<blockquote class="last">
+<div><p>Catalog table for a selected hdu extension.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">fetch_fermi_catalog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fetch_fermi_catalog</span><span class="p">(</span><span class="s">&#39;2FGL&#39;</span><span class="p">)</span>  
+<span class="go">    [&lt;astropy.io.fits.hdu.image.PrimaryHDU at 0x3330790&gt;,</span>
+<span class="go">     &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x338b990&gt;,</span>
+<span class="go">     &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x3396450&gt;,</span>
+<span class="go">     &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x339af10&gt;,</span>
+<span class="go">     &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x339ff10&gt;]</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">fetch_fermi_catalog</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fetch_fermi_catalog</span><span class="p">(</span><span class="s">&#39;2FGL&#39;</span><span class="p">,</span> <span class="s">&#39;LAT_Point_Source_Catalog&#39;</span><span class="p">)</span>  
+<span class="go">    &lt;Table rows=1873 names= ... &gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.datasets.fetch_fermi_catalog.html#">fetch_fermi_catalog</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.datasets.fetch_fermi_catalog.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.datasets.fetch_fermi_catalog.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

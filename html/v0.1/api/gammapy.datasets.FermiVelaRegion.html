@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>FermiVelaRegion &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="up" title="Access datasets (gammapy.datasets)" href="../datasets/index.html" />
+    <link rel="next" title="Source detection tools (gammapy.detect)" href="../detect/index.html" />
+    <link rel="prev" title="FermiGalacticCenter" href="gammapy.datasets.FermiGalacticCenter.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.datasets.FermiVelaRegion.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "api/gammapy.datasets.FermiVelaRegion",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.datasets.FermiVelaRegion";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../detect/index.html" title="Source detection tools (gammapy.detect)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.datasets.FermiGalacticCenter.html" title="FermiGalacticCenter">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../datasets/index.html" accesskey="U">Access datasets (<tt class="docutils literal"><span class="pre">gammapy.datasets</span></tt>)</a> &raquo;</li>
+      
+      <li>FermiVelaRegion</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fermivelaregion">
+<h1>FermiVelaRegion<a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#fermivelaregion" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.datasets.FermiVelaRegion">
+<em class="property">class </em><tt class="descclassname">gammapy.datasets.</tt><tt class="descname">FermiVelaRegion</tt><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Fermi high-energy data for the Vela region.</p>
+<p>For details, see
+<a class="reference external" href="https://github.com/gammapy/gammapy-extra/blob/master/datasets/vela_region/README.rst">README file for FermiVelaRegion</a>.</p>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.background_image" title="gammapy.datasets.FermiVelaRegion.background_image"><tt class="xref py py-obj docutils literal"><span class="pre">background_image</span></tt></a>()</td>
+<td>Predicted background counts image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.counts_cube" title="gammapy.datasets.FermiVelaRegion.counts_cube"><tt class="xref py py-obj docutils literal"><span class="pre">counts_cube</span></tt></a>()</td>
+<td>Counts cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.diffuse_model" title="gammapy.datasets.FermiVelaRegion.diffuse_model"><tt class="xref py py-obj docutils literal"><span class="pre">diffuse_model</span></tt></a>()</td>
+<td>Diffuse model spectral cube cutout for Vela region.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.events" title="gammapy.datasets.FermiVelaRegion.events"><tt class="xref py py-obj docutils literal"><span class="pre">events</span></tt></a>()</td>
+<td>Fermi Events list for Vela Region.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.exposure_cube" title="gammapy.datasets.FermiVelaRegion.exposure_cube"><tt class="xref py py-obj docutils literal"><span class="pre">exposure_cube</span></tt></a>()</td>
+<td>Exposure cube.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.filenames" title="gammapy.datasets.FermiVelaRegion.filenames"><tt class="xref py py-obj docutils literal"><span class="pre">filenames</span></tt></a>()</td>
+<td>Dictionary of available file names.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.livetime_cube" title="gammapy.datasets.FermiVelaRegion.livetime_cube"><tt class="xref py py-obj docutils literal"><span class="pre">livetime_cube</span></tt></a>()</td>
+<td>Livetime cube.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.predicted_image" title="gammapy.datasets.FermiVelaRegion.predicted_image"><tt class="xref py py-obj docutils literal"><span class="pre">predicted_image</span></tt></a>()</td>
+<td>Predicted counts spectral image including Vela Pulsar.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.psf" title="gammapy.datasets.FermiVelaRegion.psf"><tt class="xref py py-obj docutils literal"><span class="pre">psf</span></tt></a>()</td>
+<td>Fermi PSF for the Vela region.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.background_image">
+<em class="property">static </em><tt class="descname">background_image</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.background_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.background_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicted background counts image.
+Based on the Fermi Diffuse model (see class docstring).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>background_cube</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdus.html#astropy.io.fits.PrimaryHDU" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">PrimaryHDU</span></tt></a></p>
+<blockquote class="last">
+<div><p>Diffuse model image.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.counts_cube">
+<em class="property">static </em><tt class="descname">counts_cube</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.counts_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.counts_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Counts cube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li>Counts cube <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdus.html#astropy.io.fits.PrimaryHDU" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">PrimaryHDU</span></tt></a>.</li>
+<li>Energy bins <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.BinTableHDU" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">BinTableHDU</span></tt></a>.</li>
+<li>MET bins <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.BinTableHDU" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">BinTableHDU</span></tt></a>.</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.diffuse_model">
+<em class="property">static </em><tt class="descname">diffuse_model</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.diffuse_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.diffuse_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Diffuse model spectral cube cutout for Vela region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectral_cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a></p>
+<blockquote class="last">
+<div><p>Diffuse model spectral cube</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.events">
+<em class="property">static </em><tt class="descname">events</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.events"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fermi Events list for Vela Region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a>.</p>
+<blockquote class="last">
+<div><p>Events list.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.exposure_cube">
+<em class="property">static </em><tt class="descname">exposure_cube</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.exposure_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.exposure_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exposure cube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>exposure_cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a></p>
+<blockquote class="last">
+<div><p>Exposure cube</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.filenames">
+<em class="property">static </em><tt class="descname">filenames</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.filenames"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.filenames" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary of available file names.</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.livetime_cube">
+<em class="property">static </em><tt class="descname">livetime_cube</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.livetime_cube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.livetime_cube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Livetime cube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>livetime_cube</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a></p>
+<blockquote class="last">
+<div><p>Livetime cube hdu_list</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.predicted_image">
+<em class="property">static </em><tt class="descname">predicted_image</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.predicted_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.predicted_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Predicted counts spectral image including Vela Pulsar.
+Based on the Fermi Diffuse model (see class docstring) and
+Vela Point source model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>background_cube</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdus.html#astropy.io.fits.PrimaryHDU" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">PrimaryHDU</span></tt></a></p>
+<blockquote class="last">
+<div><p>Predicted model image.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.datasets.FermiVelaRegion.psf">
+<em class="property">static </em><tt class="descname">psf</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/datasets/fermi.html#FermiVelaRegion.psf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.psf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fermi PSF for the Vela region.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>psf</strong> : <a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF" title="gammapy.irf.EnergyDependentTablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">EnergyDependentTablePSF</span></tt></a>.</p>
+<blockquote class="last">
+<div><p>PSF</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.datasets.FermiVelaRegion.html#">FermiVelaRegion</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.datasets.FermiVelaRegion.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.datasets.FermiVelaRegion.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

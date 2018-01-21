@@ -1,0 +1,50 @@
+
+
+Blob
+===================
+
+.. currentmodule:: gammapy.detect
+
+.. autoclass:: Blob
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Blob.area
+      ~Blob.image
+      ~Blob.overlap
+      ~Blob.q_factor
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: area
+   .. automethod:: image
+   .. automethod:: overlap
+   .. automethod:: q_factor
+
+   
+   

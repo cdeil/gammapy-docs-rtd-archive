@@ -1,0 +1,44 @@
+
+
+ShowerImage
+==========================
+
+.. currentmodule:: gammapy.shower
+
+.. autoclass:: ShowerImage
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ShowerImage.hillas_parameters
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: hillas_parameters
+
+   
+   

@@ -1,0 +1,583 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.image.plotting &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/image/plotting.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/image/plotting",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/image/plotting";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.image.plotting</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Helper functions and functions for plotting gamma-ray images.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;colormap_hess&#39;</span><span class="p">,</span> <span class="s">&#39;colormap_milagro&#39;</span><span class="p">,</span>
+           <span class="s">&#39;fits_to_png&#39;</span><span class="p">,</span>
+           <span class="s">&#39;GalacticPlaneSurveyPanelPlot&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+<span class="n">__doctest_requires__</span> <span class="o">=</span> <span class="p">{(</span><span class="s">&#39;colormap_hess&#39;</span><span class="p">,</span> <span class="s">&#39;colormap_milagro&#39;</span><span class="p">):</span> <span class="p">[</span><span class="s">&#39;matplotlib&#39;</span><span class="p">]}</span>
+
+
+<div class="viewcode-block" id="colormap_hess"><a class="viewcode-back" href="../../../api/gammapy.image.colormap_hess.html#gammapy.image.colormap_hess">[docs]</a><span class="k">def</span> <span class="nf">colormap_hess</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">vtransition</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Colormap often used in H.E.S.S. collaboration publications.</span>
+
+<span class="sd">    This colormap goes black -&gt; blue -&gt; red -&gt; yellow -&gt; white.</span>
+
+<span class="sd">    A sharp blue -&gt; red -&gt; yellow transition is often used for significance images</span>
+<span class="sd">    with a value of red at ``vtransition ~ 5`` or ``vtransition ~ 7``</span>
+<span class="sd">    so that the following effect is achieved:</span>
+
+<span class="sd">    - black, blue: non-significant features, not well visible</span>
+<span class="sd">    - red: features at the detection threshold ``vtransition``</span>
+<span class="sd">    - yellow, white: significant features, very well visible</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vmin : float</span>
+<span class="sd">        Minimum value (color: black)</span>
+<span class="sd">    vmax : float</span>
+<span class="sd">        Maximum value (color: white)</span>
+<span class="sd">    vtransition : float</span>
+<span class="sd">        Transition value (color: red).</span>
+<span class="sd">    width : float</span>
+<span class="sd">        Width of the blue-red color transition (fraction in ``vmax - vmin`` range).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    colormap : `matplotlib.colors.LinearSegmentedColormap`</span>
+<span class="sd">        Colormap</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    -------- </span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.image import colormap_hess</span>
+<span class="sd">    &gt;&gt;&gt; vmin, vmax, vtransition = -5, 15, 5</span>
+<span class="sd">    &gt;&gt;&gt; cmap = colormap_hess(vmin=vmin, vmax=vmax, vtransition=vtransition)</span>
+
+<span class="sd">    .. plot::</span>
+
+<span class="sd">        from gammapy.image import colormap_hess</span>
+<span class="sd">        vmin, vmax, vtransition = -5, 15, 5</span>
+<span class="sd">        cmap = colormap_hess(vmin=vmin, vmax=vmax, vtransition=vtransition)</span>
+
+<span class="sd">        # This is how to plot a colorbar only with matplotlib</span>
+<span class="sd">        # http://matplotlib.org/examples/api/colorbar_only.html</span>
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        from matplotlib.colorbar import ColorbarBase</span>
+<span class="sd">        from matplotlib.colors import Normalize</span>
+<span class="sd">        norm = Normalize(vmin, vmax)</span>
+<span class="sd">        fig = plt.figure(figsize=(8, 1))</span>
+<span class="sd">        fig.add_axes([0.05, 0.3, 0.9, 0.6])</span>
+<span class="sd">        ColorbarBase(plt.gca(), cmap, norm, orientation=&#39;horizontal&#39;)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LinearSegmentedColormap</span>
+
+    <span class="c"># Compute normalised values (range 0 to 1) that</span>
+    <span class="c"># correspond to red, blue, yellow.</span>
+    <span class="n">red</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vtransition</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">width</span> <span class="o">&gt;</span> <span class="n">red</span><span class="p">:</span>
+        <span class="n">blue</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">red</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">blue</span> <span class="o">=</span> <span class="n">red</span> <span class="o">-</span> <span class="n">width</span>
+
+    <span class="n">yellow</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">/</span> <span class="mf">3.</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">red</span><span class="p">)</span> <span class="o">+</span> <span class="n">red</span>
+
+    <span class="n">black</span><span class="p">,</span> <span class="n">white</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+
+    <span class="c"># Create custom colormap</span>
+    <span class="c"># List entries: (value, (R, G, B))</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="n">black</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">blue</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)),</span>
+              <span class="p">(</span><span class="n">red</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">),</span>
+              <span class="p">(</span><span class="n">yellow</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+              <span class="p">(</span><span class="n">white</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">),</span>
+              <span class="p">]</span>
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;hess&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">colors</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cmap</span>
+
+</div>
+<div class="viewcode-block" id="colormap_milagro"><a class="viewcode-back" href="../../../api/gammapy.image.colormap_milagro.html#gammapy.image.colormap_milagro">[docs]</a><span class="k">def</span> <span class="nf">colormap_milagro</span><span class="p">(</span><span class="n">vmin</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">vtransition</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mf">0.0001</span><span class="p">,</span> <span class="n">huestart</span><span class="o">=</span><span class="mf">0.6</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Colormap often used in Milagro collaboration publications.</span>
+
+<span class="sd">    This colormap is gray below ``vtransition`` and similar to the jet colormap above.</span>
+
+<span class="sd">    A sharp gray -&gt; color transition is often used for significance images</span>
+<span class="sd">    with a transition value of ``vtransition ~ 5`` or ``vtransition ~ 7``,</span>
+<span class="sd">    so that the following effect is achieved:</span>
+
+<span class="sd">    - gray: non-significant features are not well visible</span>
+<span class="sd">    - color: significant features at the detection threshold ``vmid``</span>
+
+<span class="sd">    Note that this colormap is often critizised for over-exaggerating small differences</span>
+<span class="sd">    in significance below and above the gray - color transition threshold.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    vmin : float</span>
+<span class="sd">        Minimum value (color: black)</span>
+<span class="sd">    vmax : float</span>
+<span class="sd">        Maximum value</span>
+<span class="sd">    vtransition : float</span>
+<span class="sd">        Transition value (below: gray, above: color).</span>
+<span class="sd">    width : float</span>
+<span class="sd">        Width of the transition</span>
+<span class="sd">    huestart : float</span>
+<span class="sd">        Hue of the color at ``vtransition``</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    colormap : `matplotlib.colors.LinearSegmentedColormap`</span>
+<span class="sd">        Colormap</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.image import colormap_milagro</span>
+<span class="sd">    &gt;&gt;&gt; vmin, vmax, vtransition = -5, 15, 5</span>
+<span class="sd">    &gt;&gt;&gt; cmap = colormap_milagro(vmin=vmin, vmax=vmax, vtransition=vtransition)</span>
+
+<span class="sd">    .. plot::</span>
+
+<span class="sd">        from gammapy.image import colormap_milagro</span>
+<span class="sd">        vmin, vmax, vtransition = -5, 15, 5</span>
+<span class="sd">        cmap = colormap_milagro(vmin=vmin, vmax=vmax, vtransition=vtransition)</span>
+
+<span class="sd">        # This is how to plot a colorbar only with matplotlib</span>
+<span class="sd">        # http://matplotlib.org/examples/api/colorbar_only.html</span>
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        from matplotlib.colorbar import ColorbarBase</span>
+<span class="sd">        from matplotlib.colors import Normalize</span>
+<span class="sd">        norm = Normalize(vmin, vmax)</span>
+<span class="sd">        fig = plt.figure(figsize=(8, 1))</span>
+<span class="sd">        fig.add_axes([0.05, 0.3, 0.9, 0.6])</span>
+<span class="sd">        ColorbarBase(plt.gca(), cmap, norm, orientation=&#39;horizontal&#39;)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">colorsys</span> <span class="kn">import</span> <span class="n">hls_to_rgb</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LinearSegmentedColormap</span>
+
+    <span class="c"># Compute normalised red, blue, yellow values</span>
+    <span class="n">transition</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">vtransition</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">vmax</span> <span class="o">-</span> <span class="n">vmin</span><span class="p">)</span>
+
+    <span class="c"># Create custom colormap</span>
+    <span class="c"># List entries: (value, (H, L, S))</span>
+    <span class="n">colors</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+              <span class="p">(</span><span class="n">transition</span> <span class="o">-</span> <span class="n">width</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)),</span>
+              <span class="p">(</span><span class="n">transition</span><span class="p">,</span> <span class="p">(</span><span class="n">huestart</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span>
+              <span class="p">(</span><span class="n">transition</span> <span class="o">+</span> <span class="n">width</span><span class="p">,</span> <span class="p">(</span><span class="n">huestart</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+              <span class="p">(</span><span class="mf">0.99</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+              <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+              <span class="p">]</span>
+
+    <span class="c"># Convert HLS values to RGB values</span>
+    <span class="n">rgb_colors</span> <span class="o">=</span> <span class="p">[(</span><span class="n">val</span><span class="p">,</span> <span class="n">hls_to_rgb</span><span class="p">(</span><span class="o">*</span><span class="n">hls</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">hls</span><span class="p">)</span> <span class="ow">in</span> <span class="n">colors</span><span class="p">]</span>
+
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;milagro&#39;</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="n">rgb_colors</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">cmap</span>
+
+</div>
+<div class="viewcode-block" id="fits_to_png"><a class="viewcode-back" href="../../../api/gammapy.image.fits_to_png.html#gammapy.image.fits_to_png">[docs]</a><span class="k">def</span> <span class="nf">fits_to_png</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">draw</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot FITS image in PNG format.</span>
+
+<span class="sd">    For the default ``dpi=100`` a 1:1 copy of the pixels in the FITS image</span>
+<span class="sd">    and the PNG image is achieved, i.e. they have exactly the same size.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    infile : str</span>
+<span class="sd">        Input FITS file name</span>
+<span class="sd">    outfile : str</span>
+<span class="sd">        Output PNG file name</span>
+<span class="sd">    draw : callable</span>
+<span class="sd">        Callback function ``draw(figure)``</span>
+<span class="sd">        where ``figure`` is an `~aplpy.FITSFigure`.</span>
+<span class="sd">    dpi : int</span>
+<span class="sd">        Resolution</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; def draw(figure):</span>
+<span class="sd">    ...     x, y, width, height = 42, 0, 3, 2</span>
+<span class="sd">    ...     figure.recenter(x, y, width, height)</span>
+<span class="sd">    ...     figure.show_grayscale()</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.image import fits_to_png</span>
+<span class="sd">    &gt;&gt;&gt; fits_to_png(&#39;image.fits&#39;, &#39;image.png&#39;, draw)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib</span>
+    <span class="n">matplotlib</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s">&#39;Agg&#39;</span><span class="p">)</span>  <span class="c"># Prevents image popup</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+    <span class="kn">from</span> <span class="nn">aplpy</span> <span class="kn">import</span> <span class="n">FITSFigure</span>
+
+    <span class="c"># Peak ahead just to get the figure size</span>
+    <span class="n">NAXIS1</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">getval</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;NAXIS1&#39;</span><span class="p">))</span>
+    <span class="n">NAXIS2</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">getval</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="s">&#39;NAXIS2&#39;</span><span class="p">))</span>
+
+    <span class="c"># Note: For dpi=100 I get exactly the same FITS and PNG image size in pix.</span>
+    <span class="n">figsize</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">NAXIS1</span><span class="p">,</span> <span class="n">NAXIS2</span><span class="p">))</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span> <span class="o">/</span> <span class="n">dpi</span><span class="p">)</span>
+    <span class="c"># Also try this:</span>
+    <span class="c"># matplotlib.rcParams[&#39;figure.figsize&#39;] = NAXIS1, NAXIS2</span>
+    <span class="c"># figsize(x,y)</span>
+
+    <span class="n">subplot</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">figure</span> <span class="o">=</span> <span class="n">FITSFigure</span><span class="p">(</span><span class="n">infile</span><span class="p">,</span> <span class="n">figure</span><span class="o">=</span><span class="n">figure</span><span class="p">,</span> <span class="n">subplot</span><span class="o">=</span><span class="n">subplot</span><span class="p">)</span>
+
+    <span class="n">draw</span><span class="p">(</span><span class="n">figure</span><span class="p">)</span>
+
+    <span class="n">figure</span><span class="o">.</span><span class="n">axis_labels</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+    <span class="n">figure</span><span class="o">.</span><span class="n">tick_labels</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+    <span class="n">figure</span><span class="o">.</span><span class="n">ticks</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">figure</span><span class="o">.</span><span class="n">frame</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">figure</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="n">max_dpi</span><span class="o">=</span><span class="n">dpi</span><span class="p">,</span> <span class="n">adjust_bbox</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="GalacticPlaneSurveyPanelPlot"><a class="viewcode-back" href="../../../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot">[docs]</a><span class="k">class</span> <span class="nc">GalacticPlaneSurveyPanelPlot</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot Galactic plane survey images in multiple panels.</span>
+
+<span class="sd">    This is useful for very wide, but not so high survey images</span>
+<span class="sd">    (~100 deg in Galactic longitude and ~10 deg in Galactic latitude).</span>
+
+<span class="sd">    TODO: describe how the callbacks work</span>
+
+<span class="sd">    References:</span>
+<span class="sd">    http://aplpy.readthedocs.org/en/latest/howto_subplot.html</span>
+
+<span class="sd">    Attributes:</span>
+
+<span class="sd">    * ``panel_parameters`` -- dict of panel parameters</span>
+<span class="sd">    * ``figure`` --- Main matplotlib figure (cantains all panels)</span>
+<span class="sd">    * ``fits_figure`` --- Current `aplpy.FITSFigure`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    fits_figure : `aplpy.FITSFigure`</span>
+<span class="sd">        FITSFigure to plot on all panels</span>
+<span class="sd">    npanels : int</span>
+<span class="sd">        Number of panels</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    TODO: Link to tutorial example</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">npanels</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">fov</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                 <span class="n">xsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">xborder</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">yborder</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">yspacing</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute panel parameters and make a matplotlib Figure.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">panel_parameters</span> <span class="o">=</span> <span class="n">_panel_parameters</span><span class="p">(</span><span class="n">npanels</span><span class="o">=</span><span class="n">npanels</span><span class="p">,</span>
+                                                  <span class="n">center</span><span class="o">=</span><span class="n">center</span><span class="p">,</span>
+                                                  <span class="n">fov</span><span class="o">=</span><span class="n">fov</span><span class="p">,</span>
+                                                  <span class="n">xsize</span><span class="o">=</span><span class="n">xsize</span><span class="p">,</span>
+                                                  <span class="n">xborder</span><span class="o">=</span><span class="n">xborder</span><span class="p">,</span>
+                                                  <span class="n">yborder</span><span class="o">=</span><span class="n">yborder</span><span class="p">,</span>
+                                                  <span class="n">yspacing</span><span class="o">=</span><span class="n">yspacing</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">figure</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">panel_parameters</span><span class="p">[</span><span class="s">&#39;figsize&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="GalacticPlaneSurveyPanelPlot.bottom"><a class="viewcode-back" href="../../../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot.bottom">[docs]</a>    <span class="k">def</span> <span class="nf">bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colorbar_pars</span><span class="o">=</span><span class="p">{},</span> <span class="n">colorbar_label</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: needed?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">colorbar_pars</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fits_figure</span><span class="o">.</span><span class="n">add_colorbar</span><span class="p">(</span><span class="o">**</span><span class="n">colorbar_pars</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">colorbar_label</span> <span class="o">!=</span> <span class="s">&#39;&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fits_figure</span><span class="o">.</span><span class="n">colorbar</span><span class="o">.</span><span class="n">set_font</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="s">&#39;small&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fits_figure</span><span class="o">.</span><span class="n">colorbar</span><span class="o">.</span><span class="n">_colorbar</span><span class="o">.</span><span class="n">set_label</span><span class="p">(</span><span class="n">colorbar_label</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="GalacticPlaneSurveyPanelPlot.top"><a class="viewcode-back" href="../../../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot.top">[docs]</a>    <span class="k">def</span> <span class="nf">top</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: needed?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="GalacticPlaneSurveyPanelPlot.draw_panels"><a class="viewcode-back" href="../../../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot.draw_panels">[docs]</a>    <span class="k">def</span> <span class="nf">draw_panels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">panels</span><span class="o">=</span><span class="s">&#39;all&#39;</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Draw panels.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        panels : list of ints or &#39;all&#39;</span>
+<span class="sd">            List of panels to draw.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">panels</span> <span class="o">==</span> <span class="s">&#39;all&#39;</span><span class="p">:</span>
+            <span class="n">panels</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">panel_parameters</span><span class="p">[</span><span class="s">&#39;npanels&#39;</span><span class="p">])</span>
+
+        <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="n">panels</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">draw_panel</span><span class="p">(</span><span class="n">panel</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="n">format</span><span class="p">)</span>
+
+        <span class="c"># self.figure.canvas.draw()</span>
+</div>
+<div class="viewcode-block" id="GalacticPlaneSurveyPanelPlot.draw_panel"><a class="viewcode-back" href="../../../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot.draw_panel">[docs]</a>    <span class="k">def</span> <span class="nf">draw_panel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">panel</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Draw panel.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        panel : int</span>
+<span class="sd">            Panel index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">panel_parameters</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s">&#39;centers&#39;</span><span class="p">][</span><span class="n">panel</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="n">pp</span><span class="p">[</span><span class="s">&#39;boxes&#39;</span><span class="p">][</span><span class="n">panel</span><span class="p">]</span>
+
+        <span class="c"># Execute user-defined plotting ...</span>
+        <span class="c"># This must set self.fits_figure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">figure</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">box</span><span class="p">)</span>
+
+        <span class="c"># self.fits_figure.set_auto_refresh(False)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fits_figure</span><span class="o">.</span><span class="n">recenter</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                                  <span class="n">width</span><span class="o">=</span><span class="n">pp</span><span class="p">[</span><span class="s">&#39;width&#39;</span><span class="p">],</span> <span class="n">height</span><span class="o">=</span><span class="n">pp</span><span class="p">[</span><span class="s">&#39;height&#39;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">panel</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">bottom</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">panel</span> <span class="o">==</span> <span class="p">(</span><span class="n">pp</span><span class="p">[</span><span class="s">&#39;npanels&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">top</span><span class="p">()</span>
+
+        <span class="c"># fits_figure.refresh()</span>
+        <span class="c"># self.figure.canvas.draw()</span>
+
+        <span class="k">if</span> <span class="n">format</span><span class="p">:</span>
+            <span class="n">GalacticPlaneSurveyPanelPlot</span><span class="o">.</span><span class="n">format_fits_figure</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fits_figure</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="GalacticPlaneSurveyPanelPlot.format_fits_figure"><a class="viewcode-back" href="../../../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot.format_fits_figure">[docs]</a>    <span class="k">def</span> <span class="nf">format_fits_figure</span><span class="p">(</span><span class="n">fits_figure</span><span class="p">,</span> <span class="n">theme</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: describe</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">theme</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">fits_figure</span><span class="o">.</span><span class="n">set_theme</span><span class="p">(</span><span class="s">&#39;publication&#39;</span><span class="p">)</span>
+        <span class="n">fits_figure</span><span class="o">.</span><span class="n">axis_labels</span><span class="o">.</span><span class="n">hide</span><span class="p">()</span>
+        <span class="n">fits_figure</span><span class="o">.</span><span class="n">ticks</span><span class="o">.</span><span class="n">set_xspacing</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="n">fits_figure</span><span class="o">.</span><span class="n">ticks</span><span class="o">.</span><span class="n">set_yspacing</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">fits_figure</span><span class="o">.</span><span class="n">tick_labels</span><span class="o">.</span><span class="n">set_xformat</span><span class="p">(</span><span class="s">&#39;dd&#39;</span><span class="p">)</span>
+        <span class="n">fits_figure</span><span class="o">.</span><span class="n">tick_labels</span><span class="o">.</span><span class="n">set_yformat</span><span class="p">(</span><span class="s">&#39;dd&#39;</span><span class="p">)</span>
+        <span class="n">fits_figure</span><span class="o">.</span><span class="n">tick_labels</span><span class="o">.</span><span class="n">set_style</span><span class="p">(</span><span class="s">&#39;colons&#39;</span><span class="p">)</span>
+        <span class="c"># fits_figure.tick_labels.set_font(size=&#39;small&#39;)</span>
+
+</div></div>
+<span class="k">def</span> <span class="nf">_panel_parameters</span><span class="p">(</span><span class="n">npanels</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">fov</span><span class="p">,</span>
+                      <span class="n">xsize</span><span class="p">,</span> <span class="n">xborder</span><span class="p">,</span> <span class="n">yborder</span><span class="p">,</span> <span class="n">yspacing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute panel parameters.</span>
+
+<span class="sd">    This function computes all relevant quantities to plot</span>
+<span class="sd">    a very wide survey map in n slices.</span>
+
+<span class="sd">    This is surprisingly complicated because coordinates are</span>
+<span class="sd">    relative to figsize, which is already not 1:1.</span>
+
+<span class="sd">    TODO: document panel parameters.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    npanels : int</span>
+<span class="sd">        Number of slices</span>
+<span class="sd">    center : pair</span>
+<span class="sd">        Image center position (lon, lat)</span>
+<span class="sd">    fov : pair</span>
+<span class="sd">        Image full-width and full-height</span>
+<span class="sd">    xsize : float</span>
+<span class="sd">        Width of the figure in inches</span>
+<span class="sd">    xborder : float</span>
+<span class="sd">        Free space to x border in inches</span>
+<span class="sd">    yborder : float</span>
+<span class="sd">        Free space to y border in inches</span>
+<span class="sd">    yspacing : float</span>
+<span class="sd">        Free space between slices in inches</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    panel_parameters : dict</span>
+<span class="sd">        Dictionary of panel parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Need floats for precise divisions</span>
+    <span class="n">center</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="n">fov</span> <span class="o">=</span> <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">fov</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">fov</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+    <span class="n">xsize</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">xsize</span><span class="p">)</span>
+    <span class="n">xborder</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">xborder</span><span class="p">)</span>
+    <span class="n">yborder</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">yborder</span><span class="p">)</span>
+    <span class="n">yspacing</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">yspacing</span><span class="p">)</span>
+
+    <span class="c"># Width and height in deg of a slice</span>
+    <span class="n">width</span> <span class="o">=</span> <span class="n">fov</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">npanels</span>
+    <span class="n">height</span> <span class="o">=</span> <span class="n">fov</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c"># Aspect ratio y:x of a slice</span>
+    <span class="n">aspectratio</span> <span class="o">=</span> <span class="n">fov</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">fov</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">npanels</span><span class="p">)</span>
+    <span class="c"># Absolute figure dimensions</span>
+    <span class="n">ysize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">yborder</span> <span class="o">+</span> <span class="p">(</span><span class="n">npanels</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">yspacing</span> <span class="o">+</span>
+             <span class="n">npanels</span> <span class="o">*</span> <span class="n">aspectratio</span> <span class="o">*</span> <span class="p">(</span><span class="n">xsize</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xborder</span><span class="p">))</span>
+    <span class="n">figsize</span> <span class="o">=</span> <span class="p">[</span><span class="n">xsize</span><span class="p">,</span> <span class="n">ysize</span><span class="p">]</span>
+
+    <span class="c"># Relative slice subplot dimensions</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">xborder</span> <span class="o">/</span> <span class="n">xsize</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">aspectratio</span> <span class="o">*</span> <span class="n">dx</span> <span class="o">*</span> <span class="n">xsize</span> <span class="o">/</span> <span class="n">ysize</span>
+    <span class="n">dyspacing</span> <span class="o">=</span> <span class="n">yspacing</span> <span class="o">/</span> <span class="n">ysize</span>
+
+    <span class="c"># List of y slice offsets</span>
+    <span class="n">boxes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">box_centers</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npanels</span><span class="p">):</span>
+        <span class="n">box_center</span> <span class="o">=</span> <span class="p">[</span><span class="n">center</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">fov</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">ii</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">width</span><span class="p">,</span> <span class="n">center</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="p">[</span><span class="n">xborder</span> <span class="o">/</span> <span class="n">xsize</span><span class="p">,</span> <span class="n">yborder</span> <span class="o">/</span> <span class="n">ysize</span> <span class="o">+</span> <span class="n">ii</span> <span class="o">*</span> <span class="p">(</span><span class="n">dy</span> <span class="o">+</span> <span class="n">dyspacing</span><span class="p">),</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">]</span>
+        <span class="n">box_centers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box_center</span><span class="p">)</span>
+        <span class="n">boxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+
+    <span class="n">pp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="n">pp</span><span class="p">[</span><span class="s">&#39;figsize&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">figsize</span>
+    <span class="n">pp</span><span class="p">[</span><span class="s">&#39;npanels&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">npanels</span>
+    <span class="n">pp</span><span class="p">[</span><span class="s">&#39;centers&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">box_centers</span>
+    <span class="n">pp</span><span class="p">[</span><span class="s">&#39;boxes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">boxes</span>
+    <span class="n">pp</span><span class="p">[</span><span class="s">&#39;width&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">width</span>
+    <span class="n">pp</span><span class="p">[</span><span class="s">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">height</span>
+
+    <span class="k">return</span> <span class="n">pp</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="plotting.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

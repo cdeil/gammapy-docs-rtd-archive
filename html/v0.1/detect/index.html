@@ -1,0 +1,297 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Source detection tools (gammapy.detect) &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="next" title="create_scale_space" href="../api/gammapy.detect.create_scale_space.html" />
+    <link rel="prev" title="FermiVelaRegion" href="../api/gammapy.datasets.FermiVelaRegion.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/detect/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "detect/index",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "detect/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.detect.create_scale_space.html" title="create_scale_space">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.datasets.FermiVelaRegion.html" title="FermiVelaRegion">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      
+      <li>Source detection tools (<tt class="docutils literal"><span class="pre">gammapy.detect</span></tt>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="source-detection-tools-gammapy-detect">
+<span id="detect"></span><h1>Source detection tools (<a class="reference internal" href="index.html#module-gammapy.detect" title="gammapy.detect"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.detect</span></tt></a>)<a class="headerlink" href="index.html#source-detection-tools-gammapy-detect" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-gammapy.detect" title="gammapy.detect"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.detect</span></tt></a> holds source detection methods that turn event lists or images or cubes
+into source catalogs.</p>
+<ul class="simple">
+<li>TODO: Describe references: <a class="reference internal" href="../references.html#stewart2009" id="id1">[Stewart2009]</a></li>
+</ul>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="index.html#getting-started" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>TODO: general intro</li>
+<li>TODO: describe the <tt class="docutils literal"><span class="pre">gammapy-iterative-source-detect</span></tt> tool.</li>
+<li>TODO: describe the <tt class="docutils literal"><span class="pre">gammapy-image-decompose-a-trous</span></tt> tool.</li>
+</ul>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.detect">
+<span id="gammapy-detect-module"></span><h3>gammapy.detect Module<a class="headerlink" href="index.html#module-gammapy.detect" title="Permalink to this headline">¶</a></h3>
+<p>Source detection and measurement methods.</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.create_scale_space.html#gammapy.detect.create_scale_space" title="gammapy.detect.create_scale_space"><tt class="xref py py-obj docutils literal"><span class="pre">create_scale_space</span></tt></a>(image,&nbsp;scales[,&nbsp;kernel])</td>
+<td>Creates Scale Space for a given image and stores it in 3D array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.detect_blobs.html#gammapy.detect.detect_blobs" title="gammapy.detect.detect_blobs"><tt class="xref py py-obj docutils literal"><span class="pre">detect_blobs</span></tt></a>(image_3D,&nbsp;scales,&nbsp;threshold)</td>
+<td>Detect blobs of different sizes.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.detect_blobs_3D.html#gammapy.detect.detect_blobs_3D" title="gammapy.detect.detect_blobs_3D"><tt class="xref py py-obj docutils literal"><span class="pre">detect_blobs_3D</span></tt></a>(image,&nbsp;threshold)</td>
+<td>Find maxima in image cubes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.detect_peaks.html#gammapy.detect.detect_peaks" title="gammapy.detect.detect_peaks"><tt class="xref py py-obj docutils literal"><span class="pre">detect_peaks</span></tt></a>(image)</td>
+<td>Detect peaks in an image  using a maximum filter.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.detect_peaks_3D.html#gammapy.detect.detect_peaks_3D" title="gammapy.detect.detect_peaks_3D"><tt class="xref py py-obj docutils literal"><span class="pre">detect_peaks_3D</span></tt></a>(image)</td>
+<td>Same functionality as detect_peaks, but works on image cubes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.probability_center.html#gammapy.detect.probability_center" title="gammapy.detect.probability_center"><tt class="xref py py-obj docutils literal"><span class="pre">probability_center</span></tt></a>(images,&nbsp;kernel)</td>
+<td>Compute matched-filter p-value at the kernel center.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.probability_image.html#gammapy.detect.probability_image" title="gammapy.detect.probability_image"><tt class="xref py py-obj docutils literal"><span class="pre">probability_image</span></tt></a>(images,&nbsp;kernel)</td>
+<td>Compute matched-filter p-value image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.prune_blobs.html#gammapy.detect.prune_blobs" title="gammapy.detect.prune_blobs"><tt class="xref py py-obj docutils literal"><span class="pre">prune_blobs</span></tt></a>(blobs,&nbsp;overlap_threshold,&nbsp;q_factor)</td>
+<td>Prune blobs.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.read_scale_cube.html#gammapy.detect.read_scale_cube" title="gammapy.detect.read_scale_cube"><tt class="xref py py-obj docutils literal"><span class="pre">read_scale_cube</span></tt></a>(filename)</td>
+<td>Load filtered images from numpy binary file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.read_scale_cube_fits.html#gammapy.detect.read_scale_cube_fits" title="gammapy.detect.read_scale_cube_fits"><tt class="xref py py-obj docutils literal"><span class="pre">read_scale_cube_fits</span></tt></a>(filename)</td>
+<td>Read scale space from fits file image cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.run_detection.html#gammapy.detect.run_detection" title="gammapy.detect.run_detection"><tt class="xref py py-obj docutils literal"><span class="pre">run_detection</span></tt></a>(args)</td>
+<td>Run iterative source detection.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.sex.html#gammapy.detect.sex" title="gammapy.detect.sex"><tt class="xref py py-obj docutils literal"><span class="pre">sex</span></tt></a>(image[,&nbsp;image2,&nbsp;catalog_name,&nbsp;...])</td>
+<td>Run SExtractor to detect sources in an image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.show_blobs.html#gammapy.detect.show_blobs" title="gammapy.detect.show_blobs"><tt class="xref py py-obj docutils literal"><span class="pre">show_blobs</span></tt></a>(image,&nbsp;blobs)</td>
+<td>Show input image with overlaid blobs.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.show_peaks.html#gammapy.detect.show_peaks" title="gammapy.detect.show_peaks"><tt class="xref py py-obj docutils literal"><span class="pre">show_peaks</span></tt></a>(image_3D)</td>
+<td>Show all images of different scales including the detected peaks.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.significance_center.html#gammapy.detect.significance_center" title="gammapy.detect.significance_center"><tt class="xref py py-obj docutils literal"><span class="pre">significance_center</span></tt></a>(images,&nbsp;kernel)</td>
+<td>Compute matched-filter significance at the kernel center.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.significance_image.html#gammapy.detect.significance_image" title="gammapy.detect.significance_image"><tt class="xref py py-obj docutils literal"><span class="pre">significance_image</span></tt></a>(images,&nbsp;kernel)</td>
+<td>Compute matched-filter significance image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.ts_image.html#gammapy.detect.ts_image" title="gammapy.detect.ts_image"><tt class="xref py py-obj docutils literal"><span class="pre">ts_image</span></tt></a>(images,&nbsp;kernel[,&nbsp;extra_info])</td>
+<td>Compute TS image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.write_region_file.html#gammapy.detect.write_region_file" title="gammapy.detect.write_region_file"><tt class="xref py py-obj docutils literal"><span class="pre">write_region_file</span></tt></a>(regionfile,&nbsp;blobs)</td>
+<td>Write ds9 region file from blob list.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.write_scale_cube.html#gammapy.detect.write_scale_cube" title="gammapy.detect.write_scale_cube"><tt class="xref py py-obj docutils literal"><span class="pre">write_scale_cube</span></tt></a>(image_cube,&nbsp;scales,&nbsp;filename)</td>
+<td>Write filtered images to numpy binary file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.write_scale_cube_fits.html#gammapy.detect.write_scale_cube_fits" title="gammapy.detect.write_scale_cube_fits"><tt class="xref py py-obj docutils literal"><span class="pre">write_scale_cube_fits</span></tt></a>(image,&nbsp;image_cube,&nbsp;...)</td>
+<td>Write scale space to fits image cube.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.Blob.html#gammapy.detect.Blob" title="gammapy.detect.Blob"><tt class="xref py py-obj docutils literal"><span class="pre">Blob</span></tt></a>(x_pos,&nbsp;y_pos,&nbsp;radius,&nbsp;value)</td>
+<td>An excess blob is represented by a position, radius and peak value.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.CWT.html#gammapy.detect.CWT" title="gammapy.detect.CWT"><tt class="xref py py-obj docutils literal"><span class="pre">CWT</span></tt></a>(min_scale,&nbsp;nscales,&nbsp;scale_step)</td>
+<td>Continuous wavelet transform.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector" title="gammapy.detect.IterativeSourceDetector"><tt class="xref py py-obj docutils literal"><span class="pre">IterativeSourceDetector</span></tt></a>(maps,&nbsp;scales[,&nbsp;...])</td>
+<td>An iterative source detection algorithm.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.detect.TSMapCalculator.html#gammapy.detect.TSMapCalculator" title="gammapy.detect.TSMapCalculator"><tt class="xref py py-obj docutils literal"><span class="pre">TSMapCalculator</span></tt></a>(images,&nbsp;kernel[,&nbsp;optimizer,&nbsp;...])</td>
+<td>TS Map calculator class.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Source detection tools (<tt class="docutils literal"><span class="pre">gammapy.detect</span></tt>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.detect">gammapy.detect Module</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/detect/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

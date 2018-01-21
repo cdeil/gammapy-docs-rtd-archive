@@ -1,0 +1,8 @@
+
+
+s_to_p_limit
+==========================
+
+.. currentmodule:: gammapy.stats
+
+.. autofunction:: s_to_p_limit

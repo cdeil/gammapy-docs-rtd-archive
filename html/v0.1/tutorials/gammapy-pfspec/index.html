@@ -1,0 +1,273 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Spectra with gammapy-pfspec and Sherpa &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../index.html" />
+    <link rel="up" title="Tutorials and Examples" href="../index.html" />
+    <link rel="next" title="Data Formats" href="../../dataformats/index.html" />
+    <link rel="prev" title="Skymaps with gammapy-pfmap and Sherpa" href="../gammapy-pfmap/index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/tutorials/gammapy-pfspec/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "tutorials/gammapy-pfspec/index",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "tutorials/gammapy-pfspec/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../../dataformats/index.html" title="Data Formats">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../gammapy-pfmap/index.html" title="Skymaps with gammapy-pfmap and Sherpa">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../index.html" accesskey="U">Tutorials and Examples</a> &raquo;</li>
+      
+      <li>Spectra with <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt> and Sherpa</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="spectra-with-gammapy-pfspec-and-sherpa">
+<span id="tutorials-gammapy-pfspec"></span><h1>Spectra with <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt> and Sherpa<a class="headerlink" href="index.html#spectra-with-gammapy-pfspec-and-sherpa" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="running-gammapy-pfspec">
+<h2>Running <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt><a class="headerlink" href="index.html#running-gammapy-pfspec" title="Permalink to this headline">¶</a></h2>
+<p>The script <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt> produces PHA spectrum files from FITS event lists, which can be analyzed with tools like XSPEC.
+The instrument response is taken from ARF (effective area) and RMF (energy distribution matrix) files
+and is assumed to be constant over the duration of a data segment (run).
+The background is estimated using a ring at the same camera/FoV distance as the source, cutting out the source position.</p>
+<p>Per data file, <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt> needs three inputs:
+the name of the data file and the corresponding ARF and RMF file names.
+These can be given via command line but usually it is more efficient to create an ASCII file (bankfile),
+with each row giving the data file name, the ARF and the RMF file names, separate by spaces.
+We assume, such a bankfile has been created for the data called my.bnk.</p>
+<p>To create the pha files run:</p>
+<div class="highlight-python"><div class="highlight"><pre>$ gammapy-pfspec my.bnk -w -r 0.125
+</pre></div>
+</div>
+<p>The option <tt class="docutils literal"><span class="pre">-r</span></tt> denotes the radius in degree of the circular source region from which the spectrum will be extracted (theta cut).
+This should match the cut used in the ARF files.</p>
+<p>This will produce three PHA files per data file in the working directory:</p>
+<ul class="simple">
+<li>bg = Background</li>
+<li>excess = Excess</li>
+<li>signal = Signal (i.e. excess = signal - background)</li>
+</ul>
+</div>
+<div class="section" id="spectrum-fitting-with-sherpa">
+<h2>Spectrum fitting with Sherpa<a class="headerlink" href="index.html#spectrum-fitting-with-sherpa" title="Permalink to this headline">¶</a></h2>
+<p>The output PHA files can be analyzed with spectra fitting tools like XSPEC or Sherpa.</p>
+<p>Find below an example session for XSPEC.</p>
+<p>Note that XSPEC and Sherpa do not recognize the units given in the ARF/RMF files correctly,
+always assuming keV and cm^2.
+Therefore, the fit results have to be converted correspondingly.
+Some output has been omitted below and has been replaced with dots (...).</p>
+<div class="highlight-text"><div class="highlight"><pre>   $ xspec
+  
+  		XSPEC version: 12.7.0
+  	Build Date/Time: Tue Jun  7 23:17:42 2011
+  
+  XSPEC12&gt;cpd /xw
+  XSPEC12&gt;data CTA1DC-HESS-run_00023523_eventlist_signal.pha.fits \
+  CTA1DC-HESS-run_00023526_eventlist_signal.pha.fits
+  
+  2 spectra  in use
+   
+  Spectral Data File: CTA1DC-HESS-run_00023523_eventlist_signal.pha.fits  Spectrum 1
+  Net count rate (cts/s) for Spectrum:1  1.174e-01 +/- 9.183e-03 (88.8 % total)
+   Assigned to Data Group 1 and Plot Group 1
+    Noticed Channels:  1-33
+    Telescope: unknown Instrument: unknown  Channel Type: PHA
+    Exposure Time: 1582 sec
+   Using fit statistic: chi
+   Using Background File                CTA1DC-HESS-run_00023523_eventlist_bg.pha.fits
+    Background Exposure Time: 1582 sec
+   Using Response (RMF) File            run023523_dummy_s0.1.rmf.fits for Source 1
+   Using Auxiliary Response (ARF) File  CTA1DC-HESS-run023523_std_arf.fits.gz
+  
+  ...
+  
+  XSPEC12&gt;plot data
+  XSPEC12&gt;model powerlaw
+  
+  Input parameter value, delta, min, bot, top, and max values for ...
+                1       0.01(      0.01)         -3         -2          9         10
+  1:powerlaw:PhoIndex&gt;2.7
+                1       0.01(      0.01)          0          0      1e+24      1e+24
+  2:powerlaw:norm&gt;1E-8
+  
+  ========================================================================
+  Model powerlaw&lt;1&gt; Source No.: 1   Active/On
+  Model Model Component  Parameter  Unit     Value
+   par  comp
+     1    1   powerlaw   PhoIndex            2.70000      +/-  0.0          
+     2    1   powerlaw   norm                1.00000E-08  +/-  0.0          
+  ________________________________________________________________________
+  
+  
+   Chi-Squared =         336.01 using 67 PHA bins.
+   Reduced chi-squared =         5.1694 for     65 degrees of freedom 
+   Null hypothesis probability =   3.604967e-38
+   Current data and model not fit yet.
+  XSPEC12&gt;fit
+  
+  ...
+  
+  ========================================================================
+  Model powerlaw&lt;1&gt; Source No.: 1   Active/On
+  Model Model Component  Parameter  Unit     Value
+   par  comp
+     1    1   powerlaw   PhoIndex            2.58471      +/-  9.17193E-02  
+     2    1   powerlaw   norm                3.49673E-07  +/-  2.17838E-08  
+  ________________________________________________________________________
+  
+  
+   Chi-Squared =          76.55 using 67 PHA bins.
+   Reduced chi-squared =          1.178 for     65 degrees of freedom 
+   Null hypothesis probability =   1.548459e-01
+  XSPEC12&gt;plot data delchi
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Spectra with <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt> and Sherpa</a><ul>
+<li><a class="reference internal" href="index.html#running-gammapy-pfspec">Running <tt class="docutils literal"><span class="pre">gammapy-pfspec</span></tt></a></li>
+<li><a class="reference internal" href="index.html#spectrum-fitting-with-sherpa">Spectrum fitting with Sherpa</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../../_sources/tutorials/gammapy-pfspec/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

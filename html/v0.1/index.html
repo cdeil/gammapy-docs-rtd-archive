@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>General documentation &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="index.html#" />
+    <link rel="next" title="Installation" href="install.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "index",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html#"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="install.html" title="Installation">
+	  next &raquo;
+	</a>
+      </li>
+      <li>
+	<a href="index.html#">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <a class="reference internal image-reference" href="_images/gammapy_banner.png"><img alt="_images/gammapy_banner.png" src="_images/gammapy_banner.png" style="width: 400px;" /></a>
+<p><strong>Gammapy</strong> is an open source (BSD licensed) gamma-ray astronomy Python package.</p>
+<p>It is an in-development <a class="reference external" href="http://www.astropy.org/affiliated/index.html">affiliated package</a> of <a class="reference external" href="http://www.astropy.org/">Astropy</a>
+that builds on the core <a class="reference external" href="http://www.scipy.org/about.html">scientific Python stack</a> to provide tools to simulate and analyse
+the gamma-ray sky for telescopes such as <a class="reference external" href="http://fermi.gsfc.nasa.gov/">Fermi</a>, <a class="reference external" href="http://www.mpi-hd.mpg.de/hfm/HESS/">H.E.S.S.</a>
+and <a class="reference external" href="https://www.cta-observatory.org/">CTA</a>.</p>
+<p>Currently the functionality is limited and geared towards Galactic plane survey studies,
+but the idea is that Gammapy is a place to share and collaborate for gamma-ray astronomy Pythonistas
+... contributions welcome!</p>
+<ul class="simple">
+<li>Read the <a class="reference external" href="https://gammapy.readthedocs.org/">Gammapy documentation</a>.</li>
+<li>Ask questions on the <a class="reference external" href="http://groups.google.com/group/gammapy">Gammapy mailing list</a>.</li>
+<li>Request features, report bugs or contribute on the <a class="reference external" href="https://github.com/gammapy/gammapy">Gammapy GitHub page</a>.</li>
+<li>Check out the <a class="reference external" href="https://www.ohloh.net/p/gammapy">Gammapy project summary on Ohloh</a> or the <a class="reference external" href="https://pypi.python.org/pypi/gammapy">Gammapy page on PyPI</a>.</li>
+<li>Requires Python (version 2.7 and 3.3 or later), Numpy (version 1.6 or later) and Astropy (version 0.4 or later)</li>
+</ul>
+<div class="section" id="general-documentation">
+<h1>General documentation<a class="headerlink" href="index.html#general-documentation" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scripts/index.html">Command line tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Tutorials and Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dataformats/index.html">Data Formats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="references.html">References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="credit.html">Credit</a></li>
+<li class="toctree-l1"><a class="reference internal" href="development/index.html">Development</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="the-gammapy-toolbox">
+<h1>The Gammapy toolbox<a class="headerlink" href="index.html#the-gammapy-toolbox" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="astro/index.html">Astrophysical source and population models (<tt class="docutils literal"><span class="pre">gammapy.astro</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="background/index.html">Background estimation and modeling  (<tt class="docutils literal"><span class="pre">gammapy.background</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="catalog/index.html">Catalog (<tt class="docutils literal"><span class="pre">gammapy.catalog</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data/index.html">Data classes (<tt class="docutils literal"><span class="pre">gammapy.data</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="datasets/index.html">Access datasets (<tt class="docutils literal"><span class="pre">gammapy.datasets</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="detect/index.html">Source detection tools (<tt class="docutils literal"><span class="pre">gammapy.detect</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="image/index.html">Image processing and analysis tools (<tt class="docutils literal"><span class="pre">gammapy.image</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="irf/index.html">Instrument response function (IRF) functionality (<tt class="docutils literal"><span class="pre">gammapy.irf</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="morphology/index.html">Morphology and PSF methods (<tt class="docutils literal"><span class="pre">gammapy.morphology</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="obs/index.html">Observation bookkeeping  (<tt class="docutils literal"><span class="pre">gammapy.obs</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shower/index.html">Air shower image I/O and analysis (<tt class="docutils literal"><span class="pre">gammapy.shower</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spectrum/index.html">Spectrum estimation and modeling (<tt class="docutils literal"><span class="pre">gammapy.spectrum</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats/index.html">Statistics tools (<tt class="docutils literal"><span class="pre">gammapy.stats</span></tt>)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="utils/index.html">Utility functions and classes (<tt class="docutils literal"><span class="pre">gammapy.utils</span></tt>)</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">General documentation</a></li>
+<li><a class="reference internal" href="index.html#the-gammapy-toolbox">The Gammapy toolbox</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

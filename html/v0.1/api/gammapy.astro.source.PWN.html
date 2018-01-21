@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>PWN &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="up" title="Astrophysical source models (gammapy.astro.source)" href="../astro/source/index.html" />
+    <link rel="next" title="Pulsar" href="gammapy.astro.source.Pulsar.html" />
+    <link rel="prev" title="SimplePulsar" href="gammapy.astro.source.SimplePulsar.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.astro.source.PWN.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "api/gammapy.astro.source.PWN",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.astro.source.PWN";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.astro.source.Pulsar.html" title="Pulsar">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.astro.source.SimplePulsar.html" title="SimplePulsar">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../astro/index.html" >Astrophysical source and population models (<tt class="docutils literal"><span class="pre">gammapy.astro</span></tt>)</a> &raquo;</li>
+      <li><a href="../astro/source/index.html" accesskey="U">Astrophysical source models (<tt class="docutils literal"><span class="pre">gammapy.astro.source</span></tt>)</a> &raquo;</li>
+      
+      <li>PWN</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="pwn">
+<h1>PWN<a class="headerlink" href="gammapy.astro.source.PWN.html#pwn" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.astro.source.PWN">
+<em class="property">class </em><tt class="descclassname">gammapy.astro.source.</tt><tt class="descname">PWN</tt><big>(</big><em>pulsar=&lt;gammapy.astro.source.pulsar.Pulsar object at 0x7f855f588890&gt;</em>, <em>snr=&lt;gammapy.astro.source.snr.SNRTrueloveMcKee object at 0x7f855f588bd0&gt;</em>, <em>eta_e=0.999</em>, <em>eta_B=0.001</em>, <em>morphology='Gaussian2D'</em>, <em>age=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/astro/source/pwn.html#PWN"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Simple pulsar wind nebula (PWN) evolution model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pulsar</strong> : <a class="reference internal" href="gammapy.astro.source.Pulsar.html#gammapy.astro.source.Pulsar" title="gammapy.astro.source.Pulsar"><tt class="xref py py-obj docutils literal"><span class="pre">Pulsar</span></tt></a></p>
+<blockquote>
+<div><p>Pulsar model instance.</p>
+</div></blockquote>
+<p><strong>snr</strong> : <a class="reference internal" href="gammapy.astro.source.SNRTrueloveMcKee.html#gammapy.astro.source.SNRTrueloveMcKee" title="gammapy.astro.source.SNRTrueloveMcKee"><tt class="xref py py-obj docutils literal"><span class="pre">SNRTrueloveMcKee</span></tt></a></p>
+<blockquote>
+<div><p>SNR model instance</p>
+</div></blockquote>
+<p><strong>eta_e</strong> : float</p>
+<blockquote>
+<div><p>Fraction of energy going into electrons.</p>
+</div></blockquote>
+<p><strong>eta_B</strong> : float</p>
+<blockquote>
+<div><p>Fraction of energy going into magnetic fields.</p>
+</div></blockquote>
+<p><strong>age</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Age of the PWN.</p>
+</div></blockquote>
+<p><strong>morphology</strong> : str</p>
+<blockquote class="last">
+<div><p>Morphology model of the PWN</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN.luminosity_tev" title="gammapy.astro.source.PWN.luminosity_tev"><tt class="xref py py-obj docutils literal"><span class="pre">luminosity_tev</span></tt></a>([t,&nbsp;fraction])</td>
+<td>Simple luminosity evolution model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN.magnetic_field" title="gammapy.astro.source.PWN.magnetic_field"><tt class="xref py py-obj docutils literal"><span class="pre">magnetic_field</span></tt></a>([t])</td>
+<td>Estimation of the magnetic field inside the PWN.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN.radius" title="gammapy.astro.source.PWN.radius"><tt class="xref py py-obj docutils literal"><span class="pre">radius</span></tt></a>([t])</td>
+<td>Radius of the PWN at age t.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.astro.source.PWN.luminosity_tev">
+<tt class="descname">luminosity_tev</tt><big>(</big><em>t=None</em>, <em>fraction=0.1</em><big>)</big><a class="reference internal" href="../_modules/gammapy/astro/source/pwn.html#PWN.luminosity_tev"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN.luminosity_tev" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple luminosity evolution model.</p>
+<p>Assumes that the luminosity is just a fraction of the total energy content
+of the pulsar. No cooling is considered and therefore the estimate is very bad.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>t</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Time after birth of the SNR.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.astro.source.PWN.magnetic_field">
+<tt class="descname">magnetic_field</tt><big>(</big><em>t=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/astro/source/pwn.html#PWN.magnetic_field"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN.magnetic_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Estimation of the magnetic field inside the PWN.</p>
+<p>By assuming that a certain fraction of the spin down energy is
+converted to magnetic field energy an estimation of the magnetic
+field can be derived.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>t</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Time after birth of the SNR.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.astro.source.PWN.radius">
+<tt class="descname">radius</tt><big>(</big><em>t=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/astro/source/pwn.html#PWN.radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.astro.source.PWN.html#gammapy.astro.source.PWN.radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Radius of the PWN at age t.</p>
+<p>Reference: <a class="reference external" href="http://adsabs.harvard.edu/abs/2006ARA%26A..44...17G">http://adsabs.harvard.edu/abs/2006ARA%26A..44...17G</a> (Formula 8).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>t</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.0.dev9682)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Time after birth of the SNR.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>During the free expansion phase the radius of the PWN evolves like:</p>
+<div class="math">
+<p><img src="../_images/math/4e031fe736efe6649aa8c988697573889e9f04d7.png" alt="R_{PWN}(t) = 1.44\text{pc}\left(\frac{E_{SN}^3\dot{E}_0^2}
+{M_{ej}^5}\right)^{1/10}t^{6/5}"/></p>
+</div><p>After the collision with the reverse shock of the SNR, the radius is
+assumed to be constant (See <a class="reference internal" href="gammapy.astro.source.SNRTrueloveMcKee.html#gammapy.astro.source.SNRTrueloveMcKee.radius_reverse_shock" title="gammapy.astro.source.SNRTrueloveMcKee.radius_reverse_shock"><tt class="xref py py-obj docutils literal"><span class="pre">radius_reverse_shock</span></tt></a>)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.astro.source.PWN.html#">PWN</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.astro.source.PWN.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.astro.source.PWN.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

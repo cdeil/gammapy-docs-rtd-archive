@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.image.healpix &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/image/healpix.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/image/healpix",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/image/healpix";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.image.healpix</h1><div class="highlight"><pre>
+<span class="sd">&quot;&quot;&quot;HEALPIX (Hierarchical Equal-Area and Isolatitude Pixelization) utility functions.</span>
+
+<span class="sd">This is a thin wrapper convenience functions around</span>
+<span class="sd">`healpy` (http://code.google.com/p/healpy/) functionality.</span>
+
+<span class="sd">Really these utility functions belong in `healpy` ... I&#39;ve made a feature request here:</span>
+<span class="sd">https://github.com/healpy/healpy/issues/129</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">coordinates</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;healpix_to_image&#39;</span><span class="p">,</span> <span class="s">&#39;image_to_healpix&#39;</span><span class="p">]</span>
+
+<span class="n">__doctest_skip__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;healpix_to_image&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="healpix_to_image"><a class="viewcode-back" href="../../../api/gammapy.image.healpix_to_image.html#gammapy.image.healpix_to_image">[docs]</a><span class="k">def</span> <span class="nf">healpix_to_image</span><span class="p">(</span><span class="n">healpix_data</span><span class="p">,</span> <span class="n">reference_image</span><span class="p">,</span> <span class="n">hpx_coord_system</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert image in HEALPIX format to a normal FITS projection image (e.g. CAR or AIT).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    healpix_data : `numpy.ndarray`</span>
+<span class="sd">        HEALPIX data array</span>
+<span class="sd">    reference_image : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">        A reference image to project to.  Must have a &#39;COORDSYS&#39; keyword of</span>
+<span class="sd">        either &#39;galactic&#39; or &#39;icrs&#39;</span>
+<span class="sd">    hpx_coord_system : &#39;galactic&#39; or &#39;icrs&#39;</span>
+<span class="sd">        The target coordinate system.  Should be derived from the HEALPIX</span>
+<span class="sd">        COORDSYS keyword if it is a FITS file</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    reprojected_data : `numpy.ndarray`</span>
+<span class="sd">        HEALPIX image resampled onto the reference image</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; import healpy as hp</span>
+<span class="sd">    &gt;&gt;&gt; from astropy.io import fits</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.image.healpix import healpix_to_image</span>
+<span class="sd">    &gt;&gt;&gt; healpix_data = hp.read_map(&#39;healpix.fits&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; healpix_system = fits.getheader(&#39;healpix.fits&#39;)[&#39;COORDSYS&#39;]</span>
+<span class="sd">    &gt;&gt;&gt; reference_image = fits.open(&#39;reference_image.fits&#39;)[0]</span>
+<span class="sd">    &gt;&gt;&gt; reprojected_data = healpix_to_image(healpix_data, reference_image, healpix_system)</span>
+<span class="sd">    &gt;&gt;&gt; fits.writeto(&#39;new_image.fits&#39;, reprojected_data, reference_image.header)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">healpy</span> <span class="kn">as</span> <span class="nn">hp</span>
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">(</span><span class="n">reference_image</span><span class="p">,</span> <span class="n">lon_sym</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">radians</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="c"># If the reference image uses a different celestial coordinate system from</span>
+    <span class="c"># the HEALPIX image we need to transform the coordinates</span>
+    <span class="n">ref_coord_system</span> <span class="o">=</span> <span class="n">reference_image</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;COORDSYS&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">ref_coord_system</span> <span class="o">!=</span> <span class="n">hpx_coord_system</span><span class="p">:</span>
+        <span class="n">coordinate</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">ref_coord_system</span><span class="p">)</span>
+        <span class="n">coordinate</span> <span class="o">=</span> <span class="n">coordinate</span><span class="o">.</span><span class="n">transform_to</span><span class="p">(</span><span class="n">hpx_coord_system</span><span class="p">)</span>
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">coordinate</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">lon</span><span class="p">,</span> <span class="n">coordinate</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">lat</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">hp</span><span class="o">.</span><span class="n">get_interp_val</span><span class="p">(</span><span class="n">healpix_data</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span>
+
+</div>
+<div class="viewcode-block" id="image_to_healpix"><a class="viewcode-back" href="../../../api/gammapy.image.image_to_healpix.html#gammapy.image.image_to_healpix">[docs]</a><span class="k">def</span> <span class="nf">image_to_healpix</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">healpix_pars</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert image in a normal FITS projection (e.g. CAR or AIT) to HEALPIX format.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">        The input image</span>
+<span class="sd">    healpix_pars : TODO</span>
+<span class="sd">        TODO: what HEALPIX parameters do we need?</span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    healpix_data : `numpy.array`</span>
+<span class="sd">        HEALPIX array data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+    <span class="c"># Can we use Kapteyn or Healpy to get e.g. bilinear interpolation?</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="healpix.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

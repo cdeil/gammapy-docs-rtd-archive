@@ -1,0 +1,48 @@
+
+
+ChisquareFitter
+====================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autoclass:: ChisquareFitter
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ChisquareFitter.chi_func
+      ~ChisquareFitter.fit_data
+      ~ChisquareFitter.print_results
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: chi_func
+   .. automethod:: fit_data
+   .. automethod:: print_results
+
+   
+   

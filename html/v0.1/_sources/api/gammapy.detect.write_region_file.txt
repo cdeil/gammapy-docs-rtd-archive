@@ -1,0 +1,8 @@
+
+
+write_region_file
+================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: write_region_file

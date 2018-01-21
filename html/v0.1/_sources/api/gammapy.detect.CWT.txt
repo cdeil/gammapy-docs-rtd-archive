@@ -1,0 +1,58 @@
+
+
+CWT
+==================
+
+.. currentmodule:: gammapy.detect
+
+.. autoclass:: CWT
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~CWT.compute_support_peak
+      ~CWT.do_transform
+      ~CWT.inverse_transform
+      ~CWT.iterative_filter_peak
+      ~CWT.max_scale_image
+      ~CWT.save_filter
+      ~CWT.set_data
+      ~CWT.set_file
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute_support_peak
+   .. automethod:: do_transform
+   .. automethod:: inverse_transform
+   .. automethod:: iterative_filter_peak
+   .. automethod:: max_scale_image
+   .. automethod:: save_filter
+   .. automethod:: set_data
+   .. automethod:: set_file
+
+   
+   

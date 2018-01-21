@@ -1,0 +1,8 @@
+
+
+run_detection
+============================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: run_detection

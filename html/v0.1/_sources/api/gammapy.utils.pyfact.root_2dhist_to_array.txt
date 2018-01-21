@@ -1,0 +1,8 @@
+
+
+root_2dhist_to_array
+=========================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: root_2dhist_to_array

@@ -1,0 +1,8 @@
+
+
+read_scale_cube_fits
+===================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: read_scale_cube_fits

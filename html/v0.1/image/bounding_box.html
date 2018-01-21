@@ -1,0 +1,315 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Bounding boxes &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="up" title="Image processing and analysis tools (gammapy.image)" href="index.html" />
+    <link rel="next" title="atrous_hdu" href="../api/gammapy.image.atrous_hdu.html" />
+    <link rel="prev" title="Image plotting" href="plotting.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/image/bounding_box.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "image/bounding_box",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "image/bounding_box";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.image.atrous_hdu.html" title="atrous_hdu">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="plotting.html" title="Image plotting">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="index.html" accesskey="U">Image processing and analysis tools (<tt class="docutils literal"><span class="pre">gammapy.image</span></tt>)</a> &raquo;</li>
+      
+      <li>Bounding boxes</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="bounding-boxes">
+<span id="image-bounding-box"></span><h1>Bounding boxes<a class="headerlink" href="bounding_box.html#bounding-boxes" title="Permalink to this headline">¶</a></h1>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">At the moment this section is pretty much just a set of notes for myself.
+This needs to be cleaned up and translated into code used consistently throughout gammapy
+(and probably astropy and photutils and maybe scikit-image ...)</p>
+</div>
+<p>This document gives a detailed description of bounding boxes.
+This is mostly useful for developers writing new functions that use bounding boxes.
+Users can consider bounding boxes an implementation detail (even though they are part of the public API in some places).</p>
+<div class="section" id="what-s-a-bounding-box-and-why-do-we-need-it">
+<h2>What&#8217;s a bounding box and why do we need it?<a class="headerlink" href="bounding_box.html#what-s-a-bounding-box-and-why-do-we-need-it" title="Permalink to this headline">¶</a></h2>
+<p>In gammapy we use <a class="reference external" href="http://en.wikipedia.org/wiki/Minimum_bounding_box">bounding boxes</a> to speed up image processing.</p>
+<p>Let&#8217;s say you have a large image, but are only interested in a small box (a rectangular sub-image):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">full_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">2000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">))</span>
+<span class="n">sub_array</span> <span class="o">=</span> <span class="n">full_array</span><span class="p">[</span><span class="mi">1000</span><span class="p">:</span><span class="mi">1010</span><span class="p">,</span> <span class="mi">2000</span><span class="p">:</span><span class="mi">2020</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">full_array</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">sub_array</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Numpy supports working with such boxes efficiently through the concept of
+<a class="reference external" href="http://scipy-lectures.github.io/intro/numpy/array_object.html#indexing-and-slicing">slicing</a>
+and
+<a class="reference external" href="http://scipy-lectures.github.io/intro/numpy/array_object.html#copies-and-views">views</a>.</p>
+<p>By slicing <tt class="docutils literal"><span class="pre">[1000:1010,</span> <span class="pre">2000:2020]</span></tt> we created a view (not a copy) <tt class="docutils literal"><span class="pre">sub_array</span></tt> into the <tt class="docutils literal"><span class="pre">full_array</span></tt>.
+On my machine making a measurement on <tt class="docutils literal"><span class="pre">sub_array</span></tt> is about 1000 times as fast as for <tt class="docutils literal"><span class="pre">full_array</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre>In [34]: %timeit np.sum(full_array)
+100 loops, best of 3: 5.32 ms per loop
+
+In [35]: %timeit np.sum(sub_array)
+100000 loops, best of 3: 7.41 µs per loop
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-represent-bounding-boxes-and-pass-them-around-in-code">
+<h2>How to represent bounding boxes and pass them around in code?<a class="headerlink" href="bounding_box.html#how-to-represent-bounding-boxes-and-pass-them-around-in-code" title="Permalink to this headline">¶</a></h2>
+<p>In gammapy we frequently need to bass bounding boxes around, e.g. from a function that detects
+many small objects in a large survey image to another function that measures some properties of these objects.</p>
+<p>Python does have a built-in <a class="reference external" href="http://docs.python.org/2/library/functions.html#slice">slice</a> class,
+and we can use it to represent 1-dimensional slices:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">find_objects</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find segments above threshold in 1-dimensional array.&quot;&quot;&quot;</span>
+    <span class="n">object_slices</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">in_object</span> <span class="o">=</span> <span class="bp">False</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">array</span><span class="p">)):</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="ow">not</span> <span class="n">in_object</span><span class="p">):</span>
+            <span class="n">in_object</span> <span class="o">=</span> <span class="bp">True</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">ii</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;=</span> <span class="n">threshold</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">in_object</span><span class="p">):</span>
+            <span class="n">in_object</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="n">stop</span> <span class="o">=</span> <span class="n">ii</span>
+            <span class="n">object_slices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">object_slices</span>
+
+<span class="k">def</span> <span class="nf">measure_objects</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">object_slices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Measure something for all objects and print the result.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">object_slice</span> <span class="ow">in</span> <span class="n">object_slices</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">object_slice</span><span class="p">]</span>
+        <span class="n">measurement</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">object_slice</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">object_slice</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="n">measurement</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="mf">0.99</span>
+<span class="n">objects</span> <span class="o">=</span> <span class="n">find_objects</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">threshold</span><span class="p">)</span>
+<span class="n">measure_objects</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">objects</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unfortunately, there is no n-dimensional slice or bounding box class in Python or Numpy.</p>
+</div>
+<div class="section" id="bounding-boxes-in-other-packages">
+<h2>Bounding boxes in other packages<a class="headerlink" href="bounding_box.html#bounding-boxes-in-other-packages" title="Permalink to this headline">¶</a></h2>
+<p>Before inventing our own, let&#8217;s look at what kinds of representations others have come up with:</p>
+<ul>
+<li><p class="first">The <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.measurements.find_objects.html#scipy.ndimage.measurements.find_objects" title="(in SciPy v0.14.0)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.measurements.find_objects</span></tt></a> function returns a Python list of
+Python tuples of Python <a class="reference external" href="http://docs.python.org/library/functions.html#slice" title="(in Python v2.7)"><tt class="xref py py-obj docutils literal"><span class="pre">slice</span></tt></a> objects to represent a list of bounding boxes.
+I.e. a single n-dimensional bounding box is represented as a Python tuple of n slice objects,
+e.g. for a 2-dimensional bounding box:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bbox</span> <span class="o">=</span> <span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="bp">None</span><span class="p">),</span> <span class="nb">slice</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="bp">None</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>This has the advantage that for a numpy array it is very easy to create views
+for the rectangles represented by the bounding box:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">((</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">))</span>
+<span class="n">bboxes</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">ndimage</span><span class="o">.</span><span class="n">find_objects</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">bbox</span> <span class="ow">in</span> <span class="n">bboxes</span><span class="p">:</span>
+    <span class="n">view</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">bbox</span><span class="p">]</span>
+    <span class="n">measurement</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">view</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As far as I can see no other function except <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.measurements.find_objects.html#scipy.ndimage.measurements.find_objects" title="(in SciPy v0.14.0)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.measurements.find_objects</span></tt></a> uses
+this bbox format, though. E.g. all other functions in <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/ndimage.html#module-scipy.ndimage.measurements" title="(in SciPy v0.14.0)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.measurements</span></tt></a> take a
+<tt class="docutils literal"><span class="pre">label</span></tt> array as input, none has a <tt class="docutils literal"><span class="pre">bboxes</span></tt> argument.</p>
+</li>
+<li><p class="first">The <a class="reference external" href="http://scikit-image.org/docs/stable/api/skimage.measure.html#skimage.measure.regionprops" title="(in skimage v0.10.0)"><tt class="xref py py-obj docutils literal"><span class="pre">skimage.measure.regionprops</span></tt></a> function returns <tt class="docutils literal"><span class="pre">properties</span></tt>, a list of dict-like objects
+with (among many other things) a <tt class="docutils literal"><span class="pre">bbox</span></tt> entry, which is a Python tuple of integers:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">bbox</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_row</span><span class="p">,</span> <span class="n">min_col</span><span class="p">,</span> <span class="n">max_row</span><span class="p">,</span> <span class="n">max_col</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Looking under the hood (this is not part of their API) at the implementation in
+<a class="reference external" href="https://github.com/scikit-image/scikit-image/blob/master/skimage/measure/_regionprops.py">skimage/measure/_regionprops.py</a> ,
+we see that <a class="reference external" href="http://scikit-image.org/docs/stable/api/skimage.measure.html#skimage.measure.regionprops" title="(in skimage v0.10.0)"><tt class="xref py py-obj docutils literal"><span class="pre">skimage.measure.regionprops</span></tt></a> is just a wrapper storing the <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.measurements.find_objects.html#scipy.ndimage.measurements.find_objects" title="(in SciPy v0.14.0)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.measurements.find_objects</span></tt></a> bboxes
+in an object as <tt class="docutils literal"><span class="pre">RegionProperties._slice</span></tt> and then generating the integer index tuple on demand:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">bbox</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_slice</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_slice</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>As for <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/ndimage.html#module-scipy.ndimage" title="(in SciPy v0.14.0)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage</span></tt></a>, as far as I can see, <tt class="docutils literal"><span class="pre">bbox</span></tt> is not used elsewhere in <a class="reference external" href="http://scikit-image.org/docs/stable/api/skimage.html#module-skimage" title="(in skimage v0.10.0)"><tt class="xref py py-obj docutils literal"><span class="pre">skimage</span></tt></a>.</p>
+</li>
+<li><p class="first"><a class="reference external" href="http://photutils.readthedocs.org/en/latest/photutils/high-level_API.html#module-photutils" title="(in photutils v0.0.dev729)"><tt class="xref py py-obj docutils literal"><span class="pre">photutils</span></tt></a> has this <a class="reference external" href="http://photutils.readthedocs.org/en/latest/photutils/index.html#coordinate-convention-in-photutils">coordinate convention</a>.
+Looking at the <a class="reference external" href="http://photutils.readthedocs.org/en/latest/api/photutils.aperture_photometry.html#photutils.aperture_photometry" title="(in photutils v0.0.dev729)"><tt class="xref py py-obj docutils literal"><span class="pre">photutils.aperture_photometry</span></tt></a> implementation, it looks like they don&#8217;t have an official <tt class="docutils literal"><span class="pre">bbox</span></tt> representation,
+but simply compute <tt class="docutils literal"><span class="pre">(x_min,</span> <span class="pre">x_max,</span> <span class="pre">y_min,</span> <span class="pre">y_max)</span></tt> where needed and then use <tt class="docutils literal"><span class="pre">data[y_min:y_max,</span> <span class="pre">x_min:x_max]</span></tt> views.
+TODO: update once this is in: <a class="reference external" href="https://github.com/astropy/astropy/issues/2607">https://github.com/astropy/astropy/issues/2607</a></p>
+</li>
+<li><p class="first"><a class="reference external" href="http://findobj.readthedocs.org/">findobj</a> doesn&#8217;t use bounding boxes in the public API.
+Internally they use an <tt class="docutils literal"><span class="pre">_ImgCutout</span></tt> class and use it in their <tt class="docutils literal"><span class="pre">_findobjs</span></tt> function.</p>
+<p>TODO: briefly describe how it works.</p>
+</li>
+</ul>
+<p>I also found
+<a class="reference external" href="http://stackoverflow.com/questions/9525313/rectangular-bounding-box-around-blobs-in-a-monochrome-image-using-python">this</a>
+and
+<a class="reference external" href="http://stackoverflow.com/questions/4087919/how-can-i-improve-my-paw-detection">this</a>
+stackoverflow entry a bit useful.</p>
+</div>
+<div class="section" id="bounding-boxes-in-gammapy">
+<h2>Bounding boxes in gammapy<a class="headerlink" href="bounding_box.html#bounding-boxes-in-gammapy" title="Permalink to this headline">¶</a></h2>
+<p>In gammapy, a single bounding box is represented as a <a class="reference internal" href="../api/gammapy.image.BoundingBox.html#gammapy.image.BoundingBox" title="gammapy.image.measure.BoundingBox"><tt class="docutils literal"><span class="pre">gammapy.image.BoundingBox</span></tt></a> objects.</p>
+<p>I decided to make a class, because I think it will help:</p>
+<ul class="simple">
+<li>Getting the index order right shouldn&#8217;t be left up to the user (<tt class="docutils literal"><span class="pre">(x,</span> <span class="pre">y)</span></tt> and <tt class="docutils literal"><span class="pre">(y,</span> <span class="pre">x)</span></tt> in different places)</li>
+<li>Getting the position right shouldn&#8217;t be left up to the user (<tt class="docutils literal"><span class="pre">(0,</span> <span class="pre">0)</span></tt> or <tt class="docutils literal"><span class="pre">(1,</span> <span class="pre">1)</span></tt> and sub-pixel positions)</li>
+</ul>
+<p>TODO: describe. Give examples of functions that take bounding boxes as input or output.</p>
+<p>TODO: there should probably also be a <tt class="docutils literal"><span class="pre">PixelCoordinate</span></tt> class instead of passing <tt class="docutils literal"><span class="pre">(x,</span> <span class="pre">y)</span></tt> tuples around.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="bounding_box.html#">Bounding boxes</a><ul>
+<li><a class="reference internal" href="bounding_box.html#what-s-a-bounding-box-and-why-do-we-need-it">What&#8217;s a bounding box and why do we need it?</a></li>
+<li><a class="reference internal" href="bounding_box.html#how-to-represent-bounding-boxes-and-pass-them-around-in-code">How to represent bounding boxes and pass them around in code?</a></li>
+<li><a class="reference internal" href="bounding_box.html#bounding-boxes-in-other-packages">Bounding boxes in other packages</a></li>
+<li><a class="reference internal" href="bounding_box.html#bounding-boxes-in-gammapy">Bounding boxes in gammapy</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/image/bounding_box.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="bounding_box.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

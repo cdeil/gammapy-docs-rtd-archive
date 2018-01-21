@@ -1,0 +1,8 @@
+
+
+compute_differential_flux_points
+=================================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: compute_differential_flux_points

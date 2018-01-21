@@ -1,0 +1,8 @@
+
+
+healpix_to_image
+==============================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: healpix_to_image

@@ -1,0 +1,274 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>MorphModelImageCreator &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="up" title="Morphology and PSF methods (gammapy.morphology)" href="../morphology/index.html" />
+    <link rel="next" title="MultiGauss2D" href="gammapy.morphology.MultiGauss2D.html" />
+    <link rel="prev" title="ModelThetaCalculator" href="gammapy.morphology.ModelThetaCalculator.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.morphology.MorphModelImageCreator.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "api/gammapy.morphology.MorphModelImageCreator",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.morphology.MorphModelImageCreator";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.morphology.MultiGauss2D.html" title="MultiGauss2D">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.morphology.ModelThetaCalculator.html" title="ModelThetaCalculator">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../morphology/index.html" accesskey="U">Morphology and PSF methods (<tt class="docutils literal"><span class="pre">gammapy.morphology</span></tt>)</a> &raquo;</li>
+      
+      <li>MorphModelImageCreator</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="morphmodelimagecreator">
+<h1>MorphModelImageCreator<a class="headerlink" href="gammapy.morphology.MorphModelImageCreator.html#morphmodelimagecreator" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.morphology.MorphModelImageCreator">
+<em class="property">class </em><tt class="descclassname">gammapy.morphology.</tt><tt class="descname">MorphModelImageCreator</tt><big>(</big><em>cfg_file</em>, <em>exposure</em>, <em>psf_file=None</em>, <em>apply_psf=True</em>, <em>background=None</em>, <em>flux_factor=1e-12</em>, <em>compute_excess=True</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/model.html#MorphModelImageCreator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Create model images from a HGPS pipeline source config file.</p>
+<p>Uses astropy to evaluate the source model, with oversampling or integrating
+over pixels.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cfg_file</strong> : str</p>
+<blockquote>
+<div><p>Config file with all the sources listed.</p>
+</div></blockquote>
+<p><strong>exposure</strong> : str</p>
+<blockquote>
+<div><p>Fits image file with the exposure.</p>
+</div></blockquote>
+<p><strong>psf_file</strong> : str (optional)</p>
+<blockquote>
+<div><p>Json file with PSF information.</p>
+</div></blockquote>
+<p><strong>background</strong> : str (optional)</p>
+<blockquote>
+<div><p>Fits image file with the background.</p>
+</div></blockquote>
+<p><strong>apply_psf</strong> : bool (default True)</p>
+<blockquote>
+<div><p>Whether the psf should be applied.</p>
+</div></blockquote>
+<p><strong>compute_excess</strong> : bool (default True)</p>
+<blockquote>
+<div><p>Whether to compute an excess image.</p>
+</div></blockquote>
+<p><strong>flux_factor</strong> : float (default 1E-12)</p>
+<blockquote class="last">
+<div><p>Flux conversion factor.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Here is an example how to use <a class="reference internal" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator" title="gammapy.morphology.MorphModelImageCreator"><tt class="xref py py-obj docutils literal"><span class="pre">MorphModelImageCreator</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.morphology</span> <span class="kn">import</span> <span class="n">MorphModelImageCreator</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_image_creator</span> <span class="o">=</span> <span class="n">MorphModelImageCreator</span><span class="p">(</span><span class="n">cfg_file</span><span class="o">=</span><span class="s">&#39;input_sherpa.cfg&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                             <span class="n">exposure</span><span class="o">=</span><span class="s">&#39;exposure.fits&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                                             <span class="n">psf_file</span><span class="o">=</span><span class="s">&#39;psf.json&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_image_creator</span><span class="o">.</span><span class="n">evaluate_model</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s">&#39;center&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model_image_creator</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="s">&#39;model_image.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator.evaluate_model" title="gammapy.morphology.MorphModelImageCreator.evaluate_model"><tt class="xref py py-obj docutils literal"><span class="pre">evaluate_model</span></tt></a>(**kwargs)</td>
+<td>Evaluate model by oversampling or taking the value at the center of the pixel.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator.fake_counts" title="gammapy.morphology.MorphModelImageCreator.fake_counts"><tt class="xref py py-obj docutils literal"><span class="pre">fake_counts</span></tt></a>(N,&nbsp;**kwargs)</td>
+<td>Fake measurement data by adding Poisson noise to the model image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator.save" title="gammapy.morphology.MorphModelImageCreator.save"><tt class="xref py py-obj docutils literal"><span class="pre">save</span></tt></a>(filename,&nbsp;**kwargs)</td>
+<td>Save model image to file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.morphology.MorphModelImageCreator.evaluate_model">
+<tt class="descname">evaluate_model</tt><big>(</big><em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/model.html#MorphModelImageCreator.evaluate_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator.evaluate_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate model by oversampling or taking the value at the center of the pixel.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.morphology.MorphModelImageCreator.fake_counts">
+<tt class="descname">fake_counts</tt><big>(</big><em>N</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/model.html#MorphModelImageCreator.fake_counts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator.fake_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fake measurement data by adding Poisson noise to the model image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>N</strong> : int</p>
+<blockquote class="last">
+<div><p>Number of measurements to fake.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.morphology.MorphModelImageCreator.save">
+<tt class="descname">save</tt><big>(</big><em>filename</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/model.html#MorphModelImageCreator.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.MorphModelImageCreator.html#gammapy.morphology.MorphModelImageCreator.save" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save model image to file.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.morphology.MorphModelImageCreator.html#">MorphModelImageCreator</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.morphology.MorphModelImageCreator.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.morphology.MorphModelImageCreator.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

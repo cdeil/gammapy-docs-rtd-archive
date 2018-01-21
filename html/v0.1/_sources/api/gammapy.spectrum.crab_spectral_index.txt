@@ -1,0 +1,8 @@
+
+
+crab_spectral_index
+====================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: crab_spectral_index

@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.datasets.fermi &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/datasets/fermi.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/datasets/fermi",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/datasets/fermi";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.datasets.fermi</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Fermi datasets.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">EnergyDependentTablePSF</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">SpectralCube</span>
+<span class="kn">from</span> <span class="nn">..datasets</span> <span class="kn">import</span> <span class="n">get_path</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;FermiGalacticCenter&#39;</span><span class="p">,</span>
+           <span class="s">&#39;FermiVelaRegion&#39;</span><span class="p">,</span>
+           <span class="s">&#39;fetch_fermi_catalog&#39;</span><span class="p">,</span>
+           <span class="s">&#39;fetch_fermi_extended_sources&#39;</span><span class="p">,</span>
+           <span class="s">&#39;fetch_fermi_diffuse_background_model&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<span class="n">FERMI_CATALOGS</span> <span class="o">=</span> <span class="s">&#39;2FGL 1FGL 1FHL 2PC&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="fetch_fermi_catalog"><a class="viewcode-back" href="../../../api/gammapy.datasets.fetch_fermi_catalog.html#gammapy.datasets.fetch_fermi_catalog">[docs]</a><span class="k">def</span> <span class="nf">fetch_fermi_catalog</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetch Fermi catalog data.</span>
+
+<span class="sd">    Reference: http://fermi.gsfc.nasa.gov/ssc/data/access/lat/.</span>
+
+<span class="sd">    The Fermi catalogs contain the following relevant catalog HDUs:</span>
+
+<span class="sd">    * 2FGL Catalog : LAT 2-year Point Source Catalog</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">        * ``ExtendedSources`` Extended Source Catalog Table.</span>
+<span class="sd">    * 1FGL Catalog : LAT 1-year Point Source Catalog</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">    * 1FHL Catalog : First Fermi-LAT Catalog of Sources above 10 GeV</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">        * ``ExtendedSources`` Extended Source Catalog Table.</span>
+<span class="sd">    * 2PC Catalog : LAT Second Catalog of Gamma-ray Pulsars</span>
+<span class="sd">        * ``PULSAR_CATALOG`` Pulsar Catalog Table.</span>
+<span class="sd">        * ``SPECTRAL`` Table of Pulsar Spectra Parameters.</span>
+<span class="sd">        * ``OFF_PEAK`` Table for further Spectral and Flux data for the Catalog.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalog : {&#39;2FGL&#39;, &#39;1FGL&#39;, &#39;1FHL&#39;, &#39;2PC&#39;}</span>
+<span class="sd">       Specifies which catalog to display.</span>
+<span class="sd">    extension : str</span>
+<span class="sd">        Specifies which catalog HDU to provide as a table (optional).</span>
+<span class="sd">        See list of catalog HDUs above.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdu_list (Default) : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        Catalog FITS HDU list (for access to full catalog dataset).</span>
+<span class="sd">    catalog_table : `~astropy.table.Table`</span>
+<span class="sd">        Catalog table for a selected hdu extension.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.datasets import fetch_fermi_catalog</span>
+<span class="sd">    &gt;&gt;&gt; fetch_fermi_catalog(&#39;2FGL&#39;)  # doctest: +REMOTE_DATA</span>
+<span class="sd">        [&lt;astropy.io.fits.hdu.image.PrimaryHDU at 0x3330790&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x338b990&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x3396450&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x339af10&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x339ff10&gt;]</span>
+
+<span class="sd">    &gt;&gt;&gt; from gammapy.datasets import fetch_fermi_catalog</span>
+<span class="sd">    &gt;&gt;&gt; fetch_fermi_catalog(&#39;2FGL&#39;, &#39;LAT_Point_Source_Catalog&#39;)  # doctest: +REMOTE_DATA</span>
+<span class="sd">        &lt;Table rows=1873 names= ... &gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&#39;http://fermi.gsfc.nasa.gov/ssc/data/access/lat/&#39;</span>
+
+    <span class="k">if</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s">&#39;2FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&#39;2yr_catalog/gll_psc_v08.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s">&#39;1FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&#39;/1yr_catalog/gll_psc_v03.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s">&#39;1FHL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&#39;/1FHL/gll_psch_v07.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s">&#39;2PC&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&#39;2nd_PSR_catalog/2PC_catalog_v03.fits&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Invalid catalog: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Available: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FERMI_CATALOGS</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">extension</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">catalog_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">catalog_table</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hdu_list</span>
+</div>
+<span class="n">FERMI_EXTENDED</span> <span class="o">=</span> <span class="s">&#39;2FGL 1FHL&#39;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="fetch_fermi_extended_sources"><a class="viewcode-back" href="../../../api/gammapy.datasets.fetch_fermi_extended_sources.html#gammapy.datasets.fetch_fermi_extended_sources">[docs]</a><span class="k">def</span> <span class="nf">fetch_fermi_extended_sources</span><span class="p">(</span><span class="n">catalog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetch Fermi catalog extended source images.</span>
+
+<span class="sd">    Reference: http://fermi.gsfc.nasa.gov/ssc/data/access/lat/.</span>
+
+<span class="sd">    Extended source are available for the following Fermi catalogs:</span>
+
+<span class="sd">    * 2FGL Catalog : LAT 2-year Point Source Catalog</span>
+<span class="sd">    * 1FHL Catalog : First Fermi-LAT Catalog of Sources above 10 GeV</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalog : {&#39;2FGL&#39;, &#39;1FHL&#39;}</span>
+<span class="sd">       Specifies which catalog extended sources to return.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        FITS HDU list of FITS ImageHDUs for the extended sources.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.datasets import fetch_fermi_extended_sources</span>
+<span class="sd">    &gt;&gt;&gt; sources = fetch_fermi_extended_sources(&#39;2FGL&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; len(sources) = 12</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&#39;http://fermi.gsfc.nasa.gov/ssc/data/access/lat/&#39;</span>
+    <span class="k">if</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s">&#39;2FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&#39;2yr_catalog/gll_psc_v07_templates.tgz&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s">&#39;1FHL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s">&#39;1FHL/LAT_extended_sources_v12.tar&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Invalid catalog: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Available: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">FERMI_EXTENDED</span><span class="p">))</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;r&#39;</span><span class="p">)</span>
+
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">tar</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s">&quot;.fits&quot;</span><span class="p">):</span>
+            <span class="nb">file</span> <span class="o">=</span> <span class="n">tar</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+            <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">hdu_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">hdu_list</span>
+
+</div>
+<div class="viewcode-block" id="fetch_fermi_diffuse_background_model"><a class="viewcode-back" href="../../../api/gammapy.datasets.fetch_fermi_diffuse_background_model.html#gammapy.datasets.fetch_fermi_diffuse_background_model">[docs]</a><span class="k">def</span> <span class="nf">fetch_fermi_diffuse_background_model</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s">&#39;gll_iem_v02.fit&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetch Fermi diffuse background model.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Diffuse model file name</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Full local path name</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s">&#39;http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/&#39;</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="n">filename</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">filename</span>
+
+</div>
+<div class="viewcode-block" id="FermiGalacticCenter"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiGalacticCenter.html#gammapy.datasets.FermiGalacticCenter">[docs]</a><span class="k">class</span> <span class="nc">FermiGalacticCenter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fermi high-energy data for the Galactic center region.</span>
+
+<span class="sd">    For details, see this</span>
+<span class="sd">    `README file</span>
+<span class="sd">    &lt;https://github.com/gammapy/gammapy/blob/master/gammapy/datasets/data/fermi/README.rst&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiGalacticCenter.filenames"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiGalacticCenter.html#gammapy.datasets.FermiGalacticCenter.filenames">[docs]</a>    <span class="k">def</span> <span class="nf">filenames</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Dictionary of available file names.&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;psf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;fermi/psf.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;counts&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;fermi/fermi_counts.fits.gz&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;diffuse_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;fermi/gll_iem_v02_cutout.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;exposure_cube&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;fermi/fermi_exposure.fits.gz&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">result</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiGalacticCenter.counts"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiGalacticCenter.html#gammapy.datasets.FermiGalacticCenter.counts">[docs]</a>    <span class="k">def</span> <span class="nf">counts</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Counts image as `astropy.io.fits.ImageHDU`.&quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiGalacticCenter</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;counts&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiGalacticCenter.psf"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiGalacticCenter.html#gammapy.datasets.FermiGalacticCenter.psf">[docs]</a>    <span class="k">def</span> <span class="nf">psf</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;PSF as `~gammapy.irf.EnergyDependentTablePSF`.&quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiGalacticCenter</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;psf&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">EnergyDependentTablePSF</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiGalacticCenter.diffuse_model"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiGalacticCenter.html#gammapy.datasets.FermiGalacticCenter.diffuse_model">[docs]</a>    <span class="k">def</span> <span class="nf">diffuse_model</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Diffuse model spectral cube.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectral_cube : `~gammapy.data.SpectralCube`</span>
+<span class="sd">            Diffuse model spectral cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiGalacticCenter</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;diffuse_model&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiGalacticCenter.exposure_cube"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiGalacticCenter.html#gammapy.datasets.FermiGalacticCenter.exposure_cube">[docs]</a>    <span class="k">def</span> <span class="nf">exposure_cube</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Exposure cube.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectral_cube : `~gammapy.data.SpectralCube`</span>
+<span class="sd">            Exposure cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiGalacticCenter</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;exposure_cube&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="FermiVelaRegion"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion">[docs]</a><span class="k">class</span> <span class="nc">FermiVelaRegion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fermi high-energy data for the Vela region.</span>
+
+<span class="sd">    For details, see</span>
+<span class="sd">    `README file for FermiVelaRegion</span>
+<span class="sd">    &lt;https://github.com/gammapy/gammapy-extra/blob/master/datasets/vela_region/README.rst&gt;`_.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.filenames"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.filenames">[docs]</a>    <span class="k">def</span> <span class="nf">filenames</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Dictionary of available file names.&quot;&quot;&quot;</span>
+        <span class="k">def</span> <span class="nf">get</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;vela_region/&#39;</span> <span class="o">+</span> <span class="n">filename</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;counts_cube&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;counts_vela.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;exposure_cube&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;exposure_vela.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;background_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;background_vela.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;total_image&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;total_vela.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;diffuse_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;gll_iem_v05_rev1_cutout.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;events&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;events_vela.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;psf&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;psf_vela.fits&#39;</span><span class="p">)</span>
+        <span class="n">result</span><span class="p">[</span><span class="s">&#39;livetime_cube&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">get</span><span class="p">(</span><span class="s">&#39;livetime_vela.fits&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.counts_cube"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.counts_cube">[docs]</a>    <span class="k">def</span> <span class="nf">counts_cube</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Counts cube.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            * Counts cube `~astropy.io.fits.PrimaryHDU`.</span>
+<span class="sd">            * Energy bins `~astropy.io.fits.BinTableHDU`.</span>
+<span class="sd">            * MET bins `~astropy.io.fits.BinTableHDU`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;counts_cube&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.psf"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.psf">[docs]</a>    <span class="k">def</span> <span class="nf">psf</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Fermi PSF for the Vela region.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        psf : `~gammapy.irf.EnergyDependentTablePSF`.</span>
+<span class="sd">            PSF</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;psf&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">EnergyDependentTablePSF</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.diffuse_model"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.diffuse_model">[docs]</a>    <span class="k">def</span> <span class="nf">diffuse_model</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Diffuse model spectral cube cutout for Vela region.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectral_cube : `~gammapy.data.SpectralCube`</span>
+<span class="sd">            Diffuse model spectral cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;diffuse_model&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.background_image"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.background_image">[docs]</a>    <span class="k">def</span> <span class="nf">background_image</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Predicted background counts image.</span>
+<span class="sd">        Based on the Fermi Diffuse model (see class docstring).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        background_cube : `~astropy.io.fits.PrimaryHDU`</span>
+<span class="sd">            Diffuse model image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;background_image&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.predicted_image"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.predicted_image">[docs]</a>    <span class="k">def</span> <span class="nf">predicted_image</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Predicted counts spectral image including Vela Pulsar.</span>
+<span class="sd">        Based on the Fermi Diffuse model (see class docstring) and</span>
+<span class="sd">        Vela Point source model.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        background_cube : `~astropy.io.fits.PrimaryHDU`</span>
+<span class="sd">            Predicted model image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;total_image&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.events"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.events">[docs]</a>    <span class="k">def</span> <span class="nf">events</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Fermi Events list for Vela Region.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`.</span>
+<span class="sd">            Events list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;events&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.exposure_cube"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.exposure_cube">[docs]</a>    <span class="k">def</span> <span class="nf">exposure_cube</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Exposure cube.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        exposure_cube : `~gammapy.data.SpectralCube`</span>
+<span class="sd">            Exposure cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;exposure_cube&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="FermiVelaRegion.livetime_cube"><a class="viewcode-back" href="../../../api/gammapy.datasets.FermiVelaRegion.html#gammapy.datasets.FermiVelaRegion.livetime_cube">[docs]</a>    <span class="k">def</span> <span class="nf">livetime_cube</span><span class="p">():</span>
+        <span class="sd">&quot;&quot;&quot;Livetime cube.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        livetime_cube : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            Livetime cube hdu_list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">FermiVelaRegion</span><span class="o">.</span><span class="n">filenames</span><span class="p">()[</span><span class="s">&#39;livetime_cube&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="fermi.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

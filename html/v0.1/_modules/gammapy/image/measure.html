@@ -1,0 +1,604 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.image.measure &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/image/measure.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/image/measure",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/image/measure";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.image.measure</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Measure image properties.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;BoundingBox&#39;</span><span class="p">,</span>
+           <span class="s">&#39;bbox&#39;</span><span class="p">,</span>
+           <span class="s">&#39;find_max&#39;</span><span class="p">,</span>
+           <span class="s">&#39;lookup&#39;</span><span class="p">,</span>
+           <span class="s">&#39;lookup_max&#39;</span><span class="p">,</span>
+           <span class="s">&#39;measure_containment_fraction&#39;</span><span class="p">,</span>
+           <span class="s">&#39;measure_containment_radius&#39;</span><span class="p">,</span>
+           <span class="s">&#39;measure_image_moments&#39;</span><span class="p">,</span>
+           <span class="s">&#39;measure_labeled_regions&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<div class="viewcode-block" id="BoundingBox"><a class="viewcode-back" href="../../../api/gammapy.image.BoundingBox.html#gammapy.image.BoundingBox">[docs]</a><span class="k">class</span> <span class="nc">BoundingBox</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Rectangular bounding box.</span>
+
+<span class="sd">    TODO: Link to bounding box docs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_start, y_start : float</span>
+<span class="sd">        Start pixel coordinates (0-based indexing, inclusive)</span>
+<span class="sd">    x_stop, y_stop : float</span>
+<span class="sd">        Stop pixel coordinates (0-based indexing, exclusive)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">x_stop</span><span class="p">,</span> <span class="n">y_stop</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_start</span> <span class="o">=</span> <span class="n">x_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_start</span> <span class="o">=</span> <span class="n">y_start</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_stop</span> <span class="o">=</span> <span class="n">x_stop</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_stop</span> <span class="o">=</span> <span class="n">y_stop</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="BoundingBox.for_circle"><a class="viewcode-back" href="../../../api/gammapy.image.BoundingBox.html#gammapy.image.BoundingBox.for_circle">[docs]</a>    <span class="k">def</span> <span class="nf">for_circle</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute bounding box for a circle.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x, y : float</span>
+<span class="sd">            Circle center position</span>
+<span class="sd">        radius : float</span>
+<span class="sd">            Circle radius (pix)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bounding_box : BoundingBox</span>
+<span class="sd">            Bounding box</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+        <span class="n">x_start</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">radius</span>
+        <span class="n">y_start</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">radius</span>
+        <span class="n">x_stop</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">radius</span>
+        <span class="n">y_stop</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">radius</span>
+        <span class="k">return</span> <span class="n">BoundingBox</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">x_stop</span><span class="p">,</span> <span class="n">y_stop</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;x = ({x_start}, {x_stop}), &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;y = ({y_start}, {y_stop}) &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ss</span>
+
+<div class="viewcode-block" id="BoundingBox.intersection"><a class="viewcode-back" href="../../../api/gammapy.image.BoundingBox.html#gammapy.image.BoundingBox.intersection">[docs]</a>    <span class="k">def</span> <span class="nf">intersection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute intersection of two bounding boxes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : `BoundingBox`</span>
+<span class="sd">            Other bounding box.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        intersection : `BoundingBox`</span>
+<span class="sd">            New intersection bounding box</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; b1 = BoundingBox(1, 5, 10, 11)</span>
+<span class="sd">        &gt;&gt;&gt; b2 = BoundingBox(2, 4, 13, 9)</span>
+<span class="sd">        &gt;&gt;&gt; b1.intersection(b2)</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x_start</span><span class="p">)</span>
+        <span class="n">x_stop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_stop</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x_stop</span><span class="p">)</span>
+        <span class="n">y_start</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_start</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">y_start</span><span class="p">)</span>
+        <span class="n">y_stop</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_stop</span><span class="p">,</span> <span class="n">other</span><span class="o">.</span><span class="n">x_stop</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">BoundingBox</span><span class="p">(</span><span class="n">x_start</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">x_stop</span><span class="p">,</span> <span class="n">y_stop</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="BoundingBox.overlaps"><a class="viewcode-back" href="../../../api/gammapy.image.BoundingBox.html#gammapy.image.BoundingBox.overlaps">[docs]</a>    <span class="k">def</span> <span class="nf">overlaps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Does this bounding box overlap the other bounding box?</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : `BoundingBox`</span>
+<span class="sd">            Other bounding box</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        overlaps : bool</span>
+<span class="sd">            True of there is overlap</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="n">other</span><span class="p">)</span><span class="o">.</span><span class="n">is_empty</span>
+</div>
+    <span class="k">def</span> <span class="nf">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">slice</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">slice</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ftcopy_string</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Bounding box in ftcopy string format.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from gammapy.image import BoundingBox</span>
+<span class="sd">        &gt;&gt;&gt; bounding_box = BoundingBox(7, 9, 43, 44)</span>
+<span class="sd">        &gt;&gt;&gt; bounding_box.ftcopy_string</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="s">&#39;[{x_start}:{x_stop},{y_start}:{y_stop}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">slice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Bounding box in slice format.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from gammapy.image import BoundingBox</span>
+<span class="sd">        &gt;&gt;&gt; bounding_box = BoundingBox(7, 9, 43, 44)</span>
+<span class="sd">        &gt;&gt;&gt; bounding_box.slice</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_slice</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_slice</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">x_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_stop</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">y_slice</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_start</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_stop</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">is_empty</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">x_is_empty</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_start</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_stop</span><span class="p">)</span>
+        <span class="n">y_is_empty</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_start</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_stop</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x_is_empty</span> <span class="ow">or</span> <span class="n">y_is_empty</span>
+
+</div>
+<div class="viewcode-block" id="bbox"><a class="viewcode-back" href="../../../api/gammapy.image.bbox.html#gammapy.image.bbox">[docs]</a><span class="k">def</span> <span class="nf">bbox</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">margin</span><span class="p">,</span> <span class="n">binsz</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Determine the bounding box of a mask.</span>
+
+<span class="sd">    TODO: this is an old utility function ... put it into the BoundingBox class.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage.measurements</span> <span class="kn">import</span> <span class="n">find_objects</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">find_objects</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">ny</span><span class="p">,</span> <span class="n">nx</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">xmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">margin</span> <span class="o">/</span> <span class="n">binsz</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span> <span class="o">+</span> <span class="n">margin</span> <span class="o">/</span> <span class="n">binsz</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">ymin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start</span> <span class="o">-</span> <span class="n">margin</span> <span class="o">/</span> <span class="n">binsz</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ny</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">box</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span> <span class="o">+</span> <span class="n">margin</span> <span class="o">/</span> <span class="n">binsz</span><span class="p">))</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">box_string</span> <span class="o">=</span> <span class="s">&#39;[{xmin}:{xmax},{ymin}:{ymax}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+    <span class="n">box</span> <span class="o">=</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span>
+    <span class="k">return</span> <span class="n">box</span><span class="p">,</span> <span class="n">box_string</span>
+
+</div>
+<div class="viewcode-block" id="measure_labeled_regions"><a class="viewcode-back" href="../../../api/gammapy.image.measure_labeled_regions.html#gammapy.image.measure_labeled_regions">[docs]</a><span class="k">def</span> <span class="nf">measure_labeled_regions</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s">&#39;IMAGE&#39;</span><span class="p">,</span>
+                            <span class="n">measure_positions</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">measure_values</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                            <span class="n">fits_offset</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">bbox_offset</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Measure source properties in image.</span>
+
+<span class="sd">    Sources are defined by a label image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">scipy.ndimage</span> <span class="kn">as</span> <span class="nn">nd</span>
+    <span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span>
+    <span class="c"># Measure all segments</span>
+    <span class="n">nsegments</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsegments</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c"># Measure all sources</span>
+    <span class="c"># Measure stuff</span>
+    <span class="nb">sum</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="nb">max</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="n">mean</span> <span class="o">=</span> <span class="n">nd</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">_split_xys</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">center_of_mass</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+    <span class="n">xpeak</span><span class="p">,</span> <span class="n">ypeak</span> <span class="o">=</span> <span class="n">_split_xys</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">maximum_position</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">index</span><span class="p">))</span>
+    <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">_split_slices</span><span class="p">(</span><span class="n">nd</span><span class="o">.</span><span class="n">find_objects</span><span class="p">(</span><span class="n">labels</span><span class="p">))</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">_measure_area</span><span class="p">(</span><span class="n">labels</span><span class="p">)</span>
+    <span class="c"># Use FITS convention, i.e. start counting at 1</span>
+    <span class="n">FITS_OFFSET</span> <span class="o">=</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">fits_offset</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="c"># Use SExtractor convention, i.e. slice max is inside</span>
+    <span class="n">BBOX_OFFSET</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="k">if</span> <span class="n">bbox_offset</span> <span class="k">else</span> <span class="mi">0</span>
+    <span class="c"># Create a table</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;NUMBER&#39;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">measure_positions</span><span class="p">:</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">x</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;X_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">y</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;Y_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">xpeak</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;XPEAK_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ypeak</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;YPEAK_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">xmin</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;XMIN_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">xmax</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span> <span class="o">+</span> <span class="n">BBOX_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;XMAX_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ymin</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;YMIN_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">ymax</span> <span class="o">+</span> <span class="n">FITS_OFFSET</span> <span class="o">+</span> <span class="n">BBOX_OFFSET</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;YMAX_IMAGE&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">area</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;AREA&#39;</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">measure_values</span><span class="p">:</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">max</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">tag</span> <span class="o">+</span> <span class="s">&#39;_MAX&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">sum</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">tag</span> <span class="o">+</span> <span class="s">&#39;_SUM&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">mean</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">tag</span> <span class="o">+</span> <span class="s">&#39;_MEAN&#39;</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+
+</div>
+<div class="viewcode-block" id="find_max"><a class="viewcode-back" href="../../../api/gammapy.image.find_max.html#gammapy.image.find_max">[docs]</a><span class="k">def</span> <span class="nf">find_max</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find position of maximum in an image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">        Input image</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    lon, lat, value : float</span>
+<span class="sd">        Maximum value and its position</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">maximum_position</span>
+    <span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+    <span class="n">proj</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">maximum_position</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">GLON</span><span class="p">,</span> <span class="n">GLAT</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">GLON</span><span class="p">,</span> <span class="n">GLAT</span><span class="p">,</span> <span class="n">val</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_lookup_pix</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Look up values in an image for given pixel coordinates.</span>
+
+<span class="sd">    image = numpy array</span>
+<span class="sd">    x, y = array_like of pixel coordinates (floats OK)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Find the right pixel</span>
+    <span class="n">x_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">y_int</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c"># Return it&#39;s value</span>
+    <span class="c"># Note that numpy has index order (y, x)</span>
+    <span class="n">values</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">y_int</span><span class="p">,</span> <span class="n">x_int</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+
+<span class="k">def</span> <span class="nf">_lookup_world</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Look up values in an image for given world coordinates.</span>
+
+<span class="sd">    image = astropy.io.fits.HDU</span>
+<span class="sd">    lon, lat = world coordinates (float OK)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">wcs_world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_lookup_pix</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="lookup"><a class="viewcode-back" href="../../../api/gammapy.image.lookup.html#gammapy.image.lookup">[docs]</a><span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">world</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Look up values in an image.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : array_like if world=False, astropy.io.fits.ImageHDU if world=True</span>
+<span class="sd">        Array or image to look up the value</span>
+<span class="sd">    x : array_like</span>
+<span class="sd">        Array of X lookup positions</span>
+<span class="sd">    y : array_like</span>
+<span class="sd">        Array of Y lookup positions</span>
+<span class="sd">    world : bool</span>
+<span class="sd">        Are (x, y) WCS coordinates?</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">world</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_lookup_world</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_lookup_pix</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="lookup_max"><a class="viewcode-back" href="../../../api/gammapy.image.lookup_max.html#gammapy.image.lookup_max">[docs]</a><span class="k">def</span> <span class="nf">lookup_max</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">GLON</span><span class="p">,</span> <span class="n">GLAT</span><span class="p">,</span> <span class="n">theta</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Look up the max image values within a circle of radius theta</span>
+<span class="sd">    around lists of given positions (nan if outside)&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">coordinates</span>
+    <span class="n">GLON</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">GLON</span><span class="p">)</span>
+    <span class="n">GLON</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">GLON</span> <span class="o">&gt;</span> <span class="mi">180</span><span class="p">,</span> <span class="n">GLON</span> <span class="o">-</span> <span class="mi">360</span><span class="p">,</span> <span class="n">GLON</span><span class="p">)</span>
+    <span class="n">GLAT</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">GLAT</span><span class="p">)</span>
+    <span class="n">n_pos</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">GLON</span><span class="p">)</span>
+    <span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">theta</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_pos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float32&#39;</span><span class="p">)</span>
+
+    <span class="n">ll</span><span class="p">,</span> <span class="n">bb</span> <span class="o">=</span> <span class="n">coordinates</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_pos</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;float32&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_pos</span><span class="p">):</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">((</span><span class="n">GLON</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">-</span> <span class="n">ll</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span>
+                <span class="p">(</span><span class="n">GLAT</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">-</span> <span class="n">bb</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">&lt;=</span>
+                <span class="n">theta</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">val</span>
+
+</div>
+<div class="viewcode-block" id="measure_image_moments"><a class="viewcode-back" href="../../../api/gammapy.image.measure_image_moments.html#gammapy.image.measure_image_moments">[docs]</a><span class="k">def</span> <span class="nf">measure_image_moments</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">shift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute 0th, 1st and 2nd moments of an image.</span>
+
+<span class="sd">    NaN values are ignored in the computation.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    image : array</span>
+<span class="sd">        Input image array.</span>
+<span class="sd">    shift : float (default value 0.5)</span>
+<span class="sd">        Depending on where the image values are given, the grid has to be</span>
+<span class="sd">        shifted. If the values are given at the center of the pixel</span>
+<span class="sd">        shift = 0.5.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    image moments : list</span>
+<span class="sd">        List of image moments:</span>
+<span class="sd">        [A, x_cms, y_cms, x_sigma, y_sigma, sqrt(x_sigma * y_sigma)]</span>
+<span class="sd">        All value are given in pixel coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="n">shift</span>
+
+    <span class="c"># Center of mass</span>
+    <span class="n">x_cms</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">image</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">A</span>
+    <span class="n">y_cms</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">image</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">A</span>
+
+    <span class="c"># Second moments</span>
+    <span class="n">x_var</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_cms</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">image</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">A</span>
+    <span class="n">y_var</span> <span class="o">=</span> <span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_cms</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">image</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">A</span>
+    <span class="n">x_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x_var</span><span class="p">)</span>
+    <span class="n">y_sigma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">y_var</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">A</span><span class="p">,</span> <span class="n">x_cms</span><span class="p">,</span> <span class="n">y_cms</span><span class="p">,</span> <span class="n">x_sigma</span><span class="p">,</span> <span class="n">y_sigma</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x_sigma</span> <span class="o">*</span> <span class="n">y_sigma</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="measure_containment_radius"><a class="viewcode-back" href="../../../api/gammapy.image.measure_containment_radius.html#gammapy.image.measure_containment_radius">[docs]</a><span class="k">def</span> <span class="nf">measure_containment_radius</span><span class="p">(</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="n">image</span><span class="p">,</span> <span class="n">containment_fraction</span><span class="p">,</span>
+                               <span class="n">shift</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">normalize_image</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Measure containment radius.</span>
+
+<span class="sd">    Uses `scipy.optimize.brentq`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_pos : float</span>
+<span class="sd">        x position of the source in pixel coordinates.</span>
+<span class="sd">    y_pos : float</span>
+<span class="sd">        y position of the source in pixel coordinates.</span>
+<span class="sd">    image : array</span>
+<span class="sd">        Intensity image</span>
+<span class="sd">    containment_fraction : float</span>
+<span class="sd">        Containment fraction</span>
+<span class="sd">    normalize_image : bool</span>
+<span class="sd">        Set ``normalize_image=False`` if it already is normalized</span>
+<span class="sd">        and you want the speed.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    containment_radius : float</span>
+<span class="sd">        Containment radius (pix)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">brentq</span>
+
+    <span class="c"># Set up squared radius array</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="n">shift</span>
+    <span class="n">rr</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">x_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+    <span class="k">if</span> <span class="n">normalize_image</span><span class="p">:</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">image</span> <span class="o">/</span> <span class="n">image</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">)]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">measure_containment_fraction</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">image</span><span class="p">)</span> <span class="o">-</span> <span class="n">containment_fraction</span>
+
+    <span class="n">containment_radius</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">rr</span><span class="o">.</span><span class="n">max</span><span class="p">()))</span>
+
+    <span class="k">return</span> <span class="n">containment_radius</span>
+
+</div>
+<div class="viewcode-block" id="measure_containment_fraction"><a class="viewcode-back" href="../../../api/gammapy.image.measure_containment_fraction.html#gammapy.image.measure_containment_fraction">[docs]</a><span class="k">def</span> <span class="nf">measure_containment_fraction</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">rr</span><span class="p">,</span> <span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Measure containment fraction.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    r : float</span>
+<span class="sd">        Containment radius.</span>
+<span class="sd">    rr : array</span>
+<span class="sd">        Squared radius array.</span>
+<span class="sd">    image : array</span>
+<span class="sd">        The image has to be normalized! I.e. image.sum() = 1.</span>
+
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    containment_fraction : float</span>
+<span class="sd">        Containment fraction</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Set up indices and containment mask</span>
+    <span class="n">containment_mask</span> <span class="o">=</span> <span class="n">rr</span> <span class="o">&lt;</span> <span class="n">r</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">containment_mask</span><span class="p">)</span>
+
+    <span class="n">containment_fraction</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">containment_fraction</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_split_xys</span><span class="p">(</span><span class="n">pos</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to work with `scipy.ndimage`.&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pos</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pos</span><span class="p">)[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+
+<span class="k">def</span> <span class="nf">_split_slices</span><span class="p">(</span><span class="n">slices</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to work with `scipy.ndimage`.&quot;&quot;&quot;</span>
+    <span class="c"># scipy.ndimage.find_objects returns a list of</span>
+    <span class="c"># tuples of slices, which is not what we want.</span>
+    <span class="c"># The following list comprehensions extract</span>
+    <span class="c"># the format we need.</span>
+    <span class="n">xmin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">start</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">])</span>
+    <span class="n">xmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">])</span>
+    <span class="n">ymin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">start</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">])</span>
+    <span class="n">ymax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">stop</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">slices</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span>
+
+
+<span class="k">def</span> <span class="nf">_measure_area</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Measure the area in pix of each segment.&quot;&quot;&quot;</span>
+    <span class="n">nsegments</span> <span class="o">=</span> <span class="n">labels</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+    <span class="n">area</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nsegments</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nsegments</span><span class="p">):</span>
+        <span class="n">area</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">labels</span> <span class="o">==</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">area</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="measure.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Sphere2D &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="up" title="Morphology and PSF methods (gammapy.morphology)" href="../morphology/index.html" />
+    <link rel="next" title="ThetaCalculator" href="gammapy.morphology.ThetaCalculator.html" />
+    <link rel="prev" title="Shell2D" href="gammapy.morphology.Shell2D.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.morphology.Sphere2D.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "api/gammapy.morphology.Sphere2D",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.morphology.Sphere2D";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.morphology.ThetaCalculator.html" title="ThetaCalculator">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.morphology.Shell2D.html" title="Shell2D">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../morphology/index.html" accesskey="U">Morphology and PSF methods (<tt class="docutils literal"><span class="pre">gammapy.morphology</span></tt>)</a> &raquo;</li>
+      
+      <li>Sphere2D</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="sphere2d">
+<h1>Sphere2D<a class="headerlink" href="gammapy.morphology.Sphere2D.html#sphere2d" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.morphology.Sphere2D">
+<em class="property">class </em><tt class="descclassname">gammapy.morphology.</tt><tt class="descname">Sphere2D</tt><big>(</big><em>amplitude</em>, <em>x_0</em>, <em>y_0</em>, <em>r_0</em>, <em>normed=True</em>, <em>**constraints</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/shapes.html#Sphere2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">astropy.modeling.core.Fittable2DModel</span></tt></p>
+<p>Projected homogeneous radiating sphere model.</p>
+<p>This model can be used for a simple PWN source morphology.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>amplitude</strong> : float</p>
+<blockquote>
+<div><p>Value of the integral of the sphere function</p>
+</div></blockquote>
+<p><strong>x_0</strong> : float</p>
+<blockquote>
+<div><p>x position center of the sphere</p>
+</div></blockquote>
+<p><strong>y_0</strong> : float</p>
+<blockquote>
+<div><p>y position center of the sphere</p>
+</div></blockquote>
+<p><strong>r_0</strong> : float</p>
+<blockquote>
+<div><p>Radius of the sphere</p>
+</div></blockquote>
+<p><strong>normed</strong> : bool (True)</p>
+<blockquote class="last">
+<div><p>If set the amplitude parameter corresponds to the integral of the
+function. If not set the &#8216;amplitude&#8217; parameter corresponds to the
+peak value of the function (value at <img class="math" src="../_images/math/a8813d6b9a1d7b9f16fee6feba5b7d67f0152c11.png" alt="r = 0"/>).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="gammapy.morphology.Shell2D.html#gammapy.morphology.Shell2D" title="gammapy.morphology.Shell2D"><tt class="xref py py-obj docutils literal"><span class="pre">Shell2D</span></tt></a>, <a class="reference internal" href="gammapy.morphology.Delta2D.html#gammapy.morphology.Delta2D" title="gammapy.morphology.Delta2D"><tt class="xref py py-obj docutils literal"><span class="pre">Delta2D</span></tt></a>, <tt class="xref py py-obj docutils literal"><span class="pre">astropy.modeling.models.Gaussian2D</span></tt></p>
+</div>
+<p class="rubric">Notes</p>
+<p>Model formula with integral normalization:</p>
+<div class="math">
+<p><img src="../_images/math/70ee55fe8e6d14f4ea396b8fda42391f0c858a2b.png" alt="f(r) = A \frac{3}{4 \pi r_0^3} \cdot \left \{
+        \begin{array}{ll}
+            \sqrt{r_0^2 - r^2} &amp; :  r \leq r_0 \\
+            0 &amp; : r &gt; r_0
+        \end{array}
+    \right."/></p>
+</div><p>Model formula with peak normalization:</p>
+<div class="math">
+<p><img src="../_images/math/b7a53d4889f2b354684a76cc1b4f9c388f56165f.png" alt="f(r) = A \frac{1}{r_0} \cdot \left \{
+        \begin{array}{ll}
+            \sqrt{r_0^2 - r^2} &amp; :  r \leq r_0 \\
+            0 &amp; : r &gt; r_0
+        \end{array}
+    \right."/></p>
+</div><p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.amplitude" title="gammapy.morphology.Sphere2D.amplitude"><tt class="xref py py-obj docutils literal"><span class="pre">amplitude</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.param_names" title="gammapy.morphology.Sphere2D.param_names"><tt class="xref py py-obj docutils literal"><span class="pre">param_names</span></tt></a></td>
+<td>list() -&gt; new empty list</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.r_0" title="gammapy.morphology.Sphere2D.r_0"><tt class="xref py py-obj docutils literal"><span class="pre">r_0</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.x_0" title="gammapy.morphology.Sphere2D.x_0"><tt class="xref py py-obj docutils literal"><span class="pre">x_0</span></tt></a></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.y_0" title="gammapy.morphology.Sphere2D.y_0"><tt class="xref py py-obj docutils literal"><span class="pre">y_0</span></tt></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.eval" title="gammapy.morphology.Sphere2D.eval"><tt class="xref py py-obj docutils literal"><span class="pre">eval</span></tt></a>(x,&nbsp;y,&nbsp;amplitude,&nbsp;x_0,&nbsp;y_0,&nbsp;r_0)</td>
+<td>Two dimensional Sphere model function normed to integral</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.eval_peak_norm" title="gammapy.morphology.Sphere2D.eval_peak_norm"><tt class="xref py py-obj docutils literal"><span class="pre">eval_peak_norm</span></tt></a>(x,&nbsp;y,&nbsp;amplitude,&nbsp;x_0,&nbsp;y_0,&nbsp;r_0)</td>
+<td>Two dimensional Sphere model function normed to peak value</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.morphology.Sphere2D.amplitude">
+<tt class="descname">amplitude</tt><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.amplitude" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.morphology.Sphere2D.param_names">
+<tt class="descname">param_names</tt><em class="property"> = ['amplitude', 'x_0', 'y_0', 'r_0']</em><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.param_names" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.morphology.Sphere2D.r_0">
+<tt class="descname">r_0</tt><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.r_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.morphology.Sphere2D.x_0">
+<tt class="descname">x_0</tt><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.x_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.morphology.Sphere2D.y_0">
+<tt class="descname">y_0</tt><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.y_0" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="staticmethod">
+<dt id="gammapy.morphology.Sphere2D.eval">
+<em class="property">static </em><tt class="descname">eval</tt><big>(</big><em>x</em>, <em>y</em>, <em>amplitude</em>, <em>x_0</em>, <em>y_0</em>, <em>r_0</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/shapes.html#Sphere2D.eval"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.eval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Two dimensional Sphere model function normed to integral</p>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.morphology.Sphere2D.eval_peak_norm">
+<em class="property">static </em><tt class="descname">eval_peak_norm</tt><big>(</big><em>x</em>, <em>y</em>, <em>amplitude</em>, <em>x_0</em>, <em>y_0</em>, <em>r_0</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/shapes.html#Sphere2D.eval_peak_norm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.Sphere2D.html#gammapy.morphology.Sphere2D.eval_peak_norm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Two dimensional Sphere model function normed to peak value</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.morphology.Sphere2D.html#">Sphere2D</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.morphology.Sphere2D.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.morphology.Sphere2D.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+
+
+check_chi2
+===========================================
+
+.. currentmodule:: gammapy.spectrum.sherpa_chi2asym
+
+.. autofunction:: check_chi2

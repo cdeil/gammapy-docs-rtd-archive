@@ -1,0 +1,50 @@
+
+
+TableModel
+==================================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: TableModel
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~TableModel.get_points
+      ~TableModel.integral
+      ~TableModel.plot
+      ~TableModel.zeros
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: get_points
+   .. automethod:: integral
+   .. automethod:: plot
+   .. automethod:: zeros
+
+   
+   

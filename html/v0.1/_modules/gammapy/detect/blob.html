@@ -1,0 +1,523 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.detect.blob &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/detect/blob.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/detect/blob",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/detect/blob";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.detect.blob</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Blob detection tool for source detection.</span>
+
+<span class="sd">This generic blob detection algorithm is based on:</span>
+<span class="sd">http://www.cs.utah.edu/~jfishbau/advimproc/project1/</span>
+
+<span class="sd">Theory: http://en.wikipedia.org/wiki/Blob_detection</span>
+
+<span class="sd">The peak detection was modified to use a maximum filter.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">combinations</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">cos</span><span class="p">,</span> <span class="n">pi</span><span class="p">,</span> <span class="n">arccos</span><span class="p">,</span> <span class="nb">abs</span><span class="p">,</span> <span class="n">exp</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;create_scale_space&#39;</span><span class="p">,</span> <span class="s">&#39;detect_peaks&#39;</span><span class="p">,</span> <span class="s">&#39;detect_peaks_3D&#39;</span><span class="p">,</span>
+           <span class="s">&#39;show_peaks&#39;</span><span class="p">,</span> <span class="s">&#39;detect_blobs_3D&#39;</span><span class="p">,</span> <span class="s">&#39;detect_blobs&#39;</span><span class="p">,</span> <span class="s">&#39;prune_blobs&#39;</span><span class="p">,</span>
+           <span class="s">&#39;show_blobs&#39;</span><span class="p">,</span> <span class="s">&#39;write_region_file&#39;</span><span class="p">,</span> <span class="s">&#39;Blob&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="create_scale_space"><a class="viewcode-back" href="../../../api/gammapy.detect.create_scale_space.html#gammapy.detect.create_scale_space">[docs]</a><span class="k">def</span> <span class="nf">create_scale_space</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scales</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="s">&#39;gaussian_laplace&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates Scale Space for a given image and stores it in 3D array.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">gaussian_filter</span><span class="p">,</span> <span class="n">gaussian_laplace</span>
+
+    <span class="c"># Filter option</span>
+    <span class="k">if</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s">&#39;gaussian&#39;</span><span class="p">:</span>
+        <span class="n">scale_filter</span> <span class="o">=</span> <span class="n">gaussian_filter</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="s">&#39;1&#39;</span>
+    <span class="k">elif</span> <span class="n">kernel</span> <span class="o">==</span> <span class="s">&#39;gaussian_laplace&#39;</span><span class="p">:</span>
+        <span class="n">scale_filter</span> <span class="o">=</span> <span class="n">gaussian_laplace</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="s">&#39;-scale**2&#39;</span>  <span class="c"># Normalization for linear scale space, see Wikipedia link above</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid kernel option&#39;</span><span class="p">)</span>
+
+    <span class="c"># Set up scale space dimensions</span>
+    <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">scale_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+
+    <span class="c"># Compute scale space</span>
+    <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="n">scales</span><span class="p">:</span>
+        <span class="n">image_scaled</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="n">N</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">scale_filter</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;constant&#39;</span><span class="p">),</span> <span class="n">ndmin</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+        <span class="n">scale_space</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">scale_space</span><span class="p">,</span> <span class="n">image_scaled</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">scale_space</span>
+
+</div>
+<div class="viewcode-block" id="detect_peaks"><a class="viewcode-back" href="../../../api/gammapy.detect.detect_peaks.html#gammapy.detect.detect_peaks">[docs]</a><span class="k">def</span> <span class="nf">detect_peaks</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect peaks in an image  using a maximum filter.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">maximum_filter</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage.morphology</span> <span class="kn">import</span> <span class="n">binary_erosion</span>
+
+    <span class="c"># Set up 3x3 footprint for maximum filter, can also be a different neighborhood if necessary</span>
+    <span class="n">footprint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="c"># Apply maximum filter: All pixel in the neighborhood are set</span>
+    <span class="c"># to the maximal value. Peaks are where image = maximum_filter(image)</span>
+    <span class="n">local_maximum</span> <span class="o">=</span> <span class="n">maximum_filter</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">footprint</span><span class="o">=</span><span class="n">footprint</span><span class="p">)</span> <span class="o">==</span> <span class="n">image</span>
+
+    <span class="c"># We have false detections, where the image is zero, we call it background.</span>
+    <span class="c"># Create the mask of the background</span>
+    <span class="n">zero_background</span> <span class="o">=</span> <span class="p">(</span><span class="n">image</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># Erode background at the borders, otherwise we would miss the points in the neighborhood</span>
+    <span class="n">eroded_background</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">zero_background</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">footprint</span><span class="p">,</span> <span class="n">border_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Remove the background from the local_maximum image</span>
+    <span class="n">detected_peaks</span> <span class="o">=</span> <span class="n">local_maximum</span> <span class="o">-</span> <span class="n">eroded_background</span>
+    <span class="k">return</span> <span class="n">detected_peaks</span>
+
+</div>
+<div class="viewcode-block" id="detect_peaks_3D"><a class="viewcode-back" href="../../../api/gammapy.detect.detect_peaks_3D.html#gammapy.detect.detect_peaks_3D">[docs]</a><span class="k">def</span> <span class="nf">detect_peaks_3D</span><span class="p">(</span><span class="n">image</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Same functionality as detect_peaks, but works on image cubes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">maximum_filter</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage.morphology</span> <span class="kn">import</span> <span class="n">binary_erosion</span>
+
+    <span class="c"># Set up 3x3 footprint for maximum filter</span>
+    <span class="n">footprint</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="c"># Apply maximum filter: All pixel in the neighborhood are set</span>
+    <span class="c"># to the maximal value. Peaks are where image = maximum_filter(image)</span>
+    <span class="n">local_max</span> <span class="o">=</span> <span class="n">maximum_filter</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">footprint</span><span class="o">=</span><span class="n">footprint</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;constant&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="n">image</span>
+
+    <span class="c"># We have false detections, where the image is zero, we call it background.</span>
+    <span class="c"># Create the mask of the background</span>
+    <span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="n">image</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c"># Erode background at the borders, otherwise we would miss</span>
+    <span class="n">eroded_background</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="n">footprint</span><span class="p">,</span> <span class="n">border_value</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Remove the background from the local_max mask</span>
+    <span class="n">detected_peaks</span> <span class="o">=</span> <span class="n">local_max</span> <span class="o">-</span> <span class="n">eroded_background</span>
+    <span class="k">return</span> <span class="n">detected_peaks</span>
+
+</div>
+<div class="viewcode-block" id="show_peaks"><a class="viewcode-back" href="../../../api/gammapy.detect.show_peaks.html#gammapy.detect.show_peaks">[docs]</a><span class="k">def</span> <span class="nf">show_peaks</span><span class="p">(</span><span class="n">image_3D</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Show all images of different scales including the detected peaks.</span>
+
+<span class="sd">    Useful for debugging.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+    <span class="k">for</span> <span class="n">scale_image</span> <span class="ow">in</span> <span class="n">image_3D</span><span class="p">:</span>
+        <span class="c"># Detect peaks</span>
+        <span class="n">detected_peaks</span> <span class="o">=</span> <span class="n">detect_peaks</span><span class="p">(</span><span class="n">scale_image</span><span class="p">)</span>
+
+        <span class="c"># Show image and peaks</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">scale_image</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">detected_peaks</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="detect_blobs_3D"><a class="viewcode-back" href="../../../api/gammapy.detect.detect_blobs_3D.html#gammapy.detect.detect_blobs_3D">[docs]</a><span class="k">def</span> <span class="nf">detect_blobs_3D</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find maxima in image cubes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Replace nan values by 0</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">image</span><span class="p">)</span>
+
+    <span class="c"># Compute scale parameters and compute scale space</span>
+    <span class="n">scale_parameters</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+    <span class="n">image_3D</span> <span class="o">=</span> <span class="n">create_scale_space</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">scale_parameters</span><span class="p">)</span>
+    <span class="n">blobs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c"># Employ threshold</span>
+    <span class="n">mask_threshold</span> <span class="o">=</span> <span class="n">image_3D</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+    <span class="n">detected_peaks</span> <span class="o">=</span> <span class="n">detect_peaks_3D</span><span class="p">(</span><span class="n">image_3D</span> <span class="o">*</span> <span class="n">mask_threshold</span><span class="p">)</span>
+    <span class="n">scale_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">,</span> <span class="n">x_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">detected_peaks</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="c"># Loop over all found blobs</span>
+    <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scale</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">,</span> <span class="n">scale_list</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">image_3D</span><span class="p">[</span><span class="n">scale</span><span class="p">][</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+        <span class="n">blobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Blob</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">val</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">blobs</span>
+
+</div>
+<div class="viewcode-block" id="detect_blobs"><a class="viewcode-back" href="../../../api/gammapy.detect.detect_blobs.html#gammapy.detect.detect_blobs">[docs]</a><span class="k">def</span> <span class="nf">detect_blobs</span><span class="p">(</span><span class="n">image_3D</span><span class="p">,</span> <span class="n">scales</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Detect blobs of different sizes.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Set up empty blob list</span>
+    <span class="n">blobs</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c"># Loop over all scale space images</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">scale_image</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">image_3D</span><span class="p">):</span>
+        <span class="c"># Maybe it is useful to employ different threshold values on different scales</span>
+        <span class="n">mask_threshold</span> <span class="o">=</span> <span class="n">scale_image</span> <span class="o">&gt;</span> <span class="n">threshold</span>
+
+        <span class="c"># Detect peaks</span>
+        <span class="n">detected_peaks</span> <span class="o">=</span> <span class="n">detect_peaks</span><span class="p">(</span><span class="n">scale_image</span> <span class="o">*</span> <span class="n">mask_threshold</span><span class="p">)</span>
+
+        <span class="c"># Get peak coordinates</span>
+        <span class="n">y_list</span><span class="p">,</span> <span class="n">x_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">detected_peaks</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c"># Set up list of blobs, with position, norm and size</span>
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">x_list</span><span class="p">,</span> <span class="n">y_list</span><span class="p">):</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">scales</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">scale_image</span><span class="p">[</span><span class="n">y</span><span class="p">][</span><span class="n">x</span><span class="p">]</span>
+            <span class="n">blobs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Blob</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scale</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">blobs</span>
+
+</div>
+<div class="viewcode-block" id="prune_blobs"><a class="viewcode-back" href="../../../api/gammapy.detect.prune_blobs.html#gammapy.detect.prune_blobs">[docs]</a><span class="k">def</span> <span class="nf">prune_blobs</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="n">overlap_threshold</span><span class="p">,</span> <span class="n">q_factor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Prune blobs.</span>
+
+<span class="sd">    If the overlap area of two blobs is to large,</span>
+<span class="sd">    the one with the smaller peak value is dismissed.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># It is still the question whether the result is unique</span>
+    <span class="c"># Loop over all pairwise blob combinations</span>
+    <span class="k">for</span> <span class="n">blob_1</span><span class="p">,</span> <span class="n">blob_2</span> <span class="ow">in</span> <span class="n">combinations</span><span class="p">(</span><span class="n">blobs</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">q_factor</span><span class="p">:</span>
+            <span class="n">overlap</span> <span class="o">=</span> <span class="n">blob_1</span><span class="o">.</span><span class="n">q_factor</span><span class="p">(</span><span class="n">blob_2</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">overlap</span> <span class="o">=</span> <span class="n">blob_1</span><span class="o">.</span><span class="n">overlap</span><span class="p">(</span><span class="n">blob_2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">overlap</span> <span class="o">&gt;</span> <span class="n">overlap_threshold</span><span class="p">:</span>  <span class="c"># Overlap criterion, neighborhood criterion</span>
+            <span class="k">if</span> <span class="n">blob_1</span><span class="o">.</span><span class="n">value</span> <span class="o">&gt;</span> <span class="n">blob_2</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>  <span class="c"># Find maximum</span>
+                <span class="n">blob_2</span><span class="o">.</span><span class="n">keep</span> <span class="o">=</span> <span class="bp">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">blob_1</span><span class="o">.</span><span class="n">keep</span> <span class="o">=</span> <span class="bp">False</span>
+
+    <span class="c"># That is Python programming at its best:-)</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">blob</span> <span class="k">for</span> <span class="n">blob</span> <span class="ow">in</span> <span class="n">blobs</span> <span class="k">if</span> <span class="n">blob</span><span class="o">.</span><span class="n">keep</span><span class="p">]</span>
+
+</div>
+<div class="viewcode-block" id="show_blobs"><a class="viewcode-back" href="../../../api/gammapy.detect.show_blobs.html#gammapy.detect.show_blobs">[docs]</a><span class="k">def</span> <span class="nf">show_blobs</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">blobs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Show input image with overlaid blobs.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s">&#39;lower&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c"># plt.colorbar()</span>
+
+    <span class="k">for</span> <span class="n">blob</span> <span class="ow">in</span> <span class="n">blobs</span><span class="p">:</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="n">image</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;y&#39;</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="write_region_file"><a class="viewcode-back" href="../../../api/gammapy.detect.write_region_file.html#gammapy.detect.write_region_file">[docs]</a><span class="k">def</span> <span class="nf">write_region_file</span><span class="p">(</span><span class="n">regionfile</span><span class="p">,</span> <span class="n">blobs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Write ds9 region file from blob list.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Open region file, it will be overwritten if it already exists!</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">regionfile</span><span class="p">,</span> <span class="s">&#39;w&#39;</span><span class="p">)</span>
+
+    <span class="c"># Write blobs to file</span>
+    <span class="k">for</span> <span class="n">blob</span> <span class="ow">in</span> <span class="n">blobs</span><span class="p">:</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s">&quot;circle({0}, {1}, {2})</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">region_string</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">blob</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="n">blob</span><span class="o">.</span><span class="n">y_pos</span><span class="p">,</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">region_string</span><span class="p">)</span>
+    <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+</div>
+<div class="viewcode-block" id="Blob"><a class="viewcode-back" href="../../../api/gammapy.detect.Blob.html#gammapy.detect.Blob">[docs]</a><span class="k">class</span> <span class="nc">Blob</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An excess blob is represented by a position, radius and peak value.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x_pos : array_like</span>
+<span class="sd">        X position</span>
+<span class="sd">    y_pos : array_like</span>
+<span class="sd">        Y position</span>
+<span class="sd">    radius : array_like</span>
+<span class="sd">        Radius</span>
+<span class="sd">    value : array_like</span>
+<span class="sd">        Value (TODO: excess or flux or amplitude?)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_pos</span><span class="p">,</span> <span class="n">y_pos</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span> <span class="o">=</span> <span class="n">x_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span> <span class="o">=</span> <span class="n">y_pos</span>
+        <span class="c"># The algorithm is most sensitive for extensions of sqrt(2) * t,</span>
+        <span class="c"># where t is the scale space parameter.</span>
+        <span class="c"># This has still to be verified, e.g. for a Gaussian source.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="mf">1.41</span> <span class="o">*</span> <span class="n">radius</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">value</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keep</span> <span class="o">=</span> <span class="bp">True</span>
+
+    <span class="c"># TODO: make it a property</span>
+<div class="viewcode-block" id="Blob.area"><a class="viewcode-back" href="../../../api/gammapy.detect.Blob.html#gammapy.detect.Blob.area">[docs]</a>    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Blob area.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pi</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span>
+</div>
+<div class="viewcode-block" id="Blob.overlap"><a class="viewcode-back" href="../../../api/gammapy.detect.Blob.html#gammapy.detect.Blob.overlap">[docs]</a>    <span class="k">def</span> <span class="nf">overlap</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blob</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overlap between two blobs.</span>
+
+<span class="sd">        Defined by the overlap area.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        TODO</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># For now it is just the overlap area of two containment circles</span>
+        <span class="c"># It could be replaced by the Q or C factor, which also defines</span>
+        <span class="c"># a certain neighborhood.</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">x_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">y_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c"># One circle lies inside the other</span>
+        <span class="k">if</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">):</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="n">pi</span> <span class="o">*</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="c"># Circles don&#39;t overlap</span>
+        <span class="k">elif</span> <span class="n">d</span> <span class="o">&gt;</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">):</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c"># Compute overlap area.</span>
+        <span class="c"># Reference: http://mathworld.wolfram.com/Circle-CircleIntersection.html (04.04.2013)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">term_a</span> <span class="o">=</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">arccos</span><span class="p">((</span><span class="n">d</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">))</span>
+            <span class="n">term_b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">arccos</span><span class="p">((</span><span class="n">d</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">d</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">))</span>
+            <span class="n">term_c</span> <span class="o">=</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">((</span><span class="o">-</span><span class="n">d</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span> <span class="o">*</span>
+                                    <span class="p">(</span><span class="n">d</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">d</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">blob</span><span class="o">.</span><span class="n">radius</span><span class="p">)))</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="p">(</span><span class="n">term_a</span> <span class="o">+</span> <span class="n">term_b</span> <span class="o">-</span> <span class="n">term_c</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="n">area</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">area</span><span class="p">(),</span> <span class="n">area</span> <span class="o">/</span> <span class="n">blob</span><span class="o">.</span><span class="n">area</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="Blob.q_factor"><a class="viewcode-back" href="../../../api/gammapy.detect.Blob.html#gammapy.detect.Blob.q_factor">[docs]</a>    <span class="k">def</span> <span class="nf">q_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blob</span><span class="p">,</span> <span class="n">sigma_PSF</span><span class="o">=</span><span class="mf">0.1</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute q factor as overlap criterion.</span>
+
+<span class="sd">        .. math::</span>
+<span class="sd">            TODO</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        TODO</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c"># Compute convolved sigma</span>
+        <span class="n">sigma_A</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">sigma_B</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">blob</span><span class="o">.</span><span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_PSF</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+        <span class="c"># sigma_AB squared</span>
+        <span class="n">sigma_AB2</span> <span class="o">=</span> <span class="n">sigma_A</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_B</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="c"># displacement x_AB squared</span>
+        <span class="n">x_AB2</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">x_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span> <span class="o">-</span> <span class="n">blob</span><span class="o">.</span><span class="n">y_pos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="c"># Normalization constant</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="mf">2.</span> <span class="o">*</span> <span class="n">sigma_A</span> <span class="o">*</span> <span class="n">sigma_B</span> <span class="o">/</span> <span class="n">sigma_AB2</span>
+        <span class="k">return</span> <span class="n">N</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">x_AB2</span> <span class="o">/</span> <span class="n">sigma_AB2</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="Blob.image"><a class="viewcode-back" href="../../../api/gammapy.detect.Blob.html#gammapy.detect.Blob.image">[docs]</a>    <span class="k">def</span> <span class="nf">image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return image of the blob.&quot;&quot;&quot;</span>
+        <span class="n">phi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+</div>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;x_pos: {0}, y_pos: {1}, radius: {2:02.2f}, peak value: {3:02.2f}&#39;</span>
+        <span class="k">return</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="blob.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

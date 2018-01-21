@@ -1,0 +1,288 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.utils.region &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/utils/region.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "_modules/gammapy/utils/region",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/utils/region";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.utils.region</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Sky and image region classes and functions.</span>
+
+<span class="sd">References:</span>
+
+<span class="sd">* https://pypi.python.org/pypi/pyregion</span>
+<span class="sd">* http://ds9.si.edu/doc/ref/region.html</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;make_ds9_region&#39;</span><span class="p">,</span>
+           <span class="s">&#39;Circle&#39;</span><span class="p">,</span>
+           <span class="s">&#39;SkyCircle&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<div class="viewcode-block" id="Circle"><a class="viewcode-back" href="../../../api/gammapy.utils.region.Circle.html#gammapy.utils.region.Circle">[docs]</a><span class="k">class</span> <span class="nc">Circle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Little helper to work with regions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="Circle.write"><a class="viewcode-back" href="../../../api/gammapy.utils.region.Circle.html#gammapy.utils.region.Circle.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="s">&#39;galactic&#39;</span><span class="p">,</span>
+              <span class="n">attrs</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="n">string</span> <span class="o">=</span> <span class="s">&#39;{system};circle({x},{y},{radius})&#39;</span>
+        <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s">&#39; #&#39;</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>  <span class="c"># and &#39; &#39; in val:</span>
+                    <span class="n">val</span> <span class="o">=</span> <span class="s">&#39;{{</span><span class="si">%s</span><span class="s">}}&#39;</span> <span class="o">%</span> <span class="n">val</span>
+                <span class="n">string</span> <span class="o">+=</span> <span class="s">&#39; {0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+</div>
+<div class="viewcode-block" id="Circle.parse"><a class="viewcode-back" href="../../../api/gammapy.utils.region.Circle.html#gammapy.utils.region.Circle.parse">[docs]</a>    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">string</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;,&#39;</span><span class="p">)</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span>  <span class="c"># , system, text, color</span>
+
+</div></div>
+<div class="viewcode-block" id="SkyCircle"><a class="viewcode-back" href="../../../api/gammapy.utils.region.SkyCircle.html#gammapy.utils.region.SkyCircle">[docs]</a><span class="k">class</span> <span class="nc">SkyCircle</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A circle on the sky.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    center : `~astropy.coordinates.SkyCoord`</span>
+<span class="sd">        Circle center coordinate</span>
+<span class="sd">    radius : `~astropy.coordinates.Angle`</span>
+<span class="sd">        Circle radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">center</span> <span class="o">=</span> <span class="n">center</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+
+<div class="viewcode-block" id="SkyCircle.contains"><a class="viewcode-back" href="../../../api/gammapy.utils.region.SkyCircle.html#gammapy.utils.region.SkyCircle.contains">[docs]</a>    <span class="k">def</span> <span class="nf">contains</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if the coordinate lies inside the circle.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coordinate : `~astropy.coordinates.SkyCoord`</span>
+<span class="sd">            Coordinate to check for containment.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        contains : bool</span>
+<span class="sd">            Does this region contain the coordinate?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">coordinate</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+</div>
+<div class="viewcode-block" id="SkyCircle.intersects"><a class="viewcode-back" href="../../../api/gammapy.utils.region.SkyCircle.html#gammapy.utils.region.SkyCircle.intersects">[docs]</a>    <span class="k">def</span> <span class="nf">intersects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if two sky circles overlap.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : `SkyCircle`</span>
+<span class="sd">            Other region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">center</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">radius</span>
+
+</div></div>
+<div class="viewcode-block" id="make_ds9_region"><a class="viewcode-back" href="../../../api/gammapy.utils.region.make_ds9_region.html#gammapy.utils.region.make_ds9_region">[docs]</a><span class="k">def</span> <span class="nf">make_ds9_region</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make ds9 region strings.</span>
+
+<span class="sd">    * circle x y radius</span>
+<span class="sd">    * ellipse x y radius radius angle</span>
+<span class="sd">    * annulus x y inner outer</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    source : dict</span>
+<span class="sd">        Dictionary with &#39;GLON&#39;, &#39;GLAT&#39;, &#39;Type&#39;, ... keys.</span>
+<span class="sd">    attrs : dict</span>
+<span class="sd">        Dictionary of attributes</span>
+<span class="sd">    scale : float</span>
+<span class="sd">        Gaussian scale factor</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    region_string : str</span>
+<span class="sd">        DS9 region string</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">],</span> <span class="n">source</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">source</span><span class="p">[</span><span class="s">&#39;Type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Gaussian&#39;</span> <span class="ow">or</span> <span class="s">&#39;NormGaussian&#39;</span><span class="p">:</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">])</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">radius</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_region_string</span><span class="p">(</span><span class="s">&#39;circle&#39;</span><span class="p">,</span> <span class="n">pars</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">source</span><span class="p">[</span><span class="s">&#39;Type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;ElongatedGaussian&#39;</span><span class="p">:</span>
+        <span class="c"># We scale the ellipse so that the major axis has size theta</span>
+        <span class="n">major</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s">&#39;Sigma&#39;</span><span class="p">])</span>
+        <span class="n">minor</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="nb">float</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s">&#39;Minor&#39;</span><span class="p">])</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">source</span><span class="p">[</span><span class="s">&#39;PositionAngle&#39;</span><span class="p">]</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">major</span><span class="p">,</span> <span class="n">minor</span><span class="p">,</span> <span class="n">angle</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_region_string</span><span class="p">(</span><span class="s">&#39;ellipse&#39;</span><span class="p">,</span> <span class="n">pars</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">source</span><span class="p">[</span><span class="s">&#39;Type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;Shell&#39;</span><span class="p">:</span>
+        <span class="n">inner</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s">&#39;InnerRadius&#39;</span><span class="p">])</span>
+        <span class="n">outer</span> <span class="o">=</span> <span class="n">inner</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s">&#39;Width&#39;</span><span class="p">])</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">inner</span><span class="p">,</span> <span class="n">outer</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">_region_string</span><span class="p">(</span><span class="s">&#39;annulus&#39;</span><span class="p">,</span> <span class="n">pars</span><span class="p">,</span> <span class="n">attrs</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_region_string</span><span class="p">(</span><span class="n">shape</span><span class="p">,</span> <span class="n">pars</span><span class="p">,</span> <span class="n">attrs</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="s">&#39;galactic&#39;</span><span class="p">):</span>
+    <span class="n">pars</span> <span class="o">=</span> <span class="s">&#39;,&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">pars</span><span class="p">])</span>
+    <span class="n">string</span> <span class="o">=</span> <span class="s">&#39;{system};{shape}({pars})&#39;</span>
+    <span class="k">if</span> <span class="n">attrs</span><span class="p">:</span>
+        <span class="n">string</span> <span class="o">+=</span> <span class="s">&#39; #&#39;</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">attrs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>  <span class="c"># and &#39; &#39; in val:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="s">&#39;{{</span><span class="si">%s</span><span class="s">}}&#39;</span> <span class="o">%</span> <span class="n">val</span>
+            <span class="n">string</span> <span class="o">+=</span> <span class="s">&#39; {0}={1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+    <span class="n">string</span> <span class="o">+=</span> <span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span>
+    <span class="k">return</span> <span class="n">string</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="region.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

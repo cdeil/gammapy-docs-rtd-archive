@@ -1,0 +1,8 @@
+
+
+assert_quantity
+=====================================
+
+.. currentmodule:: gammapy.utils.testing
+
+.. autofunction:: assert_quantity

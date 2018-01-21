@@ -1,0 +1,393 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Statistics tools (gammapy.stats) &mdash; gammapy v0.1</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.1" href="../index.html" />
+    <link rel="next" title="background" href="../api/gammapy.stats.background.html" />
+    <link rel="prev" title="load_chi2asym_stat" href="../api/gammapy.spectrum.sherpa_chi2asym.load_chi2asym_stat.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/stats/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.1",
+    language: "en",
+    page: "stats/index",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "7060f90715048bf4b519494441a271e9b5ab78c9"
+  }
+  // Old variables
+  var doc_version = "v0.1";
+  var doc_slug = "gammapy";
+  var page_name = "stats/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.1/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.stats.background.html" title="background">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.spectrum.sherpa_chi2asym.load_chi2asym_stat.html" title="load_chi2asym_stat">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.1</a>
+	 &raquo;
+      </li>
+      
+      <li>Statistics tools (<tt class="docutils literal"><span class="pre">gammapy.stats</span></tt>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="statistics-tools-gammapy-stats">
+<span id="stats"></span><h1>Statistics tools (<tt class="docutils literal"><span class="pre">gammapy.stats</span></tt>)<a class="headerlink" href="index.html#statistics-tools-gammapy-stats" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-gammapy.stats" title="gammapy.stats"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.stats</span></tt></a> holds statistical estimators,
+fit statistics and algorithms commonly used in gamma-ray astronomy.</p>
+<p>It is mostly concerned with the evaluation of one or several observations
+that count events in a given region and time window, i.e. with
+Poisson-distributed counts measurements.</p>
+<p>For on-off methods we will use the following variable names
+following the notation in <a class="reference internal" href="../references.html#cousins2007" id="id1">[Cousins2007]</a>:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Definition</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">n_on</span></tt></td>
+<td>Total observed counts in the on region</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">n_off</span></tt></td>
+<td>Total observed counts in the off region</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">mu_on</span></tt></td>
+<td>Total expected counts in the on region</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">mu_off</span></tt></td>
+<td>Total expected counts in the off region</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">mu_signal</span></tt></td>
+<td>Signal expected counts in the on region</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">mu_background</span></tt></td>
+<td>Background expected counts in the on region</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">a_on</span></tt></td>
+<td>Relative background efficiency in the on region</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">a_off</span></tt></td>
+<td>Relative background efficiency in the off region</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">alpha</span></tt></td>
+<td>Background efficiency ratio <tt class="docutils literal"><span class="pre">a_on</span></tt> / <tt class="docutils literal"><span class="pre">a_off</span></tt></td>
+</tr>
+</tbody>
+</table>
+<p>The following formulae show how an on-off measurement <img class="math" src="../_images/math/6a1542cbb8d96cabcc24320243cc9a8d9b813391.png" alt="(n_{on}, n_{off})"/>
+is related to the quantities in the above table:</p>
+<div class="math">
+<p><img src="../_images/math/658b4b1088c9c37a1d921d086e6da07e74ab1c43.png" alt="n_{on} \sim Pois(\mu_{on})\text{ with }\mu_{on} = \mu_s + \mu_b
+
+n_{off} \sim Pois(\mu_{off})\text{ with }\mu_{off} = \mu_b / \alpha\text{ with }\alpha = a_{on} / a_{off}"/></p>
+</div><p>The maximum likelihood estimate of a signal excess is</p>
+<div class="math">
+<p><img src="../_images/math/d24e98d6edeaac315c2cf8351921c37cf548090d.png" alt="n_{excess} = n_{on} - \alpha\ n_{off}."/></p>
+</div><p>When the background is known and there is only an &#8220;on&#8221; region (sometimes also called &#8220;source region&#8221;),
+we use the variable names <tt class="docutils literal"><span class="pre">n_observed</span></tt>, <tt class="docutils literal"><span class="pre">mu_observed</span></tt>, <tt class="docutils literal"><span class="pre">mu_signal</span></tt> and <tt class="docutils literal"><span class="pre">mu_background</span></tt>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Variable</th>
+<th class="head">Definition</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">n_observed</span></tt></td>
+<td>Observed counts</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">mu_observed</span></tt></td>
+<td>Expected counts (signal + background)</td>
+</tr>
+</tbody>
+</table>
+<p>Here&#8217;s some references describing the available methods:
+<a class="reference internal" href="../references.html#lima1983" id="id2">[LiMa1983]</a>, <a class="reference internal" href="../references.html#cash1979" id="id3">[Cash1979]</a>, <a class="reference internal" href="../references.html#stewart2009" id="id4">[Stewart2009]</a>, <a class="reference internal" href="../references.html#rolke2005" id="id5">[Rolke2005]</a>, <a class="reference internal" href="../references.html#feldman1998" id="id6">[Feldman1998]</a>, <a class="reference internal" href="../references.html#cousins2007" id="id7">[Cousins2007]</a>.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="index.html#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>As an example, assume you have measured <img class="math" src="../_images/math/1ecdb06d2ebe5bf44beec90cd0cab7c73afc88fe.png" alt="n_{on} = 18"/> counts in a
+region where you suspect a source might be present and <img class="math" src="../_images/math/cb31797b7daeacc294550811bcd61b971f3abbfd.png" alt="n_{off} = 97"/>
+counts in a background control region where you assume no source is present
+and that is <img class="math" src="../_images/math/bd3154bd80a5adb8560fd75ab0e69a2582a19fa3.png" alt="a_{off}/a_{on}=10"/> times larger than the on-region.</p>
+<p>Here&#8217;s how you compute the statistical significance of your detection
+with the Li &amp; Ma formula:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.stats</span> <span class="kn">import</span> <span class="n">significance_on_off</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">significance_on_off</span><span class="p">(</span><span class="n">n_on</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">n_off</span><span class="o">=</span><span class="mi">97</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">1.</span> <span class="o">/</span> <span class="mi">10</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;lima&#39;</span><span class="p">)</span>
+<span class="go">2.2421704424844875</span>
+</pre></div>
+</div>
+<p>TODO: More examples.</p>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.stats">
+<span id="gammapy-stats-module"></span><h3>gammapy.stats Module<a class="headerlink" href="index.html#module-gammapy.stats" title="Permalink to this headline">¶</a></h3>
+<p>Statistics utility functions and classes</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.background.html#gammapy.stats.background" title="gammapy.stats.background"><tt class="xref py py-obj docutils literal"><span class="pre">background</span></tt></a>(n_off,&nbsp;alpha)</td>
+<td>Estimate background in the on-region from an off-region observation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.background_error.html#gammapy.stats.background_error" title="gammapy.stats.background_error"><tt class="xref py py-obj docutils literal"><span class="pre">background_error</span></tt></a>(n_off,&nbsp;alpha)</td>
+<td>Estimate standard error on background in the on region from an off-region observation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.cash.html#gammapy.stats.cash" title="gammapy.stats.cash"><tt class="xref py py-obj docutils literal"><span class="pre">cash</span></tt></a>(n_observed,&nbsp;mu_observed)</td>
+<td>Cash statistic, for Poisson data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.chi2.html#gammapy.stats.chi2" title="gammapy.stats.chi2"><tt class="xref py py-obj docutils literal"><span class="pre">chi2</span></tt></a>(N_S,&nbsp;B,&nbsp;S,&nbsp;sigma2)</td>
+<td>Chi-square statistic with user-specified variance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.chi2constvar.html#gammapy.stats.chi2constvar" title="gammapy.stats.chi2constvar"><tt class="xref py py-obj docutils literal"><span class="pre">chi2constvar</span></tt></a>(N_S,&nbsp;N_B,&nbsp;A_S,&nbsp;A_B)</td>
+<td>Chi-square statistic with constant variance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.chi2datavar.html#gammapy.stats.chi2datavar" title="gammapy.stats.chi2datavar"><tt class="xref py py-obj docutils literal"><span class="pre">chi2datavar</span></tt></a>(N_S,&nbsp;N_B,&nbsp;A_S,&nbsp;A_B)</td>
+<td>Chi-square statistic with data variance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.chi2gehrels.html#gammapy.stats.chi2gehrels" title="gammapy.stats.chi2gehrels"><tt class="xref py py-obj docutils literal"><span class="pre">chi2gehrels</span></tt></a>(N_S,&nbsp;N_B,&nbsp;A_S,&nbsp;A_B)</td>
+<td>Chi-square statistic with Gehrel&#8217;s variance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.chi2modvar.html#gammapy.stats.chi2modvar" title="gammapy.stats.chi2modvar"><tt class="xref py py-obj docutils literal"><span class="pre">chi2modvar</span></tt></a>(S,&nbsp;B,&nbsp;A_S,&nbsp;A_B)</td>
+<td>Chi-square statistic with model variance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.chi2xspecvar.html#gammapy.stats.chi2xspecvar" title="gammapy.stats.chi2xspecvar"><tt class="xref py py-obj docutils literal"><span class="pre">chi2xspecvar</span></tt></a>(N_S,&nbsp;N_B,&nbsp;A_S,&nbsp;A_B)</td>
+<td>Chi-square statistic with XSPEC variance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.combine_stats.html#gammapy.stats.combine_stats" title="gammapy.stats.combine_stats"><tt class="xref py py-obj docutils literal"><span class="pre">combine_stats</span></tt></a>(stats_1,&nbsp;stats_2[,&nbsp;weight_method])</td>
+<td>Combine using some weight method for the exposure.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.compute_total_stats.html#gammapy.stats.compute_total_stats" title="gammapy.stats.compute_total_stats"><tt class="xref py py-obj docutils literal"><span class="pre">compute_total_stats</span></tt></a>(counts,&nbsp;exposure[,&nbsp;...])</td>
+<td>Compute total stats for arrays of per-bin stats.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.cov_to_corr.html#gammapy.stats.cov_to_corr" title="gammapy.stats.cov_to_corr"><tt class="xref py py-obj docutils literal"><span class="pre">cov_to_corr</span></tt></a>(covariance)</td>
+<td>Compute correlation matrix from covariance matrix.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.cstat.html#gammapy.stats.cstat" title="gammapy.stats.cstat"><tt class="xref py py-obj docutils literal"><span class="pre">cstat</span></tt></a>(n_observed,&nbsp;mu_observed[,&nbsp;n_observed_min])</td>
+<td>C statistic, for Poisson data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.excess.html#gammapy.stats.excess" title="gammapy.stats.excess"><tt class="xref py py-obj docutils literal"><span class="pre">excess</span></tt></a>(n_on,&nbsp;n_off,&nbsp;alpha)</td>
+<td>Estimate excess in the on region for an on-off observation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.excess_error.html#gammapy.stats.excess_error" title="gammapy.stats.excess_error"><tt class="xref py py-obj docutils literal"><span class="pre">excess_error</span></tt></a>(n_on,&nbsp;n_off,&nbsp;alpha)</td>
+<td>Estimate standard error on excess in the on region for an on-off observation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.lstat.html#gammapy.stats.lstat" title="gammapy.stats.lstat"><tt class="xref py py-obj docutils literal"><span class="pre">lstat</span></tt></a>()</td>
+<td>L statistic, for Poisson data with Poisson background (Bayesian).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.make_stats.html#gammapy.stats.make_stats" title="gammapy.stats.make_stats"><tt class="xref py py-obj docutils literal"><span class="pre">make_stats</span></tt></a>(signal,&nbsp;background,&nbsp;area_factor)</td>
+<td>Fill using some weight method for the exposure.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.p_to_s.html#gammapy.stats.p_to_s" title="gammapy.stats.p_to_s"><tt class="xref py py-obj docutils literal"><span class="pre">p_to_s</span></tt></a>(p)</td>
+<td>Convert one-sided tail probability to significance.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.p_to_s_limit.html#gammapy.stats.p_to_s_limit" title="gammapy.stats.p_to_s_limit"><tt class="xref py py-obj docutils literal"><span class="pre">p_to_s_limit</span></tt></a>(p)</td>
+<td>Convert tail probability to significance in the limit of small p and large s.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.pgstat.html#gammapy.stats.pgstat" title="gammapy.stats.pgstat"><tt class="xref py py-obj docutils literal"><span class="pre">pgstat</span></tt></a>()</td>
+<td>PG statistic, for Poisson data with Gaussian background.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.s_to_p.html#gammapy.stats.s_to_p" title="gammapy.stats.s_to_p"><tt class="xref py py-obj docutils literal"><span class="pre">s_to_p</span></tt></a>(s)</td>
+<td>Convert significance to one-sided tail probability.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.s_to_p_limit.html#gammapy.stats.s_to_p_limit" title="gammapy.stats.s_to_p_limit"><tt class="xref py py-obj docutils literal"><span class="pre">s_to_p_limit</span></tt></a>(s[,&nbsp;guess])</td>
+<td>Convert significance to tail probability in the limit of small p and large s.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.sensitivity.html#gammapy.stats.sensitivity" title="gammapy.stats.sensitivity"><tt class="xref py py-obj docutils literal"><span class="pre">sensitivity</span></tt></a>(mu_background,&nbsp;significance[,&nbsp;...])</td>
+<td>Compute sensitivity.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.sensitivity_on_off.html#gammapy.stats.sensitivity_on_off" title="gammapy.stats.sensitivity_on_off"><tt class="xref py py-obj docutils literal"><span class="pre">sensitivity_on_off</span></tt></a>(n_off,&nbsp;alpha,&nbsp;significance)</td>
+<td>Compute sensitivity of an on-off observation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.significance.html#gammapy.stats.significance" title="gammapy.stats.significance"><tt class="xref py py-obj docutils literal"><span class="pre">significance</span></tt></a>(n_observed,&nbsp;mu_background[,&nbsp;method])</td>
+<td>Compute significance for an observed number of counts and known background.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.significance_on_off.html#gammapy.stats.significance_on_off" title="gammapy.stats.significance_on_off"><tt class="xref py py-obj docutils literal"><span class="pre">significance_on_off</span></tt></a>(n_on,&nbsp;n_off,&nbsp;alpha[,&nbsp;...])</td>
+<td>Compute significance of an on-off observation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.wstat.html#gammapy.stats.wstat" title="gammapy.stats.wstat"><tt class="xref py py-obj docutils literal"><span class="pre">wstat</span></tt></a>()</td>
+<td>W statistic, for Poisson data with Poisson background.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.stats.PoissonLikelihoodFitter.html#gammapy.stats.PoissonLikelihoodFitter" title="gammapy.stats.PoissonLikelihoodFitter"><tt class="xref py py-obj docutils literal"><span class="pre">PoissonLikelihoodFitter</span></tt></a>(optimizer,&nbsp;statistic)</td>
+<td>Poisson likelihood fitter.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.stats.Stats.html#gammapy.stats.Stats" title="gammapy.stats.Stats"><tt class="xref py py-obj docutils literal"><span class="pre">Stats</span></tt></a>(n_on,&nbsp;n_off,&nbsp;a_on,&nbsp;a_off)</td>
+<td>Container for an on-off observation.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Statistics tools (<tt class="docutils literal"><span class="pre">gammapy.stats</span></tt>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.stats">gammapy.stats Module</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/stats/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2014, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 27 Aug 2014. <br/>
+  </p>
+</footer>
+  </body>
+</html>

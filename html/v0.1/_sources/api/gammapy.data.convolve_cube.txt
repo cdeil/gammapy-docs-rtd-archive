@@ -1,0 +1,8 @@
+
+
+convolve_cube
+==========================
+
+.. currentmodule:: gammapy.data
+
+.. autofunction:: convolve_cube

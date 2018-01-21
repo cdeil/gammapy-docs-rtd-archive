@@ -1,0 +1,44 @@
+
+
+TSMapCalculator
+==============================
+
+.. currentmodule:: gammapy.detect
+
+.. autoclass:: TSMapCalculator
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~TSMapCalculator.run
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: run
+
+   
+   

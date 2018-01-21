@@ -1,0 +1,8 @@
+
+
+create_scale_space
+=================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: create_scale_space

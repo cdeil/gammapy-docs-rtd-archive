@@ -1,0 +1,8 @@
+
+
+detect_peaks_3D
+==============================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: detect_peaks_3D

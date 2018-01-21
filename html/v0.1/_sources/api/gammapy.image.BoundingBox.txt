@@ -1,0 +1,71 @@
+
+
+BoundingBox
+=========================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: BoundingBox
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~BoundingBox.ftcopy_string
+      ~BoundingBox.is_empty
+      ~BoundingBox.slice
+      ~BoundingBox.x_slice
+      ~BoundingBox.y_slice
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~BoundingBox.for_circle
+      ~BoundingBox.intersection
+      ~BoundingBox.overlaps
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: ftcopy_string
+   .. autoattribute:: is_empty
+   .. autoattribute:: slice
+   .. autoattribute:: x_slice
+   .. autoattribute:: y_slice
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: for_circle
+   .. automethod:: intersection
+   .. automethod:: overlaps
+
+   
+   

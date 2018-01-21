@@ -1,0 +1,8 @@
+
+
+get_path
+=========================
+
+.. currentmodule:: gammapy.datasets
+
+.. autofunction:: get_path

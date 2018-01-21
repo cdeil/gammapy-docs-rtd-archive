@@ -1,0 +1,8 @@
+
+
+load_atnf_sample
+=================================
+
+.. currentmodule:: gammapy.datasets
+
+.. autofunction:: load_atnf_sample

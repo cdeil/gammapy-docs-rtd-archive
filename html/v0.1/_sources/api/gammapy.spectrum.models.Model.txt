@@ -1,0 +1,48 @@
+
+
+Model
+=============================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: Model
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Model.__call__
+      ~Model.integral
+      ~Model.points
+      ~Model.table_spectrum
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: __call__
+   .. automethod:: integral
+   .. automethod:: points
+   .. automethod:: table_spectrum
+
+   
+   

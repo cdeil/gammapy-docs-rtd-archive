@@ -1,0 +1,8 @@
+
+
+atrous_hdu
+========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: atrous_hdu

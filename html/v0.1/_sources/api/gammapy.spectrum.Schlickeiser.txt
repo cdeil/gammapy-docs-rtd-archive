@@ -1,0 +1,59 @@
+
+
+Schlickeiser
+=============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: Schlickeiser
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~Schlickeiser.component_infos
+      ~Schlickeiser.components
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Schlickeiser.__call__
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: component_infos
+   .. autoattribute:: components
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: __call__
+
+   
+   

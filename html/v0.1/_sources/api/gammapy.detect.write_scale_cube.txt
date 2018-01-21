@@ -1,0 +1,8 @@
+
+
+write_scale_cube
+===============================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: write_scale_cube

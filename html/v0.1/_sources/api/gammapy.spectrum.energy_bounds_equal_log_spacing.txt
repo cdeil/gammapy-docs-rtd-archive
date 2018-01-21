@@ -1,0 +1,8 @@
+
+
+energy_bounds_equal_log_spacing
+================================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: energy_bounds_equal_log_spacing

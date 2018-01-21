@@ -1,0 +1,8 @@
+
+
+significance_image
+=================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: significance_image

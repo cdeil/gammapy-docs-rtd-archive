@@ -1,0 +1,8 @@
+
+
+g_from_f
+==================================
+
+.. currentmodule:: gammapy.spectrum.powerlaw
+
+.. autofunction:: g_from_f

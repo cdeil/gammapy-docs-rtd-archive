@@ -1,0 +1,8 @@
+
+
+binary_disk
+=========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: binary_disk

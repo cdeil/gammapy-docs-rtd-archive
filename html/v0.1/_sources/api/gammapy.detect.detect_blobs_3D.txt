@@ -1,0 +1,8 @@
+
+
+detect_blobs_3D
+==============================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: detect_blobs_3D

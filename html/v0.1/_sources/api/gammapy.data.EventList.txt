@@ -1,0 +1,27 @@
+
+
+EventList
+======================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: EventList
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

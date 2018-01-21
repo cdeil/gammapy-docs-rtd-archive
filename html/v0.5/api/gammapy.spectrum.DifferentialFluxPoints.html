@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>DifferentialFluxPoints &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="Fitter" href="gammapy.spectrum.Fitter.html" />
+    <link rel="prev" title="CrabSpectrum" href="gammapy.spectrum.CrabSpectrum.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.DifferentialFluxPoints.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.DifferentialFluxPoints'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.Fitter.html" title="Fitter">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.CrabSpectrum.html" title="CrabSpectrum">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>DifferentialFluxPoints</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="differentialfluxpoints">
+<h1>DifferentialFluxPoints<a class="headerlink" href="gammapy.spectrum.DifferentialFluxPoints.html#differentialfluxpoints" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.DifferentialFluxPoints">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">DifferentialFluxPoints</code><span class="sig-paren">(</span><em>data=None</em>, <em>masked=None</em>, <em>names=None</em>, <em>dtype=None</em>, <em>meta=None</em>, <em>copy=True</em>, <em>rows=None</em>, <em>copy_indices=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/flux_point.html#DifferentialFluxPoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="astropy.table.Table"><code class="docutils literal"><span class="pre">astropy.table.Table</span></code></a></p>
+<p>Differential flux points table</p>
+<p>Column names: ENERGY, ENERGY_ERR_HI, ENERGY_ERR_LO,
+DIFF_FLUX, DIFF_FLUX_ERR_HI, DIFF_FLUX_ERR_LO
+For a complete documentation see <a class="reference external" href="http://gamma-astro-data-formats.readthedocs.io/en/latest/results/flux_points/index.html#flux-points" title="(in Data formats for gamma-ray astronomy v0.1)"><span>SED</span></a>, for an usage
+example see <a class="reference internal" href="../spectrum/flux_points.html#flux-point-computation"><span>Flux point computation</span></a>.</p>
+<p>Upper limits are stored as in the Fermi catalogs. I.e. the lower error is set
+to <code class="xref py py-obj docutils literal"><span class="pre">NaN</span></code>, while the upper error represents the 1 sigma upper limit.</p>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.from_arrays" title="gammapy.spectrum.DifferentialFluxPoints.from_arrays"><code class="xref py py-obj docutils literal"><span class="pre">from_arrays</span></code></a>(energy,&nbsp;diff_flux[,&nbsp;...])</td>
+<td>Create <a class="reference internal" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints" title="gammapy.spectrum.DifferentialFluxPoints"><code class="xref py py-obj docutils literal"><span class="pre">DifferentialFluxPoints</span></code></a> from numpy arrays</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.plot" title="gammapy.spectrum.DifferentialFluxPoints.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>([ax,&nbsp;energy_unit,&nbsp;flux_unit,&nbsp;energy_power])</td>
+<td>Plot flux points</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="classmethod">
+<dt id="gammapy.spectrum.DifferentialFluxPoints.from_arrays">
+<em class="property">classmethod </em><code class="descname">from_arrays</code><span class="sig-paren">(</span><em>energy</em>, <em>diff_flux</em>, <em>energy_err_hi=None</em>, <em>energy_err_lo=None</em>, <em>diff_flux_err_hi=None</em>, <em>diff_flux_err_lo=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/flux_point.html#DifferentialFluxPoints.from_arrays"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.from_arrays" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create <a class="reference internal" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints" title="gammapy.spectrum.DifferentialFluxPoints"><code class="xref py py-obj docutils literal"><span class="pre">DifferentialFluxPoints</span></code></a> from numpy arrays</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.DifferentialFluxPoints.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax=None</em>, <em>energy_unit=u'TeV'</em>, <em>flux_unit=u'cm-2 s-1 TeV-1'</em>, <em>energy_power=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/flux_point.html#DifferentialFluxPoints.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot flux points</p>
+<p>kwargs are forwarded to <a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.errorbar" title="(in Matplotlib v1.5.3)"><code class="xref py py-func docutils literal"><span class="pre">errorbar()</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a>, optional</p>
+<blockquote>
+<div><p>Axis</p>
+</div></blockquote>
+<p><strong>energy_unit</strong> : str, <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Unit.html#astropy.units.Unit" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Unit</span></code></a>, optional</p>
+<blockquote>
+<div><p>Unit of the energy axis</p>
+</div></blockquote>
+<p><strong>flux_unit</strong> : str, <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Unit.html#astropy.units.Unit" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Unit</span></code></a>, optional</p>
+<blockquote>
+<div><p>Unit of the flux axis</p>
+</div></blockquote>
+<p><strong>energy_power</strong> : int</p>
+<blockquote>
+<div><p>Power of energy to multiply flux axis with</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a>, optional</p>
+<blockquote class="last">
+<div><p>Axis</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.DifferentialFluxPoints.html#">DifferentialFluxPoints</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.DifferentialFluxPoints.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.DifferentialFluxPoints.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

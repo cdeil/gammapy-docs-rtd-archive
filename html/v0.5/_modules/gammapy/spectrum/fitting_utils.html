@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.fitting_utils &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/fitting_utils.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/fitting_utils'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.fitting_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Convenience functions for chi**2 and likelihood fitting.</span>
+
+<span class="sd">TODO: Unusable at the moment. Refactor into classes and clean up.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">..utils.random</span> <span class="kn">import</span> <span class="n">get_random_state</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;generate_MC_data&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;plot_chi2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;plot_fit&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;plot_model&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;plot_points&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">set_off_diagonal_to_zero</span><span class="p">(</span><span class="n">matrix</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sets the off-diagonal elements of a matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="n">j</span><span class="p">:</span>
+                <span class="n">matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">matrix</span>
+
+
+<div class="viewcode-block" id="generate_MC_data"><a class="viewcode-back" href="../../../api/gammapy.spectrum.generate_MC_data.html#gammapy.spectrum.generate_MC_data">[docs]</a><span class="k">def</span> <span class="nf">generate_MC_data</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">yerr</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="s1">&#39;random-seed&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Generate points with equal-log spacing in x given by the model.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model = [function, parameters, constants]</span>
+<span class="sd">    xlim = [xmin, xmax]</span>
+<span class="sd">    yerr = [ydn_err, yup_err] = fractional error on model y</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data = x, y, ydn, yup</span>
+<span class="sd">    random_state : {int, &#39;random-seed&#39;, &#39;global-rng&#39;, `~numpy.random.RandomState`}</span>
+<span class="sd">        Defines random number generator initialisation.</span>
+<span class="sd">        Passed to `~gammapy.utils.random.get_random_state`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># initialise random number generator</span>
+    <span class="n">random_state</span> <span class="o">=</span> <span class="n">get_random_state</span><span class="p">(</span><span class="n">random_state</span><span class="p">)</span>
+
+    <span class="c1"># Generate equal-log spaced x points</span>
+    <span class="n">logx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">logx</span>
+
+    <span class="c1"># Unpack model components</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">model</span>
+
+    <span class="c1"># Compute true y and asymmetric errors</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
+    <span class="n">ydn</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">yerr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">yup</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">yerr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1">#</span>
+    <span class="c1"># Compute observed y by drawing a random value</span>
+    <span class="c1">#</span>
+
+    <span class="c1"># First decide if an up or down fluctuation occurs</span>
+    <span class="n">fluctuate_up</span> <span class="o">=</span> <span class="n">random_state</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>  <span class="c1"># 1 = yes, 2 = no</span>
+
+    <span class="c1"># Then draw a random y value</span>
+    <span class="n">yobs_dn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">random_state</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">ydn</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">npoints</span><span class="p">))</span>
+    <span class="n">yobs_up</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fabs</span><span class="p">(</span><span class="n">random_state</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">yup</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">npoints</span><span class="p">))</span>
+    <span class="n">yobs</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">fluctuate_up</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="n">yobs_up</span><span class="p">,</span> <span class="o">-</span><span class="n">yobs_dn</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">verbose</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npoints</span><span class="p">):</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%2d</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39; </span><span class="si">%10g</span><span class="s1">&#39;</span> <span class="o">*</span> <span class="mi">7</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ydn</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yup</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yobs_dn</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yobs_up</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">yobs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="k">print</span><span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">vals</span><span class="p">))</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">yobs</span><span class="p">,</span> <span class="n">ydn</span><span class="p">,</span> <span class="n">yup</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="plot_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.plot_points.html#gammapy.spectrum.plot_points">[docs]</a><span class="k">def</span> <span class="nf">plot_points</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">xpower</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a nice plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">xpower</span>
+    <span class="n">ydn</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">xpower</span>
+    <span class="n">yup</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">xpower</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="p">[</span><span class="n">ydn</span><span class="p">,</span> <span class="n">yup</span><span class="p">],</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_fit"><a class="viewcode-back" href="../../../api/gammapy.spectrum.plot_fit.html#gammapy.spectrum.plot_fit">[docs]</a><span class="k">def</span> <span class="nf">plot_fit</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">fit_result</span><span class="p">,</span> <span class="n">xlimits</span><span class="p">,</span> <span class="n">ylimits</span><span class="p">,</span>
+             <span class="n">disregard_correlation</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+             <span class="n">fill_band</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+             <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot the error butterfly.</span>
+
+<span class="sd">    Errors are propagated using the uncertainties module.</span>
+<span class="sd">    If disregard_correlation == True, the off-diagonal elements of the</span>
+<span class="sd">    covariance matrix are set to 0 before propagating the errors.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="kn">import</span> <span class="nn">uncertainties</span>
+    <span class="c1"># Choose equal-log x spacing</span>
+    <span class="n">logxlimits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlimits</span><span class="p">)</span>
+    <span class="n">logx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">logxlimits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">logxlimits</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">logx</span>
+    <span class="n">popt</span> <span class="o">=</span> <span class="n">fit_result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">pcov</span> <span class="o">=</span> <span class="n">fit_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">disregard_correlation</span><span class="p">:</span>
+        <span class="n">pcov</span> <span class="o">=</span> <span class="n">set_off_diagonal_to_zero</span><span class="p">(</span><span class="n">pcov</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">popt</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="c1"># Use uncertainties to compute an error band</span>
+    <span class="n">p_wu</span> <span class="o">=</span> <span class="n">uncertainties</span><span class="o">.</span><span class="n">correlated_values</span><span class="p">(</span><span class="n">popt</span><span class="p">,</span> <span class="n">pcov</span><span class="p">)</span>
+    <span class="n">y_wu</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">p_wu</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">y_val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">y_wu</span><span class="p">)</span>
+    <span class="n">y_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">y_wu</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">y_wu</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">y_val</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_wu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">nominal_value</span>
+        <span class="n">y_err</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_wu</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">std_dev</span>
+    <span class="c1"># Need to clip values to frame so that no plotting artifacts occur</span>
+    <span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">y_err</span><span class="p">,</span> <span class="n">ylimits</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">y</span> <span class="o">+</span> <span class="n">y_err</span><span class="p">,</span> <span class="n">ylimits</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># Plot error band</span>
+    <span class="k">if</span> <span class="n">fill_band</span> <span class="o">==</span> <span class="bp">True</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span>
+
+    <span class="c1"># Plot best-fit spectrum</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="n">alpha</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_model"><a class="viewcode-back" href="../../../api/gammapy.spectrum.plot_model.html#gammapy.spectrum.plot_model">[docs]</a><span class="k">def</span> <span class="nf">plot_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot model curve.</span>
+
+<span class="sd">    model = [function, parameters, constants]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="c1"># Choose equal-log x spacing for plotting</span>
+    <span class="n">logxlim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+    <span class="n">logx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">logxlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">logxlim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">npoints</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">logx</span>
+    <span class="c1"># Unpack model and compute y vector</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">c</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="plot_chi2"><a class="viewcode-back" href="../../../api/gammapy.spectrum.plot_chi2.html#gammapy.spectrum.plot_chi2">[docs]</a><span class="k">def</span> <span class="nf">plot_chi2</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">fit_result</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+              <span class="n">disregard_correlation</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+              <span class="n">npoints</span><span class="o">=</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">stddev_max</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">,</span>
+              <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot chi**2 contours and linear fit approxiation</span>
+
+<span class="sd">    Note that chi**2 is related to likelihood in the following way:</span>
+<span class="sd">    L = exp(-(1/2)*chi**2)</span>
+<span class="sd">    This means that log(L) and chi**2 are identical up to a factor (-2).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="c1"># Unpack model and fit result</span>
+    <span class="n">f</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">model</span>
+    <span class="c1"># popt, pcov</span>
+
+    <span class="k">if</span> <span class="n">disregard_correlation</span><span class="p">:</span>
+        <span class="n">fit_result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">set_off_diagonal_to_zero</span><span class="p">(</span><span class="n">fit_result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="c1"># If no limits are given, compute a good choice from fit_result</span>
+
+    <span class="c1"># Set up a grid of points in parameter space</span>
+    <span class="n">p1_lim</span> <span class="o">=</span> <span class="n">limits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">p2_lim</span> <span class="o">=</span> <span class="n">limits</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">p1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">p1_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p1_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">npoints</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">p2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">p2_lim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p2_lim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">npoints</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">p1</span><span class="p">,</span> <span class="n">p2</span><span class="p">)</span>
+
+    <span class="c1"># Compute chi**2 (called chi2) for each grid point</span>
+    <span class="c1"># Looping can probably be avoided, but I don&#39;t know how.</span>
+    <span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>  <span class="c1"># real chi**2</span>
+    <span class="n">x2lin</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">P1</span><span class="p">)</span>  <span class="c1"># linear chi**2 approximation</span>
+    <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p1</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i2</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p2</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+            <span class="c1"># Note the weird numpy indexing order.</span>
+            <span class="c1"># i2,i1 seems wrong, but is correct:</span>
+            <span class="c1"># TODO: implement</span>
+            <span class="k">pass</span>
+            <span class="c1"># x2   [i2, i1] = chi2    ((p1[i1], p2[i2]), c, f, data)</span>
+            <span class="c1"># x2lin[i2, i1] = chi2_lin((p1[i1], p2[i2]), fit_result)</span>
+
+    <span class="c1"># Set the most likely point to chi**2 = 0</span>
+    <span class="n">x2</span> <span class="o">-=</span> <span class="n">x2</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+    <span class="c1"># Use sqrt scale</span>
+    <span class="c1"># x2 = np.sqrt(x2)</span>
+    <span class="c1"># x2lin = np.sqrt(x2lin)</span>
+
+    <span class="c1"># Plot likelihood as color landscape</span>
+    <span class="n">x2_image</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">pcolor</span><span class="p">(</span><span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">vmin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                          <span class="n">vmax</span><span class="o">=</span><span class="n">stddev_max</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+    <span class="c1"># Add marker at the minimum</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fit_result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">fit_result</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+             <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;*&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add contour of real likelihood</span>
+    <span class="n">contour_levels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">stddev_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">x2_cont</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="n">contour_levels</span><span class="p">,</span>
+                          <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">x2_cont</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+               <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
+
+    <span class="c1"># Overplot linear approximation as contours</span>
+    <span class="n">x2lin_cont</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">,</span> <span class="n">x2lin</span><span class="p">,</span> <span class="n">contour_levels</span><span class="p">,</span>
+                             <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidth</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">clabel</span><span class="p">(</span><span class="n">x2lin_cont</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+               <span class="n">linewidths</span><span class="o">=</span><span class="n">linewidth</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span>
+
+    <span class="c1"># Add colorbar and labels</span>
+    <span class="c1"># axcb = plt.colorbar()</span>
+    <span class="c1"># axcb.set_label(r&#39;$\chi^2$&#39;, size=15)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Parameter P1&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Parameter P2&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="n">p1_lim</span> <span class="o">+</span> <span class="n">p2_lim</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="fitting_utils.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

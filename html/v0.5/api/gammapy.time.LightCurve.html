@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>LightCurve &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Time handling and analysis (gammapy.time)" href="../time/index.html" />
+    <link rel="next" title="Utility functions and classes (gammapy.utils)" href="../utils/index.html" />
+    <link rel="prev" title="random_times" href="gammapy.time.random_times.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.time.LightCurve.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.time.LightCurve'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../utils/index.html" title="Utility functions and classes (gammapy.utils)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.time.random_times.html" title="random_times">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../time/index.html" accesskey="U">Time handling and analysis (<code class="docutils literal"><span class="pre">gammapy.time</span></code>)</a> &raquo;</li>
+      
+      <li>LightCurve</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="lightcurve">
+<h1>LightCurve<a class="headerlink" href="gammapy.time.LightCurve.html#lightcurve" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.time.LightCurve">
+<em class="property">class </em><code class="descclassname">gammapy.time.</code><code class="descname">LightCurve</code><span class="sig-paren">(</span><em>data=None</em>, <em>masked=None</em>, <em>names=None</em>, <em>dtype=None</em>, <em>meta=None</em>, <em>copy=True</em>, <em>rows=None</em>, <em>copy_indices=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/time/lightcurve.html#LightCurve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="http://docs.astropy.org/en/latest/api/astropy.table.QTable.html#astropy.table.QTable" title="astropy.table.QTable"><code class="docutils literal"><span class="pre">astropy.table.QTable</span></code></a></p>
+<p>LightCurve class.</p>
+<p>Contains all data in the tabular form with columns
+tstart, tstop, flux, flux error, time bin (opt).
+Possesses functions allowing plotting data, saving as txt
+and elementary stats like mean &amp; std dev.</p>
+<p>TODO: specification of format is work in progress
+See <a class="reference external" href="https://github.com/open-gamma-ray-astro/gamma-astro-data-formats/pull/61">https://github.com/open-gamma-ray-astro/gamma-astro-data-formats/pull/61</a></p>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve.plot" title="gammapy.time.LightCurve.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>([ax])</td>
+<td>Plot flux versus time.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve.simulate_example" title="gammapy.time.LightCurve.simulate_example"><code class="xref py py-obj docutils literal"><span class="pre">simulate_example</span></code></a>()</td>
+<td>Simulate an example <a class="reference internal" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve" title="gammapy.time.LightCurve"><code class="xref py py-obj docutils literal"><span class="pre">LightCurve</span></code></a>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.time.LightCurve.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/time/lightcurve.html#LightCurve.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot flux versus time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a> or None, optional.</p>
+<blockquote>
+<div><p>The <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a> object to be drawn on.
+If None, uses the current <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a> or None, optional.</p>
+<blockquote class="last">
+<div><p>The <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a> object to be drawn on.
+If None, uses the current <a class="reference external" href="http://matplotlib.org/api/axes_api.html#matplotlib.axes.Axes" title="(in Matplotlib v1.5.3)"><code class="xref py py-obj docutils literal"><span class="pre">Axes</span></code></a>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.time.LightCurve.simulate_example">
+<em class="property">classmethod </em><code class="descname">simulate_example</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/time/lightcurve.html#LightCurve.simulate_example"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve.simulate_example" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simulate an example <a class="reference internal" href="gammapy.time.LightCurve.html#gammapy.time.LightCurve" title="gammapy.time.LightCurve"><code class="xref py py-obj docutils literal"><span class="pre">LightCurve</span></code></a>.</p>
+<p>TODO: add options to simulate some more interesting lightcurves.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.time.LightCurve.html#">LightCurve</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.time.LightCurve.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.time.LightCurve.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

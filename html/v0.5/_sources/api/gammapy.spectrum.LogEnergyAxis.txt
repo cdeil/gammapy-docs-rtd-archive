@@ -1,0 +1,50 @@
+
+
+LogEnergyAxis
+==============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: LogEnergyAxis
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~LogEnergyAxis.bin_edges
+      ~LogEnergyAxis.closest_point
+      ~LogEnergyAxis.pix2world
+      ~LogEnergyAxis.world2pix
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: bin_edges
+   .. automethod:: closest_point
+   .. automethod:: pix2world
+   .. automethod:: world2pix
+
+   
+   

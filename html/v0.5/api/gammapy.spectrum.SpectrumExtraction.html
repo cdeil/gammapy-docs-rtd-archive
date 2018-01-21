@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SpectrumExtraction &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="SpectrumFit" href="gammapy.spectrum.SpectrumFit.html" />
+    <link rel="prev" title="SpectrumEnergyGroups" href="gammapy.spectrum.SpectrumEnergyGroups.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.SpectrumExtraction.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.SpectrumExtraction'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumFit.html" title="SpectrumFit">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumEnergyGroups.html" title="SpectrumEnergyGroups">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>SpectrumExtraction</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spectrumextraction">
+<h1>SpectrumExtraction<a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#spectrumextraction" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.SpectrumExtraction">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">SpectrumExtraction</code><span class="sig-paren">(</span><em>target</em>, <em>obs</em>, <em>background</em>, <em>e_reco=None</em>, <em>e_true=None</em>, <em>containment_correction=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/2/library/functions.html#object" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for creating input data to 1D spectrum fitting</p>
+<p>This class is responsible for extracting a
+<a class="reference internal" href="gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a> from a
+<a class="reference internal" href="gammapy.data.DataStoreObservation.html#gammapy.data.DataStoreObservation" title="gammapy.data.DataStoreObservation"><code class="xref py py-obj docutils literal"><span class="pre">DataStoreObservation</span></code></a>, given a certain signal extraction
+region. A background estimate can be passed on initialization or created on
+the fly given a dict of parameters.  For point sources analyzed with &#8216;full
+containement&#8217; IRFs, a correction for PSF leakage out of the circular ON
+region can be applied.  For more info see <a class="reference internal" href="../spectrum/fitting.html#spectral-fitting"><span>Spectral Fitting</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>target</strong> : <a class="reference internal" href="gammapy.data.Target.html#gammapy.data.Target" title="gammapy.data.Target"><code class="xref py py-obj docutils literal"><span class="pre">Target</span></code></a> or <a class="reference external" href="http://astropy-regions.readthedocs.io/en/latest/api/regions.SkyRegion.html#regions.SkyRegion" title="(in regions v0.2.dev233)"><code class="xref py py-obj docutils literal"><span class="pre">SkyRegion</span></code></a></p>
+<blockquote>
+<div><p>Signal extraction region</p>
+</div></blockquote>
+<p><strong>obs</strong> : <a class="reference internal" href="gammapy.data.ObservationList.html#gammapy.data.ObservationList" title="gammapy.data.ObservationList"><code class="xref py py-obj docutils literal"><span class="pre">ObservationList</span></code></a></p>
+<blockquote>
+<div><p>Observations to process</p>
+</div></blockquote>
+<p><strong>background</strong> : <a class="reference internal" href="gammapy.background.BackgroundEstimate.html#gammapy.background.BackgroundEstimate" title="gammapy.background.BackgroundEstimate"><code class="xref py py-obj docutils literal"><span class="pre">BackgroundEstimate</span></code></a> or dict</p>
+<blockquote>
+<div><p>Background estimate or dict of parameters</p>
+</div></blockquote>
+<p><strong>e_reco</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>, optional</p>
+<blockquote>
+<div><p>Reconstructed energy binning</p>
+</div></blockquote>
+<p><strong>e_true</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>, optional</p>
+<blockquote>
+<div><p>True energy binning</p>
+</div></blockquote>
+<p><strong>containment_correction</strong> : bool</p>
+<blockquote class="last">
+<div><p>Apply containment correction for point sources and circular ON regions.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>TODO</p>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.DEFAULT_RECO_ENERGY" title="gammapy.spectrum.SpectrumExtraction.DEFAULT_RECO_ENERGY"><code class="xref py py-obj docutils literal"><span class="pre">DEFAULT_RECO_ENERGY</span></code></a></td>
+<td>Reconstruced energy axis to be used if not specified otherwise</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.DEFAULT_TRUE_ENERGY" title="gammapy.spectrum.SpectrumExtraction.DEFAULT_TRUE_ENERGY"><code class="xref py py-obj docutils literal"><span class="pre">DEFAULT_TRUE_ENERGY</span></code></a></td>
+<td>True energy axis to be used if not specified otherwise</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.OGIP_FOLDER" title="gammapy.spectrum.SpectrumExtraction.OGIP_FOLDER"><code class="xref py py-obj docutils literal"><span class="pre">OGIP_FOLDER</span></code></a></td>
+<td>Folder that will contain the output ogip data</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.observations" title="gammapy.spectrum.SpectrumExtraction.observations"><code class="xref py py-obj docutils literal"><span class="pre">observations</span></code></a></td>
+<td>List of <a class="reference internal" href="gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.define_energy_threshold" title="gammapy.spectrum.SpectrumExtraction.define_energy_threshold"><code class="xref py py-obj docutils literal"><span class="pre">define_energy_threshold</span></code></a>([method_lo_threshold])</td>
+<td>Set energy threshold</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.estimate_background" title="gammapy.spectrum.SpectrumExtraction.estimate_background"><code class="xref py py-obj docutils literal"><span class="pre">estimate_background</span></code></a>(config)</td>
+<td>Create <a class="reference internal" href="gammapy.background.BackgroundEstimate.html#gammapy.background.BackgroundEstimate" title="gammapy.background.BackgroundEstimate"><code class="xref py py-obj docutils literal"><span class="pre">BackgroundEstimate</span></code></a></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.extract_spectrum" title="gammapy.spectrum.SpectrumExtraction.extract_spectrum"><code class="xref py py-obj docutils literal"><span class="pre">extract_spectrum</span></code></a>()</td>
+<td>Extract 1D spectral information</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.filter_observations" title="gammapy.spectrum.SpectrumExtraction.filter_observations"><code class="xref py py-obj docutils literal"><span class="pre">filter_observations</span></code></a>()</td>
+<td>Filter observations by number of reflected regions</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.run" title="gammapy.spectrum.SpectrumExtraction.run"><code class="xref py py-obj docutils literal"><span class="pre">run</span></code></a>([outdir])</td>
+<td>Run all steps</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.write" title="gammapy.spectrum.SpectrumExtraction.write"><code class="xref py py-obj docutils literal"><span class="pre">write</span></code></a>()</td>
+<td>Write results to disk</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.spectrum.SpectrumExtraction.DEFAULT_RECO_ENERGY">
+<code class="descname">DEFAULT_RECO_ENERGY</code><em class="property"> = &lt;Quantity [  1.00000000e-02,  1.13646367e-02,  1.29154967e-02,              1.46779927e-02,  1.66810054e-02,  1.89573565e-02,              2.15443469e-02,  2.44843675e-02,  2.78255940e-02,              3.16227766e-02,  3.59381366e-02,  4.08423865e-02,              4.64158883e-02,  5.27499706e-02,  5.99484250e-02,              6.81292069e-02,  7.74263683e-02,  8.79922544e-02,              1.00000000e-01,  1.13646367e-01,  1.29154967e-01,              1.46779927e-01,  1.66810054e-01,  1.89573565e-01,              2.15443469e-01,  2.44843675e-01,  2.78255940e-01,              3.16227766e-01,  3.59381366e-01,  4.08423865e-01,              4.64158883e-01,  5.27499706e-01,  5.99484250e-01,              6.81292069e-01,  7.74263683e-01,  8.79922544e-01,              1.00000000e+00,  1.13646367e+00,  1.29154967e+00,              1.46779927e+00,  1.66810054e+00,  1.89573565e+00,              2.15443469e+00,  2.44843675e+00,  2.78255940e+00,              3.16227766e+00,  3.59381366e+00,  4.08423865e+00,              4.64158883e+00,  5.27499706e+00,  5.99484250e+00,              6.81292069e+00,  7.74263683e+00,  8.79922544e+00,              1.00000000e+01,  1.13646367e+01,  1.29154967e+01,              1.46779927e+01,  1.66810054e+01,  1.89573565e+01,              2.15443469e+01,  2.44843675e+01,  2.78255940e+01,              3.16227766e+01,  3.59381366e+01,  4.08423865e+01,              4.64158883e+01,  5.27499706e+01,  5.99484250e+01,              6.81292069e+01,  7.74263683e+01,  8.79922544e+01,              1.00000000e+02] TeV&gt;</em><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.DEFAULT_RECO_ENERGY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reconstruced energy axis to be used if not specified otherwise</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.spectrum.SpectrumExtraction.DEFAULT_TRUE_ENERGY">
+<code class="descname">DEFAULT_TRUE_ENERGY</code><em class="property"> = &lt;Quantity [  1.00000000e-02,  1.10069417e-02,  1.21152766e-02,              1.33352143e-02,  1.46779927e-02,  1.61559810e-02,              1.77827941e-02,  1.95734178e-02,  2.15443469e-02,              2.37137371e-02,  2.61015722e-02,  2.87298483e-02,              3.16227766e-02,  3.48070059e-02,  3.83118685e-02,              4.21696503e-02,  4.64158883e-02,  5.10896977e-02,              5.62341325e-02,  6.18965819e-02,  6.81292069e-02,              7.49894209e-02,  8.25404185e-02,  9.08517576e-02,              1.00000000e-01,  1.10069417e-01,  1.21152766e-01,              1.33352143e-01,  1.46779927e-01,  1.61559810e-01,              1.77827941e-01,  1.95734178e-01,  2.15443469e-01,              2.37137371e-01,  2.61015722e-01,  2.87298483e-01,              3.16227766e-01,  3.48070059e-01,  3.83118685e-01,              4.21696503e-01,  4.64158883e-01,  5.10896977e-01,              5.62341325e-01,  6.18965819e-01,  6.81292069e-01,              7.49894209e-01,  8.25404185e-01,  9.08517576e-01,              1.00000000e+00,  1.10069417e+00,  1.21152766e+00,              1.33352143e+00,  1.46779927e+00,  1.61559810e+00,              1.77827941e+00,  1.95734178e+00,  2.15443469e+00,              2.37137371e+00,  2.61015722e+00,  2.87298483e+00,              3.16227766e+00,  3.48070059e+00,  3.83118685e+00,              4.21696503e+00,  4.64158883e+00,  5.10896977e+00,              5.62341325e+00,  6.18965819e+00,  6.81292069e+00,              7.49894209e+00,  8.25404185e+00,  9.08517576e+00,              1.00000000e+01,  1.10069417e+01,  1.21152766e+01,              1.33352143e+01,  1.46779927e+01,  1.61559810e+01,              1.77827941e+01,  1.95734178e+01,  2.15443469e+01,              2.37137371e+01,  2.61015722e+01,  2.87298483e+01,              3.16227766e+01,  3.48070059e+01,  3.83118685e+01,              4.21696503e+01,  4.64158883e+01,  5.10896977e+01,              5.62341325e+01,  6.18965819e+01,  6.81292069e+01,              7.49894209e+01,  8.25404185e+01,  9.08517576e+01,              1.00000000e+02,  1.10069417e+02,  1.21152766e+02,              1.33352143e+02,  1.46779927e+02,  1.61559810e+02,              1.77827941e+02,  1.95734178e+02,  2.15443469e+02,              2.37137371e+02,  2.61015722e+02,  2.87298483e+02,              3.16227766e+02] TeV&gt;</em><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.DEFAULT_TRUE_ENERGY" title="Permalink to this definition">¶</a></dt>
+<dd><p>True energy axis to be used if not specified otherwise</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.spectrum.SpectrumExtraction.OGIP_FOLDER">
+<code class="descname">OGIP_FOLDER</code><em class="property"> = u'ogip_data'</em><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.OGIP_FOLDER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Folder that will contain the output ogip data</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.spectrum.SpectrumExtraction.observations">
+<code class="descname">observations</code><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.observations" title="Permalink to this definition">¶</a></dt>
+<dd><p>List of <a class="reference internal" href="gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a></p>
+<p>This list is generated via
+<code class="xref py py-func docutils literal"><span class="pre">extract_spectrum()</span></code>
+when the property is first called and the result is cached.</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumExtraction.define_energy_threshold">
+<code class="descname">define_energy_threshold</code><span class="sig-paren">(</span><em>method_lo_threshold=u'area_max'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction.define_energy_threshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.define_energy_threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set energy threshold</p>
+<p>Set the high and low energy threshold for each observation based on a
+chosen method.</p>
+<p>Available methods for setting the low energy threshold</p>
+<ul>
+<li><dl class="first docutils">
+<dt>area_max <span class="classifier-delimiter">:</span> <span class="classifier">Set energy threshold at x percent of the maximum effective</span></dt>
+<dd><p class="first last">area (x given as kwargs[&#8216;percent&#8217;])</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Available methods for setting the high energy threshold</p>
+<ul class="simple">
+<li>TBD</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>method_lo_threshold</strong> : {&#8216;area_max&#8217;}</p>
+<blockquote class="last">
+<div><p>method for defining the low energy threshold</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumExtraction.estimate_background">
+<code class="descname">estimate_background</code><span class="sig-paren">(</span><em>config</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction.estimate_background"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.estimate_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create <a class="reference internal" href="gammapy.background.BackgroundEstimate.html#gammapy.background.BackgroundEstimate" title="gammapy.background.BackgroundEstimate"><code class="xref py py-obj docutils literal"><span class="pre">BackgroundEstimate</span></code></a></p>
+<p>In case no background estimate was passed on initialization, this
+method creates one given a dict of parameters.</p>
+<p>TODO: Link to high-level docs page.
+TODO: Refactor</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>config</strong> : dict</p>
+<blockquote class="last">
+<div><p>Background estimation method</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumExtraction.extract_spectrum">
+<code class="descname">extract_spectrum</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction.extract_spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.extract_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Extract 1D spectral information</p>
+<p>The result can be obtained via
+<code class="xref py py-func docutils literal"><span class="pre">observations()</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumExtraction.filter_observations">
+<code class="descname">filter_observations</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction.filter_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.filter_observations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter observations by number of reflected regions</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumExtraction.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>outdir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run all steps</p>
+<p>Extract spectrum, update observation table, filter observations,
+write results to disk.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>outdir</strong> : Path, str</p>
+<blockquote class="last">
+<div><p>directory to write results files to</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumExtraction.write">
+<code class="descname">write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/extract.html#SpectrumExtraction.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write results to disk</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#">SpectrumExtraction</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.SpectrumExtraction.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.SpectrumExtraction.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

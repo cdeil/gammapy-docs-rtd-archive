@@ -1,0 +1,8 @@
+
+
+calculate_predicted_counts
+===========================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: calculate_predicted_counts

@@ -1,0 +1,8 @@
+
+
+image_profile
+===========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: image_profile

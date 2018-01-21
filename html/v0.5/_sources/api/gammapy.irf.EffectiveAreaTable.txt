@@ -1,0 +1,73 @@
+
+
+EffectiveAreaTable
+==============================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EffectiveAreaTable
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~EffectiveAreaTable.axis_names
+      ~EffectiveAreaTable.energy
+      ~EffectiveAreaTable.max_area
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EffectiveAreaTable.evaluate
+      ~EffectiveAreaTable.find_energy
+      ~EffectiveAreaTable.from_parametrization
+      ~EffectiveAreaTable.from_table
+      ~EffectiveAreaTable.plot
+      ~EffectiveAreaTable.to_sherpa
+      ~EffectiveAreaTable.to_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: axis_names
+   .. autoattribute:: energy
+   .. autoattribute:: max_area
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+   .. automethod:: find_energy
+   .. automethod:: from_parametrization
+   .. automethod:: from_table
+   .. automethod:: plot
+   .. automethod:: to_sherpa
+   .. automethod:: to_table
+
+   
+   

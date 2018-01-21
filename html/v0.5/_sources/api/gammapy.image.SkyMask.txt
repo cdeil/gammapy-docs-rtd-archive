@@ -1,0 +1,67 @@
+
+
+SkyMask
+=====================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: SkyMask
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SkyMask.distance_image
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyMask.close
+      ~SkyMask.dilate
+      ~SkyMask.erode
+      ~SkyMask.fill_random_circles
+      ~SkyMask.open
+      ~SkyMask.read
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: distance_image
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: close
+   .. automethod:: dilate
+   .. automethod:: erode
+   .. automethod:: fill_random_circles
+   .. automethod:: open
+   .. automethod:: read
+
+   
+   

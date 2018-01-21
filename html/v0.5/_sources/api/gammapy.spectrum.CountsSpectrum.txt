@@ -1,0 +1,79 @@
+
+
+CountsSpectrum
+===============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: CountsSpectrum
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~CountsSpectrum.axis_names
+      ~CountsSpectrum.energy
+      ~CountsSpectrum.interp_kwargs
+      ~CountsSpectrum.total_counts
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~CountsSpectrum.copy
+      ~CountsSpectrum.fill
+      ~CountsSpectrum.from_hdulist
+      ~CountsSpectrum.peek
+      ~CountsSpectrum.plot
+      ~CountsSpectrum.plot_hist
+      ~CountsSpectrum.spectral_index
+      ~CountsSpectrum.to_hdulist
+      ~CountsSpectrum.to_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: axis_names
+   .. autoattribute:: energy
+   .. autoattribute:: interp_kwargs
+   .. autoattribute:: total_counts
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: copy
+   .. automethod:: fill
+   .. automethod:: from_hdulist
+   .. automethod:: peek
+   .. automethod:: plot
+   .. automethod:: plot_hist
+   .. automethod:: spectral_index
+   .. automethod:: to_hdulist
+   .. automethod:: to_table
+
+   
+   

@@ -1,0 +1,8 @@
+
+
+plot_chi2
+==========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: plot_chi2

@@ -1,0 +1,64 @@
+
+
+IterativeSourceDetector
+======================================
+
+.. currentmodule:: gammapy.detect
+
+.. autoclass:: IterativeSourceDetector
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~IterativeSourceDetector.compute_iter_images
+      ~IterativeSourceDetector.estimate_flux
+      ~IterativeSourceDetector.find_peaks
+      ~IterativeSourceDetector.fit_source_parameters
+      ~IterativeSourceDetector.guess_source_parameters
+      ~IterativeSourceDetector.model_excess
+      ~IterativeSourceDetector.run
+      ~IterativeSourceDetector.save_fits
+      ~IterativeSourceDetector.save_json
+      ~IterativeSourceDetector.save_regions
+      ~IterativeSourceDetector.stop_iteration
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute_iter_images
+   .. automethod:: estimate_flux
+   .. automethod:: find_peaks
+   .. automethod:: fit_source_parameters
+   .. automethod:: guess_source_parameters
+   .. automethod:: model_excess
+   .. automethod:: run
+   .. automethod:: save_fits
+   .. automethod:: save_json
+   .. automethod:: save_regions
+   .. automethod:: stop_iteration
+
+   
+   

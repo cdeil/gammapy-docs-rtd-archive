@@ -1,0 +1,56 @@
+
+
+SpectralModel
+=====================================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: SpectralModel
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectralModel.__call__
+      ~SpectralModel.energy_flux
+      ~SpectralModel.from_dict
+      ~SpectralModel.integral
+      ~SpectralModel.plot
+      ~SpectralModel.spectral_index
+      ~SpectralModel.to_dict
+      ~SpectralModel.to_sherpa
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: __call__
+   .. automethod:: energy_flux
+   .. automethod:: from_dict
+   .. automethod:: integral
+   .. automethod:: plot
+   .. automethod:: spectral_index
+   .. automethod:: to_dict
+   .. automethod:: to_sherpa
+
+   
+   

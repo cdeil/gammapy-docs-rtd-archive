@@ -1,0 +1,8 @@
+
+
+exposure_cube
+==========================
+
+.. currentmodule:: gammapy.cube
+
+.. autofunction:: exposure_cube

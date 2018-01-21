@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.scripts.cta_irf &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/scripts/cta_irf.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/scripts/cta_irf'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.scripts.cta_irf</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">make_path</span>
+<span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">EffectiveAreaTable2D</span>
+<span class="kn">from</span> <span class="nn">..background</span> <span class="kn">import</span> <span class="n">FOVCube</span>
+<span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">EnergyDispersion2D</span>
+<span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">EnergyDependentMultiGaussPSF</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;CTAIrf&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="CTAIrf"><a class="viewcode-back" href="../../../api/gammapy.scripts.CTAIrf.html#gammapy.scripts.CTAIrf">[docs]</a><span class="k">class</span> <span class="nc">CTAIrf</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;CTA instrument response function container.</span>
+
+<span class="sd">    Class handling CTA instrument response function.</span>
+
+<span class="sd">    For now we use the production 2 of the CTA IRF</span>
+<span class="sd">    (https://portal.cta-observatory.org/Pages/CTA-Performance.aspx)</span>
+<span class="sd">    adapted from the ctools</span>
+<span class="sd">    (http://cta.irap.omp.eu/ctools/user_manual/getting_started/response.html).</span>
+
+<span class="sd">    The IRF format should be compliant with the one discussed</span>
+<span class="sd">    at http://gamma-astro-data-formats.readthedocs.io/en/latest/irfs/.</span>
+<span class="sd">    Waiting for a new public production of the CTA IRF,</span>
+<span class="sd">    we&#39;ll fix the missing pieces.</span>
+
+<span class="sd">    This class is similar to `~gammapy.data.DataStoreObservation`,</span>
+<span class="sd">    but only contains IRFs (no event data or livetime info).</span>
+<span class="sd">    TODO: maybe re-factor code somehow to avoid code duplication.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    aeff : `~gammapy.irf.EffectiveAreaTable2D`</span>
+<span class="sd">        Effective area</span>
+<span class="sd">    edisp : `~gammapy.irf.EnergyDispersion2D`</span>
+<span class="sd">        Energy dispersion</span>
+<span class="sd">    psf : `~gammapy.irf.EnergyDependentMultiGaussPSF`</span>
+<span class="sd">        Point spread function</span>
+<span class="sd">    bkg : `~gammapy.background.FOVCube`</span>
+<span class="sd">        Background rate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aeff</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">edisp</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">psf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bkg</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aeff</span> <span class="o">=</span> <span class="n">aeff</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">edisp</span> <span class="o">=</span> <span class="n">edisp</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">psf</span> <span class="o">=</span> <span class="n">psf</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bkg</span> <span class="o">=</span> <span class="n">bkg</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CTAIrf.read"><a class="viewcode-back" href="../../../api/gammapy.scripts.CTAIrf.html#gammapy.scripts.CTAIrf.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read from a FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : `str`</span>
+<span class="sd">            File containing the IRFs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">make_path</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+        <span class="c1"># table = Table.read(filename, hdu=&#39;EFFECTIVE AREA&#39;)</span>
+        <span class="c1"># aeff = EffectiveAreaTable2D.from_table(table)</span>
+        <span class="n">aeff</span> <span class="o">=</span> <span class="n">EffectiveAreaTable2D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="s1">&#39;EFFECTIVE AREA&#39;</span><span class="p">)</span>
+
+        <span class="c1"># TODO: fix `FOVCube.read`, then use it directly here.</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="s1">&#39;BACKGROUND&#39;</span><span class="p">]</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">change_name</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;BGD&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;Bgd&#39;</span><span class="p">))</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;TUNIT7&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1 / (MeV s sr)&#39;</span>
+        <span class="n">bkg</span> <span class="o">=</span> <span class="n">FOVCube</span><span class="o">.</span><span class="n">from_fits_table</span><span class="p">(</span><span class="n">table</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;bg_cube&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Dealing energy dispersion matrix</span>
+        <span class="c1"># table_hdu_disp = get_hdu(filename + &#39;[ENERGY DISPERSION]&#39;)</span>
+        <span class="c1"># edisp = EnergyDispersion2D.from_fits(table_hdu_disp)</span>
+        <span class="n">edisp</span> <span class="o">=</span> <span class="n">EnergyDispersion2D</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="s1">&#39;ENERGY DISPERSION&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Dealing with psf and fix values to get a single gaussian component</span>
+        <span class="c1"># by setting the amplitudes and the sigmas of the last two components</span>
+        <span class="c1"># to 0 and 1, respectively</span>
+        <span class="n">table_hdu_psf</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="s1">&#39;POINT SPREAD FUNCTION&#39;</span><span class="p">]</span>
+
+        <span class="n">table_hdu_psf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;AMPL_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">table_hdu_psf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;AMPL_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="n">table_hdu_psf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;SIGMA_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">table_hdu_psf</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;SIGMA_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="n">psf</span> <span class="o">=</span> <span class="n">EnergyDependentMultiGaussPSF</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">table_hdu_psf</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span>
+            <span class="n">aeff</span><span class="o">=</span><span class="n">aeff</span><span class="p">,</span>
+            <span class="n">bkg</span><span class="o">=</span><span class="n">bkg</span><span class="p">,</span>
+            <span class="n">edisp</span><span class="o">=</span><span class="n">edisp</span><span class="p">,</span>
+            <span class="n">psf</span><span class="o">=</span><span class="n">psf</span><span class="p">,</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="cta_irf.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

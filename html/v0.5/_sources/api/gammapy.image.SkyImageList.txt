@@ -1,0 +1,69 @@
+
+
+SkyImageList
+==========================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: SkyImageList
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SkyImageList.names
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyImageList.assert_allclose
+      ~SkyImageList.check_required
+      ~SkyImageList.from_hdu_list
+      ~SkyImageList.read
+      ~SkyImageList.to_hdu_list
+      ~SkyImageList.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: names
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: assert_allclose
+   .. automethod:: check_required
+   .. automethod:: from_hdu_list
+   .. automethod:: read
+   .. automethod:: to_hdu_list
+   .. automethod:: write
+
+   
+   

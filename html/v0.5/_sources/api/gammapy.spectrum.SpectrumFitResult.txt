@@ -1,0 +1,75 @@
+
+
+SpectrumFitResult
+==================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumFitResult
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumFitResult.expected_source_counts
+      ~SpectrumFitResult.model_with_uncertainties
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumFitResult.butterfly
+      ~SpectrumFitResult.from_dict
+      ~SpectrumFitResult.from_yaml
+      ~SpectrumFitResult.info
+      ~SpectrumFitResult.plot
+      ~SpectrumFitResult.to_dict
+      ~SpectrumFitResult.to_table
+      ~SpectrumFitResult.to_yaml
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: expected_source_counts
+   .. autoattribute:: model_with_uncertainties
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: butterfly
+   .. automethod:: from_dict
+   .. automethod:: from_yaml
+   .. automethod:: info
+   .. automethod:: plot
+   .. automethod:: to_dict
+   .. automethod:: to_table
+   .. automethod:: to_yaml
+
+   
+   

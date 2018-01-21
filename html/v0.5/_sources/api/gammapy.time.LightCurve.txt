@@ -1,0 +1,44 @@
+
+
+LightCurve
+=======================
+
+.. currentmodule:: gammapy.time
+
+.. autoclass:: LightCurve
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~LightCurve.plot
+      ~LightCurve.simulate_example
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: plot
+   .. automethod:: simulate_example
+
+   
+   

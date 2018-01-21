@@ -1,0 +1,8 @@
+
+
+image_ts
+========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_ts

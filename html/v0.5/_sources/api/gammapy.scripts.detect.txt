@@ -1,0 +1,8 @@
+
+
+detect
+======================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: detect

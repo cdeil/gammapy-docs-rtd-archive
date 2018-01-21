@@ -1,0 +1,79 @@
+
+
+NDDataArray
+================================
+
+.. currentmodule:: gammapy.utils.nddata
+
+.. autoclass:: NDDataArray
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~NDDataArray.axes
+      ~NDDataArray.axis_names
+      ~NDDataArray.data
+      ~NDDataArray.dim
+      ~NDDataArray.interp_kwargs
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~NDDataArray.evaluate
+      ~NDDataArray.from_hdulist
+      ~NDDataArray.from_table
+      ~NDDataArray.read
+      ~NDDataArray.to_hdulist
+      ~NDDataArray.to_table
+      ~NDDataArray.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: axes
+   .. autoattribute:: axis_names
+   .. autoattribute:: data
+   .. autoattribute:: dim
+   .. autoattribute:: interp_kwargs
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+   .. automethod:: from_hdulist
+   .. automethod:: from_table
+   .. automethod:: read
+   .. automethod:: to_hdulist
+   .. automethod:: to_table
+   .. automethod:: write
+
+   
+   

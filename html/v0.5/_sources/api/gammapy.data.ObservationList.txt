@@ -1,0 +1,44 @@
+
+
+ObservationList
+============================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: ObservationList
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ObservationList.make_mean_edisp
+      ~ObservationList.make_psf
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: make_mean_edisp
+   .. automethod:: make_psf
+
+   
+   

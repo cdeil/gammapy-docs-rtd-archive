@@ -1,0 +1,291 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fit statistics &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Statistics tools (gammapy.stats)" href="index.html" />
+    <link rel="next" title="background" href="../api/gammapy.stats.background.html" />
+    <link rel="prev" title="Feldman and Cousins Confidence Intervals" href="feldman_cousins.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/stats/fit_statistics.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'stats/fit_statistics'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.stats.background.html" title="background">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="feldman_cousins.html" title="Feldman and Cousins Confidence Intervals">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="index.html" accesskey="U">Statistics tools (<code class="docutils literal"><span class="pre">gammapy.stats</span></code>)</a> &raquo;</li>
+      
+      <li>Fit statistics</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fit-statistics">
+<span id="id1"></span><h1>Fit statistics<a class="headerlink" href="fit_statistics.html#fit-statistics" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="fit_statistics.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This page describes common fit statistics used in gamma-ray astronomy.
+Results were tested against results from the
+<a class="reference external" href="http://cxc.harvard.edu/sherpa/">Sherpa</a> and
+<a class="reference external" href="https://heasarc.gsfc.nasa.gov/xanadu/xspec/">XSpec</a>
+X-ray analysis packages.</p>
+<p>All functions compute per-bin statistics. If you want the summed statistics for
+all bins, call sum on the output array yourself. Here&#8217;s an example for the
+<a class="reference internal" href="../api/gammapy.stats.cash.html#gammapy.stats.cash" title="gammapy.stats.cash"><code class="xref py py-obj docutils literal"><span class="pre">cash</span></code></a> statistic:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.stats</span> <span class="kn">import</span> <span class="n">cash</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">9</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.3</span><span class="p">,</span> <span class="mf">6.8</span><span class="p">,</span> <span class="mf">9.2</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cash</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+<span class="go">array([ -0.56353481,  -5.56922612, -21.54566271])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cash</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="go">-27.678423645645118</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="gaussian-data">
+<h2>Gaussian data<a class="headerlink" href="fit_statistics.html#gaussian-data" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="poisson-data">
+<h2>Poisson data<a class="headerlink" href="fit_statistics.html#poisson-data" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+</div>
+<div class="section" id="poisson-data-with-background-measurement">
+<span id="wstat"></span><h2>Poisson data with background measurement<a class="headerlink" href="fit_statistics.html#poisson-data-with-background-measurement" title="Permalink to this headline">¶</a></h2>
+<p>If you not only have a  measurement of counts  <span class="math">\(n_{on}\)</span> in the signal region,
+but also a measurement <span class="math">\(n_{off}\)</span> in a background region you can write down the
+likelihood formula as</p>
+<div class="math">
+\[L (n_{on}, n_{off}, \alpha; \mu_{sig}, \mu_{bkg}) =
+     \frac{(\mu_{sig}+\alpha \mu_{bkg})^{n_{on}}}{n_{on} !}
+    \exp{(-(\mu_{sig}+\alpha \mu_{bkg}))}\times
+    \frac{(\mu_{bkg})^{n_{off}}}{n_{off} !}\exp{(-\mu_{bkg})},\]</div>
+<p>where <span class="math">\(\mu_{sig}\)</span> is the number of expected counts in the signal regions,
+and <span class="math">\(\mu_{bkg}\)</span> is the number of expected counts in the background
+region, as defined in the <a class="reference internal" href="index.html#stats-introduction"><span>Introduction</span></a>. By taking two time the
+negative log likelihood and neglecting model independent and thus constant
+terms, we define the <strong>WStat</strong>.</p>
+<div class="math">
+\[W = 2 (\mu_{sig} + (1 + \alpha)\mu_{bkg}
+- n_{on} \log{(\mu_{sig} + \alpha \mu_{bkg})}
+- n_{off} \log{(\mu_{bkg})})\]</div>
+<p>Most of the times you probably won&#8217;t have a model in order to get
+<span class="math">\(\mu_{bkg}\)</span>. The strategy in this case is to treat <span class="math">\(\mu_{bkg}\)</span> as
+so-called nuisance parameter, i.e. a free parameter that is of no physical
+interest.  Of course you don&#8217;t want an additional free parameter for each bin
+during a fit. Therefore one calculates an estimator for <span class="math">\(\mu_{bkg}\)</span> by
+analytically minimizing the likelihood function. This is called &#8216;profile
+likelihood&#8217;.</p>
+<div class="math">
+\[\frac{\mathrm d \log L}{\mathrm d \mu_{bkg}} = 0\]</div>
+<p>This yields a quadratic equation for <span class="math">\(\mu_{bkg}\)</span></p>
+<div class="math">
+\[\frac{\alpha n_{on}}{mu_{sig}+\alpha \mu_{bkg}} +
+\frac{n_{off}}{\mu_{bkg}} - (\alpha + 1) = 0\]</div>
+<p>with the solution</p>
+<div class="math">
+\[\mu_{bkg} = \frac{C + D}{2\alpha(\alpha + 1)}\]</div>
+<p>where</p>
+<div class="math">
+\[\begin{split}C = \alpha(n_{on} + n_{off}) - (\alpha+1)\mu_{sig} \\
+D^2 = C^2 + 4 (\alpha+1)\alpha n_{off} \mu_{sig}\end{split}\]</div>
+<p>The best-fit value of the WStat as defined now contains no information about
+the goodness of the fit. In order to provide such an estimate, we can add a
+constant term to the WStat, namely twice the log likelihood of the data
+<span class="math">\(n_{on}\)</span> and <span class="math">\(n_{off}\)</span> under the expectation of <span class="math">\(n_{on}\)</span> and <span class="math">\(n_{off}\)</span>,</p>
+<div class="math">
+\[2 \log L (n_{on}, n_{off}; n_{on}, n_{off}) =
+    2 (n_{on} ( \log n_{on} - 1 ) + n_{off} ( \log n_{off} - 1))\]</div>
+<p>In doing so, we are computing the likelihood ratio:</p>
+<div class="math">
+\[-2 \log \frac{L(n_{on},n_{off},\alpha; \mu_{sig},\mu_{bkg})}
+    {L(n_{on},n_{off};n_{on},n_{off})}\]</div>
+<p>Intuitively, this log-likelihood ratio should asymptotically behave like a
+chi-square with <code class="docutils literal"><span class="pre">m-n</span></code> degrees of freedom, where <code class="docutils literal"><span class="pre">m</span></code> is the number of
+measurements and <code class="docutils literal"><span class="pre">n</span></code> the number of model parameters.</p>
+<p>Hence, we rewrite WStat as:</p>
+<div class="math">
+\[W = 2 (\mu_{sig} + (1 + \alpha)\mu_{bkg} - n_{on} - n_{off}
+- n_{on} (\log{(\mu_{sig} + \alpha \mu_{bkg}) - \log{(n_{on})}})
+- n_{off} (\log{(\mu_{bkg})} - \log{(n_{off})}))\]</div>
+<p>The above formular is obviously undefined if <span class="math">\(n_{on}\)</span> or <span class="math">\(n_{off}\)</span>
+are equal to zero. This case is treated as follows.</p>
+<p>If <span class="math">\(n_{on} = 0\)</span></p>
+<div class="math">
+\[W = \mu_{sig} - n_{on} \log{\frac{1}{1 + \alpha}}\]</div>
+<p>Otherwise, two cases are distinguished.</p>
+<p>If
+<span class="math">\(mu_{sig} &lt; n_{on} (\frac{\alpha}{1 + \alpha})\)</span></p>
+<div class="math">
+\[W = -\mu_{sig} (\frac{1}{\alpha}) - n_{on} \log{(\frac{\alpha}{1 + alpha})}\]</div>
+<p>else</p>
+<div class="math">
+\[W = \mu_{sig} + n_{on}(\log{(n_{on})} - \log{(mu_{sig})} - 1)\]</div>
+<p>The following table gives an overview over values that WStat takes in different
+scenarios</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.stats</span> <span class="kn">import</span> <span class="n">wstat</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;mu_sig&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">1.4</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">5.2</span><span class="p">,</span> <span class="mf">6.2</span><span class="p">,</span> <span class="mf">4.1</span><span class="p">,</span> <span class="mf">6.4</span><span class="p">,</span> <span class="mf">4.9</span><span class="p">,</span> <span class="mf">10.2</span><span class="p">,</span>
+<span class="gp">... </span>                   <span class="mf">16.9</span><span class="p">,</span> <span class="mf">102.5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;n_on&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">100</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;n_off&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span> <span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">70</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.1</span> <span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">,</span>
+<span class="gp">... </span>                  <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;wstat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wstat</span><span class="p">(</span><span class="n">n_on</span><span class="o">=</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;n_on&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">n_off</span><span class="o">=</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;n_off&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">alpha</span><span class="o">=</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                       <span class="n">mu_sig</span><span class="o">=</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;mu_sig&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;wstat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">format</span> <span class="o">=</span> <span class="s1">&#39;.3f&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">table</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
+<span class="go">mu_sig n_on n_off alpha wstat</span>
+<span class="go">------ ---- ----- ----- ------</span>
+<span class="go">   0.1    0     0  0.01  0.200</span>
+<span class="go">   0.1    0     1  0.01  0.220</span>
+<span class="go">   1.4    0     1   0.5  3.611</span>
+<span class="go">   0.2    0    10   0.1  2.306</span>
+<span class="go">   0.1    0    10   0.2  3.846</span>
+<span class="go">   5.2    5     0   0.2  0.008</span>
+<span class="go">   6.2    5     5   0.2  0.736</span>
+<span class="go">   4.1    5     5  0.01  0.163</span>
+<span class="go">   6.4    5    20   0.4  7.125</span>
+<span class="go">   4.9    5    40   0.4 14.578</span>
+<span class="go">  10.2   10     2   0.2  0.034</span>
+<span class="go">  16.9   20    70   0.1  0.656</span>
+<span class="go"> 102.5  100    10   0.6  0.663</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="further-references">
+<h2>Further references<a class="headerlink" href="fit_statistics.html#further-references" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><a class="reference external" href="http://cxc.cfa.harvard.edu/sherpa/statistics">Sherpa statistics page</a></li>
+<li><a class="reference external" href="http://heasarc.nasa.gov/xanadu/xspec/manual/XSappendixStatistics.html">XSpec manual statistics page</a></li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="fit_statistics.html#">Fit statistics</a><ul>
+<li><a class="reference internal" href="fit_statistics.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="fit_statistics.html#gaussian-data">Gaussian data</a></li>
+<li><a class="reference internal" href="fit_statistics.html#poisson-data">Poisson data</a></li>
+<li><a class="reference internal" href="fit_statistics.html#poisson-data-with-background-measurement">Poisson data with background measurement</a></li>
+<li><a class="reference internal" href="fit_statistics.html#further-references">Further references</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/stats/fit_statistics.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="fit_statistics.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

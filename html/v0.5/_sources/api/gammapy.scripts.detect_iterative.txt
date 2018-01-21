@@ -1,0 +1,8 @@
+
+
+detect_iterative
+================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: detect_iterative

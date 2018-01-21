@@ -1,0 +1,52 @@
+
+
+Fitter
+=======================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: Fitter
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Fitter.chi2
+      ~Fitter.chi2_lin
+      ~Fitter.error
+      ~Fitter.fit
+      ~Fitter.plot
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: chi2
+   .. automethod:: chi2_lin
+   .. automethod:: error
+   .. automethod:: fit
+   .. automethod:: plot
+
+   
+   

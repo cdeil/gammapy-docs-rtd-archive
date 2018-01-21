@@ -1,0 +1,75 @@
+
+
+SpectrumExtraction
+===================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumExtraction
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumExtraction.DEFAULT_RECO_ENERGY
+      ~SpectrumExtraction.DEFAULT_TRUE_ENERGY
+      ~SpectrumExtraction.OGIP_FOLDER
+      ~SpectrumExtraction.observations
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumExtraction.define_energy_threshold
+      ~SpectrumExtraction.estimate_background
+      ~SpectrumExtraction.extract_spectrum
+      ~SpectrumExtraction.filter_observations
+      ~SpectrumExtraction.run
+      ~SpectrumExtraction.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: DEFAULT_RECO_ENERGY
+   .. autoattribute:: DEFAULT_TRUE_ENERGY
+   .. autoattribute:: OGIP_FOLDER
+   .. autoattribute:: observations
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: define_energy_threshold
+   .. automethod:: estimate_background
+   .. automethod:: extract_spectrum
+   .. automethod:: filter_observations
+   .. automethod:: run
+   .. automethod:: write
+
+   
+   

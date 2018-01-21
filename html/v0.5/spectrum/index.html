@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Spectrum estimation and modeling (gammapy.spectrum) &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="next" title="Spectral Fitting" href="fitting.html" />
+    <link rel="prev" title="TablePSF" href="../api/gammapy.irf.TablePSF.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/spectrum/" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'spectrum/index'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="fitting.html" title="Spectral Fitting">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.irf.TablePSF.html" title="TablePSF">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      
+      <li>Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spectrum-estimation-and-modeling-gammapy-spectrum">
+<span id="spectrum"></span><h1>Spectrum estimation and modeling (<a class="reference internal" href="index.html#module-gammapy.spectrum" title="gammapy.spectrum"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum</span></code></a>)<a class="headerlink" href="index.html#spectrum-estimation-and-modeling-gammapy-spectrum" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-gammapy.spectrum" title="gammapy.spectrum"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum</span></code></a> holds functions and classes related to 1D region based
+spectral analysis.</p>
+<p>The basic of this type of analysis are explained in <a class="reference external" href="https://github.com/gammapy/PyGamma15/tree/gh-pages/talks/analysis-classical">this</a>
+talk</p>
+<p>TODO: explain basics</p>
+<p>A good reference for the forward-folding on-off likelihood fitting methods
+is Section 7.5 &#8220;Spectra and Light Curves&#8221; in <a class="reference internal" href="../references.html#naurois2012" id="id1">[Naurois2012]</a>,
+in publications usually the reference <a class="reference internal" href="../references.html#piron2001" id="id2">[Piron2001]</a> is used.
+A standard reference for the unfolding method is <a class="reference internal" href="../references.html#albert2007" id="id3">[Albert2007]</a>.</p>
+</div>
+<div class="section" id="content">
+<h2>Content<a class="headerlink" href="index.html#content" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="fitting.html">Spectral Fitting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="flux_points.html">Flux point computation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energy_group.html">Spectrum energy grouping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting_fermi_spectra.html">Plotting Fermi 2FHL and 3FGL spectra</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.spectrum">
+<span id="gammapy-spectrum-package"></span><h3>gammapy.spectrum Package<a class="headerlink" href="index.html#module-gammapy.spectrum" title="Permalink to this headline">¶</a></h3>
+<p>Spectrum estimation and modeling methods (1-dimensional, with an energy axis).</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.add_spec.html#gammapy.spectrum.add_spec" title="gammapy.spectrum.add_spec"><code class="xref py py-obj docutils literal"><span class="pre">add_spec</span></code></a>(frame,&nbsp;model,&nbsp;xlim[,&nbsp;npoints])</td>
+<td>Add a spectral component to a frame.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.calculate_flux_point_binning.html#gammapy.spectrum.calculate_flux_point_binning" title="gammapy.spectrum.calculate_flux_point_binning"><code class="xref py py-obj docutils literal"><span class="pre">calculate_flux_point_binning</span></code></a>(obs_list,&nbsp;...)</td>
+<td>Compute energy binning.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.calculate_predicted_counts.html#gammapy.spectrum.calculate_predicted_counts" title="gammapy.spectrum.calculate_predicted_counts"><code class="xref py py-obj docutils literal"><span class="pre">calculate_predicted_counts</span></code></a>(model,&nbsp;aeff,&nbsp;...)</td>
+<td>Get npred</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.check_chi2.html#gammapy.spectrum.check_chi2" title="gammapy.spectrum.check_chi2"><code class="xref py py-obj docutils literal"><span class="pre">check_chi2</span></code></a>()</td>
+<td>Execute this function after fitting to see if the</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.chi2asym_err_func.html#gammapy.spectrum.chi2asym_err_func" title="gammapy.spectrum.chi2asym_err_func"><code class="xref py py-obj docutils literal"><span class="pre">chi2asym_err_func</span></code></a>(data)</td>
+<td>Compute statistical error per bin from the data.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.chi2asym_stat_func.html#gammapy.spectrum.chi2asym_stat_func" title="gammapy.spectrum.chi2asym_stat_func"><code class="xref py py-obj docutils literal"><span class="pre">chi2asym_stat_func</span></code></a>(data,&nbsp;model[,&nbsp;staterror,&nbsp;...])</td>
+<td>Define asymmetric chi-square errors.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.compute_differential_flux_points.html#gammapy.spectrum.compute_differential_flux_points" title="gammapy.spectrum.compute_differential_flux_points"><code class="xref py py-obj docutils literal"><span class="pre">compute_differential_flux_points</span></code></a>([x_method,&nbsp;...])</td>
+<td>Creates differential flux points table from integral flux points table.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.cosmic_ray_flux.html#gammapy.spectrum.cosmic_ray_flux" title="gammapy.spectrum.cosmic_ray_flux"><code class="xref py py-obj docutils literal"><span class="pre">cosmic_ray_flux</span></code></a>(energy[,&nbsp;particle])</td>
+<td>Cosmic ray flux at Earth.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.cube_sed.html#gammapy.spectrum.cube_sed" title="gammapy.spectrum.cube_sed"><code class="xref py py-obj docutils literal"><span class="pre">cube_sed</span></code></a>(cube[,&nbsp;mask,&nbsp;flux_type,&nbsp;counts,&nbsp;...])</td>
+<td>Creates SED from SkyCube within given lat and lon range.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.diffuse_gamma_ray_flux.html#gammapy.spectrum.diffuse_gamma_ray_flux" title="gammapy.spectrum.diffuse_gamma_ray_flux"><code class="xref py py-obj docutils literal"><span class="pre">diffuse_gamma_ray_flux</span></code></a>(energy[,&nbsp;component])</td>
+<td>Diffuse gamma ray flux.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.generate_MC_data.html#gammapy.spectrum.generate_MC_data" title="gammapy.spectrum.generate_MC_data"><code class="xref py py-obj docutils literal"><span class="pre">generate_MC_data</span></code></a>(model,&nbsp;xlim,&nbsp;yerr[,&nbsp;...])</td>
+<td>Generate points with equal-log spacing in x given by the model.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.group_obs_table.html#gammapy.spectrum.group_obs_table" title="gammapy.spectrum.group_obs_table"><code class="xref py py-obj docutils literal"><span class="pre">group_obs_table</span></code></a>(obs_table[,&nbsp;offset_range,&nbsp;...])</td>
+<td>Helper function to provide an observation grouping in offset, muon_efficiency, and zenith.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.integrate_spectrum.html#gammapy.spectrum.integrate_spectrum" title="gammapy.spectrum.integrate_spectrum"><code class="xref py py-obj docutils literal"><span class="pre">integrate_spectrum</span></code></a>(func,&nbsp;xmin,&nbsp;xmax[,&nbsp;...])</td>
+<td>Integrate 1d function using the log-log trapezoidal rule.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.load_chi2asym_stat.html#gammapy.spectrum.load_chi2asym_stat" title="gammapy.spectrum.load_chi2asym_stat"><code class="xref py py-obj docutils literal"><span class="pre">load_chi2asym_stat</span></code></a>()</td>
+<td>&#8220;Load and set the chi2asym statistic</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.plot_chi2.html#gammapy.spectrum.plot_chi2" title="gammapy.spectrum.plot_chi2"><code class="xref py py-obj docutils literal"><span class="pre">plot_chi2</span></code></a>(model,&nbsp;data[,&nbsp;fit_result,&nbsp;limits,&nbsp;...])</td>
+<td>Plot chi**2 contours and linear fit approxiation</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.plot_fit.html#gammapy.spectrum.plot_fit" title="gammapy.spectrum.plot_fit"><code class="xref py py-obj docutils literal"><span class="pre">plot_fit</span></code></a>(f,&nbsp;c,&nbsp;fit_result,&nbsp;xlimits,&nbsp;ylimits)</td>
+<td>Plot the error butterfly.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.plot_model.html#gammapy.spectrum.plot_model" title="gammapy.spectrum.plot_model"><code class="xref py py-obj docutils literal"><span class="pre">plot_model</span></code></a>(model,&nbsp;xlim[,&nbsp;npoints])</td>
+<td>Plot model curve.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.plot_points.html#gammapy.spectrum.plot_points" title="gammapy.spectrum.plot_points"><code class="xref py py-obj docutils literal"><span class="pre">plot_points</span></code></a>(data[,&nbsp;xpower])</td>
+<td>Make a nice plot</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum" title="gammapy.spectrum.CountsSpectrum"><code class="xref py py-obj docutils literal"><span class="pre">CountsSpectrum</span></code></a>(**kwargs)</td>
+<td>Generic counts spectrum</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.CrabSpectrum.html#gammapy.spectrum.CrabSpectrum" title="gammapy.spectrum.CrabSpectrum"><code class="xref py py-obj docutils literal"><span class="pre">CrabSpectrum</span></code></a>([reference])</td>
+<td>Crab spectral model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints" title="gammapy.spectrum.DifferentialFluxPoints"><code class="xref py py-obj docutils literal"><span class="pre">DifferentialFluxPoints</span></code></a>([data,&nbsp;masked,&nbsp;...])</td>
+<td>Differential flux points table</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.Fitter.html#gammapy.spectrum.Fitter" title="gammapy.spectrum.Fitter"><code class="xref py py-obj docutils literal"><span class="pre">Fitter</span></code></a>(data,&nbsp;model[,&nbsp;sym])</td>
+<td>Chi^2 fitter for spectral models and flux points.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.FluxPointEstimator.html#gammapy.spectrum.FluxPointEstimator" title="gammapy.spectrum.FluxPointEstimator"><code class="xref py py-obj docutils literal"><span class="pre">FluxPointEstimator</span></code></a>(obs,&nbsp;groups,&nbsp;model)</td>
+<td>Flux point estimator.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.Galprop.html#gammapy.spectrum.Galprop" title="gammapy.spectrum.Galprop"><code class="xref py py-obj docutils literal"><span class="pre">Galprop</span></code></a>()</td>
+<td>A cylindrically symmetric model for the distribution of the optical and infrared ISRF in the Milky Way.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.IntegralFluxPoints.html#gammapy.spectrum.IntegralFluxPoints" title="gammapy.spectrum.IntegralFluxPoints"><code class="xref py py-obj docutils literal"><span class="pre">IntegralFluxPoints</span></code></a>([data,&nbsp;masked,&nbsp;names,&nbsp;...])</td>
+<td>Integral flux points table</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis" title="gammapy.spectrum.LogEnergyAxis"><code class="xref py py-obj docutils literal"><span class="pre">LogEnergyAxis</span></code></a>(energy[,&nbsp;mode])</td>
+<td>Log10 energy axis.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.PHACountsSpectrum.html#gammapy.spectrum.PHACountsSpectrum" title="gammapy.spectrum.PHACountsSpectrum"><code class="xref py py-obj docutils literal"><span class="pre">PHACountsSpectrum</span></code></a>(**kwargs)</td>
+<td>OGIP PHA equivalent</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SED.html#gammapy.spectrum.SED" title="gammapy.spectrum.SED"><code class="xref py py-obj docutils literal"><span class="pre">SED</span></code></a>([initlist])</td>
+<td>Class to plot GeV &#8211; TeV SEDs</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SEDComponent.html#gammapy.spectrum.SEDComponent" title="gammapy.spectrum.SEDComponent"><code class="xref py py-obj docutils literal"><span class="pre">SEDComponent</span></code></a>([name,&nbsp;model,&nbsp;points])</td>
+<td>Uniform interface to SED components for the SED class</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SEDLikelihoodProfile.html#gammapy.spectrum.SEDLikelihoodProfile" title="gammapy.spectrum.SEDLikelihoodProfile"><code class="xref py py-obj docutils literal"><span class="pre">SEDLikelihoodProfile</span></code></a>(table)</td>
+<td>SED likelihood profile.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.Schlickeiser.html#gammapy.spectrum.Schlickeiser" title="gammapy.spectrum.Schlickeiser"><code class="xref py py-obj docutils literal"><span class="pre">Schlickeiser</span></code></a></td>
+<td>ISRF model for the solar neighborhood.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumButterfly.html#gammapy.spectrum.SpectrumButterfly" title="gammapy.spectrum.SpectrumButterfly"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumButterfly</span></code></a>([data,&nbsp;masked,&nbsp;names,&nbsp;...])</td>
+<td>Spectral model butterfly class.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumEnergyGroup.html#gammapy.spectrum.SpectrumEnergyGroup" title="gammapy.spectrum.SpectrumEnergyGroup"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumEnergyGroup</span></code></a>(energy_group_idx,&nbsp;...)</td>
+<td>Spectrum energy group.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumEnergyGroupMaker.html#gammapy.spectrum.SpectrumEnergyGroupMaker" title="gammapy.spectrum.SpectrumEnergyGroupMaker"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumEnergyGroupMaker</span></code></a>([obs])</td>
+<td>Energy bin groups for spectral analysis.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumEnergyGroups.html#gammapy.spectrum.SpectrumEnergyGroups" title="gammapy.spectrum.SpectrumEnergyGroups"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumEnergyGroups</span></code></a>([initlist])</td>
+<td>List of <a class="reference internal" href="../api/gammapy.spectrum.SpectrumEnergyGroup.html#gammapy.spectrum.SpectrumEnergyGroup" title="gammapy.spectrum.SpectrumEnergyGroup"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumEnergyGroup</span></code></a> objects.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction" title="gammapy.spectrum.SpectrumExtraction"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumExtraction</span></code></a>(target,&nbsp;obs,&nbsp;background)</td>
+<td>Class for creating input data to 1D spectrum fitting</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumFit.html#gammapy.spectrum.SpectrumFit" title="gammapy.spectrum.SpectrumFit"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumFit</span></code></a>(obs_list,&nbsp;model[,&nbsp;stat,&nbsp;method])</td>
+<td>Spectral Fit using Sherpa</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult" title="gammapy.spectrum.SpectrumFitResult"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumFitResult</span></code></a>(model[,&nbsp;covariance,&nbsp;...])</td>
+<td>Class representing the result of a spectral fit</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a>(on_vector,&nbsp;aeff[,&nbsp;...])</td>
+<td>1D spectral analysis storage class</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumObservationGrouping.html#gammapy.spectrum.SpectrumObservationGrouping" title="gammapy.spectrum.SpectrumObservationGrouping"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationGrouping</span></code></a>(obs_table)</td>
+<td>Class for stacking observations in groups</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList" title="gammapy.spectrum.SpectrumObservationList"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationList</span></code></a>([initlist])</td>
+<td>List of <a class="reference internal" href="../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumObservationStacker.html#gammapy.spectrum.SpectrumObservationStacker" title="gammapy.spectrum.SpectrumObservationStacker"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationStacker</span></code></a>(obs_list)</td>
+<td>Stack <code class="xref py py-obj docutils literal"><span class="pre">SpectrumObervationList</span></code></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult" title="gammapy.spectrum.SpectrumResult"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumResult</span></code></a>([fit,&nbsp;obs,&nbsp;points])</td>
+<td>Class holding all results of a spectral analysis</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumSimulation.html#gammapy.spectrum.SpectrumSimulation" title="gammapy.spectrum.SpectrumSimulation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumSimulation</span></code></a>(aeff,&nbsp;edisp,&nbsp;...[,&nbsp;...])</td>
+<td>Simulate <a class="reference internal" href="../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats" title="gammapy.spectrum.SpectrumStats"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumStats</span></code></a>(**kwargs)</td>
+<td>Spectrum stats.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.spectrum.models">
+<span id="gammapy-spectrum-models-module"></span><h3>gammapy.spectrum.models Module<a class="headerlink" href="index.html#module-gammapy.spectrum.models" title="Permalink to this headline">¶</a></h3>
+<p>Spectral models for Gammapy.</p>
+<div class="section" id="id4">
+<h4>Classes<a class="headerlink" href="index.html#id4" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.models.SpectralModel.html#gammapy.spectrum.models.SpectralModel" title="gammapy.spectrum.models.SpectralModel"><code class="xref py py-obj docutils literal"><span class="pre">SpectralModel</span></code></a></td>
+<td>Spectral model base class.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.models.PowerLaw.html#gammapy.spectrum.models.PowerLaw" title="gammapy.spectrum.models.PowerLaw"><code class="xref py py-obj docutils literal"><span class="pre">PowerLaw</span></code></a>(index,&nbsp;amplitude,&nbsp;reference)</td>
+<td>Spectral power-law model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.models.PowerLaw2.html#gammapy.spectrum.models.PowerLaw2" title="gammapy.spectrum.models.PowerLaw2"><code class="xref py py-obj docutils literal"><span class="pre">PowerLaw2</span></code></a>(amplitude,&nbsp;index,&nbsp;emin,&nbsp;emax)</td>
+<td>Spectral power-law model with integral as norm parameter</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.models.ExponentialCutoffPowerLaw.html#gammapy.spectrum.models.ExponentialCutoffPowerLaw" title="gammapy.spectrum.models.ExponentialCutoffPowerLaw"><code class="xref py py-obj docutils literal"><span class="pre">ExponentialCutoffPowerLaw</span></code></a>(index,&nbsp;amplitude,&nbsp;...)</td>
+<td>Spectral exponential cutoff power-law model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.models.ExponentialCutoffPowerLaw3FGL.html#gammapy.spectrum.models.ExponentialCutoffPowerLaw3FGL" title="gammapy.spectrum.models.ExponentialCutoffPowerLaw3FGL"><code class="xref py py-obj docutils literal"><span class="pre">ExponentialCutoffPowerLaw3FGL</span></code></a>(index,&nbsp;...)</td>
+<td>Spectral exponential cutoff power-law model used for 3FGL.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.models.LogParabola.html#gammapy.spectrum.models.LogParabola" title="gammapy.spectrum.models.LogParabola"><code class="xref py py-obj docutils literal"><span class="pre">LogParabola</span></code></a>(amplitude,&nbsp;reference,&nbsp;alpha,&nbsp;beta)</td>
+<td>Spectral log parabola model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.models.TableModel.html#gammapy.spectrum.models.TableModel" title="gammapy.spectrum.models.TableModel"><code class="xref py py-obj docutils literal"><span class="pre">TableModel</span></code></a>(energy,&nbsp;values[,&nbsp;amplitude])</td>
+<td>A model generated from a table of energy and value arrays.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.spectrum.powerlaw">
+<span id="gammapy-spectrum-powerlaw-module"></span><h3>gammapy.spectrum.powerlaw Module<a class="headerlink" href="index.html#module-gammapy.spectrum.powerlaw" title="Permalink to this headline">¶</a></h3>
+<p>Power law spectrum helper functions.</p>
+<p>This <a class="reference internal" href="index.html#module-gammapy.spectrum.powerlaw" title="gammapy.spectrum.powerlaw"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum.powerlaw</span></code></a> module contains a bunch of helper functions for computations
+concerning power laws that are standalone and in their separate namespace
+(i.e. not imported into the <a class="reference internal" href="index.html#module-gammapy.spectrum" title="gammapy.spectrum"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum</span></code></a> namespace).
+Their main purpose is to serve as building blocks for implementing other code in Gammapy
+that depends on power laws, e.g. interpolation or extrapolation or integration
+of spectra or spectral cubes.</p>
+<p>End users will rarely need to use the functions here, the <a class="reference internal" href="../api/gammapy.spectrum.models.PowerLaw.html#gammapy.spectrum.models.PowerLaw" title="gammapy.spectrum.models.PowerLaw"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum.models.PowerLaw</span></code></a> class,
+which is a <a class="reference internal" href="../api/gammapy.spectrum.models.SpectralModel.html#gammapy.spectrum.models.SpectralModel" title="gammapy.spectrum.models.SpectralModel"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum.models.SpectralModel</span></code></a> sub-class provides the common functionality
+with a convenient API, that can be somewhat slower though than the functions here, because it
+uses <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a> objects.</p>
+<p>TODO: probably it doesn&#8217;t make sense to keep <code class="docutils literal"><span class="pre">power_law_evaluate</span></code> here ... it&#8217;s a direct duplication
+of the staticmethod <code class="docutils literal"><span class="pre">PowerLaw.evaluate</span></code>.</p>
+<div class="section" id="examples">
+<h4>Examples<a class="headerlink" href="index.html#examples" title="Permalink to this headline">¶</a></h4>
+<p>All the functions contain the <code class="docutils literal"><span class="pre">powerlaw_</span></code> prefix and are pretty long,
+so we suggest importing them directly and using them like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.spectrum.powerlaw</span> <span class="kn">import</span> <span class="n">power_law_evaluate</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">power_law_evaluate</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="mf">4.2e-11</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">energy_ref</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">7.758467093729267e-15</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>Functions<a class="headerlink" href="index.html#id5" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_evaluate.html#gammapy.spectrum.powerlaw.power_law_evaluate" title="gammapy.spectrum.powerlaw.power_law_evaluate"><code class="xref py py-obj docutils literal"><span class="pre">power_law_evaluate</span></code></a>(energy,&nbsp;norm,&nbsp;gamma,&nbsp;...)</td>
+<td>Differential flux at a given energy.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_pivot_energy.html#gammapy.spectrum.powerlaw.power_law_pivot_energy" title="gammapy.spectrum.powerlaw.power_law_pivot_energy"><code class="xref py py-obj docutils literal"><span class="pre">power_law_pivot_energy</span></code></a>(energy_ref,&nbsp;f0,&nbsp;...)</td>
+<td>Compute pivot (a.k.a.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_df_over_f.html#gammapy.spectrum.powerlaw.power_law_df_over_f" title="gammapy.spectrum.powerlaw.power_law_df_over_f"><code class="xref py py-obj docutils literal"><span class="pre">power_law_df_over_f</span></code></a>(e,&nbsp;e0,&nbsp;f0,&nbsp;df0,&nbsp;dg,&nbsp;cov)</td>
+<td>Compute relative flux error at any given energy.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_flux.html#gammapy.spectrum.powerlaw.power_law_flux" title="gammapy.spectrum.powerlaw.power_law_flux"><code class="xref py py-obj docutils literal"><span class="pre">power_law_flux</span></code></a>([I,&nbsp;g,&nbsp;e,&nbsp;e1,&nbsp;e2])</td>
+<td>Compute differential flux for a given integral flux.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_energy_flux.html#gammapy.spectrum.powerlaw.power_law_energy_flux" title="gammapy.spectrum.powerlaw.power_law_energy_flux"><code class="xref py py-obj docutils literal"><span class="pre">power_law_energy_flux</span></code></a>(I[,&nbsp;g,&nbsp;e,&nbsp;e1,&nbsp;e2])</td>
+<td>Compute energy flux between e1 and e2 for a given integral flux.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_integral_flux.html#gammapy.spectrum.powerlaw.power_law_integral_flux" title="gammapy.spectrum.powerlaw.power_law_integral_flux"><code class="xref py py-obj docutils literal"><span class="pre">power_law_integral_flux</span></code></a>([f,&nbsp;g,&nbsp;e,&nbsp;e1,&nbsp;e2])</td>
+<td>Compute integral flux for a given differential flux.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_g_from_f.html#gammapy.spectrum.powerlaw.power_law_g_from_f" title="gammapy.spectrum.powerlaw.power_law_g_from_f"><code class="xref py py-obj docutils literal"><span class="pre">power_law_g_from_f</span></code></a>(e,&nbsp;f[,&nbsp;de])</td>
+<td>Spectral index at a given energy e for a given function f(e)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_g_from_points.html#gammapy.spectrum.powerlaw.power_law_g_from_points" title="gammapy.spectrum.powerlaw.power_law_g_from_points"><code class="xref py py-obj docutils literal"><span class="pre">power_law_g_from_points</span></code></a>(e1,&nbsp;e2,&nbsp;f1,&nbsp;f2)</td>
+<td>Spectral index for two given differential flux points</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_I_from_points.html#gammapy.spectrum.powerlaw.power_law_I_from_points" title="gammapy.spectrum.powerlaw.power_law_I_from_points"><code class="xref py py-obj docutils literal"><span class="pre">power_law_I_from_points</span></code></a>(e1,&nbsp;e2,&nbsp;f1,&nbsp;f2)</td>
+<td>Integral flux in energy bin for power law</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_f_from_points.html#gammapy.spectrum.powerlaw.power_law_f_from_points" title="gammapy.spectrum.powerlaw.power_law_f_from_points"><code class="xref py py-obj docutils literal"><span class="pre">power_law_f_from_points</span></code></a>(e1,&nbsp;e2,&nbsp;f1,&nbsp;f2,&nbsp;e)</td>
+<td>Linear interpolation</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_f_with_err.html#gammapy.spectrum.powerlaw.power_law_f_with_err" title="gammapy.spectrum.powerlaw.power_law_f_with_err"><code class="xref py py-obj docutils literal"><span class="pre">power_law_f_with_err</span></code></a>([I_val,&nbsp;I_err,&nbsp;g_val,&nbsp;...])</td>
+<td>Wrapper for f so the user doesn&#8217;t have to know about</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_I_with_err.html#gammapy.spectrum.powerlaw.power_law_I_with_err" title="gammapy.spectrum.powerlaw.power_law_I_with_err"><code class="xref py py-obj docutils literal"><span class="pre">power_law_I_with_err</span></code></a>([f_val,&nbsp;f_err,&nbsp;g_val,&nbsp;...])</td>
+<td>Wrapper for f so the user doesn&#8217;t have to know about</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.spectrum.powerlaw.power_law_compatibility.html#gammapy.spectrum.powerlaw.power_law_compatibility" title="gammapy.spectrum.powerlaw.power_law_compatibility"><code class="xref py py-obj docutils literal"><span class="pre">power_law_compatibility</span></code></a>(par_low,&nbsp;par_high)</td>
+<td>Quantify spectral compatibility of power-law measurements in two energy bands.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#content">Content</a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.spectrum">gammapy.spectrum Package</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.spectrum.models">gammapy.spectrum.models Module</a><ul>
+<li><a class="reference internal" href="index.html#id4">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.spectrum.powerlaw">gammapy.spectrum.powerlaw Module</a><ul>
+<li><a class="reference internal" href="index.html#examples">Examples</a></li>
+<li><a class="reference internal" href="index.html#id5">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/spectrum/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

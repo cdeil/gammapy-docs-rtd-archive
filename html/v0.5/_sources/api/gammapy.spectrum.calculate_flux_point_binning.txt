@@ -1,0 +1,8 @@
+
+
+calculate_flux_point_binning
+=============================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: calculate_flux_point_binning

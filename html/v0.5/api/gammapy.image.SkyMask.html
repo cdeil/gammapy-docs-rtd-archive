@@ -1,0 +1,371 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SkyMask &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Image processing and analysis tools (gammapy.image)" href="../image/index.html" />
+    <link rel="next" title="Instrument response function (IRF) functionality (gammapy.irf)" href="../irf/index.html" />
+    <link rel="prev" title="SkyImageList" href="gammapy.image.SkyImageList.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.image.SkyMask.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.image.SkyMask'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../irf/index.html" title="Instrument response function (IRF) functionality (gammapy.irf)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.image.SkyImageList.html" title="SkyImageList">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../image/index.html" accesskey="U">Image processing and analysis tools (<code class="docutils literal"><span class="pre">gammapy.image</span></code>)</a> &raquo;</li>
+      
+      <li>SkyMask</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="skymask">
+<h1>SkyMask<a class="headerlink" href="gammapy.image.SkyMask.html#skymask" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.image.SkyMask">
+<em class="property">class </em><code class="descclassname">gammapy.image.</code><code class="descname">SkyMask</code><span class="sig-paren">(</span><em>name=None</em>, <em>data=None</em>, <em>wcs=None</em>, <em>unit=None</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="gammapy.image.SkyImage.html#gammapy.image.SkyImage" title="gammapy.image.core.SkyImage"><code class="docutils literal"><span class="pre">gammapy.image.SkyImage</span></code></a></p>
+<p>Sky image mask.</p>
+<p><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="gammapy.image.SkyMask"><code class="xref py py-obj docutils literal"><span class="pre">SkyMask</span></code></a> is a <a class="reference internal" href="gammapy.image.SkyImage.html#gammapy.image.SkyImage" title="gammapy.image.SkyImage"><code class="xref py py-obj docutils literal"><span class="pre">SkyImage</span></code></a> sub-class, i.e. it inherits
+all of its features. The distinction is that <a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="gammapy.image.SkyMask"><code class="xref py py-obj docutils literal"><span class="pre">SkyMask</span></code></a> is to
+represent boolean masks and has methods that only make sense for
+mask data. The data array can be integer or float, but if it is,
+it should only contain pixel values of 0 or 1.</p>
+<p>TODO: explain about semantics and give examples what 0 and 1 mean
+in different applications (or link to other docs).</p>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.distance_image" title="gammapy.image.SkyMask.distance_image"><code class="xref py py-obj docutils literal"><span class="pre">distance_image</span></code></a></td>
+<td>Distance to nearest exclusion region.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.close" title="gammapy.image.SkyMask.close"><code class="xref py py-obj docutils literal"><span class="pre">close</span></code></a>(structure,&nbsp;**kwargs)</td>
+<td>Binary closing with structuring element.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.dilate" title="gammapy.image.SkyMask.dilate"><code class="xref py py-obj docutils literal"><span class="pre">dilate</span></code></a>(structure,&nbsp;**kwargs)</td>
+<td>Binary dilation with structuring element.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.erode" title="gammapy.image.SkyMask.erode"><code class="xref py py-obj docutils literal"><span class="pre">erode</span></code></a>(structure,&nbsp;**kwargs)</td>
+<td>Binary erosion with structuring element.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.fill_random_circles" title="gammapy.image.SkyMask.fill_random_circles"><code class="xref py py-obj docutils literal"><span class="pre">fill_random_circles</span></code></a>([n,&nbsp;min_rad,&nbsp;max_rad])</td>
+<td>Create random exclusion mask (n circles) on a  given image</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.open" title="gammapy.image.SkyMask.open"><code class="xref py py-obj docutils literal"><span class="pre">open</span></code></a>(structure,&nbsp;**kwargs)</td>
+<td>Binary opening with structuring element.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.read" title="gammapy.image.SkyMask.read"><code class="xref py py-obj docutils literal"><span class="pre">read</span></code></a>(fobj,&nbsp;*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.image.SkyMask.distance_image">
+<code class="descname">distance_image</code><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.distance_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Distance to nearest exclusion region.</p>
+<p>Compute distance image, i.e. the Euclidean (=Cartesian 2D)
+distance (in pixels) to the nearest exclusion region.</p>
+<p>We need to call distance_transform_edt twice because it only computes
+dist for pixels outside exclusion regions, so to get the
+distances for pixels inside we call it on the inverted mask
+and then combine both distance images into one, using negative
+distances (note the minus sign) for pixels inside exclusion regions.</p>
+<p>If data consist only of ones, it&#8217;ll be supposed to be far away
+from zero pixels, so in capacity of answer it should be return
+the matrix with the shape as like as data but packed by constant
+value Max_Value (MAX_VALUE = 1e10).</p>
+<p>If data consist only of zeros, it&#8217;ll be supposed to be deep inside
+an exclusion region, so in capacity of answer it should be return
+the matrix with the shape as like as data but packed by constant
+value -Max_Value (MAX_VALUE = 1e10).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>distance</strong> : <a class="reference internal" href="gammapy.image.SkyImage.html#gammapy.image.SkyImage" title="gammapy.image.SkyImage"><code class="xref py py-obj docutils literal"><span class="pre">SkyImage</span></code></a></p>
+<blockquote class="last">
+<div><p>Sky image of distance to nearest exclusion region.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.image</span> <span class="kn">import</span> <span class="n">SkyMask</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span> <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mask</span> <span class="o">=</span> <span class="n">SkyMask</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span><span class="p">(</span><span class="n">mask</span><span class="o">.</span><span class="n">distance_image</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<span class="go">[[-1, -1, 1], [1, 1, 1.41421356]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.image.SkyMask.close">
+<code class="descname">close</code><span class="sig-paren">(</span><em>structure</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary closing with structuring element.</p>
+<p>Calls <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.binary_closing.html#scipy.ndimage.binary_closing" title="(in SciPy v0.18.1)"><code class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.binary_closing</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : array-like</p>
+<blockquote>
+<div><p>Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>skymask</strong> : <a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="gammapy.image.SkyMask"><code class="xref py py-obj docutils literal"><span class="pre">SkyMask</span></code></a></p>
+<blockquote class="last">
+<div><p>Closed sky mask.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMask.dilate">
+<code class="descname">dilate</code><span class="sig-paren">(</span><em>structure</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask.dilate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.dilate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary dilation with structuring element.</p>
+<p>Calls <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.binary_dilation.html#scipy.ndimage.binary_dilation" title="(in SciPy v0.18.1)"><code class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.binary_dilation</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : array-like</p>
+<blockquote>
+<div><p>Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>skymask</strong> : <a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="gammapy.image.SkyMask"><code class="xref py py-obj docutils literal"><span class="pre">SkyMask</span></code></a></p>
+<blockquote class="last">
+<div><p>Dilated sky mask.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMask.erode">
+<code class="descname">erode</code><span class="sig-paren">(</span><em>structure</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask.erode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.erode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary erosion with structuring element.</p>
+<p>Calls <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.binary_erosion.html#scipy.ndimage.binary_erosion" title="(in SciPy v0.18.1)"><code class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.binary_erosion</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : array-like</p>
+<blockquote>
+<div><p>Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>skymask</strong> : <a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="gammapy.image.SkyMask"><code class="xref py py-obj docutils literal"><span class="pre">SkyMask</span></code></a></p>
+<blockquote class="last">
+<div><p>Eroded sky mask.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMask.fill_random_circles">
+<code class="descname">fill_random_circles</code><span class="sig-paren">(</span><em>n=4</em>, <em>min_rad=0</em>, <em>max_rad=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask.fill_random_circles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.fill_random_circles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create random exclusion mask (n circles) on a  given image</p>
+<p>This is useful for testing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n</strong> : int</p>
+<blockquote>
+<div><p>Number of circles to place</p>
+</div></blockquote>
+<p><strong>min_rad</strong> : int</p>
+<blockquote>
+<div><p>Minimum circle radius in pixels</p>
+</div></blockquote>
+<p><strong>max_rad</strong> : int</p>
+<blockquote class="last">
+<div><p>Maximum circle radius in pixels</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMask.open">
+<code class="descname">open</code><span class="sig-paren">(</span><em>structure</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask.open"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.open" title="Permalink to this definition">¶</a></dt>
+<dd><p>Binary opening with structuring element.</p>
+<p>Calls <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.ndimage.binary_opening.html#scipy.ndimage.binary_opening" title="(in SciPy v0.18.1)"><code class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage.binary_opening</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>structure</strong> : array-like</p>
+<blockquote>
+<div><p>Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>skymask</strong> : <a class="reference internal" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask" title="gammapy.image.SkyMask"><code class="xref py py-obj docutils literal"><span class="pre">SkyMask</span></code></a></p>
+<blockquote class="last">
+<div><p>Opened sky mask.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.image.SkyMask.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>fobj</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#SkyMask.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMask.html#gammapy.image.SkyMask.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.image.SkyMask.html#">SkyMask</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.image.SkyMask.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.image.SkyMask.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+
+
+TableModel
+==================================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: TableModel
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~TableModel.evaluate
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+
+   
+   

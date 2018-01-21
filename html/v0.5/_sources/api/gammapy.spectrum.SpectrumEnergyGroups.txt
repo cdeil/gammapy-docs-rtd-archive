@@ -1,0 +1,83 @@
+
+
+SpectrumEnergyGroups
+=====================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumEnergyGroups
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumEnergyGroups.bin_idx_range
+      ~SpectrumEnergyGroups.energy_range
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumEnergyGroups.apply_energy_binning
+      ~SpectrumEnergyGroups.apply_energy_max
+      ~SpectrumEnergyGroups.apply_energy_min
+      ~SpectrumEnergyGroups.clip_to_valid_range
+      ~SpectrumEnergyGroups.find_list_idx
+      ~SpectrumEnergyGroups.find_list_idx_range
+      ~SpectrumEnergyGroups.from_groups_table
+      ~SpectrumEnergyGroups.from_total_table
+      ~SpectrumEnergyGroups.make_and_replace_merged_group
+      ~SpectrumEnergyGroups.make_merged_group
+      ~SpectrumEnergyGroups.reindex_groups
+      ~SpectrumEnergyGroups.to_group_table
+      ~SpectrumEnergyGroups.to_total_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: bin_idx_range
+   .. autoattribute:: energy_range
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: apply_energy_binning
+   .. automethod:: apply_energy_max
+   .. automethod:: apply_energy_min
+   .. automethod:: clip_to_valid_range
+   .. automethod:: find_list_idx
+   .. automethod:: find_list_idx_range
+   .. automethod:: from_groups_table
+   .. automethod:: from_total_table
+   .. automethod:: make_and_replace_merged_group
+   .. automethod:: make_merged_group
+   .. automethod:: reindex_groups
+   .. automethod:: to_group_table
+   .. automethod:: to_total_table
+
+   
+   

@@ -1,0 +1,50 @@
+
+
+PowerLaw
+================================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: PowerLaw
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PowerLaw.energy_flux
+      ~PowerLaw.evaluate
+      ~PowerLaw.integral
+      ~PowerLaw.to_sherpa
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: energy_flux
+   .. automethod:: evaluate
+   .. automethod:: integral
+   .. automethod:: to_sherpa
+
+   
+   

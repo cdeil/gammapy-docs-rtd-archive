@@ -1,0 +1,75 @@
+
+
+EffectiveAreaTable2D
+================================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EffectiveAreaTable2D
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~EffectiveAreaTable2D.axis_names
+      ~EffectiveAreaTable2D.energy
+      ~EffectiveAreaTable2D.high_threshold
+      ~EffectiveAreaTable2D.low_threshold
+      ~EffectiveAreaTable2D.offset
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EffectiveAreaTable2D.from_table
+      ~EffectiveAreaTable2D.peek
+      ~EffectiveAreaTable2D.plot_energy_dependence
+      ~EffectiveAreaTable2D.plot_image
+      ~EffectiveAreaTable2D.plot_offset_dependence
+      ~EffectiveAreaTable2D.to_effective_area_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: axis_names
+   .. autoattribute:: energy
+   .. autoattribute:: high_threshold
+   .. autoattribute:: low_threshold
+   .. autoattribute:: offset
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_table
+   .. automethod:: peek
+   .. automethod:: plot_energy_dependence
+   .. automethod:: plot_image
+   .. automethod:: plot_offset_dependence
+   .. automethod:: to_effective_area_table
+
+   
+   

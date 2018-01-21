@@ -1,0 +1,67 @@
+
+
+SourceCatalogObject3FGL
+=======================================
+
+.. currentmodule:: gammapy.catalog
+
+.. autoclass:: SourceCatalogObject3FGL
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SourceCatalogObject3FGL.energy_range
+      ~SourceCatalogObject3FGL.flux_points
+      ~SourceCatalogObject3FGL.flux_points_integral
+      ~SourceCatalogObject3FGL.spectral_model
+      ~SourceCatalogObject3FGL.spectrum
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SourceCatalogObject3FGL.plot_lightcurve
+      ~SourceCatalogObject3FGL.summary
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: energy_range
+   .. autoattribute:: flux_points
+   .. autoattribute:: flux_points_integral
+   .. autoattribute:: spectral_model
+   .. autoattribute:: spectrum
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: plot_lightcurve
+   .. automethod:: summary
+
+   
+   

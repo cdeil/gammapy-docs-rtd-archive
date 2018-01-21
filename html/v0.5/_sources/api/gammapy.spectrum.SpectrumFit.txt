@@ -1,0 +1,77 @@
+
+
+SpectrumFit
+============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumFit
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumFit.DEFAULT_METHOD
+      ~SpectrumFit.DEFAULT_STAT
+      ~SpectrumFit.FLUX_FACTOR
+      ~SpectrumFit.fit_range
+      ~SpectrumFit.global_result
+      ~SpectrumFit.method_fit
+      ~SpectrumFit.result
+      ~SpectrumFit.statistic
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumFit.compute_fluxpoints
+      ~SpectrumFit.fit
+      ~SpectrumFit.run
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: DEFAULT_METHOD
+   .. autoattribute:: DEFAULT_STAT
+   .. autoattribute:: FLUX_FACTOR
+   .. autoattribute:: fit_range
+   .. autoattribute:: global_result
+   .. autoattribute:: method_fit
+   .. autoattribute:: result
+   .. autoattribute:: statistic
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute_fluxpoints
+   .. automethod:: fit
+   .. automethod:: run
+
+   
+   

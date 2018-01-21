@@ -1,0 +1,632 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.catalog.fermi &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/catalog/fermi.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/catalog/fermi'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.catalog.fermi</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Fermi catalog and source classes.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">tarfile</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">..utils.energy</span> <span class="kn">import</span> <span class="n">EnergyBounds</span>
+<span class="kn">from</span> <span class="nn">..spectrum</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">DifferentialFluxPoints</span><span class="p">,</span>
+    <span class="n">IntegralFluxPoints</span><span class="p">,</span>
+    <span class="n">SpectrumResult</span><span class="p">,</span>
+    <span class="n">SpectrumFitResult</span>
+<span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..spectrum.models</span> <span class="kn">import</span> <span class="p">(</span><span class="n">PowerLaw</span><span class="p">,</span> <span class="n">PowerLaw2</span><span class="p">,</span> <span class="n">ExponentialCutoffPowerLaw</span><span class="p">,</span>
+                               <span class="n">ExponentialCutoffPowerLaw3FGL</span><span class="p">,</span> <span class="n">LogParabola</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..spectrum.powerlaw</span> <span class="kn">import</span> <span class="n">power_law_flux</span>
+<span class="kn">from</span> <span class="nn">..datasets</span> <span class="kn">import</span> <span class="n">gammapy_extra</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">SourceCatalog</span><span class="p">,</span> <span class="n">SourceCatalogObject</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;fetch_fermi_catalog&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;fetch_fermi_extended_sources&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SourceCatalog2FHL&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SourceCatalog3FGL&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SourceCatalogObject2FHL&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SourceCatalogObject3FGL&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_is_galactic</span><span class="p">(</span><span class="n">source_class</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Re-group sources into rough categories.</span>
+
+<span class="sd">    Categories:</span>
+<span class="sd">    - &#39;galactic&#39;</span>
+<span class="sd">    - &#39;extra-galactic&#39;</span>
+<span class="sd">    - &#39;unknown&#39;</span>
+<span class="sd">    - &#39;other&#39;</span>
+
+<span class="sd">    Source identifications and associations are treated identically,</span>
+<span class="sd">    i.e. lower-case and upper-case source classes are not distinguished.</span>
+
+<span class="sd">    References:</span>
+<span class="sd">    - Table 3 in 3FGL paper: http://adsabs.harvard.edu/abs/2015arXiv150102003T</span>
+<span class="sd">    - Table 4 in the 1FHL paper: http://adsabs.harvard.edu/abs/2013ApJS..209...34A</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">source_class</span> <span class="o">=</span> <span class="n">source_class</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">gal_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;psr&#39;</span><span class="p">,</span> <span class="s1">&#39;pwn&#39;</span><span class="p">,</span> <span class="s1">&#39;snr&#39;</span><span class="p">,</span> <span class="s1">&#39;spp&#39;</span><span class="p">,</span> <span class="s1">&#39;lbv&#39;</span><span class="p">,</span> <span class="s1">&#39;hmb&#39;</span><span class="p">,</span>
+                   <span class="s1">&#39;hpsr&#39;</span><span class="p">,</span> <span class="s1">&#39;sfr&#39;</span><span class="p">,</span> <span class="s1">&#39;glc&#39;</span><span class="p">,</span> <span class="s1">&#39;bin&#39;</span><span class="p">,</span> <span class="s1">&#39;nov&#39;</span><span class="p">]</span>
+    <span class="n">egal_classes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;agn&#39;</span><span class="p">,</span> <span class="s1">&#39;agu&#39;</span><span class="p">,</span> <span class="s1">&#39;bzb&#39;</span><span class="p">,</span> <span class="s1">&#39;bzq&#39;</span><span class="p">,</span> <span class="s1">&#39;bll&#39;</span><span class="p">,</span> <span class="s1">&#39;gal&#39;</span><span class="p">,</span> <span class="s1">&#39;rdg&#39;</span><span class="p">,</span> <span class="s1">&#39;fsrq&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;css&#39;</span><span class="p">,</span> <span class="s1">&#39;sey&#39;</span><span class="p">,</span> <span class="s1">&#39;sbg&#39;</span><span class="p">,</span> <span class="s1">&#39;nlsy1&#39;</span><span class="p">,</span> <span class="s1">&#39;ssrq&#39;</span><span class="p">,</span> <span class="s1">&#39;bcu&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">source_class</span> <span class="ow">in</span> <span class="n">gal_classes</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;galactic&#39;</span>
+    <span class="k">elif</span> <span class="n">source_class</span> <span class="ow">in</span> <span class="n">egal_classes</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;extra-galactic&#39;</span>
+    <span class="k">elif</span> <span class="n">source_class</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;unknown&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown source class: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source_class</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="fetch_fermi_catalog"><a class="viewcode-back" href="../../../api/gammapy.catalog.fetch_fermi_catalog.html#gammapy.catalog.fetch_fermi_catalog">[docs]</a><span class="k">def</span> <span class="nf">fetch_fermi_catalog</span><span class="p">(</span><span class="n">catalog</span><span class="p">,</span> <span class="n">extension</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetch Fermi catalog data.</span>
+
+<span class="sd">    Reference: http://fermi.gsfc.nasa.gov/ssc/data/access/lat/.</span>
+
+<span class="sd">    The Fermi catalogs contain the following relevant catalog HDUs:</span>
+
+<span class="sd">    * 3FGL Catalog : LAT 4-year Point Source Catalog</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">        * ``ExtendedSources`` Extended Source Catalog Table.</span>
+<span class="sd">    * 2FGL Catalog : LAT 2-year Point Source Catalog</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">        * ``ExtendedSources`` Extended Source Catalog Table.</span>
+<span class="sd">    * 1FGL Catalog : LAT 1-year Point Source Catalog</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">    * 2FHL Catalog : Second Fermi-LAT Catalog of High-Energy Sources</span>
+<span class="sd">        * ``Count Map`` AIT projection 2D count image</span>
+<span class="sd">        * ``2FHL Source Catalog`` Main catalog</span>
+<span class="sd">        * ``Extended Sources`` Extended Source Catalog Table</span>
+<span class="sd">        * ``ROIs`` Regions of interest</span>
+<span class="sd">    * 1FHL Catalog : First Fermi-LAT Catalog of Sources above 10 GeV</span>
+<span class="sd">        * ``LAT_Point_Source_Catalog`` Point Source Catalog Table.</span>
+<span class="sd">        * ``ExtendedSources`` Extended Source Catalog Table.</span>
+<span class="sd">    * 2PC Catalog : LAT Second Catalog of Gamma-ray Pulsars</span>
+<span class="sd">        * ``PULSAR_CATALOG`` Pulsar Catalog Table.</span>
+<span class="sd">        * ``SPECTRAL`` Table of Pulsar Spectra Parameters.</span>
+<span class="sd">        * ``OFF_PEAK`` Table for further Spectral and Flux data for the Catalog.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalog : {&#39;3FGL&#39;, &#39;2FGL&#39;, &#39;1FGL&#39;, &#39;1FHL&#39;, &#39;2FHL&#39;, &#39;2PC&#39;}</span>
+<span class="sd">       Specifies which catalog to display.</span>
+<span class="sd">    extension : str</span>
+<span class="sd">        Specifies which catalog HDU to provide as a table (optional).</span>
+<span class="sd">        See list of catalog HDUs above.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdu_list (Default) : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        Catalog FITS HDU list (for access to full catalog dataset).</span>
+<span class="sd">    catalog_table : `~astropy.table.Table`</span>
+<span class="sd">        Catalog table for a selected hdu extension.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.catalog import fetch_fermi_catalog</span>
+<span class="sd">    &gt;&gt;&gt; fetch_fermi_catalog(&#39;2FGL&#39;)</span>
+<span class="sd">        [&lt;astropy.io.fits.hdu.image.PrimaryHDU at 0x3330790&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x338b990&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x3396450&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x339af10&gt;,</span>
+<span class="sd">         &lt;astropy.io.fits.hdu.table.BinTableHDU at 0x339ff10&gt;]</span>
+
+<span class="sd">    &gt;&gt;&gt; from gammapy.catalog import fetch_fermi_catalog</span>
+<span class="sd">    &gt;&gt;&gt; fetch_fermi_catalog(&#39;2FGL&#39;, &#39;LAT_Point_Source_Catalog&#39;)</span>
+<span class="sd">        &lt;Table rows=1873 names= ... &gt;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;http://fermi.gsfc.nasa.gov/ssc/data/access/lat/&#39;</span>
+
+    <span class="k">if</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;3FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;4yr_catalog/gll_psc_v16.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;2FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;2yr_catalog/gll_psc_v08.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;1FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;1yr_catalog/gll_psc_v03.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;1FHL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;1FHL/gll_psch_v07.fit&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;2FHL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://github.com/gammapy/gammapy-extra/raw/master/datasets/catalogs/fermi/gll_psch_v08.fit.gz&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;2PC&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;2nd_PSR_catalog/2PC_catalog_v03.fits&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;Invalid catalog: {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">extension</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">hdu_list</span>
+
+    <span class="c1"># TODO: 2FHL doesn&#39;t have a &#39;CLASS1&#39; column, just &#39;CLASS&#39;</span>
+    <span class="c1"># It&#39;s probably better if we make a `SourceCatalog` class</span>
+    <span class="c1"># and then sub-class `FermiSourceCatalog` and `Fermi2FHLSourceCatalog`</span>
+    <span class="c1"># and handle catalog-specific stuff in these classes,</span>
+    <span class="c1"># trying to provide an as-uniform as possible API to the common catalogs.</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">[</span><span class="n">extension</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;IS_GALACTIC&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_is_galactic</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">table</span><span class="p">[</span><span class="s1">&#39;CLASS1&#39;</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">table</span></div>
+
+
+<div class="viewcode-block" id="fetch_fermi_extended_sources"><a class="viewcode-back" href="../../../api/gammapy.catalog.fetch_fermi_extended_sources.html#gammapy.catalog.fetch_fermi_extended_sources">[docs]</a><span class="k">def</span> <span class="nf">fetch_fermi_extended_sources</span><span class="p">(</span><span class="n">catalog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetch Fermi catalog extended source images.</span>
+
+<span class="sd">    Reference: http://fermi.gsfc.nasa.gov/ssc/data/access/lat/.</span>
+
+<span class="sd">    Extended source are available for the following Fermi catalogs:</span>
+
+<span class="sd">    * 3FGL Catalog : LAT 4-year Point Source Catalog</span>
+<span class="sd">    * 2FGL Catalog : LAT 2-year Point Source Catalog</span>
+<span class="sd">    * 1FHL Catalog : First Fermi-LAT Catalog of Sources above 10 GeV</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    catalog : {&#39;3FGL&#39;, &#39;2FGL&#39;, &#39;1FHL&#39;}</span>
+<span class="sd">       Specifies which catalog extended sources to return.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        FITS HDU list of FITS ImageHDUs for the extended sources.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from gammapy.catalog import fetch_fermi_extended_sources</span>
+<span class="sd">    &gt;&gt;&gt; sources = fetch_fermi_extended_sources(&#39;2FGL&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; len(sources)</span>
+<span class="sd">    12</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">BASE_URL</span> <span class="o">=</span> <span class="s1">&#39;http://fermi.gsfc.nasa.gov/ssc/data/access/lat/&#39;</span>
+    <span class="k">if</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;3FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;4yr_catalog/LAT_extended_sources_v15.tgz&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;2FGL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;2yr_catalog/gll_psc_v07_templates.tgz&#39;</span>
+    <span class="k">elif</span> <span class="n">catalog</span> <span class="o">==</span> <span class="s1">&#39;1FHL&#39;</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">BASE_URL</span> <span class="o">+</span> <span class="s1">&#39;1FHL/LAT_extended_sources_v12.tar&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;Invalid catalog: {0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">catalog</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">member</span> <span class="ow">in</span> <span class="n">tar</span><span class="o">.</span><span class="n">getmembers</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">member</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;.fits&quot;</span><span class="p">):</span>
+            <span class="nb">file</span> <span class="o">=</span> <span class="n">tar</span><span class="o">.</span><span class="n">extractfile</span><span class="p">(</span><span class="n">member</span><span class="p">)</span>
+            <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">file</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">hdu_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">hdu_list</span></div>
+
+
+<div class="viewcode-block" id="SourceCatalogObject3FGL"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalogObject3FGL.html#gammapy.catalog.SourceCatalogObject3FGL">[docs]</a><span class="k">class</span> <span class="nc">SourceCatalogObject3FGL</span><span class="p">(</span><span class="n">SourceCatalogObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    One source from the Fermi-LAT 3FGL catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+    <span class="n">_ebounds_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;100_300&#39;</span><span class="p">,</span> <span class="s1">&#39;300_1000&#39;</span><span class="p">,</span> <span class="s1">&#39;1000_3000&#39;</span><span class="p">,</span> <span class="s1">&#39;3000_10000&#39;</span><span class="p">,</span> <span class="s1">&#39;10000_100000&#39;</span><span class="p">]</span>
+    <span class="n">energy_range</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100000</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Energy range of the catalog.</span>
+
+<span class="sd">    Paper says that analysis uses data up to 300 GeV,</span>
+<span class="sd">    but results are all quoted up to 100 GeV only to</span>
+<span class="sd">    be consistent with previous catalogs.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print default summary info string&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SourceCatalogObject3FGL.summary"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalogObject3FGL.html#gammapy.catalog.SourceCatalogObject3FGL.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print summary info.&quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;Source: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Source_Name&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;RA (J2000)  : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;RAJ2000&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;Dec (J2000) : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;DEJ2000&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;GLON        : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;GLON&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;GLAT        : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;GLAT&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="n">val</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;Energy_Flux100&#39;</span><span class="p">],</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;Unc_Energy_Flux100&#39;</span><span class="p">]</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;Energy flux (100 MeV - 100 GeV) : {} +- {} erg cm^-2 s^-1</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">err</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;Detection significance : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Signif_Avg&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spectral_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Best fit spectral model `~gammapy.spectrum.SpectralModel`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">spec_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;SpectrumType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;amplitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Flux_Density&#39;</span><span class="p">],</span> <span class="s1">&#39;MeV-1 cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Pivot_Energy&#39;</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s1">&#39;PowerLaw&#39;</span><span class="p">:</span>
+            <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">PowerLaw</span><span class="p">(</span><span class="o">**</span><span class="n">pars</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s1">&#39;PLExpCutoff&#39;</span><span class="p">:</span>
+            <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;ecut&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Cutoff&#39;</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ExponentialCutoffPowerLaw3FGL</span><span class="p">(</span><span class="o">**</span><span class="n">pars</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s1">&#39;LogParabola&#39;</span><span class="p">:</span>
+            <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">return</span>  <span class="n">LogParabola</span><span class="p">(</span><span class="o">**</span><span class="n">pars</span><span class="p">)</span>
+
+        <span class="k">elif</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s2">&quot;PLSuperExpCutoff&quot;</span><span class="p">:</span>
+            <span class="c1"># TODO Implement super exponential cut off</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Spectral model {} not available&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec_type</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flux_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Differential flux points (`~gammapy.spectrum.DifferentialFluxPoints`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ebounds</span><span class="o">.</span><span class="n">log_centers</span>
+        <span class="n">energy_err_lo</span> <span class="o">=</span> <span class="n">energy</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ebounds</span><span class="o">.</span><span class="n">lower_bounds</span>
+        <span class="n">energy_err_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ebounds</span><span class="o">.</span><span class="n">upper_bounds</span> <span class="o">-</span> <span class="n">energy</span>
+
+        <span class="n">nuFnu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_flux_values</span><span class="p">(</span><span class="s1">&#39;nuFnu&#39;</span><span class="p">,</span> <span class="s1">&#39;erg cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">diff_flux</span> <span class="o">=</span> <span class="p">(</span><span class="n">nuFnu</span> <span class="o">*</span> <span class="n">energy</span> <span class="o">**</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV-1 cm-2 s-1&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Get relativ error on integral fluxes</span>
+        <span class="n">int_flux_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flux_points_integral</span>
+        <span class="n">diff_flux_err_hi</span> <span class="o">=</span> <span class="n">diff_flux</span> <span class="o">*</span> <span class="n">int_flux_points</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_HI_%&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">100</span>
+        <span class="n">diff_flux_err_lo</span> <span class="o">=</span> <span class="n">diff_flux</span> <span class="o">*</span> <span class="n">int_flux_points</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_LO_%&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">100</span>
+
+        <span class="k">return</span> <span class="n">DifferentialFluxPoints</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">,</span>
+                                                  <span class="n">energy_err_hi</span><span class="o">=</span><span class="n">energy_err_hi</span><span class="p">,</span>
+                                                  <span class="n">energy_err_lo</span><span class="o">=</span><span class="n">energy_err_lo</span><span class="p">,</span>
+                                                  <span class="n">diff_flux</span><span class="o">=</span><span class="n">diff_flux</span><span class="p">,</span>
+                                                  <span class="n">diff_flux_err_lo</span><span class="o">=</span><span class="n">diff_flux_err_lo</span><span class="p">,</span>
+                                                  <span class="n">diff_flux_err_hi</span><span class="o">=</span><span class="n">diff_flux_err_hi</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flux_points_integral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Integral flux points (`~gammapy.spectrum.IntegralFluxPoints`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_flux_values</span><span class="p">()</span>
+        <span class="n">flux_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_flux_values</span><span class="p">(</span><span class="s1">&#39;Unc_Flux&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">IntegralFluxPoints</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ebounds</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                                              <span class="n">flux_err</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spectrum model fit result (`~gammapy.spectrum.SpectrumFitResult`)</span>
+
+<span class="sd">        TODO: remove!???</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span>
+
+        <span class="n">spec_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;SpectrumType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s1">&#39;PowerLaw&#39;</span><span class="p">:</span>
+            <span class="n">par_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">]</span>
+            <span class="n">par_errs</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Spectral_Index&#39;</span><span class="p">],</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Flux_Density&#39;</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s1">&#39;PLExpCutoff&#39;</span><span class="p">:</span>
+            <span class="n">par_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">,</span> <span class="s1">&#39;ecut&#39;</span><span class="p">]</span>
+            <span class="n">par_errs</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Spectral_Index&#39;</span><span class="p">],</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Flux_Density&#39;</span><span class="p">],</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Cutoff&#39;</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s1">&#39;LogParabola&#39;</span><span class="p">:</span>
+            <span class="n">par_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;amplitude&#39;</span><span class="p">,</span> <span class="s1">&#39;alpha&#39;</span><span class="p">,</span> <span class="s1">&#39;beta&#39;</span><span class="p">]</span>
+            <span class="n">par_errs</span> <span class="o">=</span> <span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Flux_Density&#39;</span><span class="p">],</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Spectral_Index&#39;</span><span class="p">],</span>
+                        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_beta&#39;</span><span class="p">]]</span>
+        <span class="k">elif</span> <span class="n">spec_type</span> <span class="o">==</span> <span class="s2">&quot;PLSuperExpCutoff&quot;</span><span class="p">:</span>
+            <span class="c1"># TODO Implement super exponential cut off</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Spectral model {} not available&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spec_type</span><span class="p">))</span>
+
+        <span class="n">covariance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">(</span><span class="n">par_errs</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+
+        <span class="k">return</span> <span class="n">SpectrumFitResult</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">fit_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="p">,</span>
+            <span class="n">covariance</span><span class="o">=</span><span class="n">covariance</span><span class="p">,</span>
+            <span class="n">covar_axis</span><span class="o">=</span><span class="n">par_names</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_flux_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;Flux&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Flux&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux&#39;</span><span class="p">,</span> <span class="s1">&#39;nuFnu&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be one of the following: &#39;Flux&#39;, &#39;Unc_Flux&#39;, &#39;nuFnu&#39;&quot;</span><span class="p">)</span>
+
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">_</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ebounds_suffix</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SourceCatalogObject3FGL.plot_lightcurve"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalogObject3FGL.html#gammapy.catalog.SourceCatalogObject3FGL.plot_lightcurve">[docs]</a>    <span class="k">def</span> <span class="nf">plot_lightcurve</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot lightcurve.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: move that function here and change to method</span>
+        <span class="c1"># that returns a `gammapy.time.LightCurve` object</span>
+        <span class="kn">from</span> <span class="nn">gammapy.time</span> <span class="kn">import</span> <span class="n">plot_fermi_3fgl_light_curve</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_fermi_3fgl_light_curve</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ax</span></div></div>
+
+
+<div class="viewcode-block" id="SourceCatalogObject2FHL"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalogObject2FHL.html#gammapy.catalog.SourceCatalogObject2FHL">[docs]</a><span class="k">class</span> <span class="nc">SourceCatalogObject2FHL</span><span class="p">(</span><span class="n">SourceCatalogObject</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;One source from the Fermi-LAT 2FHL catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">_ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">585</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="s1">&#39;GeV&#39;</span><span class="p">)</span>
+    <span class="n">_ebounds_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;50_171&#39;</span><span class="p">,</span> <span class="s1">&#39;171_585&#39;</span><span class="p">,</span> <span class="s1">&#39;585_2000&#39;</span><span class="p">]</span>
+    <span class="n">energy_range</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">([</span><span class="mf">0.05</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+    <span class="sd">&quot;&quot;&quot;Energy range of the Fermi 2FHL source catalog&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print default summary info string&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SourceCatalogObject2FHL.summary"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalogObject2FHL.html#gammapy.catalog.SourceCatalogObject2FHL.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print summary info.&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: can we share code with 3FGL summary funtion?</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;Source: {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Source_Name&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;RA (J2000)  : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;RAJ2000&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;Dec (J2000) : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;DEJ2000&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;GLON        : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;GLON&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;GLAT        : {}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;GLAT&#39;</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+
+        <span class="c1"># val, err = d[&#39;Energy_Flux100&#39;], d[&#39;Unc_Energy_Flux100&#39;]</span>
+        <span class="c1"># ss += &#39;Energy flux (100 MeV - 100 GeV) : {} +- {} erg cm^-2 s^-1\n&#39;.format(val, err)</span>
+        <span class="c1"># ss += &#39;Detection significance : {}\n&#39;.format(d[&#39;Signif_Avg&#39;])</span>
+
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_flux_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s1">&#39;Flux&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">prefix</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;Flux&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Must be one of the following: &#39;Flux&#39;, &#39;Unc_Flux&#39;&quot;</span><span class="p">)</span>
+
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">prefix</span> <span class="o">+</span> <span class="n">_</span> <span class="o">+</span> <span class="s1">&#39;GeV&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_ebounds_suffix</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="n">unit</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flux_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Differential flux points (`~gammapy.spectrum.DifferentialFluxPoints`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">int_flux_points</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flux_points_integral</span>
+        <span class="n">gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">int_flux_points</span><span class="o">.</span><span class="n">to_differential_flux_points</span><span class="p">(</span>
+            <span class="n">x_method</span><span class="o">=</span><span class="s1">&#39;log_center&#39;</span><span class="p">,</span>
+            <span class="n">spectral_index</span><span class="o">=</span><span class="n">gamma</span><span class="p">,</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flux_points_integral</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Integral flux points (`~gammapy.spectrum.IntegralFluxPoints`).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_flux_values</span><span class="p">()</span>
+        <span class="n">flux_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_flux_values</span><span class="p">(</span><span class="s1">&#39;Unc_Flux&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">IntegralFluxPoints</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_ebounds</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span> <span class="n">flux_err</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                                              <span class="n">flux_err</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spectral_model</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Best fit spectral model `~gammapy.spectrum.SpectralModel`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+
+        <span class="n">pars</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;amplitude&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Flux50&#39;</span><span class="p">],</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;emin&#39;</span><span class="p">],</span> <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;emax&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">g</span>
+        <span class="k">return</span> <span class="n">PowerLaw2</span><span class="p">(</span><span class="o">**</span><span class="n">pars</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spectrum information (`~gammapy.spectrum.SpectrumFitResult`)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span>
+
+        <span class="n">covariance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diag</span><span class="p">([</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Spectral_Index&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Unc_Flux50&#39;</span><span class="p">]</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="mi">0</span><span class="p">,</span>
+        <span class="p">])</span>
+
+        <span class="n">covar_axis</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="s1">&#39;amplitude&#39;</span><span class="p">]</span>
+
+        <span class="n">fit</span> <span class="o">=</span> <span class="n">SpectrumFitResult</span><span class="p">(</span>
+            <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+            <span class="n">fit_range</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="p">,</span>
+            <span class="n">covariance</span><span class="o">=</span><span class="n">covariance</span><span class="p">,</span>
+            <span class="n">covar_axis</span><span class="o">=</span><span class="n">covar_axis</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">fit</span></div>
+
+
+<div class="viewcode-block" id="SourceCatalog3FGL"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalog3FGL.html#gammapy.catalog.SourceCatalog3FGL">[docs]</a><span class="k">class</span> <span class="nc">SourceCatalog3FGL</span><span class="p">(</span><span class="n">SourceCatalog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fermi-LAT 3FGL source catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;3fgl&#39;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;LAT 4-year point source catalog&#39;</span>
+    <span class="n">source_object_class</span> <span class="o">=</span> <span class="n">SourceCatalogObject3FGL</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">gammapy_extra</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="s1">&#39;datasets/catalogs/fermi/gll_psc_v16.fit.gz&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extended_sources_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span><span class="p">[</span><span class="s1">&#39;ExtendedSources&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span><span class="p">[</span><span class="s1">&#39;LAT_Point_Source_Catalog&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SourceCatalog3FGL</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SourceCatalog2FHL"><a class="viewcode-back" href="../../../api/gammapy.catalog.SourceCatalog2FHL.html#gammapy.catalog.SourceCatalog2FHL">[docs]</a><span class="k">class</span> <span class="nc">SourceCatalog2FHL</span><span class="p">(</span><span class="n">SourceCatalog</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fermi-LAT 2FHL source catalog.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;2fhl&#39;</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="s1">&#39;LAT second high-energy source catalog&#39;</span>
+    <span class="n">source_object_class</span> <span class="o">=</span> <span class="n">SourceCatalogObject2FHL</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filename</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">gammapy_extra</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="s1">&#39;datasets/catalogs/fermi/gll_psch_v08.fit.gz&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count_map_hdu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span><span class="p">[</span><span class="s1">&#39;Count Map&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extended_sources_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span><span class="p">[</span><span class="s1">&#39;Extended Sources&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rois</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span><span class="p">[</span><span class="s1">&#39;ROIs&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hdu_list</span><span class="p">[</span><span class="s1">&#39;2FHL Source Catalog&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SourceCatalog2FHL</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">table</span><span class="o">=</span><span class="n">table</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="fermi.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

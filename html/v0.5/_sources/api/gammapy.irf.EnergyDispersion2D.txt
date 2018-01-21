@@ -1,0 +1,60 @@
+
+
+EnergyDispersion2D
+==============================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EnergyDispersion2D
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EnergyDispersion2D.evaluate
+      ~EnergyDispersion2D.from_fits
+      ~EnergyDispersion2D.get_response
+      ~EnergyDispersion2D.info
+      ~EnergyDispersion2D.peek
+      ~EnergyDispersion2D.plot_bias
+      ~EnergyDispersion2D.plot_migration
+      ~EnergyDispersion2D.read
+      ~EnergyDispersion2D.to_energy_dispersion
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+   .. automethod:: from_fits
+   .. automethod:: get_response
+   .. automethod:: info
+   .. automethod:: peek
+   .. automethod:: plot_bias
+   .. automethod:: plot_migration
+   .. automethod:: read
+   .. automethod:: to_energy_dispersion
+
+   
+   

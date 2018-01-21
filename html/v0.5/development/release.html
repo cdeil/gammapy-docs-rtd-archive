@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to make a Gammapy release &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Developer documentation" href="index.html" />
+    <link rel="next" title="Changelog" href="../changelog.html" />
+    <link rel="prev" title="Developer HOWTO" href="howto.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/development/release.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'development/release'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../changelog.html" title="Changelog">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="howto.html" title="Developer HOWTO">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="index.html" accesskey="U">Developer documentation</a> &raquo;</li>
+      
+      <li>How to make a Gammapy release</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="how-to-make-a-gammapy-release">
+<span id="development-release"></span><h1>How to make a Gammapy release<a class="headerlink" href="release.html#how-to-make-a-gammapy-release" title="Permalink to this headline">¶</a></h1>
+<p>This page contains step-by-step instructions how to make a Gammapy release.</p>
+<p>We have structured the procedure in three phases:</p>
+<ol class="arabic simple">
+<li>&#8220;Pre release&#8221; &#8211; before the release day</li>
+<li>&#8220;Make release&#8221;  &#8211; on the release day</li>
+<li>&#8220;Post release&#8221; &#8211; in the days after the release</li>
+</ol>
+<p>The purpose of writing the procedure down explicitly is to make it easy for anyone to make a release
+(as opposed to one or a few people with secret knowledge how to do it).
+It&#8217;s also good to not have to remember this stuff, and to avoid errors or forgotten steps.</p>
+<p>Note that we currently don&#8217;t do bugfix releases, i.e. making a release is always simple in the sense
+that you just need to create a branch off of <code class="docutils literal"><span class="pre">master</span></code>.
+Making bugfix releases would be more difficult and involve identifying commits with bug fixes and
+backporting those to the stable branches.</p>
+<p>In these notes we&#8217;ll use the Gammapy 0.3 release as an example.</p>
+<div class="section" id="pre-release">
+<h2>Pre release<a class="headerlink" href="release.html#pre-release" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Make a milestone for the release.</p>
+<p>Example: <a class="reference external" href="https://github.com/gammapy/gammapy/milestones/0.3">https://github.com/gammapy/gammapy/milestones/0.3</a></p>
+<p>Go through the open issues and pull requests and make sure a milestone is set for all.
+Then set a realistic release date well in advance (ideally a month, although a week
+is probably OK) and follow up on these issues / pull requests.</p>
+<p>It&#8217;s usually OK to just move issues and pull requests to the next milestone if
+they don&#8217;t get done before the release date.</p>
+</li>
+<li><p class="first">Make in issue for the release.</p>
+<p>Example: <a class="reference external" href="https://github.com/gammapy/gammapy/issues/302">https://github.com/gammapy/gammapy/issues/302</a></p>
+<p>This can be used to take notes and discuss any release-related issues.</p>
+</li>
+<li><p class="first">Follow the instructions <a class="reference external" href="http://docs.astropy.org/en/latest/development/affiliated-packages.html#updating-to-the-latest-template-files">here</a>
+to check that the astropy-helpers sub-module in Gammapy is pointing to the latest stable astropy-helpers release
+and whether there have been any fixes / changes to the Astropy
+<a class="reference external" href="https://github.com/astropy/package-template/blob/master/TEMPLATE_CHANGES.md">package-template</a>
+since the last Gammapy release that should be copied over.
+In Gammapy we are using the method that&#8217;s described in the section &#8220;managing the template files manually&#8221;
+that&#8217;s described.
+If there are any updates to be done, you should do them via a PR so that travis-ci testing can run.</p>
+</li>
+<li><p class="first">Do these extra checks and clean up any warnings / errors that come up:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>make code-analysis
+make trailing-spaces
+python setup.py test -V --remote-data
+</pre></div>
+</div>
+</li>
+<li><p class="first">Check external HTML links from the docs (see <a class="reference internal" href="howto.html#development-check-html-links"><span>here</span></a>).</p>
+</li>
+<li><p class="first">Check that the travis-ci and readthedocs build is working (it usually always is).</p>
+<p>Links are at <a class="reference external" href="https://github.com/gammapy/gammapy#status-shields">https://github.com/gammapy/gammapy#status-shields</a></p>
+</li>
+<li><p class="first">Check that the changelog is complete, by going through the list of Github issues for the
+release milestone.</p>
+</li>
+</ol>
+</div>
+<div class="section" id="make-release">
+<h2>Make release<a class="headerlink" href="release.html#make-release" title="Permalink to this headline">¶</a></h2>
+<p>These are the steps you should do on the day of the release:</p>
+<ol class="arabic simple">
+<li>Mention release in the <a class="reference internal" href="../index.html#gammapy-news"><span>News</span></a> section.</li>
+<li>Follow the instructions how to release an Astropy affiliated package
+<a class="reference external" href="http://docs.astropy.org/en/latest/development/affiliated-packages.html#releasing-an-affiliated-package">here</a>.</li>
+<li>Check that the tarball and description (which is from <code class="docutils literal"><span class="pre">LONG_DESCRIPTION.rst</span></code>) on PyPI is OK.</li>
+<li>Update the Gammapy stable branch to point to the new tag
+as described <a class="reference external" href="http://docs.astropy.org/en/latest/development/releasing.html">here</a>.</li>
+<li>Add the new version on readthedocs.</li>
+<li>Make a pull request that updates the Gammapy version number in this file to trigger a conda package build:
+<a class="reference external" href="https://github.com/astropy/conda-builder-affiliated/blob/master/requirements.txt">https://github.com/astropy/conda-builder-affiliated/blob/master/requirements.txt</a></li>
+</ol>
+</div>
+<div class="section" id="post-release">
+<h2>Post release<a class="headerlink" href="release.html#post-release" title="Permalink to this headline">¶</a></h2>
+<p>Wait for a day (or a few days) until the new Gammapy conda package becomes available in the Astropy
+conda channel at <a class="reference external" href="https://anaconda.org/astropy">https://anaconda.org/astropy</a> and until a few co-developers had the time to try out
+the new release a bit.</p>
+<ol class="arabic simple">
+<li>Send an announcement to the Gammapy and Astropy mailing lists
+(TODO: we need a template for this, so that it&#8217;s quick to do)</li>
+<li>Update Debian package</li>
+</ol>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="release.html#">How to make a Gammapy release</a><ul>
+<li><a class="reference internal" href="release.html#pre-release">Pre release</a></li>
+<li><a class="reference internal" href="release.html#make-release">Make release</a></li>
+<li><a class="reference internal" href="release.html#post-release">Post release</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/development/release.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="release.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

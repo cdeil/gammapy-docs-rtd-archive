@@ -1,0 +1,63 @@
+
+
+BinnedDataAxis
+===================================
+
+.. currentmodule:: gammapy.utils.nddata
+
+.. autoclass:: BinnedDataAxis
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~BinnedDataAxis.nbins
+      ~BinnedDataAxis.nodes
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~BinnedDataAxis.lin_center
+      ~BinnedDataAxis.log_center
+      ~BinnedDataAxis.logspace
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: nbins
+   .. autoattribute:: nodes
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: lin_center
+   .. automethod:: log_center
+   .. automethod:: logspace
+
+   
+   

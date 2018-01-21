@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>calculate_predicted_counts &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="check_chi2" href="gammapy.spectrum.check_chi2.html" />
+    <link rel="prev" title="calculate_flux_point_binning" href="gammapy.spectrum.calculate_flux_point_binning.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.calculate_predicted_counts.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.calculate_predicted_counts'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.check_chi2.html" title="check_chi2">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.calculate_flux_point_binning.html" title="calculate_flux_point_binning">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>calculate_predicted_counts</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="calculate-predicted-counts">
+<h1>calculate_predicted_counts<a class="headerlink" href="gammapy.spectrum.calculate_predicted_counts.html#calculate-predicted-counts" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.spectrum.calculate_predicted_counts">
+<code class="descclassname">gammapy.spectrum.</code><code class="descname">calculate_predicted_counts</code><span class="sig-paren">(</span><em>model</em>, <em>aeff</em>, <em>edisp</em>, <em>livetime</em>, <em>e_reco=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/utils.html#calculate_predicted_counts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.calculate_predicted_counts.html#gammapy.spectrum.calculate_predicted_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get npred</p>
+<p>The true energy binning is inferred from the provided
+<a class="reference internal" href="gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable" title="gammapy.irf.EffectiveAreaTable"><code class="xref py py-obj docutils literal"><span class="pre">EffectiveAreaTable</span></code></a>. The reco energy binning can be inferred
+from the <a class="reference internal" href="gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion" title="gammapy.irf.EnergyDispersion"><code class="xref py py-obj docutils literal"><span class="pre">EnergyDispersion</span></code></a> or be given as a parameter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>model</strong> : <a class="reference internal" href="gammapy.spectrum.models.SpectralModel.html#gammapy.spectrum.models.SpectralModel" title="gammapy.spectrum.models.SpectralModel"><code class="xref py py-obj docutils literal"><span class="pre">SpectralModel</span></code></a></p>
+<blockquote>
+<div><p>Spectral model</p>
+</div></blockquote>
+<p><strong>livetime</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Observation duration</p>
+</div></blockquote>
+<p><strong>aeff</strong> : <a class="reference internal" href="gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable" title="gammapy.irf.EffectiveAreaTable"><code class="xref py py-obj docutils literal"><span class="pre">EffectiveAreaTable</span></code></a></p>
+<blockquote>
+<div><p>EffectiveArea</p>
+</div></blockquote>
+<p><strong>edisp</strong> : <a class="reference internal" href="gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion" title="gammapy.irf.EnergyDispersion"><code class="xref py py-obj docutils literal"><span class="pre">EnergyDispersion</span></code></a></p>
+<blockquote>
+<div><p>EnergyDispersion</p>
+</div></blockquote>
+<p><strong>e_reco</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.3.dev16418)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>, optional</p>
+<blockquote>
+<div><p>Desired energy axis of the prediced counts vector By default, the reco
+energy axis of the energy dispersion matrix is used.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>counts</strong> : <a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum" title="gammapy.spectrum.CountsSpectrum"><code class="xref py py-obj docutils literal"><span class="pre">CountsSpectrum</span></code></a></p>
+<blockquote class="last">
+<div><p>Predicted counts</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Calculate prediced counts in a desired reconstruced energy binning</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gammapy.irf</span> <span class="kn">import</span> <span class="n">EnergyDispersion</span><span class="p">,</span> <span class="n">EffectiveAreaTable</span>
+<span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">models</span><span class="p">,</span> <span class="n">calculate_predicted_counts</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="kn">as</span> <span class="nn">u</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">e_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mf">2.5</span><span class="p">,</span><span class="mi">109</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">TeV</span>
+<span class="n">e_reco</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">73</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">TeV</span>
+
+<span class="n">aeff</span> <span class="o">=</span> <span class="n">EffectiveAreaTable</span><span class="o">.</span><span class="n">from_parametrization</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">e_true</span><span class="p">)</span>
+<span class="n">edisp</span> <span class="o">=</span> <span class="n">EnergyDispersion</span><span class="o">.</span><span class="n">from_gauss</span><span class="p">(</span><span class="n">e_true</span><span class="o">=</span><span class="n">e_true</span><span class="p">,</span> <span class="n">e_reco</span><span class="o">=</span><span class="n">e_reco</span><span class="p">,</span>
+                                    <span class="n">sigma</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PowerLaw</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span>
+                        <span class="n">amplitude</span><span class="o">=</span><span class="mf">2.5</span> <span class="o">*</span> <span class="mf">1e-12</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">),</span>
+                        <span class="n">reference</span><span class="o">=</span><span class="mi">1</span><span class="o">*</span><span class="n">u</span><span class="o">.</span><span class="n">TeV</span><span class="p">)</span>
+
+<span class="n">livetime</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">h</span>
+<span class="n">e_reco_desired</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">TeV</span>
+
+<span class="n">npred</span> <span class="o">=</span> <span class="n">calculate_predicted_counts</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                                   <span class="n">aeff</span><span class="o">=</span><span class="n">aeff</span><span class="p">,</span>
+                                   <span class="n">edisp</span><span class="o">=</span><span class="n">edisp</span><span class="p">,</span>
+                                   <span class="n">livetime</span><span class="o">=</span><span class="n">livetime</span><span class="p">,</span>
+                                   <span class="n">e_reco</span><span class="o">=</span><span class="n">e_reco_desired</span><span class="p">)</span>
+
+<span class="n">npred</span><span class="o">.</span><span class="n">plot_hist</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="gammapy-spectrum-calculate_predicted_counts-1.py">Source code</a>, <a class="reference external" href="gammapy-spectrum-calculate_predicted_counts-1.png">png</a>, <a class="reference external" href="gammapy-spectrum-calculate_predicted_counts-1.hires.png">hires.png</a>, <a class="reference external" href="gammapy-spectrum-calculate_predicted_counts-1.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/gammapy-spectrum-calculate_predicted_counts-1.png" src="../_images/gammapy-spectrum-calculate_predicted_counts-1.png" />
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.calculate_predicted_counts.html#">calculate_predicted_counts</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.calculate_predicted_counts.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.calculate_predicted_counts.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

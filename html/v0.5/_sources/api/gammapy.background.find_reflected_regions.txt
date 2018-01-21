@@ -1,0 +1,8 @@
+
+
+find_reflected_regions
+=========================================
+
+.. currentmodule:: gammapy.background
+
+.. autofunction:: find_reflected_regions

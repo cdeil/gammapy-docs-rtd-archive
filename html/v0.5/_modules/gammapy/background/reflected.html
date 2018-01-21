@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.background.reflected &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/background/reflected.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/background/reflected'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.background.reflected</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">regions</span> <span class="kn">import</span> <span class="n">PixCoord</span><span class="p">,</span> <span class="n">CirclePixelRegion</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">SkyMask</span>
+<span class="kn">from</span> <span class="nn">.background_estimate</span> <span class="kn">import</span> <span class="n">BackgroundEstimate</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;find_reflected_regions&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;ReflectedRegionsBackgroundEstimator&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="find_reflected_regions"><a class="viewcode-back" href="../../../api/gammapy.background.find_reflected_regions.html#gammapy.background.find_reflected_regions">[docs]</a><span class="k">def</span> <span class="nf">find_reflected_regions</span><span class="p">(</span><span class="n">region</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">exclusion_mask</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                           <span class="n">angle_increment</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">min_distance</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                           <span class="n">min_distance_input</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Find reflected regions.</span>
+
+<span class="sd">    Converts to pixel coordinates internally.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    region : `~regions.CircleSkyRegion`</span>
+<span class="sd">        Region</span>
+<span class="sd">    center : `~astropy.coordinates.SkyCoord`</span>
+<span class="sd">        Rotation point</span>
+<span class="sd">    exclusion_mask : `~gammapy.image.SkyMask`, optional</span>
+<span class="sd">        Exclusion mask</span>
+<span class="sd">    angle_increment : `~astropy.coordinates.Angle`</span>
+<span class="sd">        Rotation angle for each step, default: 0.1 rad</span>
+<span class="sd">    min_distance : `~astropy.coordinates.Angle`</span>
+<span class="sd">        Minimal distance between to reflected regions, default: 0 rad</span>
+<span class="sd">    min_distance_input : `~astropy.coordinates.Angle`</span>
+<span class="sd">        Minimal distance from input region, default: 0.1 rad</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    regions : list of `~regions.SkyRegion`</span>
+<span class="sd">        Reflected regions list</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">angle_increment</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="s1">&#39;0.1 rad&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">angle_increment</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">Angle</span><span class="p">(</span><span class="n">angle_increment</span><span class="p">)</span>
+    <span class="n">min_distance</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="s1">&#39;0 rad&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">min_distance</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">Angle</span><span class="p">(</span><span class="n">min_distance</span><span class="p">)</span>
+    <span class="n">min_distance_input</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="s1">&#39;0.1 rad&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">min_distance_input</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">Angle</span><span class="p">(</span><span class="n">min_distance_input</span><span class="p">)</span>
+
+    <span class="c1"># Create empty exclusion mask if None is provided</span>
+    <span class="k">if</span> <span class="n">exclusion_mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">min_size</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+        <span class="n">binsz</span> <span class="o">=</span> <span class="mf">0.02</span>
+        <span class="n">npix</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="mi">3</span> <span class="o">*</span> <span class="n">min_size</span> <span class="o">/</span> <span class="n">binsz</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">exclusion_mask</span> <span class="o">=</span> <span class="n">SkyMask</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;empty exclusion mask&#39;</span><span class="p">,</span>
+                                       <span class="n">xref</span><span class="o">=</span><span class="n">center</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                       <span class="n">yref</span><span class="o">=</span><span class="n">center</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                       <span class="n">binsz</span><span class="o">=</span><span class="n">binsz</span><span class="p">,</span>
+                                       <span class="n">nxpix</span><span class="o">=</span><span class="n">npix</span><span class="p">,</span>
+                                       <span class="n">nypix</span><span class="o">=</span><span class="n">npix</span><span class="p">,</span>
+                                       <span class="n">fill</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">reflected_regions_pix</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="n">exclusion_mask</span><span class="o">.</span><span class="n">wcs</span>
+    <span class="n">pix_region</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">to_pixel</span><span class="p">(</span><span class="n">wcs</span><span class="p">)</span>
+    <span class="n">pix_center</span> <span class="o">=</span> <span class="n">PixCoord</span><span class="p">(</span><span class="o">*</span><span class="n">center</span><span class="o">.</span><span class="n">to_pixel</span><span class="p">(</span><span class="n">wcs</span><span class="p">))</span>
+
+    <span class="c1"># Compute angle of the ON regions</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">pix_region</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">pix_center</span><span class="o">.</span><span class="n">x</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">pix_region</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">y</span> <span class="o">-</span> <span class="n">pix_center</span><span class="o">.</span><span class="n">y</span>
+    <span class="n">offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hypot</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+    <span class="n">angle</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">),</span> <span class="s1">&#39;rad&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Get the minimum angle a Circle has to be moved in order to not overlap</span>
+    <span class="c1"># with the previous one</span>
+    <span class="n">min_ang</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">arcsin</span><span class="p">(</span><span class="n">pix_region</span><span class="o">.</span><span class="n">radius</span> <span class="o">/</span> <span class="n">offset</span><span class="p">),</span> <span class="s1">&#39;rad&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Add required minimal distance between two off regions</span>
+    <span class="n">min_ang</span> <span class="o">+=</span> <span class="n">min_distance</span>
+
+    <span class="c1"># Maximum allowd angle before the an overlap with the ON regions happens</span>
+    <span class="n">max_angle</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">+</span> <span class="n">Angle</span><span class="p">(</span><span class="s1">&#39;360deg&#39;</span><span class="p">)</span> <span class="o">-</span> <span class="n">min_ang</span> <span class="o">-</span> <span class="n">min_distance_input</span>
+
+    <span class="c1"># Starting angle</span>
+    <span class="n">curr_angle</span> <span class="o">=</span> <span class="n">angle</span> <span class="o">+</span> <span class="n">min_ang</span> <span class="o">+</span> <span class="n">min_distance_input</span>
+    <span class="k">while</span> <span class="n">curr_angle</span> <span class="o">&lt;</span> <span class="n">max_angle</span><span class="p">:</span>
+        <span class="n">test_pos</span> <span class="o">=</span> <span class="n">_compute_xy</span><span class="p">(</span><span class="n">pix_center</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">curr_angle</span><span class="p">)</span>
+        <span class="n">test_reg</span> <span class="o">=</span> <span class="n">CirclePixelRegion</span><span class="p">(</span><span class="n">test_pos</span><span class="p">,</span> <span class="n">pix_region</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">_is_inside_exclusion</span><span class="p">(</span><span class="n">test_reg</span><span class="p">,</span> <span class="n">exclusion_mask</span><span class="p">):</span>
+            <span class="n">reflected_regions_pix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_reg</span><span class="p">)</span>
+            <span class="n">curr_angle</span> <span class="o">=</span> <span class="n">curr_angle</span> <span class="o">+</span> <span class="n">min_ang</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">curr_angle</span> <span class="o">=</span> <span class="n">curr_angle</span> <span class="o">+</span> <span class="n">angle_increment</span>
+
+    <span class="n">reflected_regions</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">to_sky</span><span class="p">(</span><span class="n">wcs</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">reflected_regions_pix</span><span class="p">]</span>
+    <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Found {} reflected regions:</span><span class="se">\n</span><span class="s1"> {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reflected_regions</span><span class="p">),</span>
+                                                        <span class="n">reflected_regions</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">reflected_regions</span></div>
+
+
+<span class="k">def</span> <span class="nf">_compute_xy</span><span class="p">(</span><span class="n">pix_center</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">angle</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute x, y position for a given position angle and offset</span>
+
+<span class="sd">    # TODO: replace by calculation using `astropy.coordinates`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">dx</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">dy</span> <span class="o">=</span> <span class="n">offset</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">angle</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">pix_center</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">dx</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">pix_center</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">dy</span>
+    <span class="k">return</span> <span class="n">PixCoord</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">)</span>
+
+
+<span class="c1"># TODO :Copied from gammapy.region.PixCircleList (deleted), find better place</span>
+<span class="k">def</span> <span class="nf">_is_inside_exclusion</span><span class="p">(</span><span class="n">pixreg</span><span class="p">,</span> <span class="n">exclusion</span><span class="p">):</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pixreg</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pixreg</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">y</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">exclusion</span><span class="o">.</span><span class="n">distance_image</span>
+    <span class="n">excl_dist</span> <span class="o">=</span> <span class="n">image</span><span class="o">.</span><span class="n">data</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">excl_dist</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="n">pixreg</span><span class="o">.</span><span class="n">radius</span>
+
+
+<div class="viewcode-block" id="ReflectedRegionsBackgroundEstimator"><a class="viewcode-back" href="../../../api/gammapy.background.ReflectedRegionsBackgroundEstimator.html#gammapy.background.ReflectedRegionsBackgroundEstimator">[docs]</a><span class="k">class</span> <span class="nc">ReflectedRegionsBackgroundEstimator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Reflected Regions background estimator</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    on_region : `~regions.CircleSkyRegion`</span>
+<span class="sd">        Target region</span>
+<span class="sd">    obs_list : `~gammapy.data.ObservationList`</span>
+<span class="sd">        List of observations to process</span>
+<span class="sd">    exclusion : `~gammapy.image.SkyMask`</span>
+<span class="sd">        Exclusion mask</span>
+<span class="sd">    config : dict</span>
+<span class="sd">        Config dict to be passed to :func:`gammapy.background.find_reflected_regions`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_region</span><span class="p">,</span> <span class="n">obs_list</span><span class="p">,</span> <span class="n">exclusion</span><span class="p">,</span> <span class="n">config</span><span class="o">=</span><span class="nb">dict</span><span class="p">()):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_region</span> <span class="o">=</span> <span class="n">on_region</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span> <span class="o">=</span> <span class="n">obs_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span> <span class="o">=</span> <span class="n">exclusion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="ReflectedRegionsBackgroundEstimator.process"><a class="viewcode-back" href="../../../api/gammapy.background.ReflectedRegionsBackgroundEstimator.html#gammapy.background.ReflectedRegionsBackgroundEstimator.process">[docs]</a>    <span class="k">def</span> <span class="nf">process</span><span class="p">(</span><span class="n">on_region</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">exclusion</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Estimate background for one observation</span>
+
+<span class="sd">        kwargs are forwaded to :func:`gammapy.background.find_reflected_regions`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        on_region : `~regions.CircleSkyRegion`</span>
+<span class="sd">            Target region</span>
+<span class="sd">        obs : `~gammapy.data.DataStoreObservation`</span>
+<span class="sd">            Observation</span>
+<span class="sd">        exclusion : `~gammapy.image.ExclusionMask`</span>
+<span class="sd">            ExclusionMask</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        background : `~gammapy.background.BackgroundEstimate`</span>
+<span class="sd">            Reflected regions background estimate</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">off_region</span> <span class="o">=</span> <span class="n">find_reflected_regions</span><span class="p">(</span><span class="n">region</span><span class="o">=</span><span class="n">on_region</span><span class="p">,</span>
+                                            <span class="n">center</span><span class="o">=</span><span class="n">obs</span><span class="o">.</span><span class="n">pointing_radec</span><span class="p">,</span>
+                                            <span class="n">exclusion_mask</span><span class="o">=</span><span class="n">exclusion</span><span class="p">,</span>
+                                            <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="c1"># TODO: Properly use regions package</span>
+        <span class="n">off_events</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">select_circular_region</span><span class="p">(</span><span class="n">off_region</span><span class="p">)</span>
+        <span class="n">a_on</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">a_off</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">off_region</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">BackgroundEstimate</span><span class="p">(</span><span class="n">off_region</span><span class="p">,</span> <span class="n">off_events</span><span class="p">,</span> <span class="n">a_on</span><span class="p">,</span> <span class="n">a_off</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s1">&#39;reflected&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ReflectedRegionsBackgroundEstimator.run"><a class="viewcode-back" href="../../../api/gammapy.background.ReflectedRegionsBackgroundEstimator.html#gammapy.background.ReflectedRegionsBackgroundEstimator.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Process all observations&quot;&quot;&quot;</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span><span class="p">:</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">process</span><span class="p">(</span><span class="n">on_region</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="p">,</span>
+                                <span class="n">obs</span><span class="o">=</span><span class="n">obs</span><span class="p">,</span>
+                                <span class="n">exclusion</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span><span class="p">,</span>
+                                <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+            <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span> <span class="o">=</span> <span class="n">result</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="reflected.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

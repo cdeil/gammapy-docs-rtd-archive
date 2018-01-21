@@ -1,0 +1,77 @@
+
+
+PHACountsSpectrum
+==================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: PHACountsSpectrum
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~PHACountsSpectrum.arffile
+      ~PHACountsSpectrum.bins_in_safe_range
+      ~PHACountsSpectrum.bkgfile
+      ~PHACountsSpectrum.counts_in_safe_range
+      ~PHACountsSpectrum.hi_threshold
+      ~PHACountsSpectrum.lo_threshold
+      ~PHACountsSpectrum.phafile
+      ~PHACountsSpectrum.rmffile
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PHACountsSpectrum.from_hdulist
+      ~PHACountsSpectrum.to_sherpa
+      ~PHACountsSpectrum.to_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: arffile
+   .. autoattribute:: bins_in_safe_range
+   .. autoattribute:: bkgfile
+   .. autoattribute:: counts_in_safe_range
+   .. autoattribute:: hi_threshold
+   .. autoattribute:: lo_threshold
+   .. autoattribute:: phafile
+   .. autoattribute:: rmffile
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_hdulist
+   .. automethod:: to_sherpa
+   .. automethod:: to_table
+
+   
+   

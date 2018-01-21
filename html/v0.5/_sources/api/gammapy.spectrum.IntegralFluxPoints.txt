@@ -1,0 +1,59 @@
+
+
+IntegralFluxPoints
+===================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: IntegralFluxPoints
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~IntegralFluxPoints.ebounds
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~IntegralFluxPoints.from_arrays
+      ~IntegralFluxPoints.to_differential_flux_points
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: ebounds
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_arrays
+   .. automethod:: to_differential_flux_points
+
+   
+   

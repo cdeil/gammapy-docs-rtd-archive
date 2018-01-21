@@ -1,0 +1,44 @@
+
+
+DifferentialFluxPoints
+=======================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: DifferentialFluxPoints
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~DifferentialFluxPoints.from_arrays
+      ~DifferentialFluxPoints.plot
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_arrays
+   .. automethod:: plot
+
+   
+   

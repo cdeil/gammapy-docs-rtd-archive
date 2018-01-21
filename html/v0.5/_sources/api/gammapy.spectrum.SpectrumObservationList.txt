@@ -1,0 +1,69 @@
+
+
+SpectrumObservationList
+========================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumObservationList
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumObservationList.obs_id
+      ~SpectrumObservationList.off_vector_list
+      ~SpectrumObservationList.on_vector_list
+      ~SpectrumObservationList.total_livetime
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumObservationList.obs
+      ~SpectrumObservationList.read
+      ~SpectrumObservationList.stack
+      ~SpectrumObservationList.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: obs_id
+   .. autoattribute:: off_vector_list
+   .. autoattribute:: on_vector_list
+   .. autoattribute:: total_livetime
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: obs
+   .. automethod:: read
+   .. automethod:: stack
+   .. automethod:: write
+
+   
+   

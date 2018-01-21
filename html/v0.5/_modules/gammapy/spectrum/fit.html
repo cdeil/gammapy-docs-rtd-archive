@@ -1,0 +1,461 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.fit &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/fit.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/fit'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.fit</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="kn">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.extern</span> <span class="kn">import</span> <span class="n">six</span>
+<span class="kn">from</span> <span class="nn">..extern.pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">make_path</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="p">(</span>
+    <span class="n">SpectrumObservationList</span><span class="p">,</span>
+    <span class="n">SpectrumObservation</span><span class="p">,</span>
+    <span class="n">models</span><span class="p">,</span>
+    <span class="n">DifferentialFluxPoints</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;SpectrumFit&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SpectrumFit"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFit.html#gammapy.spectrum.SpectrumFit">[docs]</a><span class="k">class</span> <span class="nc">SpectrumFit</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Spectral Fit using Sherpa</span>
+
+<span class="sd">    This is a wrapper around `~sherpa.fit.Fit` that takes care about</span>
+<span class="sd">    translating gammapy classes to sherpa classes and handling various aspects</span>
+<span class="sd">    of the fitting correctly. For usage examples see :ref:`spectral_fitting`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obs_list : SpectrumObservationList</span>
+<span class="sd">        Observations to fit</span>
+<span class="sd">    model : `~gammapy.spectrum.models.SpectralModel`, `~sherpa.models.ArithmeticModel`</span>
+<span class="sd">        Model to be fit</span>
+<span class="sd">    stat : str, `~sherpa.stats.Stat`</span>
+<span class="sd">        Fit statistic to be used</span>
+<span class="sd">    method : str, `~sherpa.optmethods.OptMethod`</span>
+<span class="sd">        Fit statistic to be used</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">FLUX_FACTOR</span> <span class="o">=</span> <span class="mf">1e-20</span>
+    <span class="sd">&quot;&quot;&quot;Numerical constant to make model amplitude O(1) during the fit&quot;&quot;&quot;</span>
+    <span class="n">DEFAULT_STAT</span> <span class="o">=</span> <span class="s1">&#39;wstat&#39;</span>
+    <span class="sd">&quot;&quot;&quot;Default statistic to be used for the fit&quot;&quot;&quot;</span>
+    <span class="n">DEFAULT_METHOD</span> <span class="o">=</span> <span class="s1">&#39;simplex&#39;</span>
+    <span class="sd">&quot;&quot;&quot;Default method to be used for the fit&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_list</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">stat</span><span class="o">=</span><span class="n">DEFAULT_STAT</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">DEFAULT_METHOD</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obs_list</span><span class="p">,</span> <span class="n">SpectrumObservation</span><span class="p">):</span>
+            <span class="n">obs_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">obs_list</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span> <span class="o">=</span> <span class="n">SpectrumObservationList</span><span class="p">(</span><span class="n">obs_list</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statistic</span> <span class="o">=</span> <span class="n">stat</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method_fit</span> <span class="o">=</span> <span class="n">method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fit_range</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;List of `~gammapy.spectrum.SpectrumFitResult` for each observation&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">global_result</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Global `~gammapy.spectrum.SpectrumFitResult`</span>
+
+<span class="sd">        Contains only model and fitrange over all observations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_global_result</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">statistic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sherpa `~sherpa.stats.Stat` to be used for the fit&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_stat</span>
+
+    <span class="nd">@statistic.setter</span>
+    <span class="k">def</span> <span class="nf">statistic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stat</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">sherpa.stats</span> <span class="kn">as</span> <span class="nn">s</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">stat</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;cstat&#39;</span><span class="p">:</span>
+                <span class="n">stat</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">CStat</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">stat</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s1">&#39;wstat&#39;</span><span class="p">:</span>
+                <span class="n">stat</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">WStat</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Undefined stat string: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">stat</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stat</span><span class="p">,</span> <span class="n">s</span><span class="o">.</span><span class="n">Stat</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only sherpa statistics are supported&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_stat</span> <span class="o">=</span> <span class="n">stat</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">method_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sherpa `~sherpa.optmethods.OptMethod` to be used for the fit&quot;&quot;&quot;</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_method</span>
+
+    <span class="nd">@method_fit.setter</span>
+    <span class="k">def</span> <span class="nf">method_fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">sherpa.optmethods</span> <span class="kn">as</span> <span class="nn">optmethod</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;simplex&#39;</span><span class="p">:</span>
+                <span class="n">method</span> <span class="o">=</span> <span class="n">optmethod</span><span class="o">.</span><span class="n">NelderMead</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;moncar&#39;</span><span class="p">:</span>
+                <span class="n">method</span> <span class="o">=</span> <span class="n">optmethod</span><span class="o">.</span><span class="n">MonCar</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;levmar&#39;</span><span class="p">:</span>
+                <span class="n">method</span> <span class="o">=</span> <span class="n">optmethod</span><span class="o">.</span><span class="n">LevMar</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Undefined method string: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="n">optmethod</span><span class="o">.</span><span class="n">OptMethod</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Only sherpa method are supported&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_method</span> <span class="o">=</span> <span class="n">method</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fit_range</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tuple of `~astropy.units.Quantity`, energy range of the fit</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fit_range</span>
+
+    <span class="nd">@fit_range.setter</span>
+    <span class="k">def</span> <span class="nf">fit_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fit_range</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_fit_range</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">Quantity</span><span class="p">(</span><span class="n">fit_range</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;String repr&quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;Model</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ss</span>
+
+<div class="viewcode-block" id="SpectrumFit.fit"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFit.html#gammapy.spectrum.SpectrumFit.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit spectrum&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sherpa.fit</span> <span class="kn">import</span> <span class="n">Fit</span>
+        <span class="kn">from</span> <span class="nn">sherpa.models</span> <span class="kn">import</span> <span class="n">ArithmeticModel</span><span class="p">,</span> <span class="n">SimulFitModel</span>
+        <span class="kn">from</span> <span class="nn">sherpa.astro.instrument</span> <span class="kn">import</span> <span class="n">Response1D</span>
+        <span class="kn">from</span> <span class="nn">sherpa.data</span> <span class="kn">import</span> <span class="n">DataSimulFit</span>
+
+        <span class="c1"># Reset results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="c1"># Translate model to sherpa model if necessary</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span> <span class="n">models</span><span class="o">.</span><span class="n">SpectralModel</span><span class="p">):</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">to_sherpa</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ArithmeticModel</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Model not understood: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="p">))</span>
+
+        <span class="c1"># Make model amplitude O(1e0)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">ampl</span><span class="o">.</span><span class="n">val</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLUX_FACTOR</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">ampl</span> <span class="o">=</span> <span class="n">val</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Restricting fit range to {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span><span class="p">))</span>
+            <span class="n">fitmin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">fitmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="c1"># Loop over observations</span>
+        <span class="n">pha</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">folded_model</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="n">nobs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nobs</span><span class="p">):</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">to_sherpa</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="n">fitmin</span><span class="p">,</span> <span class="n">fitmax</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">temp</span><span class="o">.</span><span class="n">get_background</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                    <span class="n">temp</span><span class="o">.</span><span class="n">get_background</span><span class="p">()</span><span class="o">.</span><span class="n">notice</span><span class="p">(</span><span class="n">fitmin</span><span class="p">,</span> <span class="n">fitmax</span><span class="p">)</span>
+            <span class="n">temp</span><span class="o">.</span><span class="n">ignore_bad</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">temp</span><span class="o">.</span><span class="n">get_background</span><span class="p">()</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">temp</span><span class="o">.</span><span class="n">get_background</span><span class="p">()</span><span class="o">.</span><span class="n">ignore_bad</span><span class="p">()</span>
+            <span class="n">pha</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Noticed channels obs {}: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">ii</span><span class="p">,</span> <span class="n">temp</span><span class="o">.</span><span class="n">get_noticed_channels</span><span class="p">()))</span>
+            <span class="c1"># Forward folding</span>
+            <span class="n">resp</span> <span class="o">=</span> <span class="n">Response1D</span><span class="p">(</span><span class="n">pha</span><span class="p">[</span><span class="n">ii</span><span class="p">])</span>
+            <span class="n">folded_model</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">resp</span><span class="p">(</span><span class="n">model</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">FLUX_FACTOR</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pha</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">pha</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">get_noticed_channels</span><span class="p">())</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;You are trying to fit one observation in only &#39;</span>
+                             <span class="s1">&#39;one bin, error estimation will fail&#39;</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">DataSimulFit</span><span class="p">(</span><span class="s1">&#39;simul fit data&#39;</span><span class="p">,</span> <span class="n">pha</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">fitmodel</span> <span class="o">=</span> <span class="n">SimulFitModel</span><span class="p">(</span><span class="s1">&#39;simul fit model&#39;</span><span class="p">,</span> <span class="n">folded_model</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">fitmodel</span><span class="p">)</span>
+
+        <span class="n">fit</span> <span class="o">=</span> <span class="n">Fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">fitmodel</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistic</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">method_fit</span><span class="p">)</span>
+
+        <span class="n">fitresult</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">fitresult</span><span class="p">)</span>
+        <span class="c1"># The model instance passed to the Fit now holds the best fit values</span>
+        <span class="n">covar</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">est_errors</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="n">covar</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nobs</span><span class="p">):</span>
+            <span class="n">efilter</span> <span class="o">=</span> <span class="n">pha</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span><span class="o">.</span><span class="n">get_filter</span><span class="p">()</span>
+            <span class="c1"># Skip observations not participating in the fit</span>
+            <span class="k">if</span> <span class="n">efilter</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="n">shmodel</span> <span class="o">=</span> <span class="n">fitmodel</span><span class="o">.</span><span class="n">parts</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="n">_sherpa_to_fitresult</span><span class="p">(</span><span class="n">shmodel</span><span class="p">,</span> <span class="n">covar</span><span class="p">,</span> <span class="n">efilter</span><span class="p">,</span> <span class="n">fitresult</span><span class="p">)</span>
+                <span class="n">result</span><span class="o">.</span><span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">result</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+
+        <span class="n">valid_result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">global_result</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="n">valid_result</span><span class="p">])</span>
+        <span class="n">global_result</span><span class="o">.</span><span class="n">npred</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">global_result</span><span class="o">.</span><span class="n">obs</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">all_fitranges</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">fit_range</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_result</span> <span class="k">if</span> <span class="n">_</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">]</span>
+        <span class="n">fit_range_min</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">all_fitranges</span><span class="p">])</span>
+        <span class="n">fit_range_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">all_fitranges</span><span class="p">])</span>
+        <span class="n">global_result</span><span class="o">.</span><span class="n">fit_range</span> <span class="o">=</span> <span class="n">u</span><span class="o">.</span><span class="n">Quantity</span><span class="p">((</span><span class="n">fit_range_min</span><span class="p">,</span> <span class="n">fit_range_max</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_global_result</span> <span class="o">=</span> <span class="n">global_result</span></div>
+
+<div class="viewcode-block" id="SpectrumFit.compute_fluxpoints"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFit.html#gammapy.spectrum.SpectrumFit.compute_fluxpoints">[docs]</a>    <span class="k">def</span> <span class="nf">compute_fluxpoints</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">binning</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute `~DifferentialFluxPoints` for best fit model</span>
+
+<span class="sd">        Calls :func:`~gammapy.spectrum.DifferentialFluxPoints.compute`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        binning : `~astropy.units.Quantity`</span>
+<span class="sd">            Energy binning, see</span>
+<span class="sd">            :func:`~gammapy.spectrum.utils.calculate_flux_point_binning` for a</span>
+<span class="sd">            method to get flux points with a minimum significance.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        result : `~gammapy.spectrum.SpectrumResult`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">SpectrumResult</span>
+        <span class="n">obs_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_list</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">model</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">DifferentialFluxPoints</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                                                <span class="n">binning</span><span class="o">=</span><span class="n">binning</span><span class="p">,</span>
+                                                <span class="n">obs_list</span><span class="o">=</span><span class="n">obs_list</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SpectrumResult</span><span class="p">(</span><span class="n">fit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumFit.run"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFit.html#gammapy.spectrum.SpectrumFit.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run all steps</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        method : str {sherpa}</span>
+<span class="sd">            Fit method to use</span>
+<span class="sd">        outdir : Path, str</span>
+
+<span class="sd">            directory to write results files to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cwd</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="n">cwd</span> <span class="k">if</span> <span class="n">outdir</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">make_path</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
+        <span class="n">outdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outdir</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+
+        <span class="c1"># Assume only one model is fit to all data</span>
+        <span class="n">modelname</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="s1">&#39;fit_result_{}.yaml&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">modelname</span><span class="p">))</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cwd</span><span class="p">))</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">_sherpa_to_fitresult</span><span class="p">(</span><span class="n">shmodel</span><span class="p">,</span> <span class="n">covar</span><span class="p">,</span> <span class="n">efilter</span><span class="p">,</span> <span class="n">fitresult</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.SpectrumFitResult` from Sherpa objects&quot;&quot;&quot;</span>
+
+    <span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">SpectrumFitResult</span>
+
+    <span class="c1"># Translate sherpa model to GP model</span>
+    <span class="c1"># Units will be transformed to TeV, s, and m to avoid numerical issues</span>
+    <span class="c1"># e.g. a flux error of O(-13) results in a covariance entry of O(-45) due</span>
+    <span class="c1"># to the sqrt and unit keV which kills the uncertainties package</span>
+    <span class="n">amplfact</span> <span class="o">=</span> <span class="n">SpectrumFit</span><span class="o">.</span><span class="n">FLUX_FACTOR</span>
+    <span class="n">pardict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">gamma</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)],</span>
+                   <span class="n">ref</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">,</span>
+                        <span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">keV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)],</span>
+                   <span class="n">ampl</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;amplitude&#39;</span><span class="p">,</span>
+                         <span class="p">(</span><span class="n">amplfact</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 keV-1&#39;</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m-2 s-1 TeV-1&#39;</span><span class="p">)],</span>
+                   <span class="n">cutoff</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;lambda_&#39;</span><span class="p">,</span>
+                           <span class="n">u</span><span class="o">.</span><span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;TeV-1&#39;</span><span class="p">)])</span>
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+    <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">shmodel</span><span class="o">.</span><span class="n">pars</span><span class="p">:</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="n">pardict</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">val</span> <span class="o">*</span> <span class="n">pardict</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s1">&#39;powlaw1d&#39;</span> <span class="ow">in</span> <span class="n">shmodel</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PowerLaw</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="s1">&#39;ecpl&#39;</span> <span class="ow">in</span> <span class="n">shmodel</span><span class="o">.</span><span class="n">name</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ExponentialCutoffPowerLaw</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">shmodel</span><span class="p">))</span>
+
+    <span class="c1"># Adjust parameters in covariance matrix</span>
+    <span class="n">covariance</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">covar</span><span class="o">.</span><span class="n">extra_output</span><span class="p">)</span>
+    <span class="n">covar_axis</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">par</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">covar</span><span class="o">.</span><span class="n">parnames</span><span class="p">):</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">covar_axis</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pardict</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">covariance</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">pardict</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">covariance</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="n">temp2</span> <span class="o">=</span> <span class="n">covariance</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">*</span> <span class="n">pardict</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">covariance</span><span class="p">[:,</span> <span class="n">idx</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp2</span>
+
+    <span class="c1"># Efilter sometimes contains &#39;,&#39;</span>
+    <span class="k">if</span> <span class="s1">&#39;:&#39;</span> <span class="ow">in</span> <span class="n">efilter</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">efilter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">efilter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+
+    <span class="c1"># Special case only one noticed bin</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">fit_range</span> <span class="o">=</span> <span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">keV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fit_range</span> <span class="o">=</span> <span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">temp</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">keV</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+
+    <span class="n">npred</span> <span class="o">=</span> <span class="n">shmodel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">statname</span> <span class="o">=</span> <span class="n">fitresult</span><span class="o">.</span><span class="n">statname</span>
+    <span class="n">statval</span> <span class="o">=</span> <span class="n">fitresult</span><span class="o">.</span><span class="n">statval</span>
+
+    <span class="c1"># TODO: Calc Flux@1TeV + Error</span>
+    <span class="k">return</span> <span class="n">SpectrumFitResult</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                             <span class="n">covariance</span><span class="o">=</span><span class="n">covariance</span><span class="p">,</span>
+                             <span class="n">covar_axis</span><span class="o">=</span><span class="n">covar_axis</span><span class="p">,</span>
+                             <span class="n">fit_range</span><span class="o">=</span><span class="n">fit_range</span><span class="p">,</span>
+                             <span class="n">statname</span><span class="o">=</span><span class="n">statname</span><span class="p">,</span>
+                             <span class="n">statval</span><span class="o">=</span><span class="n">statval</span><span class="p">,</span>
+                             <span class="n">npred</span><span class="o">=</span><span class="n">npred</span>
+                             <span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="fit.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

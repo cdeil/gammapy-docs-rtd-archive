@@ -1,0 +1,356 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.image.mask &mdash; gammapy v0.5</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.5" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/image/mask.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/image/mask'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.5/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.5</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.image.mask</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Latitude</span><span class="p">,</span> <span class="n">Longitude</span><span class="p">,</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.utils</span> <span class="kn">import</span> <span class="n">lazyproperty</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">lon_lat_circle_mask</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">SkyImage</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;SkyMask&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;make_tevcat_exclusion_mask&#39;</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="SkyMask"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask">[docs]</a><span class="k">class</span> <span class="nc">SkyMask</span><span class="p">(</span><span class="n">SkyImage</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sky image mask.</span>
+
+<span class="sd">    `SkyMask` is a `~gammapy.image.SkyImage` sub-class, i.e. it inherits</span>
+<span class="sd">    all of its features. The distinction is that `SkyMask` is to</span>
+<span class="sd">    represent boolean masks and has methods that only make sense for</span>
+<span class="sd">    mask data. The data array can be integer or float, but if it is,</span>
+<span class="sd">    it should only contain pixel values of 0 or 1.</span>
+
+<span class="sd">    TODO: explain about semantics and give examples what 0 and 1 mean</span>
+<span class="sd">    in different applications (or link to other docs).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SkyMask.fill_random_circles"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask.fill_random_circles">[docs]</a>    <span class="k">def</span> <span class="nf">fill_random_circles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">min_rad</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">max_rad</span><span class="o">=</span><span class="mi">40</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create random exclusion mask (n circles) on a  given image</span>
+
+<span class="sd">        This is useful for testing</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n : int</span>
+<span class="sd">            Number of circles to place</span>
+<span class="sd">        min_rad : int</span>
+<span class="sd">            Minimum circle radius in pixels</span>
+<span class="sd">        max_rad : int</span>
+<span class="sd">            Maximum circle radius in pixels</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># TODO: is it worth to change this to take the radius in deg?</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">nx</span><span class="p">,</span> <span class="n">ny</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nx</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">ny</span><span class="p">),</span> <span class="n">n</span><span class="p">)</span>
+        <span class="n">rr</span> <span class="o">=</span> <span class="n">min_rad</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">max_rad</span> <span class="o">-</span> <span class="n">min_rad</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">rr</span><span class="p">):</span>
+            <span class="n">xd</span><span class="p">,</span> <span class="n">yd</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ogrid</span><span class="p">[</span><span class="o">-</span><span class="n">x</span><span class="p">:</span><span class="n">nx</span> <span class="o">-</span> <span class="n">x</span><span class="p">,</span> <span class="o">-</span><span class="n">y</span><span class="p">:</span><span class="n">ny</span> <span class="o">-</span> <span class="n">y</span><span class="p">]</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">xd</span> <span class="o">*</span> <span class="n">xd</span> <span class="o">+</span> <span class="n">yd</span> <span class="o">*</span> <span class="n">yd</span> <span class="o">&lt;=</span> <span class="n">r</span> <span class="o">*</span> <span class="n">r</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">val</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="SkyMask.open"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask.open">[docs]</a>    <span class="k">def</span> <span class="nf">open</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Binary opening with structuring element.</span>
+
+<span class="sd">        Calls `scipy.ndimage.binary_opening`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        structure : array-like</span>
+<span class="sd">            Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        skymask : `SkyMask`</span>
+<span class="sd">            Opened sky mask.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">binary_opening</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">binary_opening</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SkyMask</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMask.dilate"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask.dilate">[docs]</a>    <span class="k">def</span> <span class="nf">dilate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Binary dilation with structuring element.</span>
+
+<span class="sd">        Calls `scipy.ndimage.binary_dilation`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        structure : array-like</span>
+<span class="sd">            Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        skymask : `SkyMask`</span>
+<span class="sd">            Dilated sky mask.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">binary_dilation</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">binary_dilation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SkyMask</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMask.close"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Binary closing with structuring element.</span>
+
+<span class="sd">        Calls `scipy.ndimage.binary_closing`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        structure : array-like</span>
+<span class="sd">            Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        skymask : `SkyMask`</span>
+<span class="sd">            Closed sky mask.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">binary_closing</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">binary_closing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SkyMask</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMask.erode"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask.erode">[docs]</a>    <span class="k">def</span> <span class="nf">erode</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Binary erosion with structuring element.</span>
+
+<span class="sd">        Calls `scipy.ndimage.binary_erosion`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        structure : array-like</span>
+<span class="sd">            Structuring kernel. Must be boolean i.e. only contain 1 and 0 values.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        skymask : `SkyMask`</span>
+<span class="sd">            Eroded sky mask.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">binary_erosion</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">structure</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SkyMask</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">),</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span></div>
+
+    <span class="nd">@lazyproperty</span>
+    <span class="k">def</span> <span class="nf">distance_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Distance to nearest exclusion region.</span>
+
+<span class="sd">        Compute distance image, i.e. the Euclidean (=Cartesian 2D)</span>
+<span class="sd">        distance (in pixels) to the nearest exclusion region.</span>
+
+<span class="sd">        We need to call distance_transform_edt twice because it only computes</span>
+<span class="sd">        dist for pixels outside exclusion regions, so to get the</span>
+<span class="sd">        distances for pixels inside we call it on the inverted mask</span>
+<span class="sd">        and then combine both distance images into one, using negative</span>
+<span class="sd">        distances (note the minus sign) for pixels inside exclusion regions.</span>
+
+<span class="sd">        If data consist only of ones, it&#39;ll be supposed to be far away</span>
+<span class="sd">        from zero pixels, so in capacity of answer it should be return</span>
+<span class="sd">        the matrix with the shape as like as data but packed by constant</span>
+<span class="sd">        value Max_Value (MAX_VALUE = 1e10).</span>
+
+<span class="sd">        If data consist only of zeros, it&#39;ll be supposed to be deep inside</span>
+<span class="sd">        an exclusion region, so in capacity of answer it should be return</span>
+<span class="sd">        the matrix with the shape as like as data but packed by constant</span>
+<span class="sd">        value -Max_Value (MAX_VALUE = 1e10).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        distance : `~gammapy.image.SkyImage`</span>
+<span class="sd">            Sky image of distance to nearest exclusion region.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from gammapy.image import SkyMask</span>
+<span class="sd">        &gt;&gt;&gt; data = np.array([[0., 0., 1.], [1., 1., 1.]])</span>
+<span class="sd">        &gt;&gt;&gt; mask = SkyMask(data=data)</span>
+<span class="sd">        &gt;&gt;&gt; print(mask.distance_image.data)</span>
+<span class="sd">        [[-1, -1, 1], [1, 1, 1.41421356]]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">distance_transform_edt</span>
+
+        <span class="n">max_value</span> <span class="o">=</span> <span class="mf">1e10</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SkyImage</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">max_value</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SkyImage</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fill</span><span class="o">=-</span><span class="n">max_value</span><span class="p">)</span>
+
+        <span class="n">distance_outside</span> <span class="o">=</span> <span class="n">distance_transform_edt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="n">invert_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">))</span>
+        <span class="n">distance_inside</span> <span class="o">=</span> <span class="n">distance_transform_edt</span><span class="p">(</span><span class="n">invert_mask</span><span class="p">)</span>
+
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">distance_outside</span><span class="p">,</span> <span class="o">-</span><span class="n">distance_inside</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SkyImage</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">distance</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span>
+
+    <span class="c1"># TODO: right now the extension name is hardcoded to &#39;exclusion&#39;, because</span>
+    <span class="c1"># single image Fits file often contain a PrimaryHDU and an ImageHDU.</span>
+    <span class="c1"># Is there a better / more flexible solution?</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyMask.read"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMask.html#gammapy.image.SkyMask.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">fobj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Check if extension name is given, else default to &#39;exclusion&#39;</span>
+        <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;extname&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;extname&#39;</span><span class="p">,</span> <span class="s1">&#39;exclusion&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">SkyMask</span><span class="p">,</span> <span class="n">cls</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="make_tevcat_exclusion_mask"><a class="viewcode-back" href="../../../api/gammapy.image.make_tevcat_exclusion_mask.html#gammapy.image.make_tevcat_exclusion_mask">[docs]</a><span class="k">def</span> <span class="nf">make_tevcat_exclusion_mask</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Create an all-sky exclusion mask containing all TeVCat sources</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mask : `~gammapy.image.SkyMask`</span>
+<span class="sd">        Exclusion mask</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># TODO: make this a method SkyMask.from_catalog()?</span>
+    <span class="kn">from</span> <span class="nn">gammapy.catalog</span> <span class="kn">import</span> <span class="n">load_catalog_tevcat</span>
+
+    <span class="n">tevcat</span> <span class="o">=</span> <span class="n">load_catalog_tevcat</span><span class="p">()</span>
+    <span class="n">all_sky_exclusion</span> <span class="o">=</span> <span class="n">SkyMask</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">nxpix</span><span class="o">=</span><span class="mi">3600</span><span class="p">,</span> <span class="n">nypix</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span> <span class="n">binsz</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>
+                                      <span class="n">fill</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int&#39;</span><span class="p">)</span>
+    <span class="n">val_lon</span><span class="p">,</span> <span class="n">val_lat</span> <span class="o">=</span> <span class="n">all_sky_exclusion</span><span class="o">.</span><span class="n">coordinates</span><span class="p">()</span>
+    <span class="n">lons</span> <span class="o">=</span> <span class="n">Longitude</span><span class="p">(</span><span class="n">val_lon</span><span class="p">,</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+    <span class="n">lats</span> <span class="o">=</span> <span class="n">Latitude</span><span class="p">(</span><span class="n">val_lat</span><span class="p">,</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">tevcat</span><span class="p">:</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">Longitude</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;coord_gal_lon&#39;</span><span class="p">],</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">Latitude</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;coord_gal_lat&#39;</span><span class="p">],</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;size_x&#39;</span><span class="p">],</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;size_y&#39;</span><span class="p">],</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+            <span class="n">rad</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="s1">&#39;0.3 deg&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">rad</span> <span class="o">=</span> <span class="n">x</span> <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span> <span class="k">else</span> <span class="n">y</span>
+
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">lon_lat_circle_mask</span><span class="p">(</span><span class="n">lons</span><span class="p">,</span> <span class="n">lats</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">rad</span><span class="p">)</span>
+        <span class="n">all_sky_exclusion</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">all_sky_exclusion</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="mask.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 22 Nov 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+
+
+LogParabola
+============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: LogParabola
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

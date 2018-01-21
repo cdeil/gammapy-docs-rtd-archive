@@ -1,0 +1,56 @@
+
+
+SpectrumResult
+===============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumResult
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumResult.calculate_residuals
+      ~SpectrumResult.from_all
+      ~SpectrumResult.from_fitspectrum_json
+      ~SpectrumResult.from_yaml
+      ~SpectrumResult.plot_residuals
+      ~SpectrumResult.plot_spectrum
+      ~SpectrumResult.to_table
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: calculate_residuals
+   .. automethod:: from_all
+   .. automethod:: from_fitspectrum_json
+   .. automethod:: from_yaml
+   .. automethod:: plot_residuals
+   .. automethod:: plot_spectrum
+   .. automethod:: to_table
+
+   
+   

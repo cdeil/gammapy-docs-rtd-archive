@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.utils &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/utils.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/utils'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> \
+    <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+
+<span class="kn">from</span> <span class="nn">gammapy.region</span> <span class="kn">import</span> <span class="n">SkyCircleRegion</span><span class="p">,</span> <span class="n">SkyRegionList</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">read_yaml</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;LogEnergyAxis&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;plot_npred_vs_excess&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="LogEnergyAxis"><a class="viewcode-back" href="../../../api/gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis">[docs]</a><span class="k">class</span> <span class="nc">LogEnergyAxis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Log10 energy axis.</span>
+
+<span class="sd">    Defines a transformation between:</span>
+
+<span class="sd">    * ``energy = 10 ** x``</span>
+<span class="sd">    * ``x = log10(energy)``</span>
+<span class="sd">    * ``pix`` in the range [0, ..., len(x)] via linear interpolation of the ``x`` array,</span>
+<span class="sd">      e.g. ``pix=0`` corresponds to ``x[0]``</span>
+<span class="sd">      and ``pix=0.3`` is ``0.5 * (0.3 * x[0] + 0.7 * x[1])``</span>
+
+<span class="sd">    .. note::</span>
+<span class="sd">        The `specutils.Spectrum1DLookupWCS &lt;http://specutils.readthedocs.org/en/latest/api/specutils.wcs.specwcs.Spectrum1DLookupWCS.html&gt;`__</span>
+<span class="sd">        class is similar (only that it doesn&#39;t include the ``log`` transformation and the API is different.</span>
+<span class="sd">        Also see this Astropy feature request: https://github.com/astropy/astropy/issues/2362</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy : `~astropy.units.Quantity`</span>
+<span class="sd">        Energy array</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">))</span>
+
+<div class="viewcode-block" id="LogEnergyAxis.world2pix"><a class="viewcode-back" href="../../../api/gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis.world2pix">[docs]</a>    <span class="k">def</span> <span class="nf">world2pix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: document.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Convert `energy` to `x = log10(energy)`</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="c1"># Interpolate in `x`</span>
+        <span class="n">pix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pix</span></div>
+
+<div class="viewcode-block" id="LogEnergyAxis.pix2world"><a class="viewcode-back" href="../../../api/gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis.pix2world">[docs]</a>    <span class="k">def</span> <span class="nf">pix2world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pix</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: document.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Interpolate in `x = log10(energy)`</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">interp</span><span class="p">(</span><span class="n">pix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="c1"># Convert `x` to `energy`</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="mi">10</span> <span class="o">**</span> <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">energy</span></div>
+
+<div class="viewcode-block" id="LogEnergyAxis.closest_point"><a class="viewcode-back" href="../../../api/gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis.closest_point">[docs]</a>    <span class="k">def</span> <span class="nf">closest_point</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: document</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="c1"># TODO: I&#39;m not sure which is faster / better here?</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">-</span> <span class="n">x</span><span class="p">))</span>
+        <span class="c1"># np.searchsorted(self.x, x)</span>
+        <span class="k">return</span> <span class="n">index</span></div>
+
+<div class="viewcode-block" id="LogEnergyAxis.bin_edges"><a class="viewcode-back" href="../../../api/gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis.bin_edges">[docs]</a>    <span class="k">def</span> <span class="nf">bin_edges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TODO: document.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        TODO</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">pix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">energy</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c1"># Loop over es by hand</span>
+            <span class="n">pix1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+                <span class="c1"># print ii, e[ii], np.where(e[ii] &gt;= self.e)</span>
+                <span class="n">pix1</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">energy</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">pix2</span> <span class="o">=</span> <span class="n">pix1</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">energy1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">[</span><span class="n">pix1</span><span class="p">]</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">[</span><span class="n">pix2</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">pix1</span><span class="p">,</span> <span class="n">pix2</span><span class="p">,</span> <span class="n">energy1</span><span class="p">,</span> <span class="n">energy2</span></div></div>
+
+
+<span class="c1"># Todo: find a better place for these functions (Spectrum analysis class?)</span>
+<span class="k">def</span> <span class="nf">plot_exclusion_mask</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot exclusion mask</span>
+
+<span class="sd">    The plot will be centered at the pointing position</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    size : `~astropy.coordinates.Angle`</span>
+<span class="sd">    Edge length of the plot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">gammapy.image</span> <span class="kn">import</span> <span class="n">ExclusionMask</span>
+    <span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">SpectrumExtraction</span>
+    <span class="c1"># Todo: plot exclusion mask as contours with skymap class</span>
+
+    <span class="n">exclusion</span> <span class="o">=</span> <span class="n">ExclusionMask</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">SpectrumExtraction</span><span class="o">.</span><span class="n">EXCLUDEDREGIONS_FILE</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">exclusion</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">plot_on_region</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot target regions&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">SpectrumExtraction</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_exclusion_mask</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">read_yaml</span><span class="p">(</span><span class="n">SpectrumExtraction</span><span class="o">.</span><span class="n">REGIONS_FILE</span><span class="p">)</span>
+    <span class="n">on_region</span> <span class="o">=</span> <span class="n">SkyCircleRegion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">])</span>
+    <span class="n">on_region</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">plot_off_region</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot off regions for all observations&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">SpectrumExtraction</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_exclusion_mask</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">read_yaml</span><span class="p">(</span><span class="n">SpectrumExtraction</span><span class="o">.</span><span class="n">REGIONS_FILE</span><span class="p">)</span>
+    <span class="n">all_regions</span> <span class="o">=</span> <span class="n">SkyRegionList</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">regions</span> <span class="ow">in</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;off_region&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+        <span class="n">all_regions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SkyRegionList</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">regions</span><span class="p">))</span>
+    <span class="n">all_regions</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ax</span>
+
+
+<span class="k">def</span> <span class="nf">plot_observations_positions</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">gammapy.data</span> <span class="kn">import</span> <span class="n">ObservationTable</span>
+    <span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">SpectrumExtraction</span>
+
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;marker&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="mi">150</span><span class="p">)</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plot_exclusion_mask</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+    <span class="n">obs_table</span> <span class="o">=</span> <span class="n">ObservationTable</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">SpectrumExtraction</span><span class="o">.</span><span class="n">OBSTABLE_FILE</span><span class="p">)</span>
+    <span class="n">ra</span> <span class="o">=</span> <span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;RA_PNT&#39;</span><span class="p">]</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;DEC_PNT&#39;</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;icrs&#39;</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">plot_events</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">pass</span>
+    <span class="c1"># TODO : wait for SkyMap Class</span>
+    <span class="c1"># Steps</span>
+    <span class="c1"># - make empty image like exclusion mask</span>
+    <span class="c1"># - fill on off events</span>
+    <span class="c1"># - plot exclusion mask as contours</span>
+
+<div class="viewcode-block" id="plot_npred_vs_excess"><a class="viewcode-back" href="../../../api/gammapy.spectrum.plot_npred_vs_excess.html#gammapy.spectrum.plot_npred_vs_excess">[docs]</a><span class="k">def</span> <span class="nf">plot_npred_vs_excess</span><span class="p">(</span><span class="n">ogip_dir</span><span class="o">=</span><span class="s1">&#39;ogip_data&#39;</span><span class="p">,</span> <span class="n">npred_dir</span><span class="o">=</span><span class="s1">&#39;n_pred&#39;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Plot predicted and measured excess counts</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    npred_dir : str, Path</span>
+<span class="sd">        Directory holding npred fits files</span>
+<span class="sd">    ogip_dir : str, Path</span>
+<span class="sd">        Directory holding OGIP data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">..spectrum.spectrum_extraction</span> <span class="kn">import</span> <span class="n">SpectrumObservationList</span>
+    <span class="kn">from</span> <span class="nn">..spectrum</span> <span class="kn">import</span> <span class="n">CountsSpectrum</span>
+    <span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">make_path</span>
+
+    <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+
+    <span class="n">ogip_dir</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">ogip_dir</span><span class="p">)</span>
+    <span class="n">n_pred_dir</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">npred_dir</span><span class="p">)</span>
+
+    <span class="n">obs</span> <span class="o">=</span> <span class="n">SpectrumObservationList</span><span class="o">.</span><span class="n">read_ogip</span><span class="p">(</span><span class="n">ogip_dir</span><span class="p">)</span>
+    <span class="n">excess</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">o</span><span class="o">.</span><span class="n">excess_vector</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs</span><span class="p">])</span>
+
+    <span class="c1"># Need to give RMF file for reco energy binning</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">obs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">obs_id</span>
+    <span class="n">rmf</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">ogip_dir</span><span class="o">/</span> <span class="s1">&#39;rmf_run{}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="p">[</span><span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">read_bkg</span><span class="p">(</span><span class="n">_</span><span class="p">,</span> <span class="n">rmf</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">n_pred_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;*.fits&#39;</span><span class="p">)]</span>
+    <span class="n">npred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="n">npred</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted counts&#39;</span><span class="p">)</span>
+    <span class="n">excess</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Excess counts&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">numpoints</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ax</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="utils.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

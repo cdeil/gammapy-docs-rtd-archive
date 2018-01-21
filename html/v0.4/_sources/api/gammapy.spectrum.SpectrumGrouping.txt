@@ -1,0 +1,50 @@
+
+
+SpectrumGrouping
+=================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumGrouping
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumGrouping.make_observation_table
+      ~SpectrumGrouping.run
+      ~SpectrumGrouping.stack_groups
+      ~SpectrumGrouping.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: make_observation_table
+   .. automethod:: run
+   .. automethod:: stack_groups
+   .. automethod:: write
+
+   
+   

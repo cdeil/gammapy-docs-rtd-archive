@@ -1,0 +1,222 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SkyRegionList &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Regions (gammapy.region)" href="../region/index.html" />
+    <link rel="next" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="prev" title="SkyRegion" href="gammapy.region.SkyRegion.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.region.SkyRegionList.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.region.SkyRegionList'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../spectrum/index.html" title="Spectrum estimation and modeling (gammapy.spectrum)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.region.SkyRegion.html" title="SkyRegion">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../region/index.html" accesskey="U">Regions (<code class="docutils literal"><span class="pre">gammapy.region</span></code>)</a> &raquo;</li>
+      
+      <li>SkyRegionList</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="skyregionlist">
+<h1>SkyRegionList<a class="headerlink" href="gammapy.region.SkyRegionList.html#skyregionlist" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.region.SkyRegionList">
+<em class="property">class </em><code class="descclassname">gammapy.region.</code><code class="descname">SkyRegionList</code><a class="reference internal" href="../_modules/gammapy/region/core.html#SkyRegionList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a></p>
+<p>List of sky regions.</p>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.from_dict" title="gammapy.region.SkyRegionList.from_dict"><code class="xref py py-obj docutils literal"><span class="pre">from_dict</span></code></a>(inlist)</td>
+<td>Read a list of regions from list of dicts</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.plot" title="gammapy.region.SkyRegionList.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>(ax,&nbsp;**kwargs)</td>
+<td>Plot all regions in the list</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.to_dict" title="gammapy.region.SkyRegionList.to_dict"><code class="xref py py-obj docutils literal"><span class="pre">to_dict</span></code></a>()</td>
+<td>Convert all regions to a list of dicts</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.to_ds9" title="gammapy.region.SkyRegionList.to_ds9"><code class="xref py py-obj docutils literal"><span class="pre">to_ds9</span></code></a>()</td>
+<td>Convert to ds9 region string.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.write" title="gammapy.region.SkyRegionList.write"><code class="xref py py-obj docutils literal"><span class="pre">write</span></code></a>(filename[,&nbsp;format])</td>
+<td>Write list of regions to file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="classmethod">
+<dt id="gammapy.region.SkyRegionList.from_dict">
+<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>inlist</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/core.html#SkyRegionList.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read a list of regions from list of dicts</p>
+<p>Only Circle regions are supported at the Moment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyRegionList.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/core.html#SkyRegionList.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot all regions in the list</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyRegionList.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/core.html#SkyRegionList.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert all regions to a list of dicts</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyRegionList.to_ds9">
+<code class="descname">to_ds9</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/core.html#SkyRegionList.to_ds9"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.to_ds9" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to ds9 region string.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyRegionList.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>filename</em>, <em>format=u'ds9'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/core.html#SkyRegionList.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write list of regions to file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>Name of file to write</p>
+</div></blockquote>
+<p><strong>format</strong> : {&#8216;ds9&#8217;}</p>
+<blockquote class="last">
+<div><p>File format</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.region.SkyRegionList.html#">SkyRegionList</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.region.SkyRegionList.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.region.SkyRegionList.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

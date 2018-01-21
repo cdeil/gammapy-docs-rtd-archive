@@ -1,0 +1,196 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TableModel &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="Statistics tools (gammapy.stats)" href="../stats/index.html" />
+    <link rel="prev" title="SpectrumStats" href="gammapy.spectrum.SpectrumStats.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.TableModel.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.TableModel'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../stats/index.html" title="Statistics tools (gammapy.stats)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumStats.html" title="SpectrumStats">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>TableModel</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="tablemodel">
+<h1>TableModel<a class="headerlink" href="gammapy.spectrum.TableModel.html#tablemodel" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.TableModel">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">TableModel</code><span class="sig-paren">(</span><em>e</em>, <em>y</em>, <em>emin=None</em>, <em>emax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/models.html#TableModel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="gammapy.spectrum.Model.html#gammapy.spectrum.Model" title="gammapy.spectrum.models.Model"><code class="docutils literal"><span class="pre">gammapy.spectrum.Model</span></code></a></p>
+<p>A spectrum represented by numeric arrays of x and y values.</p>
+<p>Internally all calculations are done on log10(x) and log10(y)
+for numerical stability and accuracy.</p>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.get_points" title="gammapy.spectrum.TableModel.get_points"><code class="xref py py-obj docutils literal"><span class="pre">get_points</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.integral" title="gammapy.spectrum.TableModel.integral"><code class="xref py py-obj docutils literal"><span class="pre">integral</span></code></a>([emin,&nbsp;emax,&nbsp;power])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.plot" title="gammapy.spectrum.TableModel.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>([power])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.zeros" title="gammapy.spectrum.TableModel.zeros"><code class="xref py py-obj docutils literal"><span class="pre">zeros</span></code></a>(emin,&nbsp;emax[,&nbsp;npoints])</td>
+<td>Factory function to create a TableModel</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.spectrum.TableModel.get_points">
+<code class="descname">get_points</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/models.html#TableModel.get_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.get_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.TableModel.integral">
+<code class="descname">integral</code><span class="sig-paren">(</span><em>emin=None</em>, <em>emax=None</em>, <em>power=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/models.html#TableModel.integral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.integral" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.TableModel.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>power=2</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/models.html#TableModel.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.plot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.spectrum.TableModel.zeros">
+<em class="property">static </em><code class="descname">zeros</code><span class="sig-paren">(</span><em>emin</em>, <em>emax</em>, <em>npoints=100</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/models.html#TableModel.zeros"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.TableModel.html#gammapy.spectrum.TableModel.zeros" title="Permalink to this definition">¶</a></dt>
+<dd><p>Factory function to create a TableModel
+with all zeros</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.TableModel.html#">TableModel</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.TableModel.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.TableModel.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CountsSpectrum &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="DifferentialFluxPoints" href="gammapy.spectrum.DifferentialFluxPoints.html" />
+    <link rel="prev" title="CompositeModel" href="gammapy.spectrum.CompositeModel.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.CountsSpectrum.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.CountsSpectrum'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.DifferentialFluxPoints.html" title="DifferentialFluxPoints">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.CompositeModel.html" title="CompositeModel">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>CountsSpectrum</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="countsspectrum">
+<h1>CountsSpectrum<a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#countsspectrum" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.CountsSpectrum">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">CountsSpectrum</code><span class="sig-paren">(</span><em>counts</em>, <em>energy</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Counts spectrum dataset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>counts</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">array</span></code></a>, list</p>
+<blockquote>
+<div><p>Counts</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference internal" href="gammapy.utils.energy.EnergyBounds.html#gammapy.utils.energy.EnergyBounds" title="gammapy.utils.energy.EnergyBounds"><code class="xref py py-obj docutils literal"><span class="pre">EnergyBounds</span></code></a></p>
+<blockquote class="last">
+<div><p>Energy axis</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gammapy.utils.energy</span> <span class="kn">import</span> <span class="n">Energy</span><span class="p">,</span> <span class="n">EnergyBounds</span>
+<span class="kn">from</span> <span class="nn">gammapy.data</span> <span class="kn">import</span> <span class="n">CountsSpectrum</span>
+<span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+<span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">spec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">)</span>
+<span class="n">hdu</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">to_fits</span><span class="p">()</span>
+</pre></div>
+</div>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.total_counts" title="gammapy.spectrum.CountsSpectrum.total_counts"><code class="xref py py-obj docutils literal"><span class="pre">total_counts</span></code></a></td>
+<td>Total number of counts</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.from_eventlist" title="gammapy.spectrum.CountsSpectrum.from_eventlist"><code class="xref py py-obj docutils literal"><span class="pre">from_eventlist</span></code></a>(event_list,&nbsp;bins)</td>
+<td>Create CountsSpectrum from fits &#8216;EVENTS&#8217; extension (<a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum" title="gammapy.spectrum.CountsSpectrum"><code class="xref py py-obj docutils literal"><span class="pre">CountsSpectrum</span></code></a>).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.get_npred" title="gammapy.spectrum.CountsSpectrum.get_npred"><code class="xref py py-obj docutils literal"><span class="pre">get_npred</span></code></a>(fit,&nbsp;obs)</td>
+<td>Get N_pred vector from spectral fit</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.info" title="gammapy.spectrum.CountsSpectrum.info"><code class="xref py py-obj docutils literal"><span class="pre">info</span></code></a>()</td>
+<td>Info string</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.peek" title="gammapy.spectrum.CountsSpectrum.peek"><code class="xref py py-obj docutils literal"><span class="pre">peek</span></code></a>([figsize])</td>
+<td>Quick-look summary plots.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.plot" title="gammapy.spectrum.CountsSpectrum.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>([ax,&nbsp;weight,&nbsp;energy_unit])</td>
+<td>Plot counts vector</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.read_bkg" title="gammapy.spectrum.CountsSpectrum.read_bkg"><code class="xref py py-obj docutils literal"><span class="pre">read_bkg</span></code></a>(bkgfile,&nbsp;rmffile)</td>
+<td>Read BKG fits file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.read_pha" title="gammapy.spectrum.CountsSpectrum.read_pha"><code class="xref py py-obj docutils literal"><span class="pre">read_pha</span></code></a>(phafile[,&nbsp;rmffile])</td>
+<td>Read PHA fits file</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.to_fits" title="gammapy.spectrum.CountsSpectrum.to_fits"><code class="xref py py-obj docutils literal"><span class="pre">to_fits</span></code></a>([bkg,&nbsp;corr,&nbsp;rmf,&nbsp;arf])</td>
+<td>Convert to FITS format</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.write" title="gammapy.spectrum.CountsSpectrum.write"><code class="xref py py-obj docutils literal"><span class="pre">write</span></code></a>(filename[,&nbsp;bkg,&nbsp;corr,&nbsp;rmf,&nbsp;arf])</td>
+<td>Write PHA to FITS file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.spectrum.CountsSpectrum.total_counts">
+<code class="descname">total_counts</code><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.total_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Total number of counts</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="classmethod">
+<dt id="gammapy.spectrum.CountsSpectrum.from_eventlist">
+<em class="property">classmethod </em><code class="descname">from_eventlist</code><span class="sig-paren">(</span><em>event_list</em>, <em>bins</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.from_eventlist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.from_eventlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create CountsSpectrum from fits &#8216;EVENTS&#8217; extension (<a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum" title="gammapy.spectrum.CountsSpectrum"><code class="xref py py-obj docutils literal"><span class="pre">CountsSpectrum</span></code></a>).</p>
+<p>Subsets of the event list should be chosen via the appropriate methods
+in <a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList" title="gammapy.data.EventList"><code class="xref py py-obj docutils literal"><span class="pre">EventList</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>event_list</strong> : <code class="xref py py-obj docutils literal"><span class="pre">EventListDataSet</span></code>,</p>
+<blockquote>
+<div><p><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList" title="gammapy.data.EventList"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.data.EventList</span></code></a>, str (filename)</p>
+</div></blockquote>
+<p><strong>bins</strong> : <a class="reference internal" href="gammapy.utils.energy.EnergyBounds.html#gammapy.utils.energy.EnergyBounds" title="gammapy.utils.energy.EnergyBounds"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.utils.energy.EnergyBounds</span></code></a></p>
+<blockquote class="last">
+<div><p>Energy bin edges</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.CountsSpectrum.get_npred">
+<em class="property">classmethod </em><code class="descname">get_npred</code><span class="sig-paren">(</span><em>fit</em>, <em>obs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.get_npred"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.get_npred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get N_pred vector from spectral fit</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fit</strong> : SpectrumFitResult</p>
+<blockquote>
+<div><p>Fitted spectrum</p>
+</div></blockquote>
+<p><strong>obs</strong> : SpectrumObservationList</p>
+<blockquote class="last">
+<div><p>Spectrum observation holding the irfs</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.CountsSpectrum.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Info string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.CountsSpectrum.peek">
+<code class="descname">peek</code><span class="sig-paren">(</span><em>figsize=(5</em>, <em>5)</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.peek"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.peek" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quick-look summary plots.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.CountsSpectrum.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax=None</em>, <em>weight=1</em>, <em>energy_unit='TeV'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot counts vector</p>
+<p>kwargs are forwarded to matplotlib.pyplot.hist</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <a class="reference external" href="http://matplotlib.org/api/axis_api.html#module-matplotlib.axis" title="(in Matplotlib v1.5.1)"><code class="xref py py-obj docutils literal"><span class="pre">axis</span></code></a> (optional)</p>
+<blockquote>
+<div><p>Axis instance to be used for the plot</p>
+</div></blockquote>
+<p><strong>weight</strong> : float</p>
+<blockquote>
+<div><p>Weighting factor for the counts</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">ax: <a class="reference external" href="http://matplotlib.org/api/axis_api.html#module-matplotlib.axis" title="(in Matplotlib v1.5.1)"><code class="xref py py-obj docutils literal"><span class="pre">axis</span></code></a></p>
+<blockquote class="last">
+<div><p>Axis instance used for the plot</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.CountsSpectrum.read_bkg">
+<em class="property">classmethod </em><code class="descname">read_bkg</code><span class="sig-paren">(</span><em>bkgfile</em>, <em>rmffile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.read_bkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.read_bkg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read BKG fits file</p>
+<p>The energy binning is not contained in the PHA standard. Therefore is
+is inferred from the corresponding RMF EBOUNDS extension.
+Todo: Should the energy binning be in the BKG file?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>phafile</strong> : str</p>
+<blockquote>
+<div><p>PHA file with <code class="docutils literal"><span class="pre">SPECTRUM</span></code> extension</p>
+</div></blockquote>
+<p><strong>rmffile</strong> : str</p>
+<blockquote class="last">
+<div><p>RMF file with <code class="docutils literal"><span class="pre">EBOUNDS</span></code> extennsion</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.CountsSpectrum.read_pha">
+<em class="property">classmethod </em><code class="descname">read_pha</code><span class="sig-paren">(</span><em>phafile</em>, <em>rmffile=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.read_pha"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.read_pha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read PHA fits file</p>
+<p>The energy binning is not contained in the PHA standard. Therefore is
+is inferred from the corresponding RMF EBOUNDS extension.
+Todo: Should the energy binning be in the PHA file?</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>phafile</strong> : str</p>
+<blockquote>
+<div><p>PHA file with <code class="docutils literal"><span class="pre">SPECTRUM</span></code> extension</p>
+</div></blockquote>
+<p><strong>rmffile</strong> : str</p>
+<blockquote class="last">
+<div><p>RMF file with <code class="docutils literal"><span class="pre">EBOUNDS</span></code> extennsion, optional</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.CountsSpectrum.to_fits">
+<code class="descname">to_fits</code><span class="sig-paren">(</span><em>bkg=None</em>, <em>corr=None</em>, <em>rmf=None</em>, <em>arf=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.to_fits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.to_fits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to FITS format</p>
+<p>This can be used to write a <a class="reference external" href="http://gamma-astro-data-formats.readthedocs.org/en/latest/ogip/index.html#ogip-pha" title="(in Data formats for gamma-ray astronomy v0.1)"><span>PHA file</span></a>. Meta info is written
+in the fits header.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>bkg</strong> : str</p>
+<blockquote>
+<div><p><a class="reference external" href="http://gamma-astro-data-formats.readthedocs.org/en/latest/ogip/index.html#ogip-bkg" title="(in Data formats for gamma-ray astronomy v0.1)"><span>BKG file</span></a> containing the corresponding background spectrum</p>
+</div></blockquote>
+<p><strong>corr</strong> : str</p>
+<blockquote>
+<div><p>name of the corresponding correction file</p>
+</div></blockquote>
+<p><strong>rmf</strong> : str</p>
+<blockquote>
+<div><p><a class="reference external" href="http://gamma-astro-data-formats.readthedocs.org/en/latest/ogip/index.html#ogip-rmf" title="(in Data formats for gamma-ray astronomy v0.1)"><span>RMF file</span></a> containing the corresponding energy resolution</p>
+</div></blockquote>
+<p><strong>arf</strong> : str</p>
+<blockquote>
+<div><p><a class="reference external" href="http://gamma-astro-data-formats.readthedocs.org/en/latest/ogip/index.html#ogip-arf" title="(in Data formats for gamma-ray astronomy v0.1)"><span>ARF file</span></a> containing the corresponding effective area</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>pha</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.BinTableHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">BinTableHDU</span></code></a></p>
+<blockquote class="last">
+<div><p>PHA FITS HDU</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>For more info on the PHA FITS file format see:
+<a class="reference external" href="http://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/summary/">http://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/summary/</a>
+ogip_92_007_summary.html</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.CountsSpectrum.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>filename</em>, <em>bkg=None</em>, <em>corr=None</em>, <em>rmf=None</em>, <em>arf=None</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/counts_spectrum.html#CountsSpectrum.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write PHA to FITS file.</p>
+<p>Calls <a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.to_fits" title="gammapy.spectrum.CountsSpectrum.to_fits"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.spectrum.CountsSpectrum.to_fits</span></code></a> and
+<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList.writeto" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">writeto</span></code></a>, forwarding all arguments.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.CountsSpectrum.html#">CountsSpectrum</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.CountsSpectrum.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.CountsSpectrum.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

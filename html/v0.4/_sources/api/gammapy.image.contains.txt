@@ -1,0 +1,8 @@
+
+
+contains
+======================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: contains

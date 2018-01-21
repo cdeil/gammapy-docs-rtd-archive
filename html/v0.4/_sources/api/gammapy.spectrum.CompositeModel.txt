@@ -1,0 +1,44 @@
+
+
+CompositeModel
+===============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: CompositeModel
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~CompositeModel.__call__
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: __call__
+
+   
+   

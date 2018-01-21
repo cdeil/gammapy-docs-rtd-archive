@@ -1,0 +1,50 @@
+
+
+SED
+====================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SED
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SED.add
+      ~SED.add_component
+      ~SED.get_ecpl_params
+      ~SED.get_ecpl_params_fermi_cat
+      ~SED.plot
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: add
+   .. automethod:: add_component
+   .. automethod:: get_ecpl_params
+   .. automethod:: get_ecpl_params_fermi_cat
+   .. automethod:: plot
+
+   
+   

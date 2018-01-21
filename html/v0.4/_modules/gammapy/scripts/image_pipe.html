@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.scripts.image_pipe &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/scripts/image_pipe.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/scripts/image_pipe'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.scripts.image_pipe</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs.utils</span> <span class="kn">import</span> <span class="n">pixel_to_skycoord</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span><span class="p">,</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">..utils.energy</span> <span class="kn">import</span> <span class="n">EnergyBounds</span>
+<span class="kn">from</span> <span class="nn">..background</span> <span class="kn">import</span> <span class="n">fill_acceptance_image</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">SkyMap</span><span class="p">,</span> <span class="n">SkyMapCollection</span><span class="p">,</span> <span class="n">disk_correlate</span>
+<span class="kn">from</span> <span class="nn">..stats</span> <span class="kn">import</span> <span class="n">significance</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;ImageAnalysis&#39;</span><span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ImageAnalysis"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis">[docs]</a><span class="k">class</span> <span class="nc">ImageAnalysis</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gammapy 2D image based analysis.</span>
+
+<span class="sd">    The computed images are stored in a ``maps`` attribute of type `~gammapy.image.SkyMapCollection`</span>
+<span class="sd">    with the following keys:</span>
+
+<span class="sd">    * counts : counts for one obs</span>
+<span class="sd">    * bkg : bkg model for one obs</span>
+<span class="sd">    * exposure : exposure for one obs</span>
+<span class="sd">    * total_counts : total counts of all the observations</span>
+<span class="sd">    * total_bkg : total bkg model for all the observations</span>
+<span class="sd">    * total_exposure : total exposure for all the observations</span>
+<span class="sd">    * total_excess : total excess for all the observations</span>
+<span class="sd">    * significance : significance for all the observations</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    empty_image : `~gammapy.image.SkyMap`</span>
+<span class="sd">            ref to an empty image</span>
+<span class="sd">    energy_band : `~gammapy.utils.energy.Energy`</span>
+<span class="sd">        Energy band for which we want to compute the image</span>
+<span class="sd">    offset_band : `astropy.coordinates.Angle`</span>
+<span class="sd">        Offset Band where you compute the image</span>
+<span class="sd">    data_store : `~gammapy.data.DataStore`</span>
+<span class="sd">        `DataStore` where are situated the events</span>
+<span class="sd">    obs_table : `~astropy.table.Table`</span>
+<span class="sd">            Required columns: OBS_ID</span>
+<span class="sd">    exclusion_mask : `~gammapy.image.ExclusionMask`</span>
+<span class="sd">            Exclusion regions</span>
+<span class="sd">    ncounts_min : int</span>
+<span class="sd">            Minimum counts required for one observation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">empty_image</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">energy_band</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">offset_band</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">data_store</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">obs_table</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">exclusion_mask</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ncounts_min</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span> <span class="o">=</span> <span class="n">SkyMapCollection</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span> <span class="o">=</span> <span class="n">data_store</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span> <span class="o">=</span> <span class="n">energy_band</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span> <span class="o">=</span> <span class="n">offset_band</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span> <span class="o">=</span> <span class="n">empty_image</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="o">.</span><span class="n">to_image_hdu</span><span class="p">()</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">if</span> <span class="n">exclusion_mask</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exclusion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exclusion_mask</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ncounts_min</span> <span class="o">=</span> <span class="n">ncounts_min</span>
+
+<div class="viewcode-block" id="ImageAnalysis.make_counts"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_counts">[docs]</a>    <span class="k">def</span> <span class="nf">make_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fill the counts image for the events of one observation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_id : int</span>
+<span class="sd">            Observation ID</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">counts_map</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">select_energy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="p">)</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">select_offset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="p">)</span>
+        <span class="n">counts_map</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">events</span><span class="o">=</span><span class="n">events</span><span class="p">)</span>
+        <span class="n">counts_map</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">counts_map</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">counts_map</span>
+        <span class="k">return</span> <span class="n">counts_map</span></div>
+
+    <span class="k">def</span> <span class="nf">_low_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if there are events for this observation after applying the offset and energy range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_id: int</span>
+<span class="sd">            Observation ID</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        low_counts : bool</span>
+<span class="sd">            Does this observation contain low counts?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">events</span><span class="o">.</span><span class="n">select_energy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="p">)</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="n">events</span><span class="o">.</span><span class="n">select_offset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ncounts_min</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Skipping obs &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">obs_id</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; because it only has &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">events</span><span class="p">))</span> <span class="o">+</span> <span class="s1">&#39; counts.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span>
+
+<div class="viewcode-block" id="ImageAnalysis.make_total_counts"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_counts">[docs]</a>    <span class="k">def</span> <span class="nf">make_total_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stack the total count from the observation in the &#39;DataStore&#39;.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_counts</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">obs_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_low_counts</span><span class="p">(</span><span class="n">obs_id</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_counts</span><span class="p">(</span><span class="n">obs_id</span><span class="p">)</span>
+            <span class="n">total_counts</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;counts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_counts&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_counts</span>
+        <span class="k">return</span> <span class="n">total_counts</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_background"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_background">[docs]</a>    <span class="k">def</span> <span class="nf">make_background</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_id</span><span class="p">,</span> <span class="n">bkg_norm</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make the background map for one observation from a bkg model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_id : int</span>
+<span class="sd">            Observation ID</span>
+<span class="sd">        bkg_norm : bool</span>
+<span class="sd">            If true, apply the scaling factor  to the bkg map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bkg_map</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">bkg</span><span class="o">.</span><span class="n">acceptance_curve_in_energy_band</span><span class="p">(</span><span class="n">energy_band</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="p">)</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">pointing_radec</span><span class="o">.</span><span class="n">galactic</span>
+        <span class="n">bkg_hdu</span> <span class="o">=</span> <span class="n">fill_acceptance_image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">,</span> <span class="n">center</span><span class="p">,</span> <span class="n">table</span><span class="p">[</span><span class="s2">&quot;offset&quot;</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="s2">&quot;Acceptance&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">livetime</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">observation_live_time_duration</span>
+        <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">bkg_hdu</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">table</span><span class="p">[</span><span class="s2">&quot;Acceptance&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span> <span class="o">*</span> <span class="n">bkg_map</span><span class="o">.</span><span class="n">solid_angle</span><span class="p">()</span> <span class="o">*</span> <span class="n">livetime</span>
+        <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+        <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="k">if</span> <span class="n">bkg_norm</span><span class="p">:</span>
+            <span class="n">counts_map</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_counts</span><span class="p">(</span><span class="n">obs_id</span><span class="p">)</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">background_norm_factor</span><span class="p">(</span><span class="n">counts_map</span><span class="p">,</span> <span class="n">bkg_map</span><span class="p">)</span>
+            <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">*</span> <span class="n">bkg_map</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;bkg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bkg_map</span>
+        <span class="k">return</span> <span class="n">bkg_map</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.background_norm_factor"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.background_norm_factor">[docs]</a>    <span class="k">def</span> <span class="nf">background_norm_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">bkg</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine the scaling factor to apply to the background map.</span>
+
+<span class="sd">        Compares the events in the counts maps and the bkg map outside the exclusion maps.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        counts : `~gammapy.image.SkyMap`</span>
+<span class="sd">            counts image</span>
+<span class="sd">        bkg : `~gammapy.image.SkyMap`</span>
+<span class="sd">            bkg image</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        scale : float</span>
+<span class="sd">            scaling factor between the counts and the bkg maps outside the exclusion region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">counts_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exclusion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">bkg_sum</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">bkg</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exclusion&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">counts_sum</span> <span class="o">/</span> <span class="n">bkg_sum</span>
+
+        <span class="k">return</span> <span class="n">scale</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_total_bkg"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_bkg">[docs]</a>    <span class="k">def</span> <span class="nf">make_total_bkg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bkg_norm</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stack the total bkg from the observation in the &#39;DataStore&#39;.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bkg_norm : bool</span>
+<span class="sd">            If true, apply the scaling factor  to the bkg map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">total_bkg</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">obs_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_low_counts</span><span class="p">(</span><span class="n">obs_id</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_background</span><span class="p">(</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">bkg_norm</span><span class="p">)</span>
+            <span class="n">total_bkg</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;bkg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_bkg&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_bkg</span>
+        <span class="k">return</span> <span class="n">total_bkg</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_significance"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_significance">[docs]</a>    <span class="k">def</span> <span class="nf">make_significance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make the significance image from the counts and bkg images.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        radius : float</span>
+<span class="sd">            Disk radius in pixels.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        s_maps : `~gammapy.image.SkyMap`</span>
+<span class="sd">            significance map</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">s_map</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">disk_correlate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_counts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span>
+        <span class="n">bkg</span> <span class="o">=</span> <span class="n">disk_correlate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_bkg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">significance</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">bkg</span><span class="p">)</span>
+        <span class="n">s_map</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">s</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;significance&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">s_map</span>
+        <span class="k">return</span> <span class="n">s_map</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_maps"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_maps">[docs]</a>    <span class="k">def</span> <span class="nf">make_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">bkg_norm</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">spectral_index</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">for_integral_flux</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute the counts, bkg, exclusion_mask and significance images for a set of observation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        radius : float</span>
+<span class="sd">            Disk radius in pixels for the significance map.</span>
+<span class="sd">        bkg_norm : bool</span>
+<span class="sd">            If true, apply the scaling factor to the bkg map</span>
+<span class="sd">        spectral_index : float</span>
+<span class="sd">            Assumed power-law spectral index</span>
+<span class="sd">        for_integral_flux : bool</span>
+<span class="sd">            True if you want that the total excess / exposure gives the integrated flux</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_total_counts</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_total_bkg</span><span class="p">(</span><span class="n">bkg_norm</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_significance</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_total_excess</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_total_exposure</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">,</span> <span class="n">for_integral_flux</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_psf"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_psf">[docs]</a>    <span class="k">def</span> <span class="nf">make_psf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make PSF.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_total_excess"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_excess">[docs]</a>    <span class="k">def</span> <span class="nf">make_total_excess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute excess between counts and bkg map.&quot;&quot;&quot;</span>
+        <span class="n">total_excess</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+        <span class="n">total_excess</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_counts&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_bkg&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_excess&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">total_excess</span>
+        <span class="k">return</span> <span class="n">total_excess</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_exposure"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">make_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_id</span><span class="p">,</span> <span class="n">spectral_index</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">for_integral_flux</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">r&quot;&quot;&quot;Compute the exposure map for one observation.</span>
+
+<span class="sd">        Excess/exposure will give the differential flux at the energy Eref at the middle of the ``self.energy_band``</span>
+
+<span class="sd">        If ``for_integral_flux`` is true, it will give the integrated flux over the ``self.energy_band``</span>
+
+<span class="sd">        Exposure is define as follow:</span>
+
+<span class="sd">        .. math ::</span>
+
+<span class="sd">            EXPOSURE = \int_{E_1}^{E_2} A(E) \phi(E) * T \, dE</span>
+
+<span class="sd">        with ``T`` the observation livetime, ``A(E)`` the effective area,</span>
+<span class="sd">        the energy integration range :math:`[E_1,E_2]` given by ``self.energy_range``</span>
+<span class="sd">        and assuming a power law for the flux :math:`\phi(E) = \phi_{Eref} \times \frac{E}{E_{ref}}^{\gamma}`</span>
+<span class="sd">        with :math:`\gamma` the spectral index of the assumed power law.</span>
+
+<span class="sd">        If ``for_integral_flux`` is true,</span>
+<span class="sd">        :math:`EXPOSURE = \int_{E_1}^{E_2} A(E) \phi_{E} * T \, dE / \int \phi_{E} \, dE`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_id : int</span>
+<span class="sd">            Number of the observation</span>
+<span class="sd">        spectral_index : float</span>
+<span class="sd">            Assumed power-law spectral index</span>
+<span class="sd">        for_integral_flux : bool</span>
+<span class="sd">            True if you want that the total excess / exposure gives the integrated flux</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+
+        <span class="c1"># TODO: should be re-implemented using the exposure_cube function</span>
+        <span class="n">exposure</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+
+        <span class="c1"># Determine offset value for each pixel of the map</span>
+        <span class="n">xpix_coord_grid</span><span class="p">,</span> <span class="n">ypix_coord_grid</span> <span class="o">=</span> <span class="n">exposure</span><span class="o">.</span><span class="n">coordinates</span><span class="p">(</span><span class="n">coord_type</span><span class="o">=</span><span class="s1">&#39;pix&#39;</span><span class="p">)</span>
+        <span class="c1"># calculate pixel offset from center (in world coordinates)</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="n">pixel_to_skycoord</span><span class="p">(</span><span class="n">xpix_coord_grid</span><span class="p">,</span> <span class="n">ypix_coord_grid</span><span class="p">,</span> <span class="n">exposure</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="o">.</span><span class="n">from_pixel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS1&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s2">&quot;NAXIS2&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="n">exposure</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">coord</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">center</span><span class="p">)</span>
+
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span>
+        <span class="n">livetime</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">observation_live_time_duration</span>
+
+        <span class="c1"># 2D Exposure computation on the self.energy_range and on an offset_tab</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span>
+                                                <span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">energy_band</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">bands</span>
+        <span class="n">energy_bin</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">log_centers</span>
+        <span class="n">eref</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_band</span><span class="p">)</span><span class="o">.</span><span class="n">log_centers</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="p">(</span><span class="n">energy_bin</span> <span class="o">/</span> <span class="n">eref</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">spectral_index</span><span class="p">)</span>
+        <span class="n">aeff2d</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">aeff</span>
+        <span class="n">offset_tab</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">exposure_tab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">aeff2d</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">offset_tab</span><span class="p">,</span> <span class="n">energy_bin</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm2&quot;</span><span class="p">)</span> <span class="o">*</span> <span class="n">spectrum</span> <span class="o">*</span> <span class="n">energy_band</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">for_integral_flux</span><span class="p">:</span>
+            <span class="n">norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">spectrum</span> <span class="o">*</span> <span class="n">energy_band</span><span class="p">)</span>
+            <span class="n">exposure_tab</span> <span class="o">/=</span> <span class="n">norm</span>
+
+        <span class="c1"># Interpolate for the offset of each pixel</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="n">offset_tab</span><span class="p">,</span> <span class="n">exposure_tab</span><span class="p">,</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">exposure</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">exposure</span><span class="o">.</span><span class="n">data</span> <span class="o">*=</span> <span class="n">livetime</span>
+        <span class="n">exposure</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">offset</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset_band</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;exposure&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exposure</span>
+        <span class="k">return</span> <span class="n">exposure</span></div>
+
+<div class="viewcode-block" id="ImageAnalysis.make_total_exposure"><a class="viewcode-back" href="../../../api/gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_exposure">[docs]</a>    <span class="k">def</span> <span class="nf">make_total_exposure</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spectral_index</span><span class="o">=</span><span class="mf">2.3</span><span class="p">,</span> <span class="n">for_integral_flux</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute the exposure map for all the observations in the obs_table.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        spectral_index : float</span>
+<span class="sd">            Assumed power-law spectral index</span>
+<span class="sd">        for_integral_flux : bool</span>
+<span class="sd">            True if you want that the total excess / exposure gives the integrated flux</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exposure_map</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">empty_image</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">obs_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_low_counts</span><span class="p">(</span><span class="n">obs_id</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">make_exposure</span><span class="p">(</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">spectral_index</span><span class="p">,</span> <span class="n">for_integral_flux</span><span class="p">)</span>
+            <span class="n">exposure_map</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;exposure&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s2">&quot;total_exposure&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exposure_map</span>
+        <span class="k">return</span> <span class="n">exposure_map</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="image_pipe.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+
+
+plot_points
+============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: plot_points

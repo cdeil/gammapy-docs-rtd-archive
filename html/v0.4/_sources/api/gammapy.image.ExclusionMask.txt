@@ -1,0 +1,65 @@
+
+
+ExclusionMask
+===========================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: ExclusionMask
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~ExclusionMask.distance_image
+      ~ExclusionMask.mask
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ExclusionMask.fill_random_circles
+      ~ExclusionMask.from_ds9
+      ~ExclusionMask.plot
+      ~ExclusionMask.read
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: distance_image
+   .. autoattribute:: mask
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: fill_random_circles
+   .. automethod:: from_ds9
+   .. automethod:: plot
+   .. automethod:: read
+
+   
+   

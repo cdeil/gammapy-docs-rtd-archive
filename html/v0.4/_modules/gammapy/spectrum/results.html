@@ -1,0 +1,1046 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.results &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/results.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/results'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.results</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.extern</span> <span class="kn">import</span> <span class="n">six</span>
+<span class="kn">from</span> <span class="nn">astropy.modeling</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">QTable</span><span class="p">,</span> <span class="n">hstack</span><span class="p">,</span> <span class="n">vstack</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Unit</span><span class="p">,</span> <span class="n">Quantity</span>
+
+<span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">DifferentialFluxPoints</span>
+<span class="kn">from</span> <span class="nn">..extern.bunch</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..utils.energy</span> <span class="kn">import</span> <span class="n">EnergyBounds</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">read_yaml</span><span class="p">,</span> <span class="n">make_path</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SpectrumStats&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;SpectrumFitResult&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;SpectrumResult&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;SpectrumResultDict&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+<span class="nd">@six.add_metaclass</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">)</span>
+<span class="k">class</span> <span class="nc">Result</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Base class for spectrum results</span>
+
+<span class="sd">    All serialisation methods should be implemented here, all derived classed</span>
+<span class="sd">    only have from_dict and to_dict methods. The HIGH_LEVEL_KEY describes the</span>
+<span class="sd">    highest level key in the serialised dicts (that way one can store all</span>
+<span class="sd">    spectrum results in one file).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">HIGH_LEVEL_KEY</span> <span class="o">=</span> <span class="s1">&#39;Default&#39;</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create cls from dict</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        val : dict</span>
+<span class="sd">            dict to read</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_yaml</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create cls from YAML file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, Path</span>
+<span class="sd">            File to read</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">read_yaml</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="n">cls</span><span class="o">.</span><span class="n">HIGH_LEVEL_KEY</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export to Python dict</span>
+
+<span class="sd">        The dict can be used for YAML or JSON serialisation.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">to_yaml</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;w&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write YAML file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File to write</span>
+<span class="sd">        mode : str</span>
+<span class="sd">            Write mode</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">import</span> <span class="nn">yaml</span>
+
+        <span class="n">d</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">d</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">HIGH_LEVEL_KEY</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_dump</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">),</span> <span class="n">mode</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+            <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_fitspectrum_json</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read FitSpectrum output file</span>
+
+<span class="sd">        TODO: Remove once FitSpectrum writes standard YAML files</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Name of the JSON file to read</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+    <span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create overview `~astropy.table.Table`</span>
+
+<span class="sd">        kwargs are forwarded to `~astropy.table.Column`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="SpectrumFitResult"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult">[docs]</a><span class="k">class</span> <span class="nc">SpectrumFitResult</span><span class="p">(</span><span class="n">Result</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class representing the result of a spectral fit</span>
+
+<span class="sd">    For a complete documentation see :ref:`spectrum-fit-result`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    spectral_model : str</span>
+<span class="sd">        Spectral model</span>
+<span class="sd">    parameters : dict</span>
+<span class="sd">        Fitted parameters</span>
+<span class="sd">    parameter_errors : dict</span>
+<span class="sd">        Parameter errors</span>
+<span class="sd">    fit_range : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">        Energy range of the spectral fit</span>
+<span class="sd">    fluxes : dict, optional</span>
+<span class="sd">        Flux for the fitted model at a given energy</span>
+<span class="sd">    flux_errors : dict, optional</span>
+<span class="sd">        Error on the flux for the fitted model at a given energy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">HIGH_LEVEL_KEY</span> <span class="o">=</span> <span class="s1">&#39;fit_result&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spectral_model</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">parameter_errors</span><span class="p">,</span>
+                 <span class="n">fit_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fluxes</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">flux_errors</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span> <span class="o">=</span> <span class="n">spectral_model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">parameter_errors</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">fit_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">fit_range</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span> <span class="o">=</span> <span class="n">fluxes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flux_errors</span> <span class="o">=</span> <span class="n">flux_errors</span>
+
+        <span class="c1"># Todo: remove this once vstack is available for astropy.table.QTable</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">flux_errors</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flux_errors</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="o">.</span><span class="n">norm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;m-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="o">.</span><span class="n">reference</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumFitResult.from_3fgl"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.from_3fgl">[docs]</a>    <span class="k">def</span> <span class="nf">from_3fgl</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Retrieve spectral fit result from 3FGL source&quot;&quot;&quot;</span>
+        <span class="n">d</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">parameter_errors</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">spectral_model</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="s1">&#39;SpectrumType&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;PowerLaw&#39;</span><span class="p">:</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Unc_Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Pivot_Energy&#39;</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Flux_Density&#39;</span><span class="p">],</span> <span class="s1">&#39;cm-2 s-1 MeV-1&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Unc_Flux_Density&#39;</span><span class="p">],</span>
+                                                <span class="s1">&#39;cm-2 s-1 MeV-1&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;LogParabola&#39;</span><span class="p">:</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Unc_Spectral_Index&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;beta&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Unc_beta&#39;</span><span class="p">],</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Pivot_Energy&#39;</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Flux_Density&#39;</span><span class="p">],</span> <span class="s1">&#39;cm-2 s-1 MeV-1&#39;</span><span class="p">)</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="s1">&#39;Unc_Flux_Density&#39;</span><span class="p">],</span>
+                                                <span class="s1">&#39;cm-2 s-1 MeV-1&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Todo : Implement models PLExpCutoff, PLSuperExpCutoff</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s1">&#39;SpectrumFitResult.from_3fgl not available&#39;</span>
+                <span class="s1">&#39; for model {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">spectral_model</span><span class="p">))</span>
+
+
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">spectral_model</span><span class="p">,</span> <span class="n">parameters</span><span class="p">,</span> <span class="n">parameter_errors</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumFitResult.from_fitspectrum_json"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.from_fitspectrum_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_fitspectrum_json</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">json</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+        <span class="n">val</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;fit_functions&#39;</span><span class="p">][</span><span class="s1">&#39;fit_functions&#39;</span><span class="p">][</span><span class="n">model</span><span class="p">]</span>
+        <span class="n">e_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="s1">&#39;energy_min&#39;</span><span class="p">],</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;energy_max&#39;</span><span class="p">])</span>
+        <span class="n">energy_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">e_range</span><span class="p">,</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">spectral_model</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">parameters_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]:</span>
+            <span class="n">pname</span> <span class="o">=</span> <span class="n">par</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;Index&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;Norm&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;norm_scale&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;norm&#39;</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;E0&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;reference&#39;</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;Alpha&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;alpha&#39;</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;Beta&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;beta&#39;</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unkown Parameter: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pname</span><span class="p">))</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">unit</span>
+            <span class="n">parameters_errors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="p">[</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">unit</span>
+
+        <span class="n">fluxes</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">fluxes</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;flux_at_1&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+        <span class="n">flux_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">flux_errors</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;flux_at_1_err&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">fit_range</span><span class="o">=</span><span class="n">energy_range</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                   <span class="n">parameter_errors</span><span class="o">=</span><span class="n">parameters_errors</span><span class="p">,</span>
+                   <span class="n">spectral_model</span><span class="o">=</span><span class="n">spectral_model</span><span class="p">,</span>
+                   <span class="n">fluxes</span><span class="o">=</span><span class="n">fluxes</span><span class="p">,</span> <span class="n">flux_errors</span><span class="o">=</span><span class="n">flux_errors</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumFitResult.from_sherpa"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.from_sherpa">[docs]</a>    <span class="k">def</span> <span class="nf">from_sherpa</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">covar</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.results.SpectrumFitResult` from sherpa objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">SpectrumFit</span>
+
+        <span class="n">el</span><span class="p">,</span> <span class="n">eh</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="nb">filter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="nb">filter</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;:&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">energy_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">((</span><span class="n">el</span><span class="p">,</span> <span class="n">eh</span><span class="p">),</span> <span class="s1">&#39;keV&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;powlaw1d&#39;</span><span class="p">:</span>
+            <span class="n">spectral_model</span> <span class="o">=</span> <span class="s1">&#39;PowerLaw&#39;</span>
+        <span class="k">elif</span> <span class="n">model</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s1">&#39;logparabola&#39;</span><span class="p">:</span>
+            <span class="n">spectral_model</span> <span class="o">=</span> <span class="s1">&#39;LogParabola&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot read sherpa model: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">parameter_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+
+        <span class="c1"># Get thawed parameters from covar object (with errors)</span>
+        <span class="c1"># Todo: Support assymetric errors</span>
+        <span class="n">thawed_pars</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">pname</span><span class="p">,</span> <span class="n">pval</span><span class="p">,</span> <span class="n">perr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">covar</span><span class="o">.</span><span class="n">parnames</span><span class="p">,</span> <span class="n">covar</span><span class="o">.</span><span class="n">parvals</span><span class="p">,</span>
+                                     <span class="n">covar</span><span class="o">.</span><span class="n">parmaxes</span><span class="p">):</span>
+            <span class="n">pname</span> <span class="o">=</span> <span class="n">pname</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">thawed_pars</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pname</span><span class="p">)</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;gamma&#39;</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;ampl&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 keV-1&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;norm&#39;</span>
+                <span class="n">factor</span> <span class="o">=</span> <span class="n">SpectrumFit</span><span class="o">.</span><span class="n">FLUX_FACTOR</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;c1&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;alpha&#39;</span>
+            <span class="k">elif</span> <span class="n">pname</span> <span class="o">==</span> <span class="s1">&#39;c2&#39;</span><span class="p">:</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;beta&#39;</span>
+                <span class="n">factor</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unkown Parameter: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pname</span><span class="p">))</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">pval</span> <span class="o">*</span> <span class="n">unit</span> <span class="o">*</span> <span class="n">factor</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">perr</span> <span class="o">*</span> <span class="n">unit</span> <span class="o">*</span> <span class="n">factor</span>
+
+        <span class="c1"># Get fixed parameters from model (not stored in covar)</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">pars</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">thawed_pars</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;ref&#39;</span><span class="p">:</span>
+                <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;reference&#39;</span>
+                <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">par</span><span class="o">.</span><span class="n">val</span> <span class="o">*</span> <span class="n">unit</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">*</span> <span class="n">unit</span>
+
+        <span class="c1"># Assumes that reference value is set to 1TeV</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;reference&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Reference not at 1 TeV. Flux@1 TeV will be wrong&#39;</span><span class="p">)</span>
+        <span class="n">fluxes</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">fluxes</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span>
+        <span class="n">flux_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">flux_errors</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameter_errors</span><span class="p">[</span><span class="s1">&#39;norm&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">fit_range</span><span class="o">=</span><span class="n">energy_range</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                   <span class="n">parameter_errors</span><span class="o">=</span><span class="n">parameter_errors</span><span class="p">,</span>
+                   <span class="n">spectral_model</span><span class="o">=</span><span class="n">spectral_model</span><span class="p">,</span>
+                   <span class="n">fluxes</span><span class="o">=</span><span class="n">fluxes</span><span class="p">,</span> <span class="n">flux_errors</span><span class="o">=</span><span class="n">flux_errors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumFitResult.to_dict"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">val</span><span class="p">[</span><span class="s1">&#39;fit_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">:</span>
+            <span class="n">par</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="n">val</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                          <span class="n">error</span><span class="o">=</span><span class="n">err</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                          <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;spectral_model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">val</span><span class="p">[</span><span class="s1">&#39;fluxes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span><span class="p">:</span>
+                <span class="n">flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="n">flux_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">flux_errors</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+                <span class="n">val</span><span class="p">[</span><span class="s1">&#39;fluxes&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">value</span><span class="o">=</span><span class="n">flux</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                          <span class="n">error</span><span class="o">=</span><span class="n">flux_err</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                          <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumFitResult.from_dict"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">erange</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;fit_range&#39;</span><span class="p">]</span>
+            <span class="n">energy_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">erange</span><span class="p">[</span><span class="s1">&#39;min&#39;</span><span class="p">],</span> <span class="n">erange</span><span class="p">[</span><span class="s1">&#39;max&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="n">erange</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">energy_range</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;parameters&#39;</span><span class="p">]</span>
+        <span class="n">parameters</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">parameter_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="n">pars</span><span class="p">:</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="n">par</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="n">pars</span><span class="p">[</span><span class="n">par</span><span class="p">][</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+            <span class="n">parameter_errors</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="n">par</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="n">pars</span><span class="p">[</span><span class="n">par</span><span class="p">][</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+        <span class="n">spectral_model</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;spectral_model&#39;</span><span class="p">]</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fl</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;fluxes&#39;</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">fluxes</span><span class="o">=</span><span class="bp">None</span>
+            <span class="n">flux_errors</span><span class="o">=</span><span class="bp">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">fluxes</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+            <span class="n">flux_errors</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">flu</span> <span class="ow">in</span> <span class="n">fl</span><span class="p">:</span>
+                <span class="n">fluxes</span><span class="p">[</span><span class="n">flu</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl</span><span class="p">[</span><span class="n">flu</span><span class="p">][</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="n">fl</span><span class="p">[</span><span class="n">flu</span><span class="p">][</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+                <span class="n">flux_errors</span><span class="p">[</span><span class="n">flu</span><span class="p">]</span> <span class="o">=</span> <span class="n">fl</span><span class="p">[</span><span class="n">flu</span><span class="p">][</span><span class="s1">&#39;error&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="n">fl</span><span class="p">[</span><span class="n">flu</span><span class="p">][</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">fit_range</span><span class="o">=</span><span class="n">energy_range</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="n">parameters</span><span class="p">,</span>
+                   <span class="n">parameter_errors</span><span class="o">=</span><span class="n">parameter_errors</span><span class="p">,</span>
+                   <span class="n">spectral_model</span><span class="o">=</span><span class="n">spectral_model</span><span class="p">,</span> <span class="n">fluxes</span><span class="o">=</span><span class="n">fluxes</span><span class="p">,</span>
+                   <span class="n">flux_errors</span><span class="o">=</span><span class="n">flux_errors</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumFitResult.to_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.to_table">[docs]</a>    <span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">t</span><span class="p">[</span><span class="n">par</span><span class="p">]</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">[</span><span class="n">par</span><span class="p">]),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">t</span><span class="p">[</span><span class="s1">&#39;{}_err&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par</span><span class="p">)]</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="p">[</span><span class="n">par</span><span class="p">]),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;fit_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span>
+                                <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">t</span><span class="p">[</span><span class="s1">&#39;flux[1TeV]&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fluxes</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]),</span>
+                                      <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">t</span><span class="p">[</span><span class="s1">&#39;flux_err[1TeV]&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span>
+                <span class="n">data</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">flux_errors</span><span class="p">[</span><span class="s1">&#39;1TeV&#39;</span><span class="p">]),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">t</span></div>
+
+<div class="viewcode-block" id="SpectrumFitResult.to_sherpa_model"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.to_sherpa_model">[docs]</a>    <span class="k">def</span> <span class="nf">to_sherpa_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return sherpa model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str, optional</span>
+<span class="sd">            Name of the sherpa model instance</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">sherpa.models</span> <span class="kn">as</span> <span class="nn">m</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;PowerLaw&#39;</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">PowLaw1D</span><span class="p">(</span><span class="s1">&#39;powlaw1d.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">ampl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 keV-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;LogParabola&#39;</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">m</span><span class="o">.</span><span class="n">LogParabola</span><span class="p">(</span><span class="s1">&#39;logparabola.&#39;</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">c1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">alpha</span><span class="o">.</span><span class="n">value</span>
+            <span class="c1"># Sherpa models have log10 in the exponent, we want ln</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">c2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">beta</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">ref</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">ampl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 keV-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span>
+                <span class="s1">&#39;to_sherpa_model for model {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">model</span></div>
+
+<div class="viewcode-block" id="SpectrumFitResult.evaluate"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Wrapper around the evaluate method on the Astropy model classes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : `~gammapy.utils.energy.Energy`</span>
+<span class="sd">            Evaluation point</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;PowerLaw&#39;</span><span class="p">:</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">PowerLaw1D</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span><span class="p">,</span>
+                                              <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;LogParabola&#39;</span><span class="p">:</span>
+            <span class="c1"># LogParabola evaluation does not work with arrays because</span>
+            <span class="c1"># there is bug when using &#39;**&#39; with Quantities</span>
+            <span class="c1"># see https://github.com/astropy/astropy/issues/4764</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">([</span><span class="n">models</span><span class="o">.</span><span class="n">LogParabola1D</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">alpha</span><span class="p">,</span>
+                                                           <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">beta</span><span class="p">)</span>
+                             <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="n">x</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Not implemented for model {}.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">flux</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumFitResult.evaluate_butterfly"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.evaluate_butterfly">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate_butterfly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;analytical&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate butterfly</span>
+
+<span class="sd">        Disclaimer: Only available for PowerLaw assuming no correlation</span>
+<span class="sd">        TODO: Use uncertainties package</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x : `~gammapy.utils.energy.Energy`</span>
+<span class="sd">            Evaluation point</span>
+<span class="sd">        method : str {&#39;analytical&#39;}</span>
+<span class="sd">            Computation method</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        butterfly : tuple</span>
+<span class="sd">            Lower, upper flux errors</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;analytical&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval_butterfly_analytical</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Method: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_eval_butterfly_analytical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate butterfly using hard-coded formulas&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span> <span class="o">==</span> <span class="s1">&#39;PowerLaw&#39;</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">df_over_f</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">e0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">reference</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">f0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">df0</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="o">.</span><span class="n">norm</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+            <span class="n">dg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">parameter_errors</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">value</span>
+            <span class="c1"># TODO: Fix this!</span>
+            <span class="n">cov</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">df_over_f</span> <span class="o">=</span> <span class="n">df_over_f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">e0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">df0</span><span class="p">,</span> <span class="n">dg</span><span class="p">,</span> <span class="n">cov</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">df_over_f</span> <span class="o">*</span> <span class="n">f</span>
+            <span class="c1"># Errors are symmetric</span>
+            <span class="k">return</span> <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">val</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">&#39;Analytical butterfly calculation&#39;</span>
+                                      <span class="s1">&#39; not implemented for model {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                                      <span class="bp">self</span><span class="o">.</span><span class="n">spectral_model</span><span class="p">))</span>
+
+<div class="viewcode-block" id="SpectrumFitResult.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span> <span class="n">energy_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+             <span class="n">flux_unit</span><span class="o">=</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">,</span> <span class="n">energy_power</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_points</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+             <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot fit function</span>
+<span class="sd">        kwargs are forwarded to :func:`~matplotlib.pyplot.errorbar`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        energy_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the energy axis</span>
+<span class="sd">        energy_range : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">            Plot range, if fit range not set</span>
+<span class="sd">        flux_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the flux axis</span>
+<span class="sd">        energy_power : int</span>
+<span class="sd">            Power of energy to multiply flux axis with</span>
+<span class="sd">        n_points : int</span>
+<span class="sd">            Number of evaluation nodes</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+
+        <span class="n">xx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_x</span><span class="p">(</span><span class="n">energy_range</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">xx</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">yy</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">flux_unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">),</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Energy [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Flux [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="SpectrumFitResult.plot_butterfly"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult.plot_butterfly">[docs]</a>    <span class="k">def</span> <span class="nf">plot_butterfly</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span> <span class="n">energy_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                       <span class="n">flux_unit</span><span class="o">=</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">,</span> <span class="n">energy_power</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">n_points</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot butterfly</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        energy_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the energy axis</span>
+<span class="sd">        energy_range : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">            Plot range, if fit range not set</span>
+<span class="sd">        flux_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the flux axis</span>
+<span class="sd">        energy_power : int</span>
+<span class="sd">            Power of energy to multiply flux axis with</span>
+<span class="sd">        n_points : int</span>
+<span class="sd">            Number of evaluation nodes</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+
+        <span class="n">xx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_x</span><span class="p">(</span><span class="n">energy_range</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+        <span class="n">y_lo</span><span class="p">,</span> <span class="n">y_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate_butterfly</span><span class="p">(</span><span class="n">xx</span><span class="p">)</span>
+        <span class="n">y_up</span> <span class="o">=</span> <span class="n">yy</span> <span class="o">+</span> <span class="n">y_hi</span>
+        <span class="n">y_down</span> <span class="o">=</span> <span class="n">yy</span> <span class="o">-</span> <span class="n">y_lo</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="n">xx</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y_up</span> <span class="o">=</span> <span class="n">y_up</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y_down</span> <span class="o">=</span> <span class="n">y_down</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="n">y_up</span> <span class="o">=</span> <span class="n">y_up</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">y_down</span> <span class="o">=</span> <span class="n">y_down</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">flux_unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">),</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y_down</span><span class="p">,</span> <span class="n">y_up</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Energy [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Flux [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ax</span></div>
+
+    <span class="k">def</span> <span class="nf">_get_x</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_range</span><span class="p">,</span> <span class="n">n_points</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to proved x sampling&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">energy_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">energy_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit_range</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Fit range not set. You have to specify an energy range&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">energy_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">energy_range</span><span class="p">)</span>
+
+        <span class="n">x_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="n">n_points</span><span class="p">)</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">x</span></div>
+
+
+<div class="viewcode-block" id="SpectrumStats"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats">[docs]</a><span class="k">class</span> <span class="nc">SpectrumStats</span><span class="p">(</span><span class="n">Result</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class summarizing basic spectral parameters</span>
+
+<span class="sd">    &#39;Spectrum&#39; refers to a set of on, off, and effective area vectors</span>
+<span class="sd">     as well as an energy dispersion matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_on : int</span>
+<span class="sd">        number of events inside on region</span>
+<span class="sd">    n_off : int</span>
+<span class="sd">        number of events inside on region</span>
+<span class="sd">    alpha : float</span>
+<span class="sd">        exposure ratio between on and off regions</span>
+<span class="sd">    excess : float</span>
+<span class="sd">        number of excess events in on region</span>
+<span class="sd">    energy_range : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">        Energy range over which the spectrum as extracted</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">HIGH_LEVEL_KEY</span> <span class="o">=</span> <span class="s1">&#39;spectrum&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">pars</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">pars</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumStats.from_hap_output"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats.from_hap_output">[docs]</a>    <span class="k">def</span> <span class="nf">from_hap_output</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Try two json read methods</span>
+
+<span class="sd">        * :func:`~gammapy.spectrum.results.from_fitspectrum_json`</span>
+<span class="sd">        * :func:`~gammapy.spectrum.results.from_bg_stats_json`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_bg_stats_json</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_fitspectrum_json</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumStats.from_fitspectrum_json"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats.from_fitspectrum_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_fitspectrum_json</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">json</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+        <span class="n">val</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;spectrum_stats&#39;</span><span class="p">]</span>
+        <span class="n">emin</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flux_graph&#39;</span><span class="p">][</span><span class="s1">&#39;energy_fit_range_min&#39;</span><span class="p">]</span>
+        <span class="n">emax</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;flux_graph&#39;</span><span class="p">][</span><span class="s1">&#39;energy_fit_range_max&#39;</span><span class="p">]</span>
+        <span class="n">energy_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">],</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">val</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">energy_range</span><span class="o">=</span><span class="n">energy_range</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="n">val</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumStats.from_bg_stats_json"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats.from_bg_stats_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_bg_stats_json</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read BgStats json file</span>
+
+<span class="sd">        This file can be produces with hap-show</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            JSON file produced by hap-show</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">json</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+        <span class="n">val</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;rate_stats&#39;</span><span class="p">][</span><span class="s1">&#39;event_stats&#39;</span><span class="p">]</span>
+        <span class="c1"># Todo: What is the energy range of BgStats?</span>
+        <span class="n">val</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">energy_range</span><span class="o">=</span><span class="n">EnergyBounds</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="s1">&#39;TeV&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="n">val</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumStats.to_dict"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;n_on&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_on</span><span class="p">)</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;n_off&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_off</span><span class="p">)</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span><span class="p">)</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;excess&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">excess</span><span class="p">)</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;energy_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumStats.from_dict"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats.from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">d</span><span class="p">):</span>
+        <span class="n">e_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;energy_range&#39;</span><span class="p">))</span>
+        <span class="n">d</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">energy_range</span><span class="o">=</span><span class="n">e_range</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="n">d</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumStats.to_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumStats.html#gammapy.spectrum.SpectrumStats.to_table">[docs]</a>    <span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="n">names</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">d</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="n">names</span><span class="p">)</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;energy_range&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="o">.</span><span class="n">unit</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;n_bkg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">t</span><span class="p">[</span><span class="s1">&#39;n_off&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">t</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">t</span></div></div>
+
+
+<div class="viewcode-block" id="SpectrumResult"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult">[docs]</a><span class="k">class</span> <span class="nc">SpectrumResult</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class holding all results of a spectral analysis</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    stats: `~gammapy.spectrum.results.SpectrumStats`, optional</span>
+<span class="sd">        Spectrum stats</span>
+<span class="sd">    fit: `~gammapy.spectrum.results.SpectrumFitResult`, optional</span>
+<span class="sd">        Spectrum fit result</span>
+<span class="sd">    points: `~gammapy.spectrum.DifferentialFluxPoints`, optional</span>
+<span class="sd">        Flux points</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">stats</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stats</span> <span class="o">=</span> <span class="n">stats</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span> <span class="o">=</span> <span class="n">fit</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span> <span class="o">=</span> <span class="n">points</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumResult.from_fitspectrum_json"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_fitspectrum_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_fitspectrum_json</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="n">SpectrumStats</span><span class="o">.</span><span class="n">from_hap_output</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">stats</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">fit</span> <span class="o">=</span> <span class="n">SpectrumFitResult</span><span class="o">.</span><span class="n">from_fitspectrum_json</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">fit</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="n">DifferentialFluxPoints</span><span class="o">.</span><span class="n">from_fitspectrum_json</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">stats</span><span class="o">=</span><span class="n">stats</span><span class="p">,</span> <span class="n">fit</span><span class="o">=</span><span class="n">fit</span><span class="p">,</span> <span class="n">points</span><span class="o">=</span><span class="n">points</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumResult.from_yaml"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_yaml">[docs]</a>    <span class="k">def</span> <span class="nf">from_yaml</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read YAML file</span>
+
+<span class="sd">        This method searches the highest-level key in a YAML file and</span>
+<span class="sd">        creates `~gammapy.spectrum.results.Result` instances depending</span>
+<span class="sd">        on the available keys</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_yaml</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+        <span class="n">results</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;fit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">results</span><span class="p">[</span><span class="s1">&#39;stats&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">Result</span><span class="o">.</span><span class="n">__subclasses__</span><span class="p">()):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">HIGH_LEVEL_KEY</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">temp</span> <span class="o">=</span> <span class="n">_</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+                <span class="n">results</span><span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">temp</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">results</span><span class="p">))</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumResult.from_all"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_all">[docs]</a>    <span class="k">def</span> <span class="nf">from_all</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_fitspectrum_json</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e1</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_yaml</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="SpectrumResult.to_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.to_table">[docs]</a>    <span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return `~astropy.table.Table` containing all results</span>
+
+<span class="sd">        only SpectrumStats and SpectrumFitResult are taken into account</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;format&#39;</span><span class="p">,</span> <span class="s1">&#39;.3g&#39;</span><span class="p">)</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">stats</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">]</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">temp</span> <span class="k">if</span> <span class="n">_</span><span class="p">]</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">result</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">to_table</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">hstack</span><span class="p">(</span><span class="n">l</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumResult.calculate_residuals"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.calculate_residuals">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate residuals and residual errors</span>
+
+<span class="sd">        Based on `~gammapy.spectrum.results.SpectrumFitResult` and</span>
+<span class="sd">        `~gammapy.spectrum.results.FluxPoints`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        residuals : `~astropy.units.Quantity`</span>
+<span class="sd">            Residuals</span>
+<span class="sd">        residuals_err : `~astropy.units.Quantity`</span>
+<span class="sd">            Residual errors</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">func</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="n">to_sherpa_model</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span>
+        <span class="n">y_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;flux_err_hi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span>
+
+        <span class="n">func_y</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">)</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;s-1 cm-2 keV-1&#39;</span><span class="p">)</span>
+        <span class="n">residuals</span> <span class="o">=</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">func_y</span><span class="p">)</span> <span class="o">/</span> <span class="n">y</span>
+        <span class="c1"># Todo: add correct formular (butterfly)</span>
+        <span class="n">residuals_err</span> <span class="o">=</span> <span class="n">y_err</span> <span class="o">/</span> <span class="n">y</span>
+
+        <span class="k">return</span> <span class="n">residuals</span><span class="o">.</span><span class="n">decompose</span><span class="p">(),</span> <span class="n">residuals_err</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="SpectrumResult.plot_spectrum"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.plot_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">plot_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span> <span class="n">flux_unit</span><span class="o">=</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">,</span>
+                      <span class="n">energy_power</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">fit_kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">point_kwargs</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot full spectrum including flux points and residuals</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        energy_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the energy axis</span>
+<span class="sd">        flux_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the flux axis</span>
+<span class="sd">        energy_power : int</span>
+<span class="sd">            Power of energy to multiply flux axis with</span>
+<span class="sd">        fit_kwargs : dict, optional</span>
+<span class="sd">            forwarded to :func:`gammapy.spectrum.results.SpectrumFitResult.plot_fit_function`</span>
+<span class="sd">        point_kwargs : dict, optional</span>
+<span class="sd">            forwarded to :func:`gammapy.spectrum.results.SpectrumFitResult.plot_points`</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">gridspec</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">gs</span> <span class="o">=</span> <span class="n">gridspec</span><span class="o">.</span><span class="n">GridSpec</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">ax0</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,:])</span>
+        <span class="n">ax1</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="n">gs</span><span class="p">[</span><span class="mi">3</span><span class="p">,:],</span> <span class="n">sharex</span><span class="o">=</span><span class="n">ax0</span><span class="p">)</span>
+
+        <span class="n">gs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">ax0</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span> <span class="n">visible</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax0</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">ax1</span><span class="o">.</span><span class="n">set_xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">fit_kwargs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">fit_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;Best Fit {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="n">spectral_model</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">point_kwargs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">point_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">)</span>
+
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy_unit</span><span class="o">=</span><span class="n">energy_unit</span><span class="p">,</span> <span class="n">flux_unit</span><span class="o">=</span><span class="n">flux_unit</span><span class="p">,</span>
+                      <span class="n">energy_power</span><span class="o">=</span><span class="n">energy_power</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="o">**</span><span class="n">fit_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy_unit</span><span class="o">=</span><span class="n">energy_unit</span><span class="p">,</span> <span class="n">flux_unit</span><span class="o">=</span><span class="n">flux_unit</span><span class="p">,</span>
+                         <span class="n">energy_power</span><span class="o">=</span><span class="n">energy_power</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax0</span><span class="p">,</span> <span class="o">**</span><span class="n">point_kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_residuals</span><span class="p">(</span><span class="n">energy_unit</span><span class="o">=</span><span class="n">energy_unit</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">,</span> <span class="o">**</span><span class="n">point_kwargs</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="n">fit_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="mf">0.9</span><span class="p">,</span>
+                 <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="o">.</span><span class="n">fit_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="mf">1.1</span><span class="p">)</span>
+
+        <span class="n">ax0</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">numpoints</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gs</span></div>
+
+<div class="viewcode-block" id="SpectrumResult.plot_residuals"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.plot_residuals">[docs]</a>    <span class="k">def</span> <span class="nf">plot_residuals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot residuals</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        energy_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the energy axis</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;fmt&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+
+        <span class="n">y</span><span class="p">,</span> <span class="n">y_err</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">calculate_residuals</span><span class="p">()</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="n">y_err</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;E [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ax</span></div></div>
+
+
+<div class="viewcode-block" id="SpectrumResultDict"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResultDict.html#gammapy.spectrum.SpectrumResultDict">[docs]</a><span class="k">class</span> <span class="nc">SpectrumResultDict</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Dict of several spectrum results</span>
+
+<span class="sd">    * `~gammapy.spectrum.results.SpectrumStats`</span>
+<span class="sd">    * `~gammapy.spectrum.results.SpectrumFitResult`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpectrumResultDict.info"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResultDict.html#gammapy.spectrum.SpectrumResultDict.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumResultDict.from_files"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResultDict.html#gammapy.spectrum.SpectrumResultDict.from_files">[docs]</a>    <span class="k">def</span> <span class="nf">from_files</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">files</span><span class="p">,</span> <span class="n">identifiers</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.SpectrumResultDict` from a list of files</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        files : list, tuple</span>
+<span class="sd">            Files to load</span>
+<span class="sd">        identifiers : list</span>
+<span class="sd">            Analysis identifiers</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">cls</span><span class="p">()</span>
+        <span class="n">identifiers</span> <span class="o">=</span> <span class="n">files</span> <span class="k">if</span> <span class="n">identifiers</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">identifiers</span>
+        <span class="k">for</span> <span class="n">f</span><span class="p">,</span> <span class="nb">id</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">files</span><span class="p">,</span> <span class="n">identifiers</span><span class="p">):</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">SpectrumResult</span><span class="o">.</span><span class="n">from_all</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">val</span><span class="p">[</span><span class="nb">id</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="SpectrumResultDict.to_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResultDict.html#gammapy.spectrum.SpectrumResultDict.to_table">[docs]</a>    <span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create overview `~astropy.table.Table`&quot;&quot;&quot;</span>
+
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">analyses</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;analysis&#39;</span><span class="p">)</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="n">l</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">to_table</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">vstack</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">analyses</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">table</span></div>
+
+<div class="viewcode-block" id="SpectrumResultDict.overplot_spectra"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumResultDict.html#gammapy.spectrum.SpectrumResultDict.overplot_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">overplot_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Overplot spectra&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="results.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

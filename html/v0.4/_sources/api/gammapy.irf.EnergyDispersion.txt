@@ -1,0 +1,85 @@
+
+
+EnergyDispersion
+============================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EnergyDispersion
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~EnergyDispersion.DEFAULT_PDF_THRESHOLD
+      ~EnergyDispersion.pdf_matrix
+      ~EnergyDispersion.pdf_threshold
+      ~EnergyDispersion.reco_energy
+      ~EnergyDispersion.true_energy
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EnergyDispersion.__call__
+      ~EnergyDispersion.apply
+      ~EnergyDispersion.from_gauss
+      ~EnergyDispersion.from_hdu_list
+      ~EnergyDispersion.plot_bias
+      ~EnergyDispersion.plot_matrix
+      ~EnergyDispersion.read
+      ~EnergyDispersion.to_fits
+      ~EnergyDispersion.to_table
+      ~EnergyDispersion.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: DEFAULT_PDF_THRESHOLD
+   .. autoattribute:: pdf_matrix
+   .. autoattribute:: pdf_threshold
+   .. autoattribute:: reco_energy
+   .. autoattribute:: true_energy
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: __call__
+   .. automethod:: apply
+   .. automethod:: from_gauss
+   .. automethod:: from_hdu_list
+   .. automethod:: plot_bias
+   .. automethod:: plot_matrix
+   .. automethod:: read
+   .. automethod:: to_fits
+   .. automethod:: to_table
+   .. automethod:: write
+
+   
+   

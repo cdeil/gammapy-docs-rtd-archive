@@ -1,0 +1,79 @@
+
+
+SpectrumFitResult
+==================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumFitResult
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumFitResult.HIGH_LEVEL_KEY
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumFitResult.evaluate
+      ~SpectrumFitResult.evaluate_butterfly
+      ~SpectrumFitResult.from_3fgl
+      ~SpectrumFitResult.from_dict
+      ~SpectrumFitResult.from_fitspectrum_json
+      ~SpectrumFitResult.from_sherpa
+      ~SpectrumFitResult.plot
+      ~SpectrumFitResult.plot_butterfly
+      ~SpectrumFitResult.to_dict
+      ~SpectrumFitResult.to_sherpa_model
+      ~SpectrumFitResult.to_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: HIGH_LEVEL_KEY
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+   .. automethod:: evaluate_butterfly
+   .. automethod:: from_3fgl
+   .. automethod:: from_dict
+   .. automethod:: from_fitspectrum_json
+   .. automethod:: from_sherpa
+   .. automethod:: plot
+   .. automethod:: plot_butterfly
+   .. automethod:: to_dict
+   .. automethod:: to_sherpa_model
+   .. automethod:: to_table
+
+   
+   

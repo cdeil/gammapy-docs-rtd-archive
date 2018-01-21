@@ -1,0 +1,8 @@
+
+
+g_from_points
+==============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: g_from_points

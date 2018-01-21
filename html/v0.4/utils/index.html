@@ -1,0 +1,696 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Utility functions and classes (gammapy.utils) &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="next" title="Energy" href="../api/gammapy.utils.energy.Energy.html" />
+    <link rel="prev" title="time_relative_to_ref" href="../api/gammapy.time.time_relative_to_ref.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/utils/" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'utils/index'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.utils.energy.Energy.html" title="Energy">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.time.time_relative_to_ref.html" title="time_relative_to_ref">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      
+      <li>Utility functions and classes (<code class="docutils literal"><span class="pre">gammapy.utils</span></code>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="utility-functions-and-classes-gammapy-utils">
+<span id="utils"></span><h1>Utility functions and classes (<code class="docutils literal"><span class="pre">gammapy.utils</span></code>)<a class="headerlink" href="index.html#utility-functions-and-classes-gammapy-utils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">gammapy.utils</span></code> is a collection of utility functions that are used in many places
+or don&#8217;t fit in one of the other packages.</p>
+<p>Since the various sub-modules of <code class="docutils literal"><span class="pre">gammapy.utils</span></code> are mostly unrelated,
+they are not imported into the top-level namespace.
+Here are some examples of how to import functionality from the <code class="docutils literal"><span class="pre">gammapy.utils</span></code>
+sub-modules:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">gammapy.utils.random</span> <span class="kn">import</span> <span class="n">sample_sphere</span>
+<span class="n">sample_sphere</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">gammapy.utils</span> <span class="kn">import</span> <span class="n">random</span>
+<span class="n">random</span><span class="o">.</span><span class="n">sample_sphere</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="energy-handling-in-gammapy">
+<span id="energy-handling-gammapy"></span><h2>Energy handling in Gammapy<a class="headerlink" href="index.html#energy-handling-in-gammapy" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="basics">
+<h3>Basics<a class="headerlink" href="index.html#basics" title="Permalink to this headline">¶</a></h3>
+<p>Most objects in Astronomy require an energy axis, e.g. counts spectra or
+effective area tables. In general, this axis can be defined in two ways.</p>
+<ul class="simple">
+<li>As an array of energy values. E.g. the Fermi-LAT diffuse flux is given at
+certain energies and those are stored in an ENERGY FITS table extension.
+In Gammalib this is represented by GEnergy.</li>
+<li>As an array of energy bin edges. This is usually stored in EBOUNDS tables,
+e.g. for Fermi-LAT counts cubes. In Gammalib this is represented by GEbounds.</li>
+</ul>
+<p>In Gammapy both the use cases are handled by two seperate classes:
+<a class="reference internal" href="../api/gammapy.utils.energy.Energy.html#gammapy.utils.energy.Energy" title="gammapy.utils.energy.Energy"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.utils.energy.Energy</span></code></a> for energy values and
+<a class="reference internal" href="../api/gammapy.utils.energy.EnergyBounds.html#gammapy.utils.energy.EnergyBounds" title="gammapy.utils.energy.EnergyBounds"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.utils.energy.EnergyBounds</span></code></a> for energy bin edges</p>
+</div>
+<div class="section" id="energy">
+<h3>Energy<a class="headerlink" href="index.html#energy" title="Permalink to this headline">¶</a></h3>
+<p>The Energy class is a subclass of <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a> and thus has the
+same functionality plus some convenience functions for fits I/O</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.utils.energy</span> <span class="kn">import</span> <span class="n">Energy</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">energy</span> <span class="o">=</span> <span class="n">Energy</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hdu</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">to_fits</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+<span class="go">&lt;class &#39;astropy.io.fits.hdu.table.BinTableHDU&#39;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="energybounds">
+<h3>EnergyBounds<a class="headerlink" href="index.html#energybounds" title="Permalink to this headline">¶</a></h3>
+<p>The EnergyBounds class is a subclass of Energy. Additional functions are available
+e.g. to compute the bin centers</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.utils.energy</span> <span class="kn">import</span> <span class="n">EnergyBounds</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="s1">&#39;GeV&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ebounds</span><span class="o">.</span><span class="n">size</span>
+<span class="go">9</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ebounds</span><span class="o">.</span><span class="n">nbins</span>
+<span class="go">8</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">center</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">log_centers</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">center</span>
+<span class="go">&lt;Energy [ 1.15478198, 1.53992653, 2.05352503, 2.73841963, 3.65174127,</span>
+<span class="go">          4.86967525, 6.49381632, 8.65964323] GeV&gt;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.utils.energy">
+<span id="gammapy-utils-energy-module"></span><h3>gammapy.utils.energy Module<a class="headerlink" href="index.html#module-gammapy.utils.energy" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.energy.Energy.html#gammapy.utils.energy.Energy" title="gammapy.utils.energy.Energy"><code class="xref py py-obj docutils literal"><span class="pre">Energy</span></code></a></td>
+<td>Energy quantity scalar or array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.energy.EnergyBounds.html#gammapy.utils.energy.EnergyBounds" title="gammapy.utils.energy.EnergyBounds"><code class="xref py py-obj docutils literal"><span class="pre">EnergyBounds</span></code></a></td>
+<td>EnergyBounds array.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.mpl_style">
+<span id="gammapy-utils-mpl-style-module"></span><h3>gammapy.utils.mpl_style Module<a class="headerlink" href="index.html#module-gammapy.utils.mpl_style" title="Permalink to this headline">¶</a></h3>
+<p>Define the Gammapy matplotlib plotting style.</p>
+</div>
+<div class="section" id="module-gammapy.utils.coordinates">
+<span id="gammapy-utils-coordinates-package"></span><h3>gammapy.utils.coordinates Package<a class="headerlink" href="index.html#module-gammapy.utils.coordinates" title="Permalink to this headline">¶</a></h3>
+<p>Astronomical coordinate calculation utility functions.</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.angle_to_radius.html#gammapy.utils.coordinates.angle_to_radius" title="gammapy.utils.coordinates.angle_to_radius"><code class="xref py py-obj docutils literal"><span class="pre">angle_to_radius</span></code></a>(angle,&nbsp;distance)</td>
+<td>Radius (pc), distance(kpc), angle(deg)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.cartesian.html#gammapy.utils.coordinates.cartesian" title="gammapy.utils.coordinates.cartesian"><code class="xref py py-obj docutils literal"><span class="pre">cartesian</span></code></a>(r,&nbsp;theta)</td>
+<td>Convert polar coordinates to cartesian coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.flux_to_luminosity.html#gammapy.utils.coordinates.flux_to_luminosity" title="gammapy.utils.coordinates.flux_to_luminosity"><code class="xref py py-obj docutils literal"><span class="pre">flux_to_luminosity</span></code></a>(flux,&nbsp;distance)</td>
+<td>Distance is assumed to be in kpc</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.galactic.html#gammapy.utils.coordinates.galactic" title="gammapy.utils.coordinates.galactic"><code class="xref py py-obj docutils literal"><span class="pre">galactic</span></code></a>(x,&nbsp;y,&nbsp;z[,&nbsp;obs_pos])</td>
+<td>Compute galactic coordinates lon, lat (deg) and distance (kpc)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.galactic_to_radec.html#gammapy.utils.coordinates.galactic_to_radec" title="gammapy.utils.coordinates.galactic_to_radec"><code class="xref py py-obj docutils literal"><span class="pre">galactic_to_radec</span></code></a>(glon,&nbsp;glat[,&nbsp;unit])</td>
+<td>Convert Galactic to Equatorial J2000 coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.luminosity_to_flux.html#gammapy.utils.coordinates.luminosity_to_flux" title="gammapy.utils.coordinates.luminosity_to_flux"><code class="xref py py-obj docutils literal"><span class="pre">luminosity_to_flux</span></code></a>(luminosity,&nbsp;distance)</td>
+<td>Distance is assumed to be in kpc</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.minimum_separation.html#gammapy.utils.coordinates.minimum_separation" title="gammapy.utils.coordinates.minimum_separation"><code class="xref py py-obj docutils literal"><span class="pre">minimum_separation</span></code></a>(lon1,&nbsp;lat1,&nbsp;lon2,&nbsp;lat2[,&nbsp;...])</td>
+<td>Compute minimum distance of each (lon1, lat1) to any (lon2, lat2).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.motion_since_birth.html#gammapy.utils.coordinates.motion_since_birth" title="gammapy.utils.coordinates.motion_since_birth"><code class="xref py py-obj docutils literal"><span class="pre">motion_since_birth</span></code></a>(v,&nbsp;age,&nbsp;theta,&nbsp;phi)</td>
+<td>Compute motion of a object with given velocity, direction and age.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.pair_correlation.html#gammapy.utils.coordinates.pair_correlation" title="gammapy.utils.coordinates.pair_correlation"><code class="xref py py-obj docutils literal"><span class="pre">pair_correlation</span></code></a>(lon,&nbsp;lat,&nbsp;theta_bins[,&nbsp;unit])</td>
+<td>Compute pair correlation function for points on the sphere.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.polar.html#gammapy.utils.coordinates.polar" title="gammapy.utils.coordinates.polar"><code class="xref py py-obj docutils literal"><span class="pre">polar</span></code></a>(x,&nbsp;y)</td>
+<td>Convert cartesian coordinates to polar coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.radec_to_galactic.html#gammapy.utils.coordinates.radec_to_galactic" title="gammapy.utils.coordinates.radec_to_galactic"><code class="xref py py-obj docutils literal"><span class="pre">radec_to_galactic</span></code></a>(ra,&nbsp;dec[,&nbsp;unit])</td>
+<td>Convert Equatorial J2000 to Galactic coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.radius_to_angle.html#gammapy.utils.coordinates.radius_to_angle" title="gammapy.utils.coordinates.radius_to_angle"><code class="xref py py-obj docutils literal"><span class="pre">radius_to_angle</span></code></a>(radius,&nbsp;distance)</td>
+<td>Radius (pc), distance(kpc), angle(deg)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.separation.html#gammapy.utils.coordinates.separation" title="gammapy.utils.coordinates.separation"><code class="xref py py-obj docutils literal"><span class="pre">separation</span></code></a>(lon1,&nbsp;lat1,&nbsp;lon2,&nbsp;lat2[,&nbsp;unit])</td>
+<td>Angular separation between points on the sphere.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.coordinates.velocity_glon_glat.html#gammapy.utils.coordinates.velocity_glon_glat" title="gammapy.utils.coordinates.velocity_glon_glat"><code class="xref py py-obj docutils literal"><span class="pre">velocity_glon_glat</span></code></a>(x,&nbsp;y,&nbsp;z,&nbsp;vx,&nbsp;vy,&nbsp;vz)</td>
+<td>Compute projected angular velocity in galactic coordinates.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.fits">
+<span id="gammapy-utils-fits-module"></span><h3>gammapy.utils.fits Module<a class="headerlink" href="index.html#module-gammapy.utils.fits" title="Permalink to this headline">¶</a></h3>
+<p>FITS utility functions.</p>
+<div class="section" id="id1">
+<h4>Functions<a class="headerlink" href="index.html#id1" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.fits.get_hdu.html#gammapy.utils.fits.get_hdu" title="gammapy.utils.fits.get_hdu"><code class="xref py py-obj docutils literal"><span class="pre">get_hdu</span></code></a>(location)</td>
+<td>Get one HDU for a given location.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.fits.get_image_hdu.html#gammapy.utils.fits.get_image_hdu" title="gammapy.utils.fits.get_image_hdu"><code class="xref py py-obj docutils literal"><span class="pre">get_image_hdu</span></code></a>()</td>
+<td>Get the first image HDU.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.fits.get_table_hdu.html#gammapy.utils.fits.get_table_hdu" title="gammapy.utils.fits.get_table_hdu"><code class="xref py py-obj docutils literal"><span class="pre">get_table_hdu</span></code></a>()</td>
+<td>Get the first table HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.fits.fits_table_to_pandas.html#gammapy.utils.fits.fits_table_to_pandas" title="gammapy.utils.fits.fits_table_to_pandas"><code class="xref py py-obj docutils literal"><span class="pre">fits_table_to_pandas</span></code></a>(filename,&nbsp;index_columns)</td>
+<td>Convert a FITS table HDU to a <a class="reference external" href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.18.0)"><code class="xref py py-obj docutils literal"><span class="pre">pandas.DataFrame</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.fits.table_to_fits_table.html#gammapy.utils.fits.table_to_fits_table" title="gammapy.utils.fits.table_to_fits_table"><code class="xref py py-obj docutils literal"><span class="pre">table_to_fits_table</span></code></a>(table)</td>
+<td>Convert astropy table to binary table FITS format.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.fits.fits_table_to_table.html#gammapy.utils.fits.fits_table_to_table" title="gammapy.utils.fits.fits_table_to_table"><code class="xref py py-obj docutils literal"><span class="pre">fits_table_to_table</span></code></a>(tbhdu)</td>
+<td>Convert astropy table to binary table FITS format.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.root">
+<span id="gammapy-utils-root-package"></span><h3>gammapy.utils.root Package<a class="headerlink" href="index.html#module-gammapy.utils.root" title="Permalink to this headline">¶</a></h3>
+<p>Utility functions to work with ROOT and rootpy.</p>
+<ul class="simple">
+<li>ROOT: <a class="reference external" href="http://root.cern.ch">http://root.cern.ch</a></li>
+<li>rootpy: <a class="reference external" href="http://rootpy.org">http://rootpy.org</a></li>
+</ul>
+<div class="section" id="id2">
+<h4>Functions<a class="headerlink" href="index.html#id2" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.root.TH2_to_FITS.html#gammapy.utils.root.TH2_to_FITS" title="gammapy.utils.root.TH2_to_FITS"><code class="xref py py-obj docutils literal"><span class="pre">TH2_to_FITS</span></code></a>(hist[,&nbsp;flipx])</td>
+<td>Convert ROOT 2D histogram to FITS format.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.root.TH2_to_FITS_data.html#gammapy.utils.root.TH2_to_FITS_data" title="gammapy.utils.root.TH2_to_FITS_data"><code class="xref py py-obj docutils literal"><span class="pre">TH2_to_FITS_data</span></code></a>(hist[,&nbsp;flipx])</td>
+<td>Convert TH2 bin values into a numpy array.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.root.TH2_to_FITS_header.html#gammapy.utils.root.TH2_to_FITS_header" title="gammapy.utils.root.TH2_to_FITS_header"><code class="xref py py-obj docutils literal"><span class="pre">TH2_to_FITS_header</span></code></a>(hist[,&nbsp;flipx])</td>
+<td>Create FITS header for a given ROOT histogram.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.root.graph1d_to_table.html#gammapy.utils.root.graph1d_to_table" title="gammapy.utils.root.graph1d_to_table"><code class="xref py py-obj docutils literal"><span class="pre">graph1d_to_table</span></code></a>(graph)</td>
+<td>Convert ROOT TGraph to an astropy Table.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.root.hist1d_to_table.html#gammapy.utils.root.hist1d_to_table" title="gammapy.utils.root.hist1d_to_table"><code class="xref py py-obj docutils literal"><span class="pre">hist1d_to_table</span></code></a>(hist)</td>
+<td>Convert 1D ROOT histogram into astropy table.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.random">
+<span id="gammapy-utils-random-module"></span><h3>gammapy.utils.random Module<a class="headerlink" href="index.html#module-gammapy.utils.random" title="Permalink to this headline">¶</a></h3>
+<p>Random sampling for some common distributions</p>
+<div class="section" id="id3">
+<h4>Functions<a class="headerlink" href="index.html#id3" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.random.get_random_state.html#gammapy.utils.random.get_random_state" title="gammapy.utils.random.get_random_state"><code class="xref py py-obj docutils literal"><span class="pre">get_random_state</span></code></a>(init)</td>
+<td>Get a <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.random.RandomState.html#numpy.random.RandomState" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.random.RandomState</span></code></a> instance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.random.sample_sphere.html#gammapy.utils.random.sample_sphere" title="gammapy.utils.random.sample_sphere"><code class="xref py py-obj docutils literal"><span class="pre">sample_sphere</span></code></a>(size[,&nbsp;lon_range,&nbsp;lat_range,&nbsp;...])</td>
+<td>Sample random points on the sphere.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.random.sample_sphere_distance.html#gammapy.utils.random.sample_sphere_distance" title="gammapy.utils.random.sample_sphere_distance"><code class="xref py py-obj docutils literal"><span class="pre">sample_sphere_distance</span></code></a>([distance_min,&nbsp;...])</td>
+<td>Sample random distances if the 3-dim space density is constant.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.random.sample_powerlaw.html#gammapy.utils.random.sample_powerlaw" title="gammapy.utils.random.sample_powerlaw"><code class="xref py py-obj docutils literal"><span class="pre">sample_powerlaw</span></code></a>(x_min,&nbsp;x_max,&nbsp;gamma[,&nbsp;size,&nbsp;...])</td>
+<td>Sample random values from a power law distribution.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.distributions">
+<span id="gammapy-utils-distributions-package"></span><h3>gammapy.utils.distributions Package<a class="headerlink" href="index.html#module-gammapy.utils.distributions" title="Permalink to this headline">¶</a></h3>
+<p>Utility functions / classes for working with distributions
+(e.g. probability density functions)</p>
+<div class="section" id="id4">
+<h4>Functions<a class="headerlink" href="index.html#id4" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.distributions.density.html#gammapy.utils.distributions.density" title="gammapy.utils.distributions.density"><code class="xref py py-obj docutils literal"><span class="pre">density</span></code></a>(func)</td>
+<td>Returns the radial surface density of a given one dimensional PDF.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.distributions.draw.html#gammapy.utils.distributions.draw" title="gammapy.utils.distributions.draw"><code class="xref py py-obj docutils literal"><span class="pre">draw</span></code></a>(low,&nbsp;high,&nbsp;size,&nbsp;dist,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>Allows drawing of random numbers from any distribution.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.distributions.normalize.html#gammapy.utils.distributions.normalize" title="gammapy.utils.distributions.normalize"><code class="xref py py-obj docutils literal"><span class="pre">normalize</span></code></a>(func,&nbsp;x_min,&nbsp;x_max)</td>
+<td>Normalize a 1D function over a given range.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.distributions.pdf.html#gammapy.utils.distributions.pdf" title="gammapy.utils.distributions.pdf"><code class="xref py py-obj docutils literal"><span class="pre">pdf</span></code></a>(func)</td>
+<td>Returns the one dimensional PDF of a given radial surface density.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id5">
+<h4>Classes<a class="headerlink" href="index.html#id5" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.distributions.GeneralRandom.html#gammapy.utils.distributions.GeneralRandom" title="gammapy.utils.distributions.GeneralRandom"><code class="xref py py-obj docutils literal"><span class="pre">GeneralRandom</span></code></a>(pdf,&nbsp;min_range,&nbsp;max_range[,&nbsp;...])</td>
+<td>Fast random number generation with an arbitrary pdf of a continuous variable x.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.distributions.GeneralRandomArray.html#gammapy.utils.distributions.GeneralRandomArray" title="gammapy.utils.distributions.GeneralRandomArray"><code class="xref py py-obj docutils literal"><span class="pre">GeneralRandomArray</span></code></a>(pdf)</td>
+<td>Draw random indices from a discrete probability distribution given by a numpy array.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.pyfact">
+<span id="gammapy-utils-pyfact-module"></span><h3>gammapy.utils.pyfact Module<a class="headerlink" href="index.html#module-gammapy.utils.pyfact" title="Permalink to this headline">¶</a></h3>
+<p>PyFACT compatibility module.</p>
+<p>This module contains a few functions and classes from PyFACT:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/mraue/pyfact">https://github.com/mraue/pyfact</a></li>
+<li><a class="reference external" href="https://github.com/gammapy/gammapy/pull/68">https://github.com/gammapy/gammapy/pull/68</a></li>
+</ul>
+<p>TODO: This is a short-term solution until we find time to refactor
+this functionality into gammapy.</p>
+<div class="section" id="id6">
+<h4>Functions<a class="headerlink" href="index.html#id6" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.circle_circle_intersection_array.html#gammapy.utils.pyfact.circle_circle_intersection_array" title="gammapy.utils.pyfact.circle_circle_intersection_array"><code class="xref py py-obj docutils literal"><span class="pre">circle_circle_intersection_array</span></code></a>(R,&nbsp;r,&nbsp;d)</td>
+<td>Calculate overlap area between two circles on the sphere.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.circle_circle_intersection_float.html#gammapy.utils.pyfact.circle_circle_intersection_float" title="gammapy.utils.pyfact.circle_circle_intersection_float"><code class="xref py py-obj docutils literal"><span class="pre">circle_circle_intersection_float</span></code></a>(R,&nbsp;r,&nbsp;d)</td>
+<td>Calculate overlap area between two circles on the sphere.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.create_sky_map.html#gammapy.utils.pyfact.create_sky_map" title="gammapy.utils.pyfact.create_sky_map"><code class="xref py py-obj docutils literal"><span class="pre">create_sky_map</span></code></a>(input_file_name[,&nbsp;...])</td>
+<td>Create sky map.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.get_cam_acc.html#gammapy.utils.pyfact.get_cam_acc" title="gammapy.utils.pyfact.get_cam_acc"><code class="xref py py-obj docutils literal"><span class="pre">get_cam_acc</span></code></a>(camdist[,&nbsp;rmax,&nbsp;nbins,&nbsp;exreg,&nbsp;...])</td>
+<td>Calculates the camera acceptance histogram from a given list with camera distances (event list).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.get_exclusion_region_map.html#gammapy.utils.pyfact.get_exclusion_region_map" title="gammapy.utils.pyfact.get_exclusion_region_map"><code class="xref py py-obj docutils literal"><span class="pre">get_exclusion_region_map</span></code></a>(map,&nbsp;rarange,&nbsp;...)</td>
+<td>Creates a map (2d numpy histogram) with all bins inside of exclusion regions set to 0.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.get_sky_mask_circle.html#gammapy.utils.pyfact.get_sky_mask_circle" title="gammapy.utils.pyfact.get_sky_mask_circle"><code class="xref py py-obj docutils literal"><span class="pre">get_sky_mask_circle</span></code></a>(r,&nbsp;bin_size)</td>
+<td>Returns a 2d numpy histogram with (2.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.get_sky_mask_ring.html#gammapy.utils.pyfact.get_sky_mask_ring" title="gammapy.utils.pyfact.get_sky_mask_ring"><code class="xref py py-obj docutils literal"><span class="pre">get_sky_mask_ring</span></code></a>(rmin,&nbsp;rmax,&nbsp;bin_size)</td>
+<td>Returns a 2d numpy histogram with (2.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.oversample_sky_map.html#gammapy.utils.pyfact.oversample_sky_map" title="gammapy.utils.pyfact.oversample_sky_map"><code class="xref py py-obj docutils literal"><span class="pre">oversample_sky_map</span></code></a>(sky,&nbsp;mask[,&nbsp;exmap])</td>
+<td>Oversamples a 2d numpy histogram with a given mask.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.plot_skymaps.html#gammapy.utils.pyfact.plot_skymaps" title="gammapy.utils.pyfact.plot_skymaps"><code class="xref py py-obj docutils literal"><span class="pre">plot_skymaps</span></code></a>(event_map,&nbsp;excess_map,&nbsp;...[,&nbsp;...])</td>
+<td>Plot sky map function (using matplotlib only).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.skycircle_from_str.html#gammapy.utils.pyfact.skycircle_from_str" title="gammapy.utils.pyfact.skycircle_from_str"><code class="xref py py-obj docutils literal"><span class="pre">skycircle_from_str</span></code></a>(cstr)</td>
+<td>Creates SkyCircle from circle region string.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.plot_th1.html#gammapy.utils.pyfact.plot_th1" title="gammapy.utils.pyfact.plot_th1"><code class="xref py py-obj docutils literal"><span class="pre">plot_th1</span></code></a>(hist[,&nbsp;logy])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.fit_th1.html#gammapy.utils.pyfact.fit_th1" title="gammapy.utils.pyfact.fit_th1"><code class="xref py py-obj docutils literal"><span class="pre">fit_th1</span></code></a>(fitter,&nbsp;p0,&nbsp;hist[,&nbsp;errscale,&nbsp;...])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.root_1dhist_to_array.html#gammapy.utils.pyfact.root_1dhist_to_array" title="gammapy.utils.pyfact.root_1dhist_to_array"><code class="xref py py-obj docutils literal"><span class="pre">root_1dhist_to_array</span></code></a>(hist)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.root_2dhist_to_array.html#gammapy.utils.pyfact.root_2dhist_to_array" title="gammapy.utils.pyfact.root_2dhist_to_array"><code class="xref py py-obj docutils literal"><span class="pre">root_2dhist_to_array</span></code></a>(hist2d)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.root_axis_to_array.html#gammapy.utils.pyfact.root_axis_to_array" title="gammapy.utils.pyfact.root_axis_to_array"><code class="xref py py-obj docutils literal"><span class="pre">root_axis_to_array</span></code></a>(ax)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.root_th1_to_fitstable.html#gammapy.utils.pyfact.root_th1_to_fitstable" title="gammapy.utils.pyfact.root_th1_to_fitstable"><code class="xref py py-obj docutils literal"><span class="pre">root_th1_to_fitstable</span></code></a>(hist[,&nbsp;xunit,&nbsp;yunit])</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.cta_irf_root_to_fits.html#gammapy.utils.pyfact.cta_irf_root_to_fits" title="gammapy.utils.pyfact.cta_irf_root_to_fits"><code class="xref py py-obj docutils literal"><span class="pre">cta_irf_root_to_fits</span></code></a>(irf_root_file_name[,&nbsp;...])</td>
+<td>Convert CTA IRF data from ROOT to FITS format.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id7">
+<h4>Classes<a class="headerlink" href="index.html#id7" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter" title="gammapy.utils.pyfact.ChisquareFitter"><code class="xref py py-obj docutils literal"><span class="pre">ChisquareFitter</span></code></a>(fitfunc)</td>
+<td>Convenience class to perform Chi^2 fits.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.SkyCircle.html#gammapy.utils.pyfact.SkyCircle" title="gammapy.utils.pyfact.SkyCircle"><code class="xref py py-obj docutils literal"><span class="pre">SkyCircle</span></code></a>(c,&nbsp;r)</td>
+<td>A circle on the sky.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.pyfact.SkyCoord.html#gammapy.utils.pyfact.SkyCoord" title="gammapy.utils.pyfact.SkyCoord"><code class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></code></a>(ra,&nbsp;dec)</td>
+<td>Sky coordinate in RA and Dec.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.scripts">
+<span id="gammapy-utils-scripts-module"></span><h3>gammapy.utils.scripts Module<a class="headerlink" href="index.html#module-gammapy.utils.scripts" title="Permalink to this headline">¶</a></h3>
+<p>Utils to create scripts and command-line tools</p>
+<div class="section" id="id8">
+<h4>Functions<a class="headerlink" href="index.html#id8" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.scripts.get_parser.html#gammapy.utils.scripts.get_parser" title="gammapy.utils.scripts.get_parser"><code class="xref py py-obj docutils literal"><span class="pre">get_parser</span></code></a>([function,&nbsp;description])</td>
+<td>Make an ArgumentParser how we like it.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.scripts.get_installed_scripts.html#gammapy.utils.scripts.get_installed_scripts" title="gammapy.utils.scripts.get_installed_scripts"><code class="xref py py-obj docutils literal"><span class="pre">get_installed_scripts</span></code></a>()</td>
+<td>Get list of installed scripts via <code class="docutils literal"><span class="pre">pkg-resources</span></code>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.scripts.get_all_main_functions.html#gammapy.utils.scripts.get_all_main_functions" title="gammapy.utils.scripts.get_all_main_functions"><code class="xref py py-obj docutils literal"><span class="pre">get_all_main_functions</span></code></a>()</td>
+<td>Get a dict with all scripts (used for testing).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.scripts.set_up_logging_from_args.html#gammapy.utils.scripts.set_up_logging_from_args" title="gammapy.utils.scripts.set_up_logging_from_args"><code class="xref py py-obj docutils literal"><span class="pre">set_up_logging_from_args</span></code></a>(args)</td>
+<td>Set up logging from command line arguments.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.scripts.read_yaml.html#gammapy.utils.scripts.read_yaml" title="gammapy.utils.scripts.read_yaml"><code class="xref py py-obj docutils literal"><span class="pre">read_yaml</span></code></a>(filename[,&nbsp;logger])</td>
+<td>Read config from YAML file</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.scripts.write_yaml.html#gammapy.utils.scripts.write_yaml" title="gammapy.utils.scripts.write_yaml"><code class="xref py py-obj docutils literal"><span class="pre">write_yaml</span></code></a>(config,&nbsp;filename[,&nbsp;logger])</td>
+<td>Write YAML config file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.scripts.make_path.html#gammapy.utils.scripts.make_path" title="gammapy.utils.scripts.make_path"><code class="xref py py-obj docutils literal"><span class="pre">make_path</span></code></a>(path)</td>
+<td>Expand environment variables on <code class="xref py py-obj docutils literal"><span class="pre">Path</span></code> construction</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.scripts.recursive_merge_dicts.html#gammapy.utils.scripts.recursive_merge_dicts" title="gammapy.utils.scripts.recursive_merge_dicts"><code class="xref py py-obj docutils literal"><span class="pre">recursive_merge_dicts</span></code></a>(a,&nbsp;b)</td>
+<td>Recursively merge two dictionaries.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id9">
+<h4>Classes<a class="headerlink" href="index.html#id9" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.scripts.GammapyFormatter.html#gammapy.utils.scripts.GammapyFormatter" title="gammapy.utils.scripts.GammapyFormatter"><code class="xref py py-obj docutils literal"><span class="pre">GammapyFormatter</span></code></a>(prog[,&nbsp;indent_increment,&nbsp;...])</td>
+<td>ArgumentParser formatter_class argument.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.testing">
+<span id="gammapy-utils-testing-module"></span><h3>gammapy.utils.testing Module<a class="headerlink" href="index.html#module-gammapy.utils.testing" title="Permalink to this headline">¶</a></h3>
+<p>Utilities for testing</p>
+<div class="section" id="id10">
+<h4>Functions<a class="headerlink" href="index.html#id10" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.testing.requires_dependency.html#gammapy.utils.testing.requires_dependency" title="gammapy.utils.testing.requires_dependency"><code class="xref py py-obj docutils literal"><span class="pre">requires_dependency</span></code></a>(name)</td>
+<td>Decorator to declare required dependencies for tests.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.testing.requires_data.html#gammapy.utils.testing.requires_data" title="gammapy.utils.testing.requires_data"><code class="xref py py-obj docutils literal"><span class="pre">requires_data</span></code></a>(name)</td>
+<td>Decorator to declare required data for tests.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.wcs">
+<span id="gammapy-utils-wcs-module"></span><h3>gammapy.utils.wcs Module<a class="headerlink" href="index.html#module-gammapy.utils.wcs" title="Permalink to this headline">¶</a></h3>
+<p>WCS related utility functions.</p>
+<div class="section" id="id11">
+<h4>Functions<a class="headerlink" href="index.html#id11" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.wcs.linear_wcs_to_arrays.html#gammapy.utils.wcs.linear_wcs_to_arrays" title="gammapy.utils.wcs.linear_wcs_to_arrays"><code class="xref py py-obj docutils literal"><span class="pre">linear_wcs_to_arrays</span></code></a>(wcs,&nbsp;nbins_x,&nbsp;nbins_y)</td>
+<td>Make a 2D linear binning from a WCS object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.utils.wcs.linear_arrays_to_wcs.html#gammapy.utils.wcs.linear_arrays_to_wcs" title="gammapy.utils.wcs.linear_arrays_to_wcs"><code class="xref py py-obj docutils literal"><span class="pre">linear_arrays_to_wcs</span></code></a>(name_x,&nbsp;name_y,&nbsp;...)</td>
+<td>Make a 2D linear WCS object from arrays of bin edges.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.wcs.get_wcs_ctype.html#gammapy.utils.wcs.get_wcs_ctype" title="gammapy.utils.wcs.get_wcs_ctype"><code class="xref py py-obj docutils literal"><span class="pre">get_wcs_ctype</span></code></a>(wcs)</td>
+<td>Get celestial coordinate type of WCS instance.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.utils.axis">
+<span id="gammapy-utils-axis-module"></span><h3>gammapy.utils.axis Module<a class="headerlink" href="index.html#module-gammapy.utils.axis" title="Permalink to this headline">¶</a></h3>
+<p>Axis methods.</p>
+<div class="section" id="id12">
+<h4>Functions<a class="headerlink" href="index.html#id12" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.utils.axis.sqrt_space.html#gammapy.utils.axis.sqrt_space" title="gammapy.utils.axis.sqrt_space"><code class="xref py py-obj docutils literal"><span class="pre">sqrt_space</span></code></a>(start,&nbsp;stop,&nbsp;num)</td>
+<td>Return numbers spaced evenly on a square root scale.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Utility functions and classes (<code class="docutils literal"><span class="pre">gammapy.utils</span></code>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#energy-handling-in-gammapy">Energy handling in Gammapy</a><ul>
+<li><a class="reference internal" href="index.html#basics">Basics</a></li>
+<li><a class="reference internal" href="index.html#energy">Energy</a></li>
+<li><a class="reference internal" href="index.html#energybounds">EnergyBounds</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.energy">gammapy.utils.energy Module</a><ul>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.mpl_style">gammapy.utils.mpl_style Module</a></li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.coordinates">gammapy.utils.coordinates Package</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.fits">gammapy.utils.fits Module</a><ul>
+<li><a class="reference internal" href="index.html#id1">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.root">gammapy.utils.root Package</a><ul>
+<li><a class="reference internal" href="index.html#id2">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.random">gammapy.utils.random Module</a><ul>
+<li><a class="reference internal" href="index.html#id3">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.distributions">gammapy.utils.distributions Package</a><ul>
+<li><a class="reference internal" href="index.html#id4">Functions</a></li>
+<li><a class="reference internal" href="index.html#id5">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.pyfact">gammapy.utils.pyfact Module</a><ul>
+<li><a class="reference internal" href="index.html#id6">Functions</a></li>
+<li><a class="reference internal" href="index.html#id7">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.scripts">gammapy.utils.scripts Module</a><ul>
+<li><a class="reference internal" href="index.html#id8">Functions</a></li>
+<li><a class="reference internal" href="index.html#id9">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.testing">gammapy.utils.testing Module</a><ul>
+<li><a class="reference internal" href="index.html#id10">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.wcs">gammapy.utils.wcs Module</a><ul>
+<li><a class="reference internal" href="index.html#id11">Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.utils.axis">gammapy.utils.axis Module</a><ul>
+<li><a class="reference internal" href="index.html#id12">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/utils/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

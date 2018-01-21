@@ -1,0 +1,8 @@
+
+
+f_with_err
+===========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: f_with_err

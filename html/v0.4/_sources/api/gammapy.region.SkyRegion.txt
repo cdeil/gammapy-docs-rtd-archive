@@ -1,0 +1,48 @@
+
+
+SkyRegion
+========================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: SkyRegion
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyRegion.area
+      ~SkyRegion.from_dict
+      ~SkyRegion.to_dict
+      ~SkyRegion.to_pixel
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: area
+   .. automethod:: from_dict
+   .. automethod:: to_dict
+   .. automethod:: to_pixel
+
+   
+   

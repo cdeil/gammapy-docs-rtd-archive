@@ -1,0 +1,103 @@
+
+
+Cube
+=======================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: Cube
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~Cube.bin_volume
+      ~Cube.coord_wcs
+      ~Cube.energy_edges
+      ~Cube.image_bin_centers
+      ~Cube.image_extent
+      ~Cube.integral
+      ~Cube.integral_images
+      ~Cube.scheme
+      ~Cube.scheme_dict
+      ~Cube.spectrum_extent
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Cube.define_scheme
+      ~Cube.fill_events
+      ~Cube.find_coord_bin
+      ~Cube.find_coord_bin_edges
+      ~Cube.from_fits_image
+      ~Cube.from_fits_table
+      ~Cube.make_spectrum
+      ~Cube.plot_image
+      ~Cube.plot_spectrum
+      ~Cube.read
+      ~Cube.to_fits_image
+      ~Cube.to_fits_table
+      ~Cube.to_table
+      ~Cube.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: bin_volume
+   .. autoattribute:: coord_wcs
+   .. autoattribute:: energy_edges
+   .. autoattribute:: image_bin_centers
+   .. autoattribute:: image_extent
+   .. autoattribute:: integral
+   .. autoattribute:: integral_images
+   .. autoattribute:: scheme
+   .. autoattribute:: scheme_dict
+   .. autoattribute:: spectrum_extent
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: define_scheme
+   .. automethod:: fill_events
+   .. automethod:: find_coord_bin
+   .. automethod:: find_coord_bin_edges
+   .. automethod:: from_fits_image
+   .. automethod:: from_fits_table
+   .. automethod:: make_spectrum
+   .. automethod:: plot_image
+   .. automethod:: plot_spectrum
+   .. automethod:: read
+   .. automethod:: to_fits_image
+   .. automethod:: to_fits_table
+   .. automethod:: to_table
+   .. automethod:: write
+
+   
+   

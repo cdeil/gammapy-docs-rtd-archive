@@ -1,0 +1,69 @@
+
+
+SpectrumStats
+==============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumStats
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumStats.HIGH_LEVEL_KEY
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumStats.from_bg_stats_json
+      ~SpectrumStats.from_dict
+      ~SpectrumStats.from_fitspectrum_json
+      ~SpectrumStats.from_hap_output
+      ~SpectrumStats.to_dict
+      ~SpectrumStats.to_table
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: HIGH_LEVEL_KEY
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_bg_stats_json
+   .. automethod:: from_dict
+   .. automethod:: from_fitspectrum_json
+   .. automethod:: from_hap_output
+   .. automethod:: to_dict
+   .. automethod:: to_table
+
+   
+   

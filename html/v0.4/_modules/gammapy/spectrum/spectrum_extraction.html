@@ -1,0 +1,994 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.spectrum_extraction &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/spectrum_extraction.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/spectrum_extraction'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.spectrum_extraction</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">copy</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Column</span><span class="p">,</span> <span class="n">vstack</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">CountsSpectrum</span>
+<span class="kn">from</span> <span class="nn">.results</span> <span class="kn">import</span> <span class="n">SpectrumStats</span>
+<span class="kn">from</span> <span class="nn">..background</span> <span class="kn">import</span> <span class="n">ring_area_factor</span><span class="p">,</span> <span class="n">Cube</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">DataStore</span><span class="p">,</span> <span class="n">ObservationTable</span>
+<span class="kn">from</span> <span class="nn">..extern.bunch</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..extern.pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">ExclusionMask</span>
+<span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">EffectiveAreaTable</span><span class="p">,</span> <span class="n">EnergyDispersion</span>
+<span class="kn">from</span> <span class="nn">..region</span> <span class="kn">import</span> <span class="n">SkyCircleRegion</span><span class="p">,</span> <span class="n">find_reflected_regions</span>
+<span class="kn">from</span> <span class="nn">..utils.energy</span> <span class="kn">import</span> <span class="n">EnergyBounds</span><span class="p">,</span> <span class="n">Energy</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">make_path</span><span class="p">,</span> <span class="n">write_yaml</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;SpectrumExtraction&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SpectrumObservation&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SpectrumObservationList&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="SpectrumExtraction"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction">[docs]</a><span class="k">class</span> <span class="nc">SpectrumExtraction</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class for creating input data to 1D spectrum fitting</span>
+
+<span class="sd">    The purpose of this class is to create 1D counts on and off counts vectors</span>
+<span class="sd">    as well as an effective area vector and an energy dispersion matrix starting</span>
+<span class="sd">    from an event list and 2D irfs for as set of observations. The container</span>
+<span class="sd">    class for one specific observation is `~gammapy.spectrum.SpectrumObservation`.</span>
+<span class="sd">    The present class is responsible for filling a list of such observations,</span>
+<span class="sd">    starting from some extraction parameters.</span>
+<span class="sd">    For more info see :ref:`spectral_fitting`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    datastore : `~gammapy.data.DataStore`</span>
+<span class="sd">        Data for the analysis</span>
+<span class="sd">    obs_table : `~gammapy.data.ObservationTable`</span>
+<span class="sd">        Table of observations to analyse</span>
+<span class="sd">    on_region : `gammapy.region.SkyCircleRegion`</span>
+<span class="sd">        Circular region to extract on counts</span>
+<span class="sd">    exclusion : `~gammapy.image.ExclusionMask`</span>
+<span class="sd">        Exclusion regions</span>
+<span class="sd">    bkg_method : dict</span>
+<span class="sd">        Background method including necessary parameters</span>
+<span class="sd">    nobs : int, optional</span>
+<span class="sd">        number of observations to process</span>
+<span class="sd">    ebounds : `~gammapy.utils.energy.EnergyBounds`, optional</span>
+<span class="sd">        Reconstructed energy binning definition</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">OBSTABLE_FILE</span> <span class="o">=</span> <span class="s1">&#39;observation_table.fits&#39;</span>
+    <span class="n">EXCLUDEDREGIONS_FILE</span> <span class="o">=</span> <span class="s1">&#39;excluded_regions.fits&#39;</span>
+    <span class="n">REGIONS_FILE</span> <span class="o">=</span> <span class="s1">&#39;regions.txt&#39;</span>
+    <span class="n">TOTAL_STATS_FILE</span> <span class="o">=</span> <span class="s1">&#39;total_spectrum_stats.yaml&#39;</span>
+    <span class="n">ONLIST_FILE</span> <span class="o">=</span> <span class="s1">&#39;on_list.fits&#39;</span>
+    <span class="n">OFFLIST_FILE</span> <span class="o">=</span> <span class="s1">&#39;off_list.fits&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">datastore</span><span class="p">,</span> <span class="n">obs_table</span><span class="p">,</span> <span class="n">on_region</span><span class="p">,</span> <span class="n">exclusion</span><span class="p">,</span> <span class="n">bkg_method</span><span class="p">,</span>
+                 <span class="n">nobs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">ebounds</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_region</span> <span class="o">=</span> <span class="n">on_region</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">datastore</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span> <span class="o">=</span> <span class="n">exclusion</span>
+        <span class="k">if</span> <span class="n">ebounds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mi">316</span><span class="p">,</span> <span class="mi">108</span><span class="p">,</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ebounds</span> <span class="o">=</span> <span class="n">ebounds</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span> <span class="o">=</span> <span class="n">bkg_method</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extra_info</span> <span class="o">=</span> <span class="n">kwargs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">nobs</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_observations</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="SpectrumExtraction.run"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run all steps</span>
+
+<span class="sd">        Extract spectrum, update observation table, filter observations,</span>
+<span class="sd">        write results to disk.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        outdir : Path, str</span>
+<span class="sd">            directory to write results files to</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cwd</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="n">cwd</span> <span class="k">if</span> <span class="n">outdir</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">make_path</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
+        <span class="n">outdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outdir</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">cutout_exclusion_mask</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">extract_spectrum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;reflected&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filter_observations</span><span class="p">()</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">write_ogip</span><span class="p">()</span>
+        <span class="n">tot_stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="o">.</span><span class="n">total_spectrum</span><span class="o">.</span><span class="n">spectrum_stats</span>
+        <span class="n">tot_stats</span><span class="o">.</span><span class="n">to_yaml</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">TOTAL_STATS_FILE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_configfile</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_regions</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_total_onlist</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write_total_offlist</span><span class="p">()</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">cwd</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.filter_observations"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.filter_observations">[docs]</a>    <span class="k">def</span> <span class="nf">filter_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter observations by number of reflected regions&quot;&quot;&quot;</span>
+        <span class="n">n_min</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span><span class="p">[</span><span class="s1">&#39;n_min&#39;</span><span class="p">]</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">filter_by_reflected_regions</span><span class="p">(</span><span class="n">n_min</span><span class="p">)</span>
+        <span class="n">inv_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">([</span><span class="n">_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">mask</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">mask</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))])</span>
+        <span class="n">excl_obs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">[</span><span class="n">inv_mask</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Excluding obs {} : Found less than {} reflected &#39;</span>
+                 <span class="s1">&#39;region(s)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">excl_obs</span><span class="p">,</span> <span class="n">n_min</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_observations</span> <span class="o">=</span> <span class="n">SpectrumObservationList</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">obs</span><span class="p">)[</span><span class="n">mask</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.extract_spectrum"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.extract_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">extract_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extract 1D spectral information</span>
+
+<span class="sd">        The result can be obtained via</span>
+<span class="sd">        :func:`~gammapy.spectrum.spectrum_extraction.observations`</span>
+<span class="sd">        The observation table is updated with some meta information.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">observations</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span>
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">t</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Extracting spectrum for observation {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]))</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">SpectrumObservation</span><span class="o">.</span><span class="n">from_datastore</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">ebounds</span><span class="p">,</span>
+                                                      <span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span><span class="p">,</span>
+                                                      <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_info</span>
+                                                      <span class="p">)</span>
+
+            <span class="n">observations</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_observations</span> <span class="o">=</span> <span class="n">SpectrumObservationList</span><span class="p">(</span><span class="n">observations</span><span class="p">)</span>
+
+        <span class="c1"># update meta info</span>
+        <span class="k">if</span> <span class="s1">&#39;OFFSET&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">offset</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;OFFSET&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">Angle</span><span class="p">(</span><span class="n">offset</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="s1">&#39;CONTAINMENT&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+            <span class="n">containment</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">containment</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;CONTAINMENT&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">containment</span><span class="p">))</span>
+        <span class="k">if</span> <span class="s1">&#39;PHAFILE&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+            <span class="n">pha</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">ogip_dir</span> <span class="o">/</span> <span class="n">_</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">phafile</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">]</span>
+            <span class="n">t</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;PHAFILE&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">pha</span><span class="p">))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">observations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`~gamampy.spectrum.ObservationList` of all observations</span>
+
+<span class="sd">        This list is generated via</span>
+<span class="sd">        :func:`~gammapy.spectrum.spectrum_extraction.extract_spectrum`</span>
+<span class="sd">        when the property is first called and the result is cached.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observations</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">extract_spectrum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_observations</span>
+
+<div class="viewcode-block" id="SpectrumExtraction.copy"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bkg_method</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return copy of `~gammapy.spectrum.SpectrumExtraction`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bkg_method : dict, optional</span>
+<span class="sd">            New background estimation method</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bkg_method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span> <span class="k">if</span> <span class="n">bkg_method</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">bkg_method</span>
+
+        <span class="n">ana</span> <span class="o">=</span> <span class="n">SpectrumExtraction</span><span class="p">(</span><span class="n">datastore</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="p">,</span> <span class="n">obs_table</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">,</span>
+                                 <span class="n">on_region</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="p">,</span>
+                                 <span class="n">bkg_method</span><span class="o">=</span><span class="n">bkg_method</span><span class="p">,</span>
+                                 <span class="n">exclusion</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span><span class="p">,</span>
+                                 <span class="n">ebounds</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">ebounds</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ana</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumExtraction.from_config"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.from_config">[docs]</a>    <span class="k">def</span> <span class="nf">from_config</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.SpectrumAnalysis` from config dict</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        configfile : dict</span>
+<span class="sd">            config dict</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;extraction&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Observations</span>
+        <span class="n">obs_table</span> <span class="o">=</span> <span class="n">ObservationTable</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;obstable&#39;</span><span class="p">])</span>
+        <span class="n">storename</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;datastore&#39;</span><span class="p">]</span>
+        <span class="n">store</span> <span class="o">=</span> <span class="n">DataStore</span><span class="o">.</span><span class="n">from_all</span><span class="p">(</span><span class="n">storename</span><span class="p">)</span>
+        <span class="n">nobs</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;nruns&#39;</span><span class="p">]</span>
+        <span class="n">nobs</span> <span class="o">=</span> <span class="bp">None</span> <span class="k">if</span> <span class="n">nobs</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">nobs</span>
+
+        <span class="c1"># Binning</span>
+        <span class="n">sec</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">sec</span><span class="p">[</span><span class="s1">&#39;equal_log_spacing&#39;</span><span class="p">]:</span>
+            <span class="n">emin</span> <span class="o">=</span> <span class="n">Energy</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="s1">&#39;emin&#39;</span><span class="p">])</span>
+            <span class="n">emax</span> <span class="o">=</span> <span class="n">Energy</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="s1">&#39;emax&#39;</span><span class="p">])</span>
+            <span class="n">nbins</span> <span class="o">=</span> <span class="n">sec</span><span class="p">[</span><span class="s1">&#39;nbins&#39;</span><span class="p">]</span>
+            <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span>
+                <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">nbins</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span><span class="n">sec</span><span class="p">[</span><span class="s1">&#39;bounds&#39;</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">)</span>
+            <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">vals</span><span class="p">,</span> <span class="n">sec</span><span class="p">[</span><span class="s1">&#39;unit&#39;</span><span class="p">])</span>
+
+        <span class="c1"># ON region</span>
+        <span class="n">on_region</span> <span class="o">=</span> <span class="n">SkyCircleRegion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">])</span>
+
+        <span class="c1"># OFF region</span>
+        <span class="n">bkg_method</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;off_region&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Exclusion</span>
+        <span class="n">excl_file</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;excluded_regions&#39;</span><span class="p">][</span><span class="s1">&#39;file&#39;</span><span class="p">]</span>
+        <span class="n">exclusion</span> <span class="o">=</span> <span class="n">ExclusionMask</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">excl_file</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">datastore</span><span class="o">=</span><span class="n">store</span><span class="p">,</span> <span class="n">obs_table</span><span class="o">=</span><span class="n">obs_table</span><span class="p">,</span> <span class="n">on_region</span><span class="o">=</span><span class="n">on_region</span><span class="p">,</span>
+                   <span class="n">bkg_method</span><span class="o">=</span><span class="n">bkg_method</span><span class="p">,</span> <span class="n">exclusion</span><span class="o">=</span><span class="n">exclusion</span><span class="p">,</span>
+                   <span class="n">nobs</span><span class="o">=</span><span class="n">nobs</span><span class="p">,</span> <span class="n">ebounds</span><span class="o">=</span><span class="n">ebounds</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumExtraction.from_configfile"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.from_configfile">[docs]</a>    <span class="k">def</span> <span class="nf">from_configfile</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">configfile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.SpectrumExtraction` from configfile</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        configfile : str</span>
+<span class="sd">            YAML config file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">yaml</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">configfile</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">config</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">config</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.write_configfile"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.write_configfile">[docs]</a>    <span class="k">def</span> <span class="nf">write_configfile</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;config.yaml&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write config file in YAML format</span>
+
+<span class="sd">        This is usefull when the `~gammapy.spectrum.SpectrumExtraction` has</span>
+<span class="sd">        been altered and the changes want to be saved. Files need to read the</span>
+<span class="sd">        configfile again are also written.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            YAML file to write</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">extraction</span><span class="o">=</span><span class="nb">dict</span><span class="p">())</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;extraction&#39;</span><span class="p">]</span>
+        <span class="n">e</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="nb">dict</span><span class="p">())</span>
+        <span class="n">e</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;obstable&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">OBSTABLE_FILE</span>
+        <span class="n">e</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;datastore&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">store</span><span class="o">.</span><span class="n">hdu_table</span><span class="o">.</span><span class="n">base_dir</span><span class="p">)</span>
+        <span class="n">e</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">][</span><span class="s1">&#39;nruns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="p">)</span>
+
+        <span class="n">e</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">binning</span><span class="o">=</span><span class="nb">dict</span><span class="p">())</span>
+        <span class="n">e</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">][</span><span class="s1">&#39;equal_log_spacing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="n">e</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">][</span><span class="s1">&#39;bounds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ebounds</span><span class="o">.</span><span class="n">value</span><span class="p">)[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">e</span><span class="p">[</span><span class="s1">&#39;binning&#39;</span><span class="p">][</span><span class="s1">&#39;unit&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ebounds</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+        <span class="n">e</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">on_region</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+        <span class="n">e</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">off_region</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span><span class="p">)</span>
+        <span class="n">e</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">excluded_regions</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">file</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">EXCLUDEDREGIONS_FILE</span><span class="p">))</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">write_yaml</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OBSTABLE_FILE</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">EXCLUDEDREGIONS_FILE</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OBSTABLE_FILE</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;fits&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.write_regions"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.write_regions">[docs]</a>    <span class="k">def</span> <span class="nf">write_regions</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write ON and OFF regions to disk&quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">out</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">bkg_method</span><span class="p">[</span><span class="s1">&#39;type&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;reflected&#39;</span><span class="p">:</span>
+            <span class="n">out</span><span class="p">[</span><span class="s1">&#39;off_region&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">out</span><span class="p">[</span><span class="s1">&#39;off_region&#39;</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">:</span>
+                <span class="n">val</span><span class="p">[</span><span class="s1">&#39;obs_{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">obs_id</span><span class="p">)]</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">off_region</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">REGIONS_FILE</span><span class="p">))</span>
+        <span class="n">write_yaml</span><span class="p">(</span><span class="n">out</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">REGIONS_FILE</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.write_total_onlist"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.write_total_onlist">[docs]</a>    <span class="k">def</span> <span class="nf">write_total_onlist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write event list containing ON events from all observations&quot;&quot;&quot;</span>
+        <span class="n">on_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">on_list</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">]</span>
+
+        <span class="c1"># Remove column TELMASK since raises an error when stacking it</span>
+        <span class="c1"># see https://github.com/gammasky/hess-host-analyses/issues/34</span>
+
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">on_lists</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;TELMASK&#39;</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">remove_column</span><span class="p">(</span><span class="s1">&#39;TELMASK&#39;</span><span class="p">)</span>
+
+        <span class="n">total_list</span> <span class="o">=</span> <span class="n">vstack</span><span class="p">(</span><span class="n">on_lists</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;inner&#39;</span><span class="p">,</span> <span class="n">metadata_conflicts</span><span class="o">=</span><span class="s1">&#39;silent&#39;</span><span class="p">)</span>
+        <span class="n">total_list</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ONLIST_FILE</span><span class="p">))</span>
+        <span class="n">total_list</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ONLIST_FILE</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.write_total_offlist"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.write_total_offlist">[docs]</a>    <span class="k">def</span> <span class="nf">write_total_offlist</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write event list containing OFF events from all observations&quot;&quot;&quot;</span>
+        <span class="n">off_lists</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">off_list</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">]</span>
+
+        <span class="c1"># Remove column TELMASK since raises an error when stacking it</span>
+        <span class="c1"># see https://github.com/gammasky/hess-host-analyses/issues/34</span>
+        <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">off_lists</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">&#39;TELMASK&#39;</span> <span class="ow">in</span> <span class="n">l</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+                <span class="n">l</span><span class="o">.</span><span class="n">remove_column</span><span class="p">(</span><span class="s1">&#39;TELMASK&#39;</span><span class="p">)</span>
+
+        <span class="n">total_list</span> <span class="o">=</span> <span class="n">vstack</span><span class="p">(</span><span class="n">off_lists</span><span class="p">,</span> <span class="n">join_type</span><span class="o">=</span><span class="s1">&#39;exact&#39;</span><span class="p">,</span> <span class="n">metadata_conflicts</span><span class="o">=</span><span class="s1">&#39;silent&#39;</span><span class="p">)</span>
+        <span class="n">total_list</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OFFLIST_FILE</span><span class="p">))</span>
+        <span class="n">total_list</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">OFFLIST_FILE</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.cutout_exclusion_mask"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.cutout_exclusion_mask">[docs]</a>    <span class="k">def</span> <span class="nf">cutout_exclusion_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fov</span><span class="o">=</span><span class="s1">&#39;9 deg&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Cutout appropriate part of exclusion mask</span>
+
+<span class="sd">        In many cases the exclusion mask is given as all-sky image, but only a</span>
+<span class="sd">        small fraction of that image is needed</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        exclusion : `~gammapy.image.ExclusionMask`</span>
+<span class="sd">            Input exclusion mask</span>
+<span class="sd">        fov : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Field of view</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">astropy.nddata</span> <span class="kn">import</span> <span class="n">Cutout2D</span>
+        <span class="kn">from</span> <span class="nn">astropy.nddata.utils</span> <span class="kn">import</span> <span class="n">PartialOverlapError</span>
+        <span class="n">fov</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">fov</span><span class="p">)</span>
+        <span class="n">exclusion</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">c</span> <span class="o">=</span> <span class="n">Cutout2D</span><span class="p">(</span><span class="n">exclusion</span><span class="o">.</span><span class="n">mask</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">fov</span><span class="p">,</span>
+                         <span class="n">exclusion</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;strict&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="n">PartialOverlapError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">PartialOverlapError</span><span class="p">(</span><span class="s1">&#39;FOV ({}) not completely contained &#39;</span>
+                                      <span class="s1">&#39;in exclusion mask&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fov</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">exclusion</span> <span class="o">=</span> <span class="n">ExclusionMask</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">exclusion</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+                                       <span class="n">wcs</span><span class="o">=</span><span class="n">c</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumExtraction.info"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print some information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Spectrum Analysis</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot;Observations : {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">observations</span><span class="p">))</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot;ON region    : {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_region</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ss</span></div></div>
+
+
+<div class="viewcode-block" id="SpectrumObservation"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation">[docs]</a><span class="k">class</span> <span class="nc">SpectrumObservation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Storage class holding ingredients for 1D region based spectral analysis</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">on_vector</span><span class="p">,</span> <span class="n">off_vector</span><span class="p">,</span> <span class="n">energy_dispersion</span><span class="p">,</span>
+                 <span class="n">effective_area</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span> <span class="o">=</span> <span class="n">on_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span> <span class="o">=</span> <span class="n">off_vector</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_dispersion</span> <span class="o">=</span> <span class="n">energy_dispersion</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span> <span class="o">=</span> <span class="n">effective_area</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumObservation.read_ogip"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation.read_ogip">[docs]</a>    <span class="k">def</span> <span class="nf">read_ogip</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">phafile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read `~gammapy.spectrum.SpectrumObservation` from OGIP files.</span>
+
+<span class="sd">        BKG file, ARF, and RMF must be set in the PHA header.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phafile : str</span>
+<span class="sd">            OGIP PHA file to read</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Put here due to circular imports issues</span>
+        <span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">EnergyDispersion</span><span class="p">,</span> <span class="n">EffectiveAreaTable</span>
+
+        <span class="n">f</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">phafile</span><span class="p">)</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">parent</span>
+        <span class="n">on_vector</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">read_pha</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">on_vector</span><span class="o">.</span><span class="n">meta</span>
+        <span class="n">energy_dispersion</span> <span class="o">=</span> <span class="n">EnergyDispersion</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="n">meta</span><span class="o">.</span><span class="n">rmf</span><span class="p">))</span>
+        <span class="n">effective_area</span> <span class="o">=</span> <span class="n">EffectiveAreaTable</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="n">meta</span><span class="o">.</span><span class="n">arf</span><span class="p">))</span>
+        <span class="n">off_vector</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">read_bkg</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="n">meta</span><span class="o">.</span><span class="n">bkg</span><span class="p">),</span>
+                                             <span class="nb">str</span><span class="p">(</span><span class="n">base</span> <span class="o">/</span> <span class="n">meta</span><span class="o">.</span><span class="n">rmf</span><span class="p">))</span>
+
+        <span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">phafile</span><span class="o">=</span><span class="n">phafile</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">on_vector</span><span class="p">,</span> <span class="n">off_vector</span><span class="p">,</span> <span class="n">energy_dispersion</span><span class="p">,</span> <span class="n">effective_area</span><span class="p">,</span>
+                   <span class="n">meta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumObservation.write_ogip"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation.write_ogip">[docs]</a>    <span class="k">def</span> <span class="nf">write_ogip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">phafile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bkgfile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rmffile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">arffile</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write OGIP files</span>
+
+<span class="sd">        The arf, rmf and bkg files are set in the :ref:`gadf:ogip-pha` FITS</span>
+<span class="sd">        header. If no filenames are given, default names will be chosen.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phafile : `~gammapy.extern.pathlib.Path`, str</span>
+<span class="sd">            PHA filename</span>
+<span class="sd">        bkgfile : str</span>
+<span class="sd">            BKG filename</span>
+<span class="sd">        arffile : str</span>
+<span class="sd">            ARF filename</span>
+<span class="sd">        rmffile : str</span>
+<span class="sd">            RMF : filename</span>
+<span class="sd">        outdir : None</span>
+<span class="sd">            directory to write the files to, default: pwd</span>
+<span class="sd">        clobber : bool</span>
+<span class="sd">            Overwrite</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cwd</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+        <span class="n">outdir</span> <span class="o">=</span> <span class="n">cwd</span> <span class="o">/</span> <span class="n">make_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">ogip_dir</span><span class="p">)</span> <span class="k">if</span> <span class="n">outdir</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">outdir</span>
+        <span class="n">outdir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">parents</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">phafile</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">phafile</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">phafile</span>
+        <span class="k">if</span> <span class="n">arffile</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">arffile</span> <span class="o">=</span> <span class="n">phafile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;pha&#39;</span><span class="p">,</span> <span class="s1">&#39;arf&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rmffile</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">rmffile</span> <span class="o">=</span> <span class="n">phafile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;pha&#39;</span><span class="p">,</span> <span class="s1">&#39;rmf&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bkgfile</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">bkgfile</span> <span class="o">=</span> <span class="n">phafile</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;pha&#39;</span><span class="p">,</span> <span class="s1">&#39;bkg&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;phafile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">outdir</span> <span class="o">/</span> <span class="n">phafile</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outdir</span> <span class="o">/</span> <span class="n">phafile</span><span class="p">),</span> <span class="n">bkg</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">bkgfile</span><span class="p">),</span> <span class="n">arf</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">arffile</span><span class="p">),</span>
+                             <span class="n">rmf</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">rmffile</span><span class="p">),</span> <span class="n">clobber</span><span class="o">=</span><span class="n">clobber</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outdir</span> <span class="o">/</span> <span class="n">bkgfile</span><span class="p">),</span> <span class="n">clobber</span><span class="o">=</span><span class="n">clobber</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outdir</span> <span class="o">/</span> <span class="n">arffile</span><span class="p">),</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;keV&#39;</span><span class="p">,</span>
+                                  <span class="n">effarea_unit</span><span class="o">=</span><span class="s1">&#39;cm2&#39;</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="n">clobber</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">outdir</span> <span class="o">/</span> <span class="n">rmffile</span><span class="p">),</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;keV&#39;</span><span class="p">,</span>
+                                     <span class="n">clobber</span><span class="o">=</span><span class="n">clobber</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumObservation.from_datastore"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation.from_datastore">[docs]</a>    <span class="k">def</span> <span class="nf">from_datastore</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obs</span><span class="p">,</span> <span class="n">store</span><span class="p">,</span> <span class="n">on_region</span><span class="p">,</span> <span class="n">bkg_method</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">,</span>
+                       <span class="n">exclusion</span><span class="p">,</span> <span class="n">dry_run</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">calc_containment</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span>
+                       <span class="n">event_list</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create Spectrum Observation from datastore</span>
+
+<span class="sd">        Meta info is stored in the input astropy table row</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs : `~astropy.table.Row`</span>
+<span class="sd">            Row of a `~gammapy.spectrum.ObservationTable`</span>
+<span class="sd">        store : `~gammapy.data.DataStore`</span>
+<span class="sd">            Data Store</span>
+<span class="sd">        on_region : `gammapy.region.SkyCircleRegion`</span>
+<span class="sd">            Circular region to extract on counts</span>
+<span class="sd">        bkg_method : dict</span>
+<span class="sd">            Background method including necessary parameters</span>
+<span class="sd">        ebounds : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">            Reconstructed energy binning definition</span>
+<span class="sd">        exclusion : `~gammapy.image.ExclusionMask`</span>
+<span class="sd">            Exclusion mask</span>
+<span class="sd">        dry_run : bool, optional</span>
+<span class="sd">            Only process meta data, not actual spectra are extracted</span>
+<span class="sd">        calc_containment : bool, optional</span>
+<span class="sd">            Calculate containment fraction of the on region</span>
+<span class="sd">        event_list : `~gammapy.data.EventList`, optional</span>
+<span class="sd">            Use event list different from the one in the data store</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">obs_id</span> <span class="o">=</span> <span class="n">obs</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">event_list</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">event_list</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span><span class="o">.</span><span class="n">events</span>
+
+        <span class="n">on</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">off</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">aeff</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="n">edisp</span> <span class="o">=</span> <span class="bp">None</span>
+
+        <span class="n">pointing</span> <span class="o">=</span> <span class="n">event_list</span><span class="o">.</span><span class="n">pointing_radec</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">pointing</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">on_region</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+        <span class="n">livetime</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span><span class="o">.</span><span class="n">observation_live_time_duration</span>
+
+        <span class="k">if</span> <span class="n">calc_containment</span><span class="p">:</span>
+            <span class="n">psf2d</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span><span class="o">.</span><span class="n">psf</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">Energy</span><span class="p">(</span><span class="s1">&#39;10 TeV&#39;</span><span class="p">)</span>
+            <span class="c1"># TODO: error: unresolved reference: `m` on the next lines</span>
+            <span class="n">psf</span> <span class="o">=</span> <span class="n">psf2d</span><span class="o">.</span><span class="n">psf_at_energy_and_theta</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">m</span><span class="o">.</span><span class="n">offset</span><span class="p">)</span>
+            <span class="n">cont</span> <span class="o">=</span> <span class="n">psf</span><span class="o">.</span><span class="n">containment_fraction</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">on_region</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;obs_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">obs_id</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;phafile&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;pha_run{}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_id</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;ogip_dir&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;ogip_data&#39;</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;offset&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">offset</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;containment&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;livetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">livetime</span>
+
+        <span class="k">if</span> <span class="n">dry_run</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">obs_id</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="bp">None</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">m</span><span class="p">)</span>
+
+        <span class="n">bkg_meta</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">bkg_meta</span><span class="p">[</span><span class="s1">&#39;bkg_method&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bkg_method</span>
+        <span class="n">bkg_meta</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">on_region</span>
+        <span class="n">bkg_meta</span><span class="p">[</span><span class="s1">&#39;exclusion&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">exclusion</span>
+        <span class="n">bkg_meta</span><span class="p">[</span><span class="s1">&#39;pointing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pointing</span>
+        <span class="n">bkg_meta</span><span class="p">[</span><span class="s1">&#39;ebounds&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ebounds</span>
+
+        <span class="n">b</span> <span class="o">=</span> <span class="n">BackgroundEstimator</span><span class="p">(</span><span class="n">event_list</span><span class="p">,</span> <span class="n">bkg_meta</span><span class="p">)</span>
+        <span class="n">b</span><span class="o">.</span><span class="n">make_off_vector</span><span class="p">()</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;off_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">off_list</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;off_region&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">off_region</span>
+        <span class="n">off_vec</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="n">off_vec</span>
+        <span class="n">off_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">backscal</span><span class="o">=</span><span class="n">b</span><span class="o">.</span><span class="n">backscal</span><span class="p">)</span>
+        <span class="n">off_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="n">livetime</span><span class="p">)</span>
+
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;on_list&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">event_list</span><span class="o">.</span><span class="n">select_circular_region</span><span class="p">(</span><span class="n">on_region</span><span class="p">)</span>
+        <span class="n">on_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">from_eventlist</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">on_list</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">)</span>
+
+        <span class="n">aeff2d</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span><span class="o">.</span><span class="n">aeff</span>
+        <span class="n">arf_vec</span> <span class="o">=</span> <span class="n">aeff2d</span><span class="o">.</span><span class="n">to_effective_area_table</span><span class="p">(</span><span class="n">offset</span><span class="p">)</span>
+        <span class="n">elo</span><span class="p">,</span> <span class="n">ehi</span> <span class="o">=</span> <span class="n">arf_vec</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="p">,</span> <span class="n">arf_vec</span><span class="o">.</span><span class="n">energy_thresh_hi</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;safe_energy_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="n">elo</span><span class="p">,</span> <span class="n">ehi</span><span class="p">])</span>
+
+        <span class="n">edisp2d</span> <span class="o">=</span> <span class="n">store</span><span class="o">.</span><span class="n">obs</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span><span class="o">.</span><span class="n">edisp</span>
+        <span class="n">rmf_mat</span> <span class="o">=</span> <span class="n">edisp2d</span><span class="o">.</span><span class="n">to_energy_dispersion</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">e_reco</span><span class="o">=</span><span class="n">ebounds</span><span class="p">)</span>
+
+        <span class="c1"># Todo: Define what metadata is stored where (obs table?)</span>
+        <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">backscal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="n">livetime</span><span class="p">)</span>
+        <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">obs_id</span><span class="p">)</span>
+        <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">safe_energy_range</span><span class="o">=</span><span class="n">m</span><span class="o">.</span><span class="n">safe_energy_range</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">on_vec</span><span class="p">,</span> <span class="n">off_vec</span><span class="p">,</span> <span class="n">rmf_mat</span><span class="p">,</span> <span class="n">arf_vec</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">m</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumObservation.stack_observation_list"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation.stack_observation_list">[docs]</a>    <span class="k">def</span> <span class="nf">stack_observation_list</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obs_list</span><span class="p">,</span> <span class="n">group_id</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.SpectrumObservations` from list</span>
+
+<span class="sd">        Observation stacking is implemented as follows</span>
+<span class="sd">        Averaged exposure ratio between ON and OFF regions, arf and rmf</span>
+<span class="sd">        :math:`\\alpha_{\\mathrm{tot}}`  for all observations is calculated as</span>
+<span class="sd">        .. math:: \\alpha_{\\mathrm{tot}} = \\frac{\\sum_{i}\\alpha_i \\cdot N_i}{\\sum_{i} N_i}</span>
+<span class="sd">        .. math:: \\arf_{\\mathrm{tot}} = \\frac{\\sum_{i}\\arf_i \\cdot \\livetime_i}{\\sum_{i} \\livetime_i}</span>
+<span class="sd">        .. math:: \\rmf_{\\mathrm{tot}} = \\frac{\\sum_{i}\\rmf_i \\cdot arf_i \\cdot livetime_i}{\\sum_{i} arf_i \\cdot livetime_i}</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_list : list of `~gammapy.spectrum.SpectrumObservations`</span>
+<span class="sd">            Observations to stack</span>
+<span class="sd">        group_id : int, optional</span>
+<span class="sd">            ID for stacked observations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">group_id</span> <span class="o">=</span> <span class="n">obs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">obs_id</span> <span class="k">if</span> <span class="n">group_id</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">group_id</span>
+
+        <span class="c1"># Stack ON and OFF vector using the _add__ method in the CountSpectrum class</span>
+        <span class="n">on_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">o</span><span class="o">.</span><span class="n">on_vector</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">])</span>
+
+        <span class="c1"># If obs_list contains only on element np.sum does not call the</span>
+        <span class="c1">#  _add__ method which lead to a faulty meta object</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">obs_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="n">obs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="p">,</span>
+                                <span class="n">backscal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">group_id</span><span class="p">)</span>
+
+        <span class="n">off_vec</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">o</span><span class="o">.</span><span class="n">off_vector</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">])</span>
+
+        <span class="c1"># Stack arf vector</span>
+        <span class="n">arf_band</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">effective_area</span> <span class="o">*</span> <span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">]</span>
+        <span class="n">arf_band_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">arf_band</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">livetime_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">])</span>
+        <span class="n">arf_vec</span> <span class="o">=</span> <span class="n">arf_band_tot</span> <span class="o">/</span> <span class="n">livetime_tot</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">obs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">ebounds</span>
+        <span class="n">arf</span> <span class="o">=</span> <span class="n">EffectiveAreaTable</span><span class="p">(</span><span class="n">ebounds</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">arf_vec</span><span class="p">,</span> <span class="n">obs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+
+        <span class="c1"># Stack rmf vector</span>
+        <span class="n">rmf_band</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="o">.</span><span class="n">pdf_matrix</span><span class="o">.</span><span class="n">T</span> <span class="o">*</span> <span class="n">o</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">value</span> <span class="o">*</span> <span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span>
+                    <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">]</span>
+        <span class="n">rmf_band_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">rmf_band</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pdf_mat</span> <span class="o">=</span> <span class="n">rmf_band_tot</span> <span class="o">/</span> <span class="n">arf_band_tot</span>
+        <span class="n">etrue</span> <span class="o">=</span> <span class="n">obs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="o">.</span><span class="n">true_energy</span>
+        <span class="n">ereco</span> <span class="o">=</span> <span class="n">obs_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="o">.</span><span class="n">reco_energy</span>
+        <span class="n">inan</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">pdf_mat</span><span class="p">)</span>
+        <span class="n">pdf_mat</span><span class="p">[</span><span class="n">inan</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">rmf</span> <span class="o">=</span> <span class="n">EnergyDispersion</span><span class="p">(</span><span class="n">pdf_mat</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">etrue</span><span class="p">,</span> <span class="n">ereco</span><span class="p">)</span>
+
+        <span class="c1"># Calculate average alpha</span>
+        <span class="n">alpha_band</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">o</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">total_counts</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">]</span>
+        <span class="n">alpha_band_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">alpha_band</span><span class="p">)</span>
+        <span class="n">off_tot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">o</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">total_counts</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">])</span>
+        <span class="n">alpha_mean</span> <span class="o">=</span> <span class="n">alpha_band_tot</span> <span class="o">/</span> <span class="n">off_tot</span>
+        <span class="n">off_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">backscal</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">alpha_mean</span>
+
+        <span class="c1"># Calculate energy range</span>
+        <span class="c1"># TODO: for the moment we take the minimal safe energy range</span>
+        <span class="c1"># Taking the whole range requires an energy dependent lifetime</span>
+        <span class="n">emin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">_</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">safe_energy_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">])</span>
+        <span class="n">emax</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">_</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">safe_energy_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">])</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;energy_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">])</span>
+        <span class="n">on_vec</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;safe_energy_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">])</span>
+        <span class="c1"># m[&#39;safe_energy_range&#39;] = EnergyBounds([emin, emax])</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;obs_ids&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">obs_id</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obs_list</span><span class="p">]</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;alpha_method1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">alpha_mean</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;livetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">livetime_tot</span><span class="p">,</span> <span class="s2">&quot;s&quot;</span><span class="p">)</span>
+        <span class="n">m</span><span class="p">[</span><span class="s1">&#39;group_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">group_id</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">on_vec</span><span class="p">,</span> <span class="n">off_vec</span><span class="p">,</span> <span class="n">rmf</span><span class="p">,</span> <span class="n">arf</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">m</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Exposure ratio between ON and OFF region&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">backscal</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">backscal</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">excess_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Excess vector</span>
+<span class="sd">        Excess = n_on - alpha * n_off</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spectrum_stats</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;`~gammapy.spectrum.results.SpectrumStats`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span><span class="o">.</span><span class="n">total_counts</span>
+        <span class="n">n_off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">total_counts</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;n_on&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_on</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;n_off&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_off</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;alpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;excess&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_on</span><span class="p">)</span> <span class="o">-</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_off</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span>
+        <span class="n">val</span><span class="p">[</span><span class="s1">&#39;energy_range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">energy_range</span>
+        <span class="k">return</span> <span class="n">SpectrumStats</span><span class="p">(</span><span class="o">**</span><span class="n">val</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SpectrumObservation.restrict_energy_range"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation.restrict_energy_range">[docs]</a>    <span class="k">def</span> <span class="nf">restrict_energy_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_range</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;binned&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Restrict to a given energy range</span>
+
+<span class="sd">        If no energy range is given, it will be extracted from the PHA header.</span>
+<span class="sd">        Tow methods are available . Unbinned method: The new counts vectors are</span>
+<span class="sd">        created from the list of on and off events. Therefore this list must be</span>
+<span class="sd">        saved in the meta info. Binned method: The counts vectors are taken as</span>
+<span class="sd">        a basis for the energy range restriction. Only bins that are entirely</span>
+<span class="sd">        contained in the desired energy range are copied.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy_range : `~gammapy.utils.energy.EnergyBounds`, optional</span>
+<span class="sd">            Desired energy range</span>
+<span class="sd">        method : str {&#39;unbinned&#39;, &#39;binned&#39;}</span>
+<span class="sd">            Use unbinned on list / binned on vector</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obs : `~gammapy.spectrum.spectrum_extraction.SpectrumObservation`</span>
+<span class="sd">            Spectrum observation in desired energy range</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">energy_range</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">arf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span>
+            <span class="n">energy_range</span> <span class="o">=</span> <span class="p">[</span><span class="n">arf</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="p">,</span> <span class="n">arf</span><span class="o">.</span><span class="n">energy_thresh_hi</span><span class="p">]</span>
+
+        <span class="n">energy_range</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">energy_range</span><span class="p">)</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span><span class="o">.</span><span class="n">energy_bounds</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;unbinned&#39;</span><span class="p">:</span>
+            <span class="n">on_list_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">on_list</span><span class="o">.</span><span class="n">select_energy</span><span class="p">(</span><span class="n">energy_range</span><span class="p">)</span>
+            <span class="n">off_list_temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">off_list</span><span class="o">.</span><span class="n">select_energy</span><span class="p">(</span><span class="n">energy_range</span><span class="p">)</span>
+            <span class="n">on_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">from_eventlist</span><span class="p">(</span><span class="n">on_list_temp</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">)</span>
+            <span class="n">off_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">from_eventlist</span><span class="p">(</span><span class="n">off_list_temp</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;binned&#39;</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span><span class="o">.</span><span class="n">energy_bounds</span><span class="o">.</span><span class="n">lower_bounds</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">energy_range</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">val</span><span class="p">))</span>
+            <span class="n">on_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">on_vector</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+            <span class="n">on_counts</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">off_counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">counts</span><span class="p">)</span>
+            <span class="n">off_counts</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">on_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="p">(</span><span class="n">on_counts</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">)</span>
+            <span class="n">off_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="p">(</span><span class="n">off_counts</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Undefined method: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+
+        <span class="n">off_vec</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">backscal</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">backscal</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">energy_range</span><span class="o">=</span><span class="n">energy_range</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SpectrumObservation</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">on_vec</span><span class="p">,</span> <span class="n">off_vec</span><span class="p">,</span>
+                                   <span class="bp">self</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="p">,</span>
+                                   <span class="n">meta</span><span class="o">=</span><span class="n">m</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_check_binning</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check that ARF and RMF binnings are compatible</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+
+<div class="viewcode-block" id="SpectrumObservationList"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList">[docs]</a><span class="k">class</span> <span class="nc">SpectrumObservationList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    List of `~gammapy.spectrum.SpectrumObservation`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SpectrumObservationList.get_obslist_from_ids"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.get_obslist_from_ids">[docs]</a>    <span class="k">def</span> <span class="nf">get_obslist_from_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">id_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return an subset of the observation list</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id_list : list of int</span>
+<span class="sd">            List of Observation Id (runnumber)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        observation : `~gammapy.spectrum.SpectrumObservationList`</span>
+<span class="sd">            Subset of observations</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">new_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="k">for</span> <span class="nb">id</span> <span class="ow">in</span> <span class="n">id_list</span><span class="p">:</span>
+            <span class="n">ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">obs_id</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">i</span> <span class="o">=</span> <span class="n">ids</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Observation {} not in list&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">id</span><span class="p">))</span>
+
+            <span class="n">new_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">SpectrumObservationList</span><span class="p">(</span><span class="n">new_list</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">total_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stack all observations belongig to the list&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SpectrumObservation</span><span class="o">.</span><span class="n">stack_observation_list</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SpectrumObservationList.info"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Info string&quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot; *** SpectrumObservationList ***&quot;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">Number of observations: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Observation IDs: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">o</span><span class="o">.</span><span class="n">obs_id</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+<div class="viewcode-block" id="SpectrumObservationList.filter_by_reflected_regions"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.filter_by_reflected_regions">[docs]</a>    <span class="k">def</span> <span class="nf">filter_by_reflected_regions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_min</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Filter observation list according to number of reflected regions.</span>
+
+<span class="sd">        Condition: number of reflected regions &gt;= nmin.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n_min : int</span>
+<span class="sd">            Minimum number of reflected regions</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        idx : `~np.array`</span>
+<span class="sd">            Indices of element fulfilling the condition</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="o">.</span><span class="n">off_vector</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">backscal</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span>
+        <span class="n">condition</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">val</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">n_min</span>
+        <span class="n">idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="n">condition</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">idx</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="SpectrumObservationList.write_ogip"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.write_ogip">[docs]</a>    <span class="k">def</span> <span class="nf">write_ogip</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outdir</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create OGIP files</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        outdir : str, `~gammapy.extern.pathlib.Path`</span>
+<span class="sd">            write directory</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">obs</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">obs</span><span class="o">.</span><span class="n">write_ogip</span><span class="p">(</span><span class="n">outdir</span><span class="o">=</span><span class="n">outdir</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SpectrumObservationList.from_observation_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.from_observation_table">[docs]</a>    <span class="k">def</span> <span class="nf">from_observation_table</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">obs_table</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.SpectrumObservationList` from an</span>
+<span class="sd">        observation table.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_table : `~gammapy.data.ObservationTable`</span>
+<span class="sd">            Observation table with column ``PHAFILE``</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obs</span> <span class="o">=</span> <span class="p">[</span><span class="n">SpectrumObservation</span><span class="o">.</span><span class="n">read_ogip</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;PHAFILE&#39;</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">obs</span><span class="p">)</span></div></div>
+
+
+<span class="k">class</span> <span class="nc">BackgroundEstimator</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;TBD</span>
+
+<span class="sd">    Select events inside off regsion. At one point this can be replaced by a</span>
+<span class="sd">    more generic `~gammapy.regions` module</span>
+<span class="sd">    For available methods see :ref:`spectrum_background_method`</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    event_list : `~gammapy.data.EventList`</span>
+<span class="sd">        Event list</span>
+<span class="sd">    params : dict</span>
+<span class="sd">        Necessary parameters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event_list</span><span class="p">,</span> <span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span> <span class="o">=</span> <span class="n">event_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">params</span> <span class="o">=</span> <span class="n">params</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;bkg_method&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;ring&#39;</span><span class="p">,</span> <span class="s1">&#39;reflected&#39;</span><span class="p">,</span> <span class="s1">&#39;bgmodel&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Undefined background method: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">m</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_list</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_vec</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backscal</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_region</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">make_off_vector</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;bkg_method&#39;</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">m</span> <span class="o">==</span> <span class="s2">&quot;ring&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_make_off_vector_ring</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">m</span> <span class="o">==</span> <span class="s2">&quot;reflected&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_make_off_vector_reflected</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">m</span> <span class="o">==</span> <span class="s2">&quot;bgmodel&quot;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_make_off_vector_bgmodel</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_make_off_vector_reflected</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to create OFF vector from reflected regions&quot;&quot;&quot;</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;bkg_method&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">&#39;n_min&#39;</span><span class="p">)</span>
+        <span class="n">off</span> <span class="o">=</span> <span class="n">find_reflected_regions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">],</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;pointing&#39;</span><span class="p">],</span>
+                                     <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;exclusion&#39;</span><span class="p">],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">off_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="o">.</span><span class="n">select_circular_region</span><span class="p">(</span><span class="n">off</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_region</span> <span class="o">=</span> <span class="n">off</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backscal</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">off</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_list</span> <span class="o">=</span> <span class="n">off_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">from_eventlist</span><span class="p">(</span><span class="n">off_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ebounds&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_make_off_vector_ring</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to create OFF vector from ring&quot;&quot;&quot;</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">pos</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;on_region&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">radius</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;bkg_method&#39;</span><span class="p">]</span>
+        <span class="n">inner</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;inner_radius&#39;</span><span class="p">])</span>
+        <span class="n">outer</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s1">&#39;outer_radius&#39;</span><span class="p">])</span>
+        <span class="n">off_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">event_list</span><span class="o">.</span><span class="n">select_sky_ring</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">inner</span><span class="p">,</span> <span class="n">outer</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backscal</span> <span class="o">=</span> <span class="n">ring_area_factor</span><span class="p">(</span><span class="n">radius</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">inner</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">outer</span><span class="o">.</span><span class="n">deg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_list</span> <span class="o">=</span> <span class="n">off_list</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="o">.</span><span class="n">from_eventlist</span><span class="p">(</span><span class="n">off_list</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ebounds&#39;</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_make_off_vector_bgmodel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to create OFF vector from BgModel&quot;&quot;&quot;</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;datastore&#39;</span><span class="p">]</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="o">.</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="s1">&#39;background&#39;</span><span class="p">)</span>
+        <span class="n">cube</span> <span class="o">=</span> <span class="n">Cube</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s1">&#39;bg_cube&#39;</span><span class="p">)</span>
+        <span class="c1"># TODO: Properly transform to SkyCoords</span>
+        <span class="n">coords</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;offset&#39;</span><span class="p">],</span> <span class="s1">&#39;0 deg&#39;</span><span class="p">])</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">make_spectrum</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ebounds&#39;</span><span class="p">])</span>
+        <span class="n">cnts</span> <span class="o">=</span> <span class="n">spec</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;ebounds&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">bands</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">[</span><span class="s1">&#39;livetime&#39;</span><span class="p">]</span> <span class="o">*</span> \
+               <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;params&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">on_region</span><span class="o">.</span><span class="n">area</span>
+        <span class="n">off_vec</span> <span class="o">=</span> <span class="n">CountsSpectrum</span><span class="p">(</span><span class="n">cnts</span><span class="o">.</span><span class="n">decompose</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">ebounds</span><span class="p">,</span> <span class="n">backscal</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">backscal</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">off_vec</span> <span class="o">=</span> <span class="n">off_vec</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="spectrum_extraction.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

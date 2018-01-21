@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SkyCircleRegion &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Regions (gammapy.region)" href="../region/index.html" />
+    <link rel="next" title="SkyRegion" href="gammapy.region.SkyRegion.html" />
+    <link rel="prev" title="Region" href="gammapy.region.Region.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.region.SkyCircleRegion.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.region.SkyCircleRegion'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.region.SkyRegion.html" title="SkyRegion">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.region.Region.html" title="Region">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../region/index.html" accesskey="U">Regions (<code class="docutils literal"><span class="pre">gammapy.region</span></code>)</a> &raquo;</li>
+      
+      <li>SkyCircleRegion</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="skycircleregion">
+<h1>SkyCircleRegion<a class="headerlink" href="gammapy.region.SkyCircleRegion.html#skycircleregion" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.region.SkyCircleRegion">
+<em class="property">class </em><code class="descclassname">gammapy.region.</code><code class="descname">SkyCircleRegion</code><span class="sig-paren">(</span><em>pos</em>, <em>radius</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="gammapy.region.SkyRegion.html#gammapy.region.SkyRegion" title="gammapy.region.core.SkyRegion"><code class="docutils literal"><span class="pre">gammapy.region.SkyRegion</span></code></a></p>
+<p>Circular region, defined in sky coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pos</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></code></a></p>
+<blockquote>
+<div><p>Sky coordinates of the circe center</p>
+</div></blockquote>
+<p><strong>radius</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote class="last">
+<div><p>Circle radius</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.area" title="gammapy.region.SkyCircleRegion.area"><code class="xref py py-obj docutils literal"><span class="pre">area</span></code></a></td>
+<td>Circle area (solid angle [sr])</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.from_dict" title="gammapy.region.SkyCircleRegion.from_dict"><code class="xref py py-obj docutils literal"><span class="pre">from_dict</span></code></a>(dict)</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.info" title="gammapy.region.SkyCircleRegion.info"><code class="xref py py-obj docutils literal"><span class="pre">info</span></code></a>()</td>
+<td>Print some basic information</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.intersects" title="gammapy.region.SkyCircleRegion.intersects"><code class="xref py py-obj docutils literal"><span class="pre">intersects</span></code></a>(other)</td>
+<td>Checks if two sky circles overlap.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.plot" title="gammapy.region.SkyCircleRegion.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>(ax,&nbsp;**kwargs)</td>
+<td>Plot region</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_dict" title="gammapy.region.SkyCircleRegion.to_dict"><code class="xref py py-obj docutils literal"><span class="pre">to_dict</span></code></a>()</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_ds9" title="gammapy.region.SkyCircleRegion.to_ds9"><code class="xref py py-obj docutils literal"><span class="pre">to_ds9</span></code></a>()</td>
+<td>Convert to ds9 region string</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_mpl_artist" title="gammapy.region.SkyCircleRegion.to_mpl_artist"><code class="xref py py-obj docutils literal"><span class="pre">to_mpl_artist</span></code></a>(ax,&nbsp;**kwargs)</td>
+<td>Convert to mpl patch using a given wcs transformation</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_pixel" title="gammapy.region.SkyCircleRegion.to_pixel"><code class="xref py py-obj docutils literal"><span class="pre">to_pixel</span></code></a>(wcs)</td>
+<td>Return a <code class="xref py py-obj docutils literal"><span class="pre">PixCircleRegion</span></code>.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.region.SkyCircleRegion.area">
+<code class="descname">area</code><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.area" title="Permalink to this definition">¶</a></dt>
+<dd><p>Circle area (solid angle [sr])</p>
+<p>For a circular region with radius <span class="math">\(2\theta\)</span>
+the solid angle <span class="math">\(\Theta\)</span> reads</p>
+<div class="math">
+\[\Theta = 2\pi (1-\cos(\theta))\]</div>
+<p>see: <a class="reference external" href="https://en.wikipedia.org/wiki/Solid_angle#Cone.2C_spherical_cap.2C_hemisphere">https://en.wikipedia.org/wiki/Solid_angle#Cone.2C_spherical_cap.2C_hemisphere</a></p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="classmethod">
+<dt id="gammapy.region.SkyCircleRegion.from_dict">
+<em class="property">classmethod </em><code class="descname">from_dict</code><span class="sig-paren">(</span><em>dict</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.from_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.from_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print some basic information</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.intersects">
+<code class="descname">intersects</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.intersects"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.intersects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if two sky circles overlap.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>other</strong> : <a class="reference internal" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion" title="gammapy.region.SkyCircleRegion"><code class="xref py py-obj docutils literal"><span class="pre">SkyCircleRegion</span></code></a></p>
+<blockquote class="last">
+<div><p>Other region.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot region</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">WCSAxes</span></code></p>
+<blockquote>
+<div><p>WCS axis object</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>kwargs are forwarded to mpatches.Circle</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.to_dict">
+<code class="descname">to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.to_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_dict" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.to_ds9">
+<code class="descname">to_ds9</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.to_ds9"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_ds9" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to ds9 region string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.to_mpl_artist">
+<code class="descname">to_mpl_artist</code><span class="sig-paren">(</span><em>ax</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.to_mpl_artist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_mpl_artist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to mpl patch using a given wcs transformation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">WCSAxes</span></code></p>
+<blockquote>
+<div><p>WCS axis object</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote>
+<div><p>kwargs are forwarded to mpatches.Circle</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>patch</strong> : <code class="xref py py-obj docutils literal"><span class="pre">Circle</span></code></p>
+<blockquote class="last">
+<div><p>Matplotlib patch object</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.region.SkyCircleRegion.to_pixel">
+<code class="descname">to_pixel</code><span class="sig-paren">(</span><em>wcs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/region/circle.html#SkyCircleRegion.to_pixel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_pixel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <code class="xref py py-obj docutils literal"><span class="pre">PixCircleRegion</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>wcs</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.wcs.WCS.html#astropy.wcs.WCS" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">WCS</span></code></a></p>
+<blockquote class="last">
+<div><p>WCS object</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.region.SkyCircleRegion.html#">SkyCircleRegion</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.region.SkyCircleRegion.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.region.SkyCircleRegion.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

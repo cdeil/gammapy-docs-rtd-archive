@@ -1,0 +1,8 @@
+
+
+compute_binning
+=============================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: compute_binning

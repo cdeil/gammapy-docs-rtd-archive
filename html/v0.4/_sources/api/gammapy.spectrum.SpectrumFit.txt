@@ -1,0 +1,89 @@
+
+
+SpectrumFit
+============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumFit
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumFit.DEFAULT_STAT
+      ~SpectrumFit.FLUX_FACTOR
+      ~SpectrumFit.energy_threshold_high
+      ~SpectrumFit.energy_threshold_low
+      ~SpectrumFit.model
+      ~SpectrumFit.pha_list
+      ~SpectrumFit.statistic
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumFit.from_config
+      ~SpectrumFit.from_configfile
+      ~SpectrumFit.from_observation_table
+      ~SpectrumFit.from_observation_table_file
+      ~SpectrumFit.from_pha_list
+      ~SpectrumFit.info
+      ~SpectrumFit.make_npred
+      ~SpectrumFit.run
+      ~SpectrumFit.set_default_thresholds
+      ~SpectrumFit.write_npred
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: DEFAULT_STAT
+   .. autoattribute:: FLUX_FACTOR
+   .. autoattribute:: energy_threshold_high
+   .. autoattribute:: energy_threshold_low
+   .. autoattribute:: model
+   .. autoattribute:: pha_list
+   .. autoattribute:: statistic
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_config
+   .. automethod:: from_configfile
+   .. automethod:: from_observation_table
+   .. automethod:: from_observation_table_file
+   .. automethod:: from_pha_list
+   .. automethod:: info
+   .. automethod:: make_npred
+   .. automethod:: run
+   .. automethod:: set_default_thresholds
+   .. automethod:: write_npred
+
+   
+   

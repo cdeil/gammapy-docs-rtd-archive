@@ -1,0 +1,46 @@
+
+
+Region
+=====================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: Region
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Region.intersection
+      ~Region.symmetric_difference
+      ~Region.union
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: intersection
+   .. automethod:: symmetric_difference
+   .. automethod:: union
+
+   
+   

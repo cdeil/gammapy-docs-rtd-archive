@@ -1,0 +1,50 @@
+
+
+SkyRegionList
+============================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: SkyRegionList
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyRegionList.from_dict
+      ~SkyRegionList.plot
+      ~SkyRegionList.to_dict
+      ~SkyRegionList.to_ds9
+      ~SkyRegionList.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_dict
+   .. automethod:: plot
+   .. automethod:: to_dict
+   .. automethod:: to_ds9
+   .. automethod:: write
+
+   
+   

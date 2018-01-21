@@ -1,0 +1,8 @@
+
+
+image_model
+===========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_model

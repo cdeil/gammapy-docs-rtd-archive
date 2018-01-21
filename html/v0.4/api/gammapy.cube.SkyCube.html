@@ -1,0 +1,647 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SkyCube &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Cube Style Analysis (gammapy.cube)" href="../cube/index.html" />
+    <link rel="next" title="Data and observation handling (gammapy.data)" href="../data/index.html" />
+    <link rel="prev" title="exposure_cube" href="gammapy.cube.exposure_cube.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.cube.SkyCube.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.cube.SkyCube'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../data/index.html" title="Data and observation handling (gammapy.data)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.cube.exposure_cube.html" title="exposure_cube">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../cube/index.html" accesskey="U">Cube Style Analysis (<code class="docutils literal"><span class="pre">gammapy.cube</span></code>)</a> &raquo;</li>
+      
+      <li>SkyCube</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="skycube">
+<h1>SkyCube<a class="headerlink" href="gammapy.cube.SkyCube.html#skycube" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.cube.SkyCube">
+<em class="property">class </em><code class="descclassname">gammapy.cube.</code><code class="descname">SkyCube</code><span class="sig-paren">(</span><em>name=None</em>, <em>data=None</em>, <em>wcs=None</em>, <em>energy=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Sky cube with dimensions lon, lat and energy.</p>
+<p>Can be used e.g. for Fermi or GALPROP diffuse model cubes.</p>
+<p>Note that there is a very nice <code class="docutils literal"><span class="pre">SkyCube</span></code> implementation here:
+<a class="reference external" href="http://spectral-cube.readthedocs.org/en/latest/index.html">http://spectral-cube.readthedocs.org/en/latest/index.html</a></p>
+<p>Here is some discussion if / how it could be used:
+<a class="reference external" href="https://github.com/radio-astro-tools/spectral-cube/issues/110">https://github.com/radio-astro-tools/spectral-cube/issues/110</a></p>
+<p>For now we re-implement what we need here.</p>
+<p>The order of the sky cube axes can be very confusing ... this should help:</p>
+<ul class="simple">
+<li>The <code class="docutils literal"><span class="pre">data</span></code> array axis order is <code class="docutils literal"><span class="pre">(energy,</span> <span class="pre">lat,</span> <span class="pre">lon)</span></code>.</li>
+<li>The <code class="docutils literal"><span class="pre">wcs</span></code> object axis order is <code class="docutils literal"><span class="pre">(lon,</span> <span class="pre">lat,</span> <span class="pre">energy)</span></code>.</li>
+<li>Methods use the <code class="docutils literal"><span class="pre">wcs</span></code> order of <code class="docutils literal"><span class="pre">(lon,</span> <span class="pre">lat,</span> <span class="pre">energy)</span></code>,
+but internally when accessing the data often the reverse order is used.
+We use <code class="docutils literal"><span class="pre">(xx,</span> <span class="pre">yy,</span> <span class="pre">zz)</span></code> as pixel coordinates for <code class="docutils literal"><span class="pre">(lon,</span> <span class="pre">lat,</span> <span class="pre">energy)</span></code>,
+as that matches the common definition of <code class="docutils literal"><span class="pre">x</span></code> and <code class="docutils literal"><span class="pre">y</span></code> in image viewers.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of the sky cube.</p>
+</div></blockquote>
+<p><strong>data</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Data array (3-dim)</p>
+</div></blockquote>
+<p><strong>wcs</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.wcs.WCS.html#astropy.wcs.WCS" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">WCS</span></code></a></p>
+<blockquote>
+<div><p>Word coordinate system transformation</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote class="last">
+<div><p>Energy array</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Diffuse model files in this format are distributed with the Fermi Science tools
+software and can also be downloaded at
+<a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html">http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html</a></p>
+<p>E.g. the 2-year diffuse model that was used in the 2FGL catalog production is at
+<a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits">http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits</a></p>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>data</td>
+<td>(<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>) Data array (3-dim)</td>
+</tr>
+<tr class="row-even"><td>wcs</td>
+<td>(<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.wcs.WCS.html#astropy.wcs.WCS" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">WCS</span></code></a>) Word coordinate system transformation</td>
+</tr>
+<tr class="row-odd"><td>energy</td>
+<td>(<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>) Energy array</td>
+</tr>
+<tr class="row-even"><td>energy_axis</td>
+<td>(<a class="reference internal" href="gammapy.spectrum.LogEnergyAxis.html#gammapy.spectrum.LogEnergyAxis" title="gammapy.spectrum.LogEnergyAxis"><code class="xref py py-obj docutils literal"><span class="pre">LogEnergyAxis</span></code></a>) Energy axis</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.solid_angle_image" title="gammapy.cube.SkyCube.solid_angle_image"><code class="xref py py-obj docutils literal"><span class="pre">solid_angle_image</span></code></a></td>
+<td>Solid angle image in steradian (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.spatial_coordinate_images" title="gammapy.cube.SkyCube.spatial_coordinate_images"><code class="xref py py-obj docutils literal"><span class="pre">spatial_coordinate_images</span></code></a></td>
+<td>Spatial coordinate images (2x <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.empty" title="gammapy.cube.SkyCube.empty"><code class="xref py py-obj docutils literal"><span class="pre">empty</span></code></a>([emin,&nbsp;emax,&nbsp;enbins,&nbsp;eunit])</td>
+<td>Create empty sky cube with log equal energy binning from the scratch.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.empty_like" title="gammapy.cube.SkyCube.empty_like"><code class="xref py py-obj docutils literal"><span class="pre">empty_like</span></code></a>(refcube[,&nbsp;fill])</td>
+<td>Create an empty sky cube with the same WCS and energy specification as given sky cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.fill" title="gammapy.cube.SkyCube.fill"><code class="xref py py-obj docutils literal"><span class="pre">fill</span></code></a>(events[,&nbsp;origin])</td>
+<td>Fill sky cube with events.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.flux" title="gammapy.cube.SkyCube.flux"><code class="xref py py-obj docutils literal"><span class="pre">flux</span></code></a>(lon,&nbsp;lat,&nbsp;energy)</td>
+<td>Differential flux.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.info" title="gammapy.cube.SkyCube.info"><code class="xref py py-obj docutils literal"><span class="pre">info</span></code></a>()</td>
+<td>Print summary info about the cube.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.integral_flux_image" title="gammapy.cube.SkyCube.integral_flux_image"><code class="xref py py-obj docutils literal"><span class="pre">integral_flux_image</span></code></a>(energy_band[,&nbsp;energy_bins])</td>
+<td>Integral flux image for a given energy band.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.pix2world" title="gammapy.cube.SkyCube.pix2world"><code class="xref py py-obj docutils literal"><span class="pre">pix2world</span></code></a>(x,&nbsp;y,&nbsp;z)</td>
+<td>Convert world to pixel coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.read" title="gammapy.cube.SkyCube.read"><code class="xref py py-obj docutils literal"><span class="pre">read</span></code></a>(filename[,&nbsp;format])</td>
+<td>Read sky cube from FITS file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.read_hdu" title="gammapy.cube.SkyCube.read_hdu"><code class="xref py py-obj docutils literal"><span class="pre">read_hdu</span></code></a>(hdu_list)</td>
+<td>Read sky cube from HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.reproject_to" title="gammapy.cube.SkyCube.reproject_to"><code class="xref py py-obj docutils literal"><span class="pre">reproject_to</span></code></a>(reference_cube[,&nbsp;projection_type])</td>
+<td>Spatially reprojects a <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a> onto a reference cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.spectral_index" title="gammapy.cube.SkyCube.spectral_index"><code class="xref py py-obj docutils literal"><span class="pre">spectral_index</span></code></a>(lon,&nbsp;lat,&nbsp;energy[,&nbsp;dz])</td>
+<td>Power law spectral index (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a>).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.to_fits" title="gammapy.cube.SkyCube.to_fits"><code class="xref py py-obj docutils literal"><span class="pre">to_fits</span></code></a>()</td>
+<td>Writes SkyCube to FITS hdu_list.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.to_sherpa_data3d" title="gammapy.cube.SkyCube.to_sherpa_data3d"><code class="xref py py-obj docutils literal"><span class="pre">to_sherpa_data3d</span></code></a>()</td>
+<td>Convert sky cube to sherpa <code class="xref py py-obj docutils literal"><span class="pre">Data3D</span></code> object.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.world2pix" title="gammapy.cube.SkyCube.world2pix"><code class="xref py py-obj docutils literal"><span class="pre">world2pix</span></code></a>(lon,&nbsp;lat,&nbsp;energy[,&nbsp;combine])</td>
+<td>Convert world to pixel coordinates.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.writeto" title="gammapy.cube.SkyCube.writeto"><code class="xref py py-obj docutils literal"><span class="pre">writeto</span></code></a>(filename,&nbsp;**kwargs)</td>
+<td>Writes SkyCube to FITS file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.cube.SkyCube.solid_angle_image">
+<code class="descname">solid_angle_image</code><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.solid_angle_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solid angle image in steradian (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.cube.SkyCube.spatial_coordinate_images">
+<code class="descname">spatial_coordinate_images</code><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.spatial_coordinate_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatial coordinate images (2x <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>)</p>
+<p>Returns two separate objects for the arrays of longitude
+and latitude pixel coordinates.</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="classmethod">
+<dt id="gammapy.cube.SkyCube.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><em>emin=0.5</em>, <em>emax=100</em>, <em>enbins=10</em>, <em>eunit=u'TeV'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create empty sky cube with log equal energy binning from the scratch.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>emin</strong> : float</p>
+<blockquote>
+<div><p>Minimum energy.</p>
+</div></blockquote>
+<p><strong>emax</strong> : float</p>
+<blockquote>
+<div><p>Maximum energy.</p>
+</div></blockquote>
+<p><strong>enbins</strong> : int</p>
+<blockquote>
+<div><p>Number of energy bins.</p>
+</div></blockquote>
+<p><strong>eunit</strong> : str</p>
+<blockquote>
+<div><p>Energy unit.</p>
+</div></blockquote>
+<p><strong>kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Keyword arguments passed to <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty" title="gammapy.image.SkyMap.empty"><code class="xref py py-obj docutils literal"><span class="pre">empty</span></code></a> to create
+the spatial part of the cube.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.cube.SkyCube.empty_like">
+<em class="property">classmethod </em><code class="descname">empty_like</code><span class="sig-paren">(</span><em>refcube</em>, <em>fill=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.empty_like"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.empty_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty sky cube with the same WCS and energy specification
+as given sky cube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>refcube</strong> : <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a></p>
+<blockquote>
+<div><p>Reference sky cube.</p>
+</div></blockquote>
+<p><strong>fill</strong> : float, optional</p>
+<blockquote class="last">
+<div><p>Fill sky map with constant value. Default is 0.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.fill">
+<code class="descname">fill</code><span class="sig-paren">(</span><em>events</em>, <em>origin=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.fill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill sky cube with events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>events</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a></p>
+<blockquote>
+<div><p>Event list table</p>
+</div></blockquote>
+<p><strong>origin</strong> : {0, 1}</p>
+<blockquote class="last">
+<div><p>Pixel coordinate origin.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.flux">
+<code class="descname">flux</code><span class="sig-paren">(</span><em>lon</em>, <em>lat</em>, <em>energy</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.flux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Differential flux.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>lon</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>Longitude</p>
+</div></blockquote>
+<p><strong>lat</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>Latitude</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Energy</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>flux</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote class="last">
+<div><p>Differential flux (1 / (cm2 MeV s sr))</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print summary info about the cube.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.integral_flux_image">
+<code class="descname">integral_flux_image</code><span class="sig-paren">(</span><em>energy_band</em>, <em>energy_bins=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.integral_flux_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.integral_flux_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integral flux image for a given energy band.</p>
+<p>A local power-law approximation in small energy bins is
+used to compute the integral.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy_band</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Tuple <code class="docutils literal"><span class="pre">(energy_min,</span> <span class="pre">energy_max)</span></code></p>
+</div></blockquote>
+<p><strong>energy_bins</strong> : int or <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Energy bin definition.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>image</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a></p>
+<blockquote class="last">
+<div><p>Integral flux image (1 / (cm^2 s sr))</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.pix2world">
+<code class="descname">pix2world</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>z</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.pix2world"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.pix2world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert world to pixel coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x, y, z</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">lon, lat, energy</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.cube.SkyCube.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>filename</em>, <em>format=u'fermi'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read sky cube from FITS file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>File name</p>
+</div></blockquote>
+<p><strong>format</strong> : {&#8216;fermi&#8217;, &#8216;fermi-counts&#8217;}</p>
+<blockquote>
+<div><p>Fits file format.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>sky_cube</strong> : <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a></p>
+<blockquote class="last">
+<div><p>Sky cube</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.cube.SkyCube.read_hdu">
+<em class="property">classmethod </em><code class="descname">read_hdu</code><span class="sig-paren">(</span><em>hdu_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.read_hdu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.read_hdu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read sky cube from HDU.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>object_hdu</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a></p>
+<blockquote>
+<div><p>Image HDU object to be read</p>
+</div></blockquote>
+<p><strong>energy_table_hdu</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.TableHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">TableHDU</span></code></a></p>
+<blockquote>
+<div><p>Table HDU object giving energies of each slice
+of the Image HDU object_hdu</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>sky_cube</strong> : <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a></p>
+<blockquote class="last">
+<div><p>Sky cube</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.reproject_to">
+<code class="descname">reproject_to</code><span class="sig-paren">(</span><em>reference_cube</em>, <em>projection_type=u'bicubic'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.reproject_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.reproject_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatially reprojects a <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a> onto a reference cube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>reference_cube</strong> : <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a></p>
+<blockquote>
+<div><p>Reference cube with the desired spatial projection.</p>
+</div></blockquote>
+<p><strong>projection_type</strong> : {&#8216;nearest-neighbor&#8217;, &#8216;bilinear&#8217;,</p>
+<blockquote>
+<div><p>&#8216;biquadratic&#8217;, &#8216;bicubic&#8217;, &#8216;flux-conserving&#8217;}
+Specify method of reprojection. Default: &#8216;bilinear&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>reprojected_cube</strong> : <a class="reference internal" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube" title="gammapy.cube.SkyCube"><code class="xref py py-obj docutils literal"><span class="pre">SkyCube</span></code></a></p>
+<blockquote class="last">
+<div><p>Cube spatially reprojected to the reference cube.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.spectral_index">
+<code class="descname">spectral_index</code><span class="sig-paren">(</span><em>lon</em>, <em>lat</em>, <em>energy</em>, <em>dz=0.001</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.spectral_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.spectral_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Power law spectral index (<a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a>).</p>
+<p>A forward finite difference method with step <code class="docutils literal"><span class="pre">dz</span></code> is used along
+the <code class="docutils literal"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">log10(energy)</span></code> axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>lon</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>Longitude</p>
+</div></blockquote>
+<p><strong>lat</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>Latitude</p>
+</div></blockquote>
+<p class="last"><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.to_fits">
+<code class="descname">to_fits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.to_fits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.to_fits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SkyCube to FITS hdu_list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">HDUList</span></code></a></p>
+<blockquote class="last">
+<div><ul>
+<li><dl class="first docutils">
+<dt>hdu_list[0] <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdus.html#astropy.io.fits.PrimaryHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">PrimaryHDU</span></code></a></span></dt>
+<dd><p class="first last">Image array of data</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>hdu_list[1] <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.BinTableHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">BinTableHDU</span></code></a></span></dt>
+<dd><p class="first last">Table of energies</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.to_sherpa_data3d">
+<code class="descname">to_sherpa_data3d</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.to_sherpa_data3d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.to_sherpa_data3d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sky cube to sherpa <code class="xref py py-obj docutils literal"><span class="pre">Data3D</span></code> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.world2pix">
+<code class="descname">world2pix</code><span class="sig-paren">(</span><em>lon</em>, <em>lat</em>, <em>energy</em>, <em>combine=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.world2pix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.world2pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert world to pixel coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lon, lat, energy</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">x, y, z or array with (x, y, z) as columns</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.cube.SkyCube.writeto">
+<code class="descname">writeto</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/cube/core.html#SkyCube.writeto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.writeto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SkyCube to FITS file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : string</p>
+<blockquote class="last">
+<div><p>Name of output file (.fits)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.cube.SkyCube.html#">SkyCube</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.cube.SkyCube.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.cube.SkyCube.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+
+
+group_obs_table
+================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: group_obs_table

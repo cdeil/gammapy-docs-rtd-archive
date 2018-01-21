@@ -1,0 +1,8 @@
+
+
+shape_2N
+======================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: shape_2N

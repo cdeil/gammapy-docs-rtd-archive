@@ -1,0 +1,64 @@
+
+
+ImageAnalysis
+=============================
+
+.. currentmodule:: gammapy.scripts
+
+.. autoclass:: ImageAnalysis
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ImageAnalysis.background_norm_factor
+      ~ImageAnalysis.make_background
+      ~ImageAnalysis.make_counts
+      ~ImageAnalysis.make_exposure
+      ~ImageAnalysis.make_maps
+      ~ImageAnalysis.make_psf
+      ~ImageAnalysis.make_significance
+      ~ImageAnalysis.make_total_bkg
+      ~ImageAnalysis.make_total_counts
+      ~ImageAnalysis.make_total_excess
+      ~ImageAnalysis.make_total_exposure
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: background_norm_factor
+   .. automethod:: make_background
+   .. automethod:: make_counts
+   .. automethod:: make_exposure
+   .. automethod:: make_maps
+   .. automethod:: make_psf
+   .. automethod:: make_significance
+   .. automethod:: make_total_bkg
+   .. automethod:: make_total_counts
+   .. automethod:: make_total_excess
+   .. automethod:: make_total_exposure
+
+   
+   

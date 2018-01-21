@@ -1,0 +1,8 @@
+
+
+spectrum_regions
+================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: spectrum_regions

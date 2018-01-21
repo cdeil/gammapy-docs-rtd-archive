@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Installation &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="top" title="gammapy v0.4" href="index.html" />
+    <link rel="next" title="Getting Started" href="getting-started.html" />
+    <link rel="prev" title="About Gammapy" href="about.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/install.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'install'
+</script>
+
+<script type="text/javascript" src="_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="getting-started.html" title="Getting Started">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="about.html" title="About Gammapy">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      
+      <li>Installation</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="installation">
+<span id="install"></span><h1>Installation<a class="headerlink" href="install.html#installation" title="Permalink to this headline">¶</a></h1>
+<p>Here we provide short installation instructions for Gammapy and its dependencies.</p>
+<p>Gammapy works (and is continually tested) with Python 2 and 3 on Linux, Mac OS X and Windows.</p>
+<p>More specifically, in the Python 2 series we only support (i.e. test in continuous integration)
+Python 2.7, and in the Python 3 series we support version 3.4 or later.
+Gammapy will (probably) not work with older Python versions,
+such as 2.6 or 3.2 (see <a class="reference internal" href="development/howto.html#development-python2and3"><span>Python 2 and 3 support</span></a> if you care why).</p>
+<p>Due to the large variety of systems, package managers and setups in us it&#8217;s not
+possible to give a detailed description for every option.</p>
+<p>Using <a class="reference external" href="http://conda.pydata.org/">conda</a> is a good option to get everything installed from scratch within minutes.
+It works on any Linux, Mac or Windows machine and doesn&#8217;t require root access.</p>
+<p>If you get stuck, have a look at the extensive installation instructions for Astropy
+at <a class="reference external" href="http://www.astropy.org/">http://www.astropy.org/</a> or ask on the <a class="reference external" href="http://groups.google.com/group/gammapy">Gammapy mailing list</a>.</p>
+<p>The main way to improve the instructions is via your feedback!</p>
+<div class="section" id="id1">
+<h2>Conda<a class="headerlink" href="install.html#id1" title="Permalink to this headline">¶</a></h2>
+<p>To install the latest Gammapy <strong>stable</strong> version as well as the most common
+optional dependencies for Gammapy, first install <a class="reference external" href="http://continuum.io/downloads">Anaconda</a>
+and then run these commands:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda config --add channels astropy --add channels sherpa
+conda install gammapy naima <span class="se">\</span>
+    scipy matplotlib ipython-notebook <span class="se">\</span>
+    cython click
+</pre></div>
+</div>
+<p>We strongly recommend that you install the optional dependencies of Gammapy to have the full
+functionality available:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda install <span class="se">\</span>
+    scikit-image scikit-learn h5py pandas <span class="se">\</span>
+    aplpy wcsaxes photutils reproject
+
+pip install iminuit
+</pre></div>
+</div>
+<p>Sherpa is the only Gammapy dependency that&#8217;s not yet available on Python 3, so if you want
+to use Sherpa for modeling / fitting, install Anaconda Python 2 and</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda install sherpa
+</pre></div>
+</div>
+<p>For a quick (depending on your download and disk speed, usually a few minutes),
+non-interactive install of <a class="reference external" href="http://conda.pydata.org/miniconda.html">Miniconda</a>
+and Gammapy from scratch, use the commands from this script:
+<a class="reference external" href="https://raw.githubusercontent.com/gammapy/gammapy/master/gammapy-conda-install.sh">gammapy-conda-install.sh</a>.</p>
+<p>Executing it like this should also work:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>bash <span class="s2">&quot;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/gammapy/gammapy/master/gammapy-conda-install.sh<span class="k">)</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>To update to the latest version:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>conda update --all
+conda update gammapy
+</pre></div>
+</div>
+<p>Overall <code class="docutils literal"><span class="pre">conda</span></code> is a great cross-platform package manager, you can quickly learn how to use
+it by reading the docs <a class="reference external" href="http://conda.pydata.org/docs/">here</a>.</p>
+</div>
+<div class="section" id="id2">
+<h2>pip<a class="headerlink" href="install.html#id2" title="Permalink to this headline">¶</a></h2>
+<p>To install the latest Gammapy <strong>stable</strong> version (see <a class="reference external" href="https://pypi.python.org/pypi/gammapy">Gammapy page on PyPI</a>) using <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install gammapy
+</pre></div>
+</div>
+<p>To install the current Gammapy <strong>development</strong> version using <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a>:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install git+https://github.com/gammapy/gammapy.git#egg<span class="o">=</span>gammapy
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-py">
+<h2>setup.py<a class="headerlink" href="install.html#setup-py" title="Permalink to this headline">¶</a></h2>
+<p>To download the latest stable version of Gammapy, download it from
+<a class="reference external" href="https://pypi.python.org/pypi/gammapy">https://pypi.python.org/pypi/gammapy</a>, if you have the
+<a class="reference external" href="http://www.gnu.org/software/wget/">wget</a> tool available you can do this
+from the command line:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ wget https://pypi.python.org/packages/source/g/gammapy/gammapy-0.3.tar.gz
+$ tar zxf gammapy-0.3.tar.gz
+$ <span class="nb">cd</span> gammapy-0.3
+</pre></div>
+</div>
+<p>To download the latest development version of Gammapy:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ git clone https://github.com/gammapy/gammapy.git
+$ <span class="nb">cd</span> gammapy
+</pre></div>
+</div>
+<p>Either way, you now can install, test or build the documentation:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python setup.py install
+$ python setup.py <span class="nb">test</span>
+$ python setup.py build_sphinx
+</pre></div>
+</div>
+<p>Also you have easy access to the Python scripts from the tutorials and examples:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> docs/tutorials
+$ <span class="nb">cd</span> examples
+</pre></div>
+</div>
+<p>If you want to contribute to Gammapy, but are not familiar with Python or
+git or Astropy yet, please have a look at the
+<a class="reference external" href="http://docs.astropy.org/en/latest/#developer-documentation">Astropy developer documentation</a>.</p>
+</div>
+<div class="section" id="other-package-managers">
+<h2>Other package managers<a class="headerlink" href="install.html#other-package-managers" title="Permalink to this headline">¶</a></h2>
+<p>Besides conda, Gammapy and some of the optional dependencies (Sherpa, Astropy-affiliated packages)
+as not yet available in other package managers (such as
+e.g. <a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Packaging_Tool">apt-get</a>
+or <a class="reference external" href="https://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified">yum</a> on Linux
+or <a class="reference external" href="https://www.macports.org/">Macports</a>
+or <a class="reference external" href="http://brew.sh/">homebrew</a> on Mac.</p>
+<p>So installing Gammapy this way is not recommended at this time.
+(The recommended method is conda as mentioned above).</p>
+<p>Still, it&#8217;s possible and common on systems where users have root access
+to install some of the dependencies using those package managers, and then
+to use <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> to do the rest of the installation.</p>
+<p>So as a convenience, here we show the commands to install those packages that are available,
+so that you don&#8217;t have to look up the package names.</p>
+<p>We do hope this situation will improve in the future as more astronomy packages become
+available in those distributions and versions are updated.</p>
+<div class="section" id="apt-get">
+<h3>apt-get<a class="headerlink" href="install.html#apt-get" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Packaging_Tool">apt-get</a> is a popular package manager on Linux,
+e.g. on Debian or Ubuntu.</p>
+<p>The following packages are available:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>sudo apt-get install <span class="se">\</span>
+    python3-pip python3-scipy python3-matplotlib python3-skimage python3-sklearn <span class="se">\</span>
+    python3-pandas python3-h5py python3-yaml ipython3-notebook python3-uncertainties <span class="se">\</span>
+    python3-astropy python3-click
+</pre></div>
+</div>
+<p>The following packages have to be installed with pip:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip3 install --user <span class="se">\</span>
+    gammapy naima photutils reproject wcsaxes gwcs astroplan <span class="se">\</span>
+    iminuit emcee healpy
+</pre></div>
+</div>
+<p>Sherpa currently doesn&#8217;t work on Python 3.
+You could try to use Python 2 and pip-installing Sherpa (don&#8217;t know if that works).</p>
+<p>A Debian package for Sherpa is in preparation: <a class="reference external" href="https://github.com/sherpa/sherpa/issues/75">https://github.com/sherpa/sherpa/issues/75</a></p>
+<p>A Debian package for Gammapy is in preparation: <a class="reference external" href="https://github.com/gammapy/gammapy/issues/324">https://github.com/gammapy/gammapy/issues/324</a></p>
+<p>As far as I can see there&#8217;s no HEALPIX or healpy package.</p>
+</div>
+<div class="section" id="yum">
+<h3>yum<a class="headerlink" href="install.html#yum" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/Yellowdog_Updater,_Modified">yum</a> is a popular package manager on Linux,
+e.g. on Scientific linux or Red Hat Linux.</p>
+<p>If you are a <code class="docutils literal"><span class="pre">yum</span></code> user, please contribute the equivalent commands
+(see e.g. the Macports section below).</p>
+</div>
+<div class="section" id="macports">
+<h3>Macports<a class="headerlink" href="install.html#macports" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.macports.org/">Macports</a> is a popular package manager on Mac.</p>
+<p>The following packages are available via Macports:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span><span class="nb">export</span> <span class="nv">PY</span><span class="o">=</span>py34
+sudo port install <span class="se">\</span>
+    <span class="nv">$PY</span>-pip <span class="nv">$PY</span>-scipy <span class="nv">$PY</span>-matplotlib <span class="nv">$PY</span>-scikit-image <span class="nv">$PY</span>-scikit-learn <span class="se">\</span>
+    <span class="nv">$PY</span>-pandas <span class="nv">$PY</span>-emcee <span class="nv">$PY</span>-h5py <span class="nv">$PY</span>-yaml <span class="nv">$PY</span>-ipython <span class="nv">$PY</span>-uncertainties <span class="se">\</span>
+    <span class="nv">$PY</span>-healpy <span class="nv">$PY</span>-astropy <span class="nv">$PY</span>-click <span class="nv">$PY</span>-cython
+</pre></div>
+</div>
+<p>If you want some other Python version, use a different suffix (e.g. <code class="docutils literal"><span class="pre">py27</span></code> or <code class="docutils literal"><span class="pre">py35</span></code>).
+Having multiple Python versions simultaneously works well, but is only really useful for developers.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>pip install --user <span class="se">\</span>
+    gammapy naima photutils reproject wcsaxes gwcs astroplan <span class="se">\</span>
+    iminuit
+</pre></div>
+</div>
+</div>
+<div class="section" id="homebrew">
+<h3>Homebrew<a class="headerlink" href="install.html#homebrew" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://brew.sh/">Homebrew</a> is a popular package manager on Mac.</p>
+<p>If you are a <code class="docutils literal"><span class="pre">brew</span></code> user, please contribute the equivalent commands
+(see e.g. the Macports section above).</p>
+</div>
+</div>
+<div class="section" id="check-gammapy-installation">
+<h2>Check Gammapy installation<a class="headerlink" href="install.html#check-gammapy-installation" title="Permalink to this headline">¶</a></h2>
+<p>To check if Gammapy is correctly installed, start up python or ipython,
+import Gammapy and run the unit tests:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ python -c <span class="s1">&#39;import gammapy; gammapy.test()&#39;</span>
+</pre></div>
+</div>
+<p>To check if the Gammapy command line tools are on your <code class="docutils literal"><span class="pre">$PATH</span></code> try this:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gammapy-info --tools
+</pre></div>
+</div>
+<p>To check which dependencies of Gammapy you have installed:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gammapy-info --dependencies
+</pre></div>
+</div>
+</div>
+<div class="section" id="common-issues">
+<span id="install-issues"></span><h2>Common issues<a class="headerlink" href="install.html#common-issues" title="Permalink to this headline">¶</a></h2>
+<p>If you have an issue with Gammapy installation or usage, please check
+this list. If your issue is not adressed, please send an email to the
+mailing list.</p>
+<ul>
+<li><p class="first">Q: I get an error mentioning something (e.g. Astropy) isn&#8217;t available,
+but I did install it.</p>
+<p>A: Check that you&#8217;re using the right <code class="docutils literal"><span class="pre">python</span></code> and that your
+<code class="docutils literal"><span class="pre">PYTHONPATH</span></code> isn&#8217;t pointing to places that aren&#8217;t appropriate
+for this Python (usually it&#8217;s best to not set it at all)
+using these commands:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>which python
+<span class="nb">echo</span> <span class="nv">$PYTHONPATH</span>
+python -c <span class="s1">&#39;import astropy&#39;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="dependencies">
+<span id="install-dependencies"></span><h2>Dependencies<a class="headerlink" href="install.html#dependencies" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The philosophy of Gammapy is to build on the existing scientific Python stack.
+This means that you need to install those dependencies to use Gammapy.</p>
+<p>We are aware that too many dependencies is an issue for deployment and maintenance.
+That&#8217;s why currently Gammapy only has two core dependencies &#8212; Numpy and Astropy.
+We are considering making Sherpa, Scipy, scikit-image, photutils, reproject and naima
+core dependencies.</p>
+<p>In addition there are about a dozen optional dependencies that are OK to import
+from Gammapy because they are potentially useful (not all of those are
+actually currently imported).</p>
+<p class="last">Before the Gammapy 1.0 release we will re-evaluate and clarify the Gammapy dependencies.</p>
+</div>
+<p>The required core dependencies of Gammapy are:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.numpy.org/">Numpy</a> - the fundamental package for scientific computing with Python</li>
+<li><a class="reference external" href="http://astropy.org">Astropy</a> - the core package for Astronomy in Python</li>
+</ul>
+<p>We&#8217;re currently using</p>
+<ul class="simple">
+<li><a class="reference external" href="http://click.pocoo.org/">click</a> for making command line tools</li>
+<li><a class="reference external" href="https://pypi.python.org/pypi/PyYAML/">PyYAML</a> for <a class="reference external" href="http://en.wikipedia.org/wiki/YAML">YAML</a> data handling (config and results files</li>
+<li><a class="reference external" href="http://flask.pocoo.org/">flask</a> and some Flask plugins for Gammapy web apps</li>
+</ul>
+<p>Currently optional dependencies that are being considered as core dependencies:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://cxc.cfa.harvard.edu/sherpa/">Sherpa</a> for modeling / fitting (doesn&#8217;t work with Python 3 yet)</li>
+<li><a class="reference external" href="http://scipy.org/scipylib/">scipy library</a> for numerical methods</li>
+<li><a class="reference external" href="http://scikit-image.org">scikit-image</a> for some image processing tasks</li>
+<li><a class="reference external" href="http://photutils.readthedocs.org">photutils</a> for image photometry</li>
+<li><a class="reference external" href="http://reproject.readthedocs.org">reproject</a> for image reprojection</li>
+<li><a class="reference external" href="https://github.com/zblz/naima">naima</a> for SED modeling</li>
+</ul>
+<p>Allowed optional dependencies:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://matplotlib.org">matplotlib</a> for plotting</li>
+<li><a class="reference external" href="https://github.com/astrofrog/wcsaxes">wcsaxes</a> for sky image plotting (provides a low-level API)</li>
+<li><a class="reference external" href="http://aplpy.github.io">aplpy</a> for sky image plotting (provides a high-level API)</li>
+<li><a class="reference external" href="http://pandas.pydata.org">pandas</a> CSV read / write; DataFrame</li>
+<li><a class="reference external" href="http://scikit-learn.org/stable/">scikit-learn</a> for some data analysis tasks</li>
+<li><a class="reference external" href="http://gammalib.sourceforge.net">GammaLib</a> and <a class="reference external" href="http://cta.irap.omp.eu/ctools">ctools</a> for simulating data and likelihood fitting</li>
+<li><a class="reference external" href="https://root.cern.ch/drupal/">ROOT</a> and <a class="reference external" href="http://www.rootpy.org/">rootpy</a> conversion helper functions (still has some Python 3 issues)</li>
+<li><a class="reference external" href="http://code.google.com/p/image-funcut/">imfun</a> for a trous wavelet decomposition</li>
+<li><a class="reference external" href="http://pythonhosted.org/uncertainties/">uncertainties</a> for Gaussian error propagation</li>
+<li><a class="reference external" href="http://gwcs.readthedocs.org">gwcs</a> for generalised world coordinate transformations</li>
+<li><a class="reference external" href="http://astroplan.readthedocs.org">astroplan</a> for observation planning and scheduling</li>
+<li><a class="reference external" href="https://github.com/iminuit/iminuit">iminuit</a> for fitting by optimization</li>
+<li><a class="reference external" href="http://dan.iel.fm/emcee/current/">emcee</a> for fitting by MCMC sampling</li>
+<li><a class="reference external" href="http://www.h5py.org/">h5py</a> for <a class="reference external" href="http://en.wikipedia.org/wiki/Hierarchical_Data_Format">HDF5</a> data handling</li>
+<li><a class="reference external" href="https://healpy.readthedocs.org/en/latest/">healpy</a> for <a class="reference external" href="http://healpix.jpl.nasa.gov/">HEALPIX</a> data handling</li>
+</ul>
+</div>
+<div class="section" id="fermi-sciencetools">
+<h2>Fermi ScienceTools<a class="headerlink" href="install.html#fermi-sciencetools" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/">Fermi ScienceTools</a>
+ships with it&#8217;s own Python 2.7 interpreter.</p>
+<p>If you want to use Astropy or Gammapy with that Python, you have to install it using
+that Python interpreter, other existing Python interpreters or installed packages
+can&#8217;t be used (when they have C extensions, like Astropy does).</p>
+<p>Fermi ScienceTools version <code class="docutils literal"><span class="pre">v10r0p5</span></code> (released Jun 24, 2015) includes
+Python 2.7.8, Numpy 1.9.1, Scipy 0.14.0, matplotlib 1.1.1, PyFITS 3.1.2.
+Unfortunately pip, ipython or Astropy are not included.</p>
+<p>So first in stall <a class="reference external" href="https://pip.pypa.io/en/stable/">pip</a> (see
+<a class="reference external" href="https://pip.pypa.io/en/latest/installing.html#install-pip">instructions</a>),
+and then</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ pip install ipython astropy gammapy
+</pre></div>
+</div>
+<p>If this doesn&#8217;t work (which is not uncommon, this is known to fail to compile the C
+extensions of Astropy on some platforms), ask your Python-installation-savvy co-worker
+or on the Astropy or Gammapy mailing list.</p>
+</div>
+<div class="section" id="id4">
+<h2>CIAO<a class="headerlink" href="install.html#id4" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The main reason to use Gammapy with CIAO was that CIAO was the easiest way to get Sherpa.
+Since 2015, Sherpa can be easily installed via conda, so we recommend you do that
+instead of installing Gammapy into CIAO as described in this section.</p>
+</div>
+<p>The <a class="reference external" href="http://cxc.harvard.edu/ciao/http://cxc.harvard.edu/ciao/">CIAO</a>
+(&#8220;Chandra Interactive Analysis of Observations&#8221;)
+package, which includes <a class="reference external" href="http://cxc.cfa.harvard.edu/sherpa/">Sherpa</a>, ships with it&#8217;s own Python 2.7 interpreter.</p>
+<p>If you want to use Astropy or Gammapy with that Python, you have to install it using
+that Python interpreter, other existing Python interpreters or installed packages
+can&#8217;t be used (when they have C extensions, like Astropy does).</p>
+<p>CIAO version 4.7 (released December 16, 2014) includes
+Python 2.7.6, Numpy 1.8.1 and IPython 2.0.0.
+Unfortunately pip, PyFITS, Astropy, Scipy or Matplotlib are not included.</p>
+<p>Building Sherpa and all the required libraries from source is very difficult.
+You should install the binary version of CIAO as described
+<a class="reference external" href="http://cxc.cfa.harvard.edu/ciao/download">here</a>,
+make sure you include Sherpa and exclude the Chandra CALDB.
+But then the Sherpa Python and Numpy will not work with the existing
+Python, Numpy, Astropy, Gammapy, ... on your system.</p>
+<p>You have to re-install Astropy, Gammapy and any other Python packages
+that you want to use in the same script as Sherpa into the CIAO Python.
+Sometimes this just works, but sometimes you&#8217;ll run into compilation errors
+when e.g. the C extensions in <code class="docutils literal"><span class="pre">astropy.wcs</span></code> or <code class="docutils literal"><span class="pre">astropy.io.fits</span></code> are compiled.</p>
+<p>Here&#8217;s a few tricks that might help you make it work.</p>
+<ul class="simple">
+<li>Execute the
+<a class="reference external" href="http://cxc.cfa.harvard.edu/ciao/threads/ciao_install/index.html#ciao_python_fix">ciao-python-fix</a>
+script after installing CIAO:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> <span class="nv">$CIAO_DIR</span>
+$ bash bin/ciao-python-fix
+</pre></div>
+</div>
+<ul class="simple">
+<li>Set <code class="docutils literal"><span class="pre">LDFLAGS</span></code> and use <code class="docutils literal"><span class="pre">ciaorun</span></code> before installing a Python package with C extensions:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">LDFLAGS</span><span class="o">=</span><span class="s2">&quot;-L</span><span class="si">${</span><span class="nv">ASCDS_INSTALL</span><span class="si">}</span><span class="s2">/ots/lib&quot;</span>
+$ ciaorun python setup.py install
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add these folders to your <code class="docutils literal"><span class="pre">PATH</span></code> and <code class="docutils literal"><span class="pre">PYTHONPATH</span></code> so that the right command line tools or
+Python packages are picked up instead of the ones in other system folders:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$CIAO_DIR</span>/ots/bin:<span class="nv">$PATH</span>
+$ <span class="nb">export</span> <span class="nv">PYTHONPATH</span><span class="o">=</span><span class="nv">$CIAO_DIR</span>/ots/lib/python2.7/site-packages/:<span class="nv">$PYTHONPATH</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="install.html#">Installation</a><ul>
+<li><a class="reference internal" href="install.html#id1">Conda</a></li>
+<li><a class="reference internal" href="install.html#id2">pip</a></li>
+<li><a class="reference internal" href="install.html#setup-py">setup.py</a></li>
+<li><a class="reference internal" href="install.html#other-package-managers">Other package managers</a><ul>
+<li><a class="reference internal" href="install.html#apt-get">apt-get</a></li>
+<li><a class="reference internal" href="install.html#yum">yum</a></li>
+<li><a class="reference internal" href="install.html#macports">Macports</a></li>
+<li><a class="reference internal" href="install.html#homebrew">Homebrew</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="install.html#check-gammapy-installation">Check Gammapy installation</a></li>
+<li><a class="reference internal" href="install.html#common-issues">Common issues</a></li>
+<li><a class="reference internal" href="install.html#dependencies">Dependencies</a></li>
+<li><a class="reference internal" href="install.html#fermi-sciencetools">Fermi ScienceTools</a></li>
+<li><a class="reference internal" href="install.html#id4">CIAO</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/install.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="install.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

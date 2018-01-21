@@ -1,0 +1,8 @@
+
+
+atrous_image
+==========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: atrous_image

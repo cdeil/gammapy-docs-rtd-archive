@@ -1,0 +1,56 @@
+
+
+CubeBackgroundModel
+======================================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: CubeBackgroundModel
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~CubeBackgroundModel.compute_rate
+      ~CubeBackgroundModel.define_cube_binning
+      ~CubeBackgroundModel.fill_obs
+      ~CubeBackgroundModel.read
+      ~CubeBackgroundModel.set_cube_binning
+      ~CubeBackgroundModel.smooth
+      ~CubeBackgroundModel.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute_rate
+   .. automethod:: define_cube_binning
+   .. automethod:: fill_obs
+   .. automethod:: read
+   .. automethod:: set_cube_binning
+   .. automethod:: smooth
+   .. automethod:: write
+
+   
+   

@@ -1,0 +1,8 @@
+
+
+crop_image
+========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: crop_image

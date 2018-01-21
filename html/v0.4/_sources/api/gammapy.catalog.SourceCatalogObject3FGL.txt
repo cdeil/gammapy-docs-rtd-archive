@@ -1,0 +1,67 @@
+
+
+SourceCatalogObject3FGL
+=======================================
+
+.. currentmodule:: gammapy.catalog
+
+.. autoclass:: SourceCatalogObject3FGL
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SourceCatalogObject3FGL.x_bins
+      ~SourceCatalogObject3FGL.x_bins_edges
+      ~SourceCatalogObject3FGL.x_cens
+      ~SourceCatalogObject3FGL.y_labels
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SourceCatalogObject3FGL.plot_lightcurve
+      ~SourceCatalogObject3FGL.plot_spectrum
+      ~SourceCatalogObject3FGL.summary
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: x_bins
+   .. autoattribute:: x_bins_edges
+   .. autoattribute:: x_cens
+   .. autoattribute:: y_labels
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: plot_lightcurve
+   .. automethod:: plot_spectrum
+   .. automethod:: summary
+
+   
+   

@@ -1,0 +1,78 @@
+
+
+SkyMap
+====================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: SkyMap
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyMap.center
+      ~SkyMap.coordinates
+      ~SkyMap.copy
+      ~SkyMap.empty
+      ~SkyMap.empty_like
+      ~SkyMap.fill
+      ~SkyMap.info
+      ~SkyMap.lookup
+      ~SkyMap.plot
+      ~SkyMap.read
+      ~SkyMap.reproject
+      ~SkyMap.show
+      ~SkyMap.solid_angle
+      ~SkyMap.threshold
+      ~SkyMap.to_image_hdu
+      ~SkyMap.to_quantity
+      ~SkyMap.to_sherpa_data2d
+      ~SkyMap.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: center
+   .. automethod:: coordinates
+   .. automethod:: copy
+   .. automethod:: empty
+   .. automethod:: empty_like
+   .. automethod:: fill
+   .. automethod:: info
+   .. automethod:: lookup
+   .. automethod:: plot
+   .. automethod:: read
+   .. automethod:: reproject
+   .. automethod:: show
+   .. automethod:: solid_angle
+   .. automethod:: threshold
+   .. automethod:: to_image_hdu
+   .. automethod:: to_quantity
+   .. automethod:: to_sherpa_data2d
+   .. automethod:: write
+
+   
+   

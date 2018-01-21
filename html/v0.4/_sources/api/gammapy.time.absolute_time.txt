@@ -1,0 +1,8 @@
+
+
+absolute_time
+==========================
+
+.. currentmodule:: gammapy.time
+
+.. autofunction:: absolute_time

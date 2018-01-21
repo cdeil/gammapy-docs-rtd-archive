@@ -1,0 +1,48 @@
+
+
+SpectrumResultDict
+===================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumResultDict
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumResultDict.from_files
+      ~SpectrumResultDict.info
+      ~SpectrumResultDict.overplot_spectra
+      ~SpectrumResultDict.to_table
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_files
+   .. automethod:: info
+   .. automethod:: overplot_spectra
+   .. automethod:: to_table
+
+   
+   

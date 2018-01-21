@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ExclusionMask &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Image processing and analysis tools (gammapy.image)" href="../image/index.html" />
+    <link rel="next" title="FluxProfile" href="gammapy.image.FluxProfile.html" />
+    <link rel="prev" title="BoundingBox" href="gammapy.image.BoundingBox.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.image.ExclusionMask.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.image.ExclusionMask'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.image.FluxProfile.html" title="FluxProfile">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.image.BoundingBox.html" title="BoundingBox">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../image/index.html" accesskey="U">Image processing and analysis tools (<code class="docutils literal"><span class="pre">gammapy.image</span></code>)</a> &raquo;</li>
+      
+      <li>ExclusionMask</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="exclusionmask">
+<h1>ExclusionMask<a class="headerlink" href="gammapy.image.ExclusionMask.html#exclusionmask" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.image.ExclusionMask">
+<em class="property">class </em><code class="descclassname">gammapy.image.</code><code class="descname">ExclusionMask</code><span class="sig-paren">(</span><em>name=None</em>, <em>data=None</em>, <em>wcs=None</em>, <em>unit=None</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#ExclusionMask"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.maps.SkyMap"><code class="docutils literal"><span class="pre">gammapy.image.SkyMap</span></code></a></p>
+<p>Exclusion mask</p>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.distance_image" title="gammapy.image.ExclusionMask.distance_image"><code class="xref py py-obj docutils literal"><span class="pre">distance_image</span></code></a></td>
+<td>Map containting the distance to the nearest exclusion region.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.mask" title="gammapy.image.ExclusionMask.mask"><code class="xref py py-obj docutils literal"><span class="pre">mask</span></code></a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.fill_random_circles" title="gammapy.image.ExclusionMask.fill_random_circles"><code class="xref py py-obj docutils literal"><span class="pre">fill_random_circles</span></code></a>([n,&nbsp;min_rad,&nbsp;max_rad])</td>
+<td>Create random exclusion mask (n circles) on a  given image</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.from_ds9" title="gammapy.image.ExclusionMask.from_ds9"><code class="xref py py-obj docutils literal"><span class="pre">from_ds9</span></code></a>(excl_file,&nbsp;hdu)</td>
+<td>Create exclusion mask from ds9 regions file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.plot" title="gammapy.image.ExclusionMask.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>([ax,&nbsp;fig])</td>
+<td>Plot exclusion mask</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.read" title="gammapy.image.ExclusionMask.read"><code class="xref py py-obj docutils literal"><span class="pre">read</span></code></a>(fobj,&nbsp;*args,&nbsp;**kwargs)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.image.ExclusionMask.distance_image">
+<code class="descname">distance_image</code><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.distance_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Map containting the distance to the nearest exclusion region.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.image.ExclusionMask.mask">
+<code class="descname">mask</code><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.mask" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.image.ExclusionMask.fill_random_circles">
+<code class="descname">fill_random_circles</code><span class="sig-paren">(</span><em>n=4</em>, <em>min_rad=0</em>, <em>max_rad=40</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#ExclusionMask.fill_random_circles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.fill_random_circles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create random exclusion mask (n circles) on a  given image</p>
+<p>This is useful for testing</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n</strong> : int</p>
+<blockquote>
+<div><p>Number of circles to place</p>
+</div></blockquote>
+<p><strong>min_rad</strong> : int</p>
+<blockquote>
+<div><p>Minimum circle radius in pixels</p>
+</div></blockquote>
+<p><strong>max_rad</strong> : int</p>
+<blockquote class="last">
+<div><p>Maximum circle radius in pixels</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.image.ExclusionMask.from_ds9">
+<em class="property">classmethod </em><code class="descname">from_ds9</code><span class="sig-paren">(</span><em>excl_file</em>, <em>hdu</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#ExclusionMask.from_ds9"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.from_ds9" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create exclusion mask from ds9 regions file</p>
+<p>Uses the pyregion package
+(<a class="reference external" href="http://pyregion.readthedocs.org/en/latest/index.html">http://pyregion.readthedocs.org/en/latest/index.html</a>)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>excl_file</strong> : str</p>
+<blockquote>
+<div><p>ds9 region file</p>
+</div></blockquote>
+<p><strong>hdu</strong> : <code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></p>
+<blockquote class="last">
+<div><p>Map to fill exclusion mask</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.ExclusionMask.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax=None</em>, <em>fig=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#ExclusionMask.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot exclusion mask</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">WCSAxes</span></code>, optional</p>
+<blockquote>
+<div><p>WCS axis object</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">WCSAxes</span></code>, optional</p>
+<blockquote class="last">
+<div><p>WCS axis object</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.image.ExclusionMask.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>fobj</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/mask.html#ExclusionMask.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask.read" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.image.ExclusionMask.html#">ExclusionMask</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.image.ExclusionMask.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.image.ExclusionMask.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

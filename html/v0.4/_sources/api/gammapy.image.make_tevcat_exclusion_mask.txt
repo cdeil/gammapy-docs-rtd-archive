@@ -1,0 +1,8 @@
+
+
+make_tevcat_exclusion_mask
+========================================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: make_tevcat_exclusion_mask

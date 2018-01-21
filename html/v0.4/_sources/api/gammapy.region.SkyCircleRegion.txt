@@ -1,0 +1,73 @@
+
+
+SkyCircleRegion
+==============================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: SkyCircleRegion
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SkyCircleRegion.area
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyCircleRegion.from_dict
+      ~SkyCircleRegion.info
+      ~SkyCircleRegion.intersects
+      ~SkyCircleRegion.plot
+      ~SkyCircleRegion.to_dict
+      ~SkyCircleRegion.to_ds9
+      ~SkyCircleRegion.to_mpl_artist
+      ~SkyCircleRegion.to_pixel
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: area
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_dict
+   .. automethod:: info
+   .. automethod:: intersects
+   .. automethod:: plot
+   .. automethod:: to_dict
+   .. automethod:: to_ds9
+   .. automethod:: to_mpl_artist
+   .. automethod:: to_pixel
+
+   
+   

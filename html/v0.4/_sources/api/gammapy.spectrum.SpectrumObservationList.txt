@@ -1,0 +1,65 @@
+
+
+SpectrumObservationList
+========================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumObservationList
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumObservationList.total_spectrum
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumObservationList.filter_by_reflected_regions
+      ~SpectrumObservationList.from_observation_table
+      ~SpectrumObservationList.get_obslist_from_ids
+      ~SpectrumObservationList.info
+      ~SpectrumObservationList.write_ogip
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: total_spectrum
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: filter_by_reflected_regions
+   .. automethod:: from_observation_table
+   .. automethod:: get_obslist_from_ids
+   .. automethod:: info
+   .. automethod:: write_ogip
+
+   
+   

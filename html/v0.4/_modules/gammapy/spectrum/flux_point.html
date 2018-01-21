@@ -1,0 +1,572 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.flux_point &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/flux_point.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/flux_point'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.flux_point</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Differential and integral flux point computations.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">Unit</span>
+
+<span class="kn">from</span> <span class="nn">gammapy.utils.energy</span> <span class="kn">import</span> <span class="n">Energy</span><span class="p">,</span> <span class="n">EnergyBounds</span>
+<span class="kn">from</span> <span class="nn">..spectrum.powerlaw</span> <span class="kn">import</span> <span class="n">power_law_flux</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;DifferentialFluxPoints&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;IntegralFluxPoints&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;compute_differential_flux_points&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="DifferentialFluxPoints"><a class="viewcode-back" href="../../../api/gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints">[docs]</a><span class="k">class</span> <span class="nc">DifferentialFluxPoints</span><span class="p">(</span><span class="n">Table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Differential flux points table</span>
+
+<span class="sd">    Column names: ENERGY, ENERGY_ERR_HI, ENERGY_ERR_LO,</span>
+<span class="sd">    DIFF_FLUX, DIFF_FLUX_ERR_HI, DIFF_FLUX_ERR_LO</span>
+<span class="sd">    For a complete documentation see :ref:`gadf:flux-points`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DifferentialFluxPoints.from_fitspectrum_json"><a class="viewcode-back" href="../../../api/gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.from_fitspectrum_json">[docs]</a>    <span class="k">def</span> <span class="nf">from_fitspectrum_json</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read `~gammapy.spectrum.DifferentialFluxPoints` from FitSpectrum JSON file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">json</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">fh</span><span class="p">)</span>
+
+        <span class="c1"># TODO : Adjust column names</span>
+        <span class="n">flux_points</span> <span class="o">=</span> <span class="n">Table</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;flux_graph&#39;</span><span class="p">][</span><span class="s1">&#39;bin_values&#39;</span><span class="p">],</span> <span class="n">masked</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;TeV&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;energy&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;ENERGY&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;energy_err_hi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;TeV&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;energy_err_hi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;ENERGY_ERR_HI&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;energy_err_lo&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;TeV&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;energy_err_lo&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;ENERGY_ERR_LO&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;DIFF_FLUX&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;flux_err_hi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;flux_err_hi&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;DIFF_FLUX_ERR_HI&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;flux_err_lo&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span>
+        <span class="n">flux_points</span><span class="p">[</span><span class="s1">&#39;flux_err_lo&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;DIFF_FLUX_ERR_LO&#39;</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">flux_points</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DifferentialFluxPoints.from_arrays"><a class="viewcode-back" href="../../../api/gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.from_arrays">[docs]</a>    <span class="k">def</span> <span class="nf">from_arrays</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">diff_flux</span><span class="p">,</span> <span class="n">energy_err_hi</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">energy_err_lo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">diff_flux_err_hi</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">diff_flux_err_lo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.DifferentialFluxPoints` from numpy arrays&quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Energy</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+        <span class="n">diff_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">diff_flux</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">diff_flux</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">is_equivalent</span><span class="p">(</span><span class="s1">&#39;TeV-1 cm-2 s-1&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                <span class="s1">&#39;Flux (unit {}) not a differential flux&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">diff_flux</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+
+        <span class="c1"># Set errors to zero by default</span>
+        <span class="n">def_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span> <span class="o">*</span> <span class="n">diff_flux</span><span class="o">.</span><span class="n">unit</span>
+        <span class="n">def_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span> <span class="o">*</span> <span class="n">energy</span><span class="o">.</span><span class="n">unit</span>
+        <span class="n">energy_err_hi</span> <span class="o">=</span> <span class="n">def_e</span> <span class="k">if</span> <span class="n">energy_err_hi</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">energy_err_hi</span>
+        <span class="n">energy_err_lo</span> <span class="o">=</span> <span class="n">def_e</span> <span class="k">if</span> <span class="n">energy_err_lo</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">energy_err_lo</span>
+        <span class="n">diff_flux_err_hi</span> <span class="o">=</span> <span class="n">def_f</span> <span class="k">if</span> <span class="n">diff_flux_err_hi</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">diff_flux_err_hi</span>
+        <span class="n">diff_flux_err_lo</span> <span class="o">=</span> <span class="n">def_f</span> <span class="k">if</span> <span class="n">diff_flux_err_lo</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">diff_flux_err_lo</span>
+
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;ENERGY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;ENERGY_ERR_HI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy_err_hi</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;ENERGY_ERR_LO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy_err_lo</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diff_flux</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX_ERR_HI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diff_flux_err_hi</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX_ERR_LO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diff_flux_err_lo</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DifferentialFluxPoints.from_3fgl"><a class="viewcode-back" href="../../../api/gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.from_3fgl">[docs]</a>    <span class="k">def</span> <span class="nf">from_3fgl</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">x_method</span><span class="o">=</span><span class="s1">&#39;log_center&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get `~gammapy.spectrum.DifferentialFluxPoints` for a 3FGL source</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        sourcename : dict</span>
+<span class="sd">            3FGL source</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">x_method</span> <span class="o">==</span> <span class="s1">&#39;log_center&#39;</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">log_centers</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Undefined x method: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_method</span><span class="p">))</span>
+        <span class="n">fluxkeys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;nuFnu100_300&#39;</span><span class="p">,</span> <span class="s1">&#39;nuFnu300_1000&#39;</span><span class="p">,</span> <span class="s1">&#39;nuFnu1000_3000&#39;</span><span class="p">,</span> <span class="s1">&#39;nuFnu3000_10000&#39;</span><span class="p">,</span> <span class="s1">&#39;nuFnu10000_100000&#39;</span><span class="p">]</span>
+        <span class="n">temp_fluxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxkeys</span><span class="p">]</span>
+        <span class="n">energy_fluxes</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes</span><span class="p">,</span> <span class="s1">&#39;erg cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">diff_fluxes</span> <span class="o">=</span> <span class="p">(</span><span class="n">energy_fluxes</span> <span class="o">*</span> <span class="n">energy</span> <span class="o">**</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;erg-1 cm-2 s-1&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Get relativ error on integral fluxes</span>
+        <span class="n">int_flux_points</span> <span class="o">=</span> <span class="n">IntegralFluxPoints</span><span class="o">.</span><span class="n">from_3fgl</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">int_flux_points</span><span class="p">[</span><span class="s1">&#39;INT_FLUX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span>
+        <span class="n">rel_error_hi</span> <span class="o">=</span> <span class="n">int_flux_points</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_HI&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">val</span>
+        <span class="n">rel_error_lo</span> <span class="o">=</span> <span class="n">int_flux_points</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_LO&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">val</span>
+
+        <span class="n">diff_fluxes_err_hi</span> <span class="o">=</span> <span class="n">diff_fluxes</span> <span class="o">*</span> <span class="n">rel_error_hi</span>
+        <span class="n">diff_fluxes_err_lo</span> <span class="o">=</span> <span class="n">diff_fluxes</span> <span class="o">*</span> <span class="n">rel_error_lo</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">,</span> <span class="n">diff_flux</span><span class="o">=</span><span class="n">diff_fluxes</span><span class="p">,</span>
+                               <span class="n">diff_flux_err_lo</span><span class="o">=</span><span class="n">diff_fluxes_err_lo</span><span class="p">,</span>
+                               <span class="n">diff_flux_err_hi</span><span class="o">=</span><span class="n">diff_fluxes_err_hi</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DifferentialFluxPoints.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.DifferentialFluxPoints.html#gammapy.spectrum.DifferentialFluxPoints.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span>
+             <span class="n">flux_unit</span><span class="o">=</span><span class="s1">&#39;cm-2 s-1 TeV-1&#39;</span><span class="p">,</span> <span class="n">energy_power</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot flux points</span>
+
+<span class="sd">        kwargs are forwarded to :func:`~matplotlib.pyplot.errorbar`</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        energy_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the energy axis</span>
+<span class="sd">        flux_unit : str, `~astropy.units.Unit`, optional</span>
+<span class="sd">            Unit of the flux axis</span>
+<span class="sd">        energy_power : int</span>
+<span class="sd">            Power of energy to multiply flux axis with</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax : `~matplolib.axes`, optional</span>
+<span class="sd">            Axis</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;fmt&#39;</span><span class="p">,</span> <span class="s1">&#39;o&#39;</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ENERGY&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">yh</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX_ERR_HI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">yl</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX_ERR_LO&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">yh</span><span class="p">,</span> <span class="n">yl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">y</span><span class="p">,</span> <span class="n">yh</span><span class="p">,</span> <span class="n">yl</span><span class="p">])</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">flux_unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">),</span> <span class="n">energy_power</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">errorbar</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">yerr</span><span class="o">=</span><span class="p">(</span><span class="n">yl</span><span class="p">,</span> <span class="n">yh</span><span class="p">),</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Energy [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Flux [{}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux_unit</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ax</span></div></div>
+
+
+<div class="viewcode-block" id="IntegralFluxPoints"><a class="viewcode-back" href="../../../api/gammapy.spectrum.IntegralFluxPoints.html#gammapy.spectrum.IntegralFluxPoints">[docs]</a><span class="k">class</span> <span class="nc">IntegralFluxPoints</span><span class="p">(</span><span class="n">Table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Integral flux points table</span>
+
+<span class="sd">    Column names: ENERGY_MIN, ENERGY_MAX, INT_FLUX, INT_FLUX_ERR_HI, INT_FLUX_ERR_LO</span>
+<span class="sd">    For a complete documentation see :ref:`gadf:flux-points`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="IntegralFluxPoints.from_arrays"><a class="viewcode-back" href="../../../api/gammapy.spectrum.IntegralFluxPoints.html#gammapy.spectrum.IntegralFluxPoints.from_arrays">[docs]</a>    <span class="k">def</span> <span class="nf">from_arrays</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">,</span> <span class="n">int_flux</span><span class="p">,</span> <span class="n">int_flux_err_hi</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                    <span class="n">int_flux_err_lo</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.IntegralFluxPoints` from numpy arrays&quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">ebounds</span><span class="p">)</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">int_flux</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">int_flux</span><span class="o">.</span><span class="n">unit</span><span class="o">.</span><span class="n">is_equivalent</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Flux (unit {}) not an integrated flux&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">int_flux</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+
+        <span class="c1"># Set errors to zero by default</span>
+        <span class="n">def_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ebounds</span><span class="o">.</span><span class="n">nbins</span><span class="p">)</span> <span class="o">*</span> <span class="n">int_flux</span><span class="o">.</span><span class="n">unit</span>
+        <span class="n">int_flux_err_hi</span> <span class="o">=</span> <span class="n">def_f</span> <span class="k">if</span> <span class="n">int_flux_err_hi</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">int_flux_err_hi</span>
+        <span class="n">int_flux_err_lo</span> <span class="o">=</span> <span class="n">def_f</span> <span class="k">if</span> <span class="n">int_flux_err_lo</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">int_flux_err_lo</span>
+
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;ENERGY_MIN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">lower_bounds</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;ENERGY_MAX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">upper_bounds</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;INT_FLUX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">int_flux</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_HI&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">int_flux_err_hi</span>
+        <span class="n">t</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_LO&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">int_flux_err_lo</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="IntegralFluxPoints.from_3fgl"><a class="viewcode-back" href="../../../api/gammapy.spectrum.IntegralFluxPoints.html#gammapy.spectrum.IntegralFluxPoints.from_3fgl">[docs]</a>    <span class="k">def</span> <span class="nf">from_3fgl</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get `~gammapy.spectrum.IntegralFluxPoints` for a 3FGL source</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source : dict</span>
+<span class="sd">            3FGL source</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">100000</span><span class="p">],</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+        <span class="n">fluxkeys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Flux100_300&#39;</span><span class="p">,</span> <span class="s1">&#39;Flux300_1000&#39;</span><span class="p">,</span> <span class="s1">&#39;Flux1000_3000&#39;</span><span class="p">,</span> <span class="s1">&#39;Flux3000_10000&#39;</span><span class="p">,</span> <span class="s1">&#39;Flux10000_100000&#39;</span><span class="p">]</span>
+        <span class="n">temp_fluxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxkeys</span><span class="p">]</span>
+
+        <span class="n">fluxerrkeys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Unc_Flux100_300&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux300_1000&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux1000_3000&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux3000_10000&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux10000_100000&#39;</span><span class="p">]</span>
+
+        <span class="n">temp_fluxes_err_hi</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxerrkeys</span><span class="p">]</span>
+        <span class="n">temp_fluxes_err_lo</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxerrkeys</span><span class="p">]</span>
+
+        <span class="n">int_fluxes</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes</span><span class="p">,</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">int_fluxes_err_hi</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes_err_hi</span><span class="p">,</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">int_fluxes_err_lo</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes_err_lo</span><span class="p">,</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">ebounds</span><span class="p">,</span> <span class="n">int_fluxes</span><span class="p">,</span> <span class="n">int_fluxes_err_hi</span><span class="p">,</span>
+                               <span class="n">int_fluxes_err_lo</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="IntegralFluxPoints.from_2fhl"><a class="viewcode-back" href="../../../api/gammapy.spectrum.IntegralFluxPoints.html#gammapy.spectrum.IntegralFluxPoints.from_2fhl">[docs]</a>    <span class="k">def</span> <span class="nf">from_2fhl</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get `~gammapy.spectrum.IntegralFluxPoints` for a 2FHL source</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        source : dict</span>
+<span class="sd">            2FHL source</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="mi">50</span><span class="p">,</span> <span class="mi">171</span><span class="p">,</span> <span class="mi">585</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span> <span class="s1">&#39;GeV&#39;</span><span class="p">)</span>
+        <span class="n">fluxkeys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Flux50_171GeV&#39;</span><span class="p">,</span> <span class="s1">&#39;Flux171_585GeV&#39;</span><span class="p">,</span> <span class="s1">&#39;Flux585_2000GeV&#39;</span><span class="p">]</span>
+        <span class="n">temp_fluxes</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxkeys</span><span class="p">]</span>
+
+        <span class="n">fluxerrkeys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Unc_Flux50_171GeV&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux171_585GeV&#39;</span><span class="p">,</span> <span class="s1">&#39;Unc_Flux585_2000GeV&#39;</span><span class="p">]</span>
+
+        <span class="n">temp_fluxes_err_hi</span> <span class="o">=</span> <span class="p">[</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxerrkeys</span><span class="p">]</span>
+        <span class="n">temp_fluxes_err_lo</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">_</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">fluxerrkeys</span><span class="p">]</span>
+
+        <span class="n">int_fluxes</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes</span><span class="p">,</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">int_fluxes_err_hi</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes_err_hi</span><span class="p">,</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">int_fluxes_err_lo</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">temp_fluxes_err_lo</span><span class="p">,</span> <span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">ebounds</span><span class="p">,</span> <span class="n">int_fluxes</span><span class="p">,</span> <span class="n">int_fluxes_err_hi</span><span class="p">,</span>
+                               <span class="n">int_fluxes_err_lo</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ebounds</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Energy bounds&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">from_lower_and_upper_bounds</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ENERGY_MIN&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ENERGY_MAX&#39;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="IntegralFluxPoints.to_differential_flux_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.IntegralFluxPoints.html#gammapy.spectrum.IntegralFluxPoints.to_differential_flux_points">[docs]</a>    <span class="k">def</span> <span class="nf">to_differential_flux_points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_method</span><span class="o">=</span><span class="s1">&#39;lafferty&#39;</span><span class="p">,</span>
+                                    <span class="n">y_method</span><span class="o">=</span><span class="s1">&#39;power_law&#39;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                    <span class="n">spectral_index</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `~gammapy.spectrum.DifferentialFluxPoints`</span>
+
+<span class="sd">        see :func:`~gammapy.spectrum.compute_differential_flux_points`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_min</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ENERGY_MIN&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">energy_max</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;ENERGY_MAX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;INT_FLUX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="c1"># Use upper error as symmetric value</span>
+        <span class="n">int_flux_err</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR_HI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;cm-2 s-1&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">compute_differential_flux_points</span><span class="p">(</span><span class="n">x_method</span><span class="o">=</span><span class="n">x_method</span><span class="p">,</span>
+                                               <span class="n">y_method</span><span class="o">=</span><span class="n">y_method</span><span class="p">,</span>
+                                               <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+                                               <span class="n">spectral_index</span><span class="o">=</span><span class="n">spectral_index</span><span class="p">,</span>
+                                               <span class="n">energy_min</span><span class="o">=</span><span class="n">energy_min</span><span class="p">,</span>
+                                               <span class="n">energy_max</span><span class="o">=</span><span class="n">energy_max</span><span class="p">,</span>
+                                               <span class="n">int_flux</span><span class="o">=</span><span class="n">int_flux</span><span class="p">,</span>
+                                               <span class="n">int_flux_err</span><span class="o">=</span><span class="n">int_flux_err</span><span class="p">)</span>
+
+        <span class="n">e</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;ENERGY&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;TeV-1 cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">f_err</span> <span class="o">=</span> <span class="n">val</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX_ERR&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">Unit</span><span class="p">(</span><span class="s1">&#39;TeV-1 cm-2 s-1&#39;</span><span class="p">)</span>
+        <span class="n">diff_flux</span> <span class="o">=</span> <span class="n">DifferentialFluxPoints</span><span class="o">.</span><span class="n">from_arrays</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">diff_flux</span><span class="o">=</span><span class="n">f</span><span class="p">,</span>
+                                                       <span class="n">diff_flux_err_lo</span><span class="o">=</span><span class="n">f_err</span><span class="p">,</span>
+                                                       <span class="n">diff_flux_err_hi</span><span class="o">=</span><span class="n">f_err</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">diff_flux</span></div></div>
+
+
+<div class="viewcode-block" id="compute_differential_flux_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.compute_differential_flux_points.html#gammapy.spectrum.compute_differential_flux_points">[docs]</a><span class="k">def</span> <span class="nf">compute_differential_flux_points</span><span class="p">(</span><span class="n">x_method</span><span class="o">=</span><span class="s1">&#39;lafferty&#39;</span><span class="p">,</span> <span class="n">y_method</span><span class="o">=</span><span class="s1">&#39;power_law&#39;</span><span class="p">,</span>
+                                     <span class="n">table</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                     <span class="n">spectral_index</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_min</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                     <span class="n">energy_max</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">int_flux</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                                     <span class="n">int_flux_err</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Creates differential flux points table from integral flux points table.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    table : `~astropy.table.Table`</span>
+<span class="sd">        Integral flux data table in energy bins, including columns</span>
+<span class="sd">        &#39;ENERGY_MIN&#39;, &#39;ENERGY_MAX&#39;, &#39;INT_FLUX&#39;, &#39;INT_FLUX_ERR&#39;</span>
+<span class="sd">    energy_min : float, array_like</span>
+<span class="sd">        If table not defined, minimum energy of bin(s) may be input</span>
+<span class="sd">        directly as either a float or array.</span>
+<span class="sd">    energy_max : float, array_like</span>
+<span class="sd">        If table not defined, maximum energy of bin(s) input directly.</span>
+<span class="sd">    int_flux : float, array_like</span>
+<span class="sd">        If table not defined, integral flux in bin(s) input directly. If array,</span>
+<span class="sd">        energy_min, energy_max must be either arrays of the same shape</span>
+<span class="sd">        (for differing energy bins) or floats (for the same energy bin).</span>
+<span class="sd">    int_flux_err : float, array_like</span>
+<span class="sd">        Type must be the same as for int_flux</span>
+<span class="sd">    x_method : {&#39;lafferty&#39;, &#39;log_center&#39;, &#39;table&#39;}</span>
+<span class="sd">        Flux point energy computation method; either Lafferty &amp; Wyatt</span>
+<span class="sd">        model-based positioning, log bin center positioning</span>
+<span class="sd">        or user-defined `~astropy.table.Table` positioning</span>
+<span class="sd">        using column heading [&#39;ENERGY&#39;]</span>
+<span class="sd">    y_method : {&#39;power_law&#39;, &#39;model&#39;}</span>
+<span class="sd">        Flux computation method assuming PowerLaw or user defined model function</span>
+<span class="sd">    model : callable</span>
+<span class="sd">        User-defined model function</span>
+<span class="sd">    spectral_index : float, array_like</span>
+<span class="sd">        Spectral index if default power law model is used. Either a float</span>
+<span class="sd">        or array_like (in which case, energy_min, energy_max and int_flux</span>
+<span class="sd">        must be floats to avoid ambiguity)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    differential_flux_table : `~astropy.table.Table`</span>
+<span class="sd">        Input table with appended columns &#39;ENERGY&#39;, &#39;DIFF_FLUX&#39;, &#39;DIFF_FLUX_ERR&#39;</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    For usage, see this tutorial: :ref:`tutorials-flux_point`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Use input values if not initially provided with a table</span>
+    <span class="c1"># and broadcast quantities to arrays if required</span>
+    <span class="k">if</span> <span class="n">table</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">spectral_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">energy_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_min</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_min</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">energy_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_max</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_max</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">)</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">int_flux</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">int_flux</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">int_flux_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">int_flux_err</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">int_flux_err</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="c1"># TODO: Can a better implementation be found here?</span>
+        <span class="n">lengths</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">SPECTRAL_INDEX</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">),</span>
+                       <span class="n">ENERGY_MIN</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">energy_min</span><span class="p">),</span>
+                       <span class="n">ENERGY_MAX</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">energy_max</span><span class="p">),</span>
+                       <span class="n">FLUX</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">int_flux</span><span class="p">))</span>
+        <span class="n">max_length</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">lengths</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">int_flux</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">max_length</span><span class="p">)</span>
+        <span class="n">spectral_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">max_length</span><span class="p">)</span>
+        <span class="n">energy_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_min</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">max_length</span><span class="p">)</span>
+        <span class="n">energy_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">energy_max</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">max_length</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">int_flux_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">int_flux_err</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">max_length</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="c1"># Otherwise use the table provided</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">energy_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;ENERGY_MIN&#39;</span><span class="p">])</span>
+        <span class="n">energy_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;ENERGY_MAX&#39;</span><span class="p">])</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;INT_FLUX&#39;</span><span class="p">])</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">int_flux_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;INT_FLUX_ERR&#39;</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+    <span class="c1"># Compute x point</span>
+    <span class="k">if</span> <span class="n">x_method</span> <span class="o">==</span> <span class="s1">&#39;table&#39;</span><span class="p">:</span>
+        <span class="c1"># This is only called if the provided table includes energies</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s1">&#39;ENERGY&#39;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">x_method</span> <span class="o">==</span> <span class="s1">&#39;log_center&#39;</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">gmean</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">gmean</span><span class="p">((</span><span class="n">energy_min</span><span class="p">,</span> <span class="n">energy_max</span><span class="p">)))</span>
+    <span class="k">elif</span> <span class="n">x_method</span> <span class="o">==</span> <span class="s1">&#39;lafferty&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">y_method</span> <span class="o">==</span> <span class="s1">&#39;power_law&#39;</span><span class="p">:</span>
+            <span class="c1"># Uses analytical implementation available for the power law case</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">_energy_lafferty_power_law</span><span class="p">(</span><span class="n">energy_min</span><span class="p">,</span> <span class="n">energy_max</span><span class="p">,</span>
+                                                <span class="n">spectral_index</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">_x_lafferty</span><span class="p">(</span><span class="n">energy_min</span><span class="p">,</span>
+                                          <span class="n">energy_max</span><span class="p">,</span> <span class="n">model</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid x_method: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x_method</span><span class="p">))</span>
+    <span class="c1"># Compute y point</span>
+    <span class="k">if</span> <span class="n">y_method</span> <span class="o">==</span> <span class="s1">&#39;power_law&#39;</span><span class="p">:</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">)</span>
+        <span class="n">diff_flux</span> <span class="o">=</span> <span class="n">power_law_flux</span><span class="p">(</span><span class="n">int_flux</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">energy_min</span><span class="p">,</span> <span class="n">energy_max</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">y_method</span> <span class="o">==</span> <span class="s1">&#39;model&#39;</span><span class="p">:</span>
+        <span class="n">diff_flux</span> <span class="o">=</span> <span class="n">_ydiff_excess_equals_expected</span><span class="p">(</span><span class="n">int_flux</span><span class="p">,</span> <span class="n">energy_min</span><span class="p">,</span>
+                                                  <span class="n">energy_max</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid y_method: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y_method</span><span class="p">))</span>
+    <span class="c1"># Add to table</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;ENERGY&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">energy</span>
+    <span class="n">table</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diff_flux</span>
+
+    <span class="c1"># Error processing if required</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># TODO: more rigorous implementation of error propagation should be implemented</span>
+        <span class="c1"># I.e. based on MC simulation rather than gaussian error assumption</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">int_flux_err</span> <span class="o">/</span> <span class="n">int_flux</span>
+        <span class="n">diff_flux_err</span> <span class="o">=</span> <span class="n">err</span> <span class="o">*</span> <span class="n">diff_flux</span>
+        <span class="n">table</span><span class="p">[</span><span class="s1">&#39;DIFF_FLUX_ERR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">diff_flux_err</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">pass</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;spectral_index&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spectral_index</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;spectral_index_description&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;Spectral index assumed in the DIFF_FLUX computation&quot;</span>
+    <span class="k">return</span> <span class="n">table</span></div>
+
+
+<span class="k">def</span> <span class="nf">_x_lafferty</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The Lafferty &amp; Wyatt method to compute X.</span>
+
+<span class="sd">    Pass in a function and bin bounds x_min and x_max i.e. for energy</span>
+<span class="sd">    See: Lafferty &amp; Wyatt, Nucl. Instr. and Meth. in Phys. Res. A 355(1995) 541-547</span>
+<span class="sd">    See: http://nbviewer.ipython.org/gist/cdeil/bdab5f236640ef52f736</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">brentq</span>
+    <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xmin</span><span class="p">))</span>
+
+    <span class="n">x_points</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+        <span class="n">deltax</span> <span class="o">=</span> <span class="n">xmax</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">-</span> <span class="n">xmin</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">I</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">quad</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">xmin</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">xmax</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">args</span><span class="o">=</span><span class="p">())</span>
+        <span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">I</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">deltax</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">g</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">-</span> <span class="n">F</span>
+
+        <span class="n">x_point</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">xmin</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">xmax</span><span class="p">[</span><span class="n">index</span><span class="p">])</span>
+        <span class="n">x_points</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x_point</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">x_points</span>
+
+
+<span class="k">def</span> <span class="nf">_ydiff_excess_equals_expected</span><span class="p">(</span><span class="n">yint</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The ExcessEqualsExpected method to compute Y (differential).</span>
+
+<span class="sd">    y / yint = y_model / yint_model&quot;&quot;&quot;</span>
+    <span class="n">yint_model</span> <span class="o">=</span> <span class="n">_integrate</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">y_model</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_model</span> <span class="o">*</span> <span class="p">(</span><span class="n">yint</span> <span class="o">/</span> <span class="n">yint_model</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">_integrate</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">segments</span><span class="o">=</span><span class="mf">1e3</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Integrates method function using the trapezium rule between xmin and xmax.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xmin</span><span class="p">))</span>
+    <span class="n">y_values</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+        <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">xmin</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">xmax</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">segments</span><span class="p">)</span>
+        <span class="n">y_vals</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">x_vals</span><span class="p">)</span>
+        <span class="c1"># Division by number of segments required for correct normalization</span>
+        <span class="n">y_values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">y_vals</span><span class="p">)</span> <span class="o">/</span> <span class="n">segments</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">y_values</span>
+
+
+<span class="k">def</span> <span class="nf">_energy_lafferty_power_law</span><span class="p">(</span><span class="n">energy_min</span><span class="p">,</span> <span class="n">energy_max</span><span class="p">,</span> <span class="n">spectral_index</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Analytical case for determining lafferty x-position for power law case.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Cannot call into gammapy.powerlaw as implementation is different</span>
+    <span class="c1"># due to different reference energies</span>
+    <span class="n">term0</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">-</span> <span class="n">spectral_index</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">energy_max</span> <span class="o">-</span> <span class="n">energy_min</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">term0</span>
+    <span class="n">flux_lw</span> <span class="o">=</span> <span class="n">term2</span> <span class="o">/</span> <span class="n">term1</span> <span class="o">*</span> <span class="p">(</span><span class="n">energy_max</span> <span class="o">**</span> <span class="n">term0</span> <span class="o">-</span> <span class="n">energy_min</span> <span class="o">**</span> <span class="n">term0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">flux_lw</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">spectral_index</span><span class="p">))</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="flux_point.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

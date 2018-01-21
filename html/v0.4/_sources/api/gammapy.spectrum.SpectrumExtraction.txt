@@ -1,0 +1,93 @@
+
+
+SpectrumExtraction
+===================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumExtraction
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumExtraction.EXCLUDEDREGIONS_FILE
+      ~SpectrumExtraction.OBSTABLE_FILE
+      ~SpectrumExtraction.OFFLIST_FILE
+      ~SpectrumExtraction.ONLIST_FILE
+      ~SpectrumExtraction.REGIONS_FILE
+      ~SpectrumExtraction.TOTAL_STATS_FILE
+      ~SpectrumExtraction.observations
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumExtraction.copy
+      ~SpectrumExtraction.cutout_exclusion_mask
+      ~SpectrumExtraction.extract_spectrum
+      ~SpectrumExtraction.filter_observations
+      ~SpectrumExtraction.from_config
+      ~SpectrumExtraction.from_configfile
+      ~SpectrumExtraction.info
+      ~SpectrumExtraction.run
+      ~SpectrumExtraction.write_configfile
+      ~SpectrumExtraction.write_regions
+      ~SpectrumExtraction.write_total_offlist
+      ~SpectrumExtraction.write_total_onlist
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: EXCLUDEDREGIONS_FILE
+   .. autoattribute:: OBSTABLE_FILE
+   .. autoattribute:: OFFLIST_FILE
+   .. autoattribute:: ONLIST_FILE
+   .. autoattribute:: REGIONS_FILE
+   .. autoattribute:: TOTAL_STATS_FILE
+   .. autoattribute:: observations
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: copy
+   .. automethod:: cutout_exclusion_mask
+   .. automethod:: extract_spectrum
+   .. automethod:: filter_observations
+   .. automethod:: from_config
+   .. automethod:: from_configfile
+   .. automethod:: info
+   .. automethod:: run
+   .. automethod:: write_configfile
+   .. automethod:: write_regions
+   .. automethod:: write_total_offlist
+   .. automethod:: write_total_onlist
+
+   
+   

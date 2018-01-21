@@ -1,0 +1,682 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.cube.core &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/cube/core.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/cube/core'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.cube.core</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Gamma-ray spectral cube: longitude, latitude and spectral axis.</span>
+
+<span class="sd">TODO: split `SkyCube` into a base class ``SkyCube`` and a few sub-classes:</span>
+
+<span class="sd">* ``SkyCube`` to represent functions evaluated at grid points (diffuse model format ... what is there now).</span>
+<span class="sd">* ``ExposureCube`` should also be supported (same semantics, but different units / methods as ``SkyCube`` (``gtexpcube`` format)</span>
+<span class="sd">* ``SkyCubeHistogram`` to represent model or actual counts in energy bands (``gtbin`` format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="kn">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+
+<span class="kn">from</span> <span class="nn">..spectrum</span> <span class="kn">import</span> <span class="n">LogEnergyAxis</span><span class="p">,</span> <span class="n">powerlaw</span>
+<span class="kn">from</span> <span class="nn">..utils.energy</span> <span class="kn">import</span> <span class="n">EnergyBounds</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">cube_to_image</span><span class="p">,</span> <span class="n">solid_angle</span><span class="p">,</span> <span class="n">SkyMap</span>
+<span class="kn">from</span> <span class="nn">..image.utils</span> <span class="kn">import</span> <span class="n">_bin_events_in_cube</span>
+<span class="kn">from</span> <span class="nn">..utils.fits</span> <span class="kn">import</span> <span class="n">table_to_fits_table</span>
+<span class="kn">from</span> <span class="nn">..utils.wcs</span> <span class="kn">import</span> <span class="n">get_wcs_ctype</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SkyCube&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="SkyCube"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube">[docs]</a><span class="k">class</span> <span class="nc">SkyCube</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Sky cube with dimensions lon, lat and energy.</span>
+
+<span class="sd">    Can be used e.g. for Fermi or GALPROP diffuse model cubes.</span>
+
+<span class="sd">    Note that there is a very nice ``SkyCube`` implementation here:</span>
+<span class="sd">    http://spectral-cube.readthedocs.org/en/latest/index.html</span>
+
+<span class="sd">    Here is some discussion if / how it could be used:</span>
+<span class="sd">    https://github.com/radio-astro-tools/spectral-cube/issues/110</span>
+
+<span class="sd">    For now we re-implement what we need here.</span>
+
+<span class="sd">    The order of the sky cube axes can be very confusing ... this should help:</span>
+
+<span class="sd">    * The ``data`` array axis order is ``(energy, lat, lon)``.</span>
+<span class="sd">    * The ``wcs`` object axis order is ``(lon, lat, energy)``.</span>
+<span class="sd">    * Methods use the ``wcs`` order of ``(lon, lat, energy)``,</span>
+<span class="sd">      but internally when accessing the data often the reverse order is used.</span>
+<span class="sd">      We use ``(xx, yy, zz)`` as pixel coordinates for ``(lon, lat, energy)``,</span>
+<span class="sd">      as that matches the common definition of ``x`` and ``y`` in image viewers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Name of the sky cube.</span>
+<span class="sd">    data : `~astropy.units.Quantity`</span>
+<span class="sd">        Data array (3-dim)</span>
+<span class="sd">    wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">        Word coordinate system transformation</span>
+<span class="sd">    energy : `~astropy.units.Quantity`</span>
+<span class="sd">        Energy array</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : `~astropy.units.Quantity`</span>
+<span class="sd">        Data array (3-dim)</span>
+<span class="sd">    wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">        Word coordinate system transformation</span>
+<span class="sd">    energy : `~astropy.units.Quantity`</span>
+<span class="sd">        Energy array</span>
+<span class="sd">    energy_axis : `~gammapy.spectrum.LogEnergyAxis`</span>
+<span class="sd">        Energy axis</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Diffuse model files in this format are distributed with the Fermi Science tools</span>
+<span class="sd">    software and can also be downloaded at</span>
+<span class="sd">    http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html</span>
+
+<span class="sd">    E.g. the 2-year diffuse model that was used in the 2FGL catalog production is at</span>
+<span class="sd">    http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c1"># TODO: check validity of inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span> <span class="o">=</span> <span class="n">wcs</span>
+
+        <span class="c1"># TODO: decide whether we want to use an EnergyAxis object or just use the array directly.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="k">if</span> <span class="n">energy</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span> <span class="o">=</span> <span class="n">LogEnergyAxis</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_interpolate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Interpolated data (`~scipy.interpolate.RegularGridInterpolator`)&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c1"># Initialise the interpolator</span>
+            <span class="c1"># This doesn&#39;t do any computations ... I&#39;m not sure if it allocates extra arrays.</span>
+            <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">RegularGridInterpolator</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span> <span class="o">=</span> <span class="n">RegularGridInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                                              <span class="n">fill_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyCube.read_hdu"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.read_hdu">[docs]</a>    <span class="k">def</span> <span class="nf">read_hdu</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">hdu_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read sky cube from HDU.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        object_hdu : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">            Image HDU object to be read</span>
+<span class="sd">        energy_table_hdu : `~astropy.io.fits.TableHDU`</span>
+<span class="sd">            Table HDU object giving energies of each slice</span>
+<span class="sd">            of the Image HDU object_hdu</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sky_cube : `SkyCube`</span>
+<span class="sd">            Sky cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">object_hdu</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">energy_table_hdu</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">object_hdu</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;1 / (cm2 MeV s sr)&#39;</span><span class="p">)</span>
+        <span class="c1"># Note: the energy axis of the FITS cube is unusable.</span>
+        <span class="c1"># We only use proj for LON, LAT and call ENERGY from the table extension</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">object_hdu</span><span class="o">.</span><span class="n">header</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">energy_table_hdu</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">]</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyCube.read"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;fermi&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read sky cube from FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File name</span>
+<span class="sd">        format : {&#39;fermi&#39;, &#39;fermi-counts&#39;}</span>
+<span class="sd">            Fits file format.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sky_cube : `SkyCube`</span>
+<span class="sd">            Sky cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="c1"># Note: the energy axis of the FITS cube is unusable.</span>
+        <span class="c1"># We only use proj for LON, LAT and do ENERGY ourselves</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header</span><span class="p">)</span><span class="o">.</span><span class="n">celestial</span>
+        <span class="k">if</span> <span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;fermi&#39;</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;ENERGIES&#39;</span><span class="p">)[</span><span class="s1">&#39;Energy&#39;</span><span class="p">]</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;1 / (cm2 MeV s sr)&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;fermi-counts&#39;</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">from_ebounds</span><span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)[</span><span class="s1">&#39;EBOUNDS&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;count&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Not a valid cube fits format&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyCube.fill"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.fill">[docs]</a>    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">events</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fill sky cube with events.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        events : `~astropy.table.Table`</span>
+<span class="sd">            Event list table</span>
+<span class="sd">        origin : {0, 1}</span>
+<span class="sd">            Pixel coordinate origin.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">_bin_events_in_cube</span><span class="p">(</span><span class="n">events</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyCube.empty"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.empty">[docs]</a>    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">enbins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">eunit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create empty sky cube with log equal energy binning from the scratch.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        emin : float</span>
+<span class="sd">            Minimum energy.</span>
+<span class="sd">        emax : float</span>
+<span class="sd">            Maximum energy.</span>
+<span class="sd">        enbins : int</span>
+<span class="sd">            Number of energy bins.</span>
+<span class="sd">        eunit : str</span>
+<span class="sd">            Energy unit.</span>
+<span class="sd">        kwargs : dict</span>
+<span class="sd">            Keyword arguments passed to `~gammapy.image.SkyMap.empty` to create</span>
+<span class="sd">            the spatial part of the cube.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">refmap</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">energies</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">enbins</span><span class="p">,</span> <span class="n">eunit</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">refmap</span><span class="o">.</span><span class="n">data</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energies</span><span class="p">))</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">refmap</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energies</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyCube.empty_like"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.empty_like">[docs]</a>    <span class="k">def</span> <span class="nf">empty_like</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">refcube</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an empty sky cube with the same WCS and energy specification</span>
+<span class="sd">        as given sky cube.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        refcube : `~gammapy.cube.SkyCube`</span>
+<span class="sd">            Reference sky cube.</span>
+<span class="sd">        fill : float, optional</span>
+<span class="sd">            Fill sky map with constant value. Default is 0.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">refcube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fill</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">refcube</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">energies</span> <span class="o">=</span> <span class="n">refcube</span><span class="o">.</span><span class="n">energies</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energies</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyCube.world2pix"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.world2pix">[docs]</a>    <span class="k">def</span> <span class="nf">world2pix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert world to pixel coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lon, lat, energy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x, y, z or array with (x, y, z) as columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;deg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;deg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># convention for gammapy</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs_world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">combine</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span></div>
+
+<div class="viewcode-block" id="SkyCube.pix2world"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.pix2world">[docs]</a>    <span class="k">def</span> <span class="nf">pix2world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert world to pixel coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x, y, z</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        lon, lat, energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># convention for gammapy</span>
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span><span class="o">.</span><span class="n">pix2world</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spatial_coordinate_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spatial coordinate images (2x `~astropy.units.Quantity`)</span>
+
+<span class="sd">        Returns two separate objects for the arrays of longitude</span>
+<span class="sd">        and latitude pixel coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_lon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">n_lat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">i_lat</span><span class="p">,</span> <span class="n">i_lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="n">n_lat</span><span class="p">,</span> <span class="n">n_lon</span><span class="p">))</span>
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix2world</span><span class="p">(</span><span class="n">i_lon</span><span class="p">,</span> <span class="n">i_lat</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span>
+
+<div class="viewcode-block" id="SkyCube.to_sherpa_data3d"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.to_sherpa_data3d">[docs]</a>    <span class="k">def</span> <span class="nf">to_sherpa_data3d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert sky cube to sherpa `Data3D` object.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.sherpa_</span> <span class="kn">import</span> <span class="n">Data3D</span>
+
+        <span class="c1"># Energy axes</span>
+        <span class="n">energies</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;TeV&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">Quantity</span><span class="p">(</span><span class="n">energies</span><span class="p">,</span> <span class="s1">&#39;TeV&#39;</span><span class="p">))</span>
+        <span class="n">elo</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">lower_bounds</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">ehi</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">upper_bounds</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">spatial_coordinate_images</span>
+
+        <span class="n">n_ebins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elo</span><span class="p">)</span>
+        <span class="n">ra_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="p">(</span><span class="n">n_ebins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">dec_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tile</span><span class="p">(</span><span class="n">dec</span><span class="p">,</span> <span class="p">(</span><span class="n">n_ebins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+        <span class="n">elo_cube</span> <span class="o">=</span> <span class="n">elo</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_ebins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ra</span><span class="p">)</span>
+        <span class="n">ehi_cube</span> <span class="o">=</span> <span class="n">ehi</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">n_ebins</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">ra</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Data3D</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">elo_cube</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">ehi_cube</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">ra_cube</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+                      <span class="n">dec_cube</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+                      <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">solid_angle_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Solid angle image in steradian (`~astropy.units.Quantity`)&quot;&quot;&quot;</span>
+        <span class="n">cube_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span>
+        <span class="n">image_hdu</span> <span class="o">=</span> <span class="n">cube_to_image</span><span class="p">(</span><span class="n">cube_hdu</span><span class="p">)</span>
+        <span class="n">image_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;WCSAXES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="k">return</span> <span class="n">solid_angle</span><span class="p">(</span><span class="n">image_hdu</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;sr&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SkyCube.flux"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.flux">[docs]</a>    <span class="k">def</span> <span class="nf">flux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Differential flux.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lon : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Longitude</span>
+<span class="sd">        lat : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Latitude</span>
+<span class="sd">        energy : `~astropy.units.Quantity`</span>
+<span class="sd">            Energy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        flux : `~astropy.units.Quantity`</span>
+<span class="sd">            Differential flux (1 / (cm2 MeV s sr))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Determine output shape by creating some array via broadcasting</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon</span> <span class="o">*</span> <span class="n">lat</span> <span class="o">*</span> <span class="n">energy</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="n">pix_coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coord</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="s1">&#39;1 / (cm2 MeV s sr)&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyCube.spectral_index"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.spectral_index">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">dz</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Power law spectral index (`numpy.array`).</span>
+
+<span class="sd">        A forward finite difference method with step ``dz`` is used along</span>
+<span class="sd">        the ``z = log10(energy)`` axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lon : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Longitude</span>
+<span class="sd">        lat : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Latitude</span>
+<span class="sd">        energy : `~astropy.units.Quantity`</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="c1"># Compute flux at `z = log(energy)`</span>
+        <span class="n">pix_coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">flux1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coord</span><span class="p">)</span>
+
+        <span class="c1"># Compute flux at `z + dz`</span>
+        <span class="n">pix_coord</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dz</span>
+        <span class="c1"># pixel_coordinates += np.zeros(pixel_coordinates.shape)</span>
+        <span class="n">flux2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coord</span><span class="p">)</span>
+
+        <span class="c1"># Power-law spectral index through these two flux points</span>
+        <span class="c1"># d_log_flux = np.log(flux2 / flux1)</span>
+        <span class="c1"># spectral_index = d_log_flux / dz</span>
+        <span class="n">energy1</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">dz</span><span class="p">)</span> <span class="o">*</span> <span class="n">energy</span>
+        <span class="n">spectral_index</span> <span class="o">=</span> <span class="n">powerlaw</span><span class="o">.</span><span class="n">g_from_points</span><span class="p">(</span><span class="n">energy1</span><span class="p">,</span> <span class="n">energy2</span><span class="p">,</span> <span class="n">flux1</span><span class="p">,</span> <span class="n">flux2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">spectral_index</span></div>
+
+<div class="viewcode-block" id="SkyCube.integral_flux_image"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.integral_flux_image">[docs]</a>    <span class="k">def</span> <span class="nf">integral_flux_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_band</span><span class="p">,</span> <span class="n">energy_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Integral flux image for a given energy band.</span>
+
+<span class="sd">        A local power-law approximation in small energy bins is</span>
+<span class="sd">        used to compute the integral.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy_band : `~astropy.units.Quantity`</span>
+<span class="sd">            Tuple ``(energy_min, energy_max)``</span>
+<span class="sd">        energy_bins : int or `~astropy.units.Quantity`</span>
+<span class="sd">            Energy bin definition.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        image : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">            Integral flux image (1 / (cm^2 s sr))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">energy_bins</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">equal_log_spacing</span><span class="p">(</span>
+                <span class="n">energy_band</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">energy_band</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">energy_bins</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">energy_bins</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">energy_band</span><span class="p">)</span>
+
+        <span class="n">energy_bins</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;MeV&#39;</span><span class="p">)</span>
+        <span class="n">energy1</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="o">.</span><span class="n">lower_bounds</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="o">.</span><span class="n">upper_bounds</span>
+
+        <span class="c1"># Compute differential flux at energy bin edges of all pixels</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">zz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span>
+
+        <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">zz</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s1">&#39;ij&#39;</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">xx</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="n">pix_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">xx</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">yy</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">zz</span><span class="o">.</span><span class="n">flat</span><span class="p">])</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coords</span><span class="p">)</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="c1"># Compute integral flux using power-law approximation in each bin</span>
+        <span class="n">flux1</span> <span class="o">=</span> <span class="n">flux</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">flux2</span> <span class="o">=</span> <span class="n">flux</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">energy1</span> <span class="o">=</span> <span class="n">energy1</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="n">energy2</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">integral_flux</span> <span class="o">=</span> <span class="n">powerlaw</span><span class="o">.</span><span class="n">I_from_points</span><span class="p">(</span><span class="n">energy1</span><span class="p">,</span> <span class="n">energy2</span><span class="p">,</span> <span class="n">flux1</span><span class="p">,</span> <span class="n">flux2</span><span class="p">)</span>
+
+        <span class="n">integral_flux</span> <span class="o">=</span> <span class="n">integral_flux</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># TODO: get rid of the `str` calls once this `WCS.sub` issue is fixed:</span>
+        <span class="c1"># https://github.com/astropy/astropy/issues/3356</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="s1">&#39;longitude&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="s1">&#39;latitude&#39;</span><span class="p">)]</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+
+        <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">integral_flux</span><span class="p">,</span>
+                            <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;integral_flux&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">hdu</span></div>
+
+<div class="viewcode-block" id="SkyCube.reproject_to"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.reproject_to">[docs]</a>    <span class="k">def</span> <span class="nf">reproject_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reference_cube</span><span class="p">,</span> <span class="n">projection_type</span><span class="o">=</span><span class="s1">&#39;bicubic&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spatially reprojects a `SkyCube` onto a reference cube.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        reference_cube : `SkyCube`</span>
+<span class="sd">            Reference cube with the desired spatial projection.</span>
+<span class="sd">        projection_type : {&#39;nearest-neighbor&#39;, &#39;bilinear&#39;,</span>
+<span class="sd">            &#39;biquadratic&#39;, &#39;bicubic&#39;, &#39;flux-conserving&#39;}</span>
+<span class="sd">            Specify method of reprojection. Default: &#39;bilinear&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        reprojected_cube : `SkyCube`</span>
+<span class="sd">            Cube spatially reprojected to the reference cube.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">reproject</span> <span class="kn">import</span> <span class="n">reproject_interp</span>
+
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">shape_out</span> <span class="o">=</span> <span class="n">reference</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wcs_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">dropaxis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">wcs_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wcs_out</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">dropaxis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">wcs_out</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">wcs</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+
+        <span class="n">cube</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reference</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                             <span class="n">reference</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">energy_slices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c1"># TODO: Re-implement to reproject cubes directly without needing</span>
+        <span class="c1"># to loop over energies here. Errors with reproject when doing this</span>
+        <span class="c1"># first need to be understood and fixed.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">energy_slices</span><span class="p">:</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">data_in</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">wcs_in</span><span class="p">)</span>
+            <span class="n">new_cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">reproject_interp</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">wcs_out</span><span class="p">,</span> <span class="n">shape_out</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">projection_type</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="c1"># Create new wcs</span>
+        <span class="n">header_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+        <span class="n">header_out</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+        <span class="c1"># Keep output energy info the same as input, but changes spatial information</span>
+        <span class="c1"># So need to restore energy parameters to input values here</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s1">&#39;CRPIX3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s1">&#39;CRPIX3&#39;</span><span class="p">]</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s1">&#39;CDELT3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s1">&#39;CDELT3&#39;</span><span class="p">]</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s1">&#39;CTYPE3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s1">&#39;CTYPE3&#39;</span><span class="p">]</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s1">&#39;CRVAL3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s1">&#39;CRVAL3&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">wcs_out</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header_out</span><span class="p">)</span><span class="o">.</span><span class="n">celestial</span>
+
+        <span class="k">return</span> <span class="n">SkyCube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs_out</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyCube.to_fits"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.to_fits">[docs]</a>    <span class="k">def</span> <span class="nf">to_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes SkyCube to FITS hdu_list.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            * hdu_list[0] : `~astropy.io.fits.PrimaryHDU`</span>
+<span class="sd">                Image array of data</span>
+<span class="sd">            * hdu_list[1] : `~astropy.io.fits.BinTableHDU`</span>
+<span class="sd">                Table of energies</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span>
+        <span class="n">image</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;SPECUNIT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{0.unit:FITS}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># for BinTableHDU&#39;s the data must be added via a Table object</span>
+        <span class="n">energy_table</span> <span class="o">=</span> <span class="n">Table</span><span class="p">()</span>
+        <span class="n">energy_table</span><span class="p">[</span><span class="s1">&#39;Energy&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+        <span class="n">energy_table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;ENERGY&#39;</span>
+
+        <span class="n">energies</span> <span class="o">=</span> <span class="n">table_to_fits_table</span><span class="p">(</span><span class="n">energy_table</span><span class="p">)</span>
+
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">image</span><span class="p">,</span> <span class="n">energies</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">hdu_list</span></div>
+
+<div class="viewcode-block" id="SkyCube.writeto"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.writeto">[docs]</a>    <span class="k">def</span> <span class="nf">writeto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes SkyCube to FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : string</span>
+<span class="sd">            Name of output file (.fits)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_fits</span><span class="p">()</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Copied from `spectral-cube` package</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot;Sky cube {} with shape={}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">unit</span> <span class="ow">is</span> <span class="n">u</span><span class="o">.</span><span class="n">dimensionless_unscaled</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot;:</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot; and unit={}:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot; n_lon:    {:5d}  type_lon:    {:15s}  unit_lon:    {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot; n_lat:    {:5d}  type_lat:    {:15s}  unit_lat:    {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot; n_energy: {:5d}  unit_energy: {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ss</span>
+
+<div class="viewcode-block" id="SkyCube.info"><a class="viewcode-back" href="../../../api/gammapy.cube.SkyCube.html#gammapy.cube.SkyCube.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print summary info about the cube.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="core.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

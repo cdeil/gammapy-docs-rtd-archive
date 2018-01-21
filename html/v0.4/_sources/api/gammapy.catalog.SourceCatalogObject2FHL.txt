@@ -1,0 +1,42 @@
+
+
+SourceCatalogObject2FHL
+=======================================
+
+.. currentmodule:: gammapy.catalog
+
+.. autoclass:: SourceCatalogObject2FHL
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SourceCatalogObject2FHL.summary
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: summary
+
+   
+   

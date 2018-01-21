@@ -1,0 +1,459 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ImageAnalysis &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Command line tools (gammapy.scripts)" href="../scripts/index.html" />
+    <link rel="next" title="Astrophysical source and population models (gammapy.astro)" href="../astro/index.html" />
+    <link rel="prev" title="stack_observations" href="gammapy.scripts.stack_observations.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.scripts.ImageAnalysis.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.scripts.ImageAnalysis'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../astro/index.html" title="Astrophysical source and population models (gammapy.astro)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.scripts.stack_observations.html" title="stack_observations">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../scripts/index.html" accesskey="U">Command line tools  (<code class="docutils literal"><span class="pre">gammapy.scripts</span></code>)</a> &raquo;</li>
+      
+      <li>ImageAnalysis</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="imageanalysis">
+<h1>ImageAnalysis<a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#imageanalysis" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.scripts.ImageAnalysis">
+<em class="property">class </em><code class="descclassname">gammapy.scripts.</code><code class="descname">ImageAnalysis</code><span class="sig-paren">(</span><em>empty_image=None</em>, <em>energy_band=None</em>, <em>offset_band=None</em>, <em>data_store=None</em>, <em>obs_table=None</em>, <em>exclusion_mask=None</em>, <em>ncounts_min=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Gammapy 2D image based analysis.</p>
+<p>The computed images are stored in a <code class="docutils literal"><span class="pre">maps</span></code> attribute of type <a class="reference internal" href="gammapy.image.SkyMapCollection.html#gammapy.image.SkyMapCollection" title="gammapy.image.SkyMapCollection"><code class="xref py py-obj docutils literal"><span class="pre">SkyMapCollection</span></code></a>
+with the following keys:</p>
+<ul class="simple">
+<li>counts : counts for one obs</li>
+<li>bkg : bkg model for one obs</li>
+<li>exposure : exposure for one obs</li>
+<li>total_counts : total counts of all the observations</li>
+<li>total_bkg : total bkg model for all the observations</li>
+<li>total_exposure : total exposure for all the observations</li>
+<li>total_excess : total excess for all the observations</li>
+<li>significance : significance for all the observations</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>empty_image</strong> : <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a></p>
+<blockquote>
+<div><p>ref to an empty image</p>
+</div></blockquote>
+<p><strong>energy_band</strong> : <a class="reference internal" href="gammapy.utils.energy.Energy.html#gammapy.utils.energy.Energy" title="gammapy.utils.energy.Energy"><code class="xref py py-obj docutils literal"><span class="pre">Energy</span></code></a></p>
+<blockquote>
+<div><p>Energy band for which we want to compute the image</p>
+</div></blockquote>
+<p><strong>offset_band</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">astropy.coordinates.Angle</span></code></a></p>
+<blockquote>
+<div><p>Offset Band where you compute the image</p>
+</div></blockquote>
+<p><strong>data_store</strong> : <a class="reference internal" href="gammapy.data.DataStore.html#gammapy.data.DataStore" title="gammapy.data.DataStore"><code class="xref py py-obj docutils literal"><span class="pre">DataStore</span></code></a></p>
+<blockquote>
+<div><p><code class="xref py py-obj docutils literal"><span class="pre">DataStore</span></code> where are situated the events</p>
+</div></blockquote>
+<p><strong>obs_table</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a></p>
+<blockquote>
+<div><p>Required columns: OBS_ID</p>
+</div></blockquote>
+<p><strong>exclusion_mask</strong> : <a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask" title="gammapy.image.ExclusionMask"><code class="xref py py-obj docutils literal"><span class="pre">ExclusionMask</span></code></a></p>
+<blockquote>
+<div><p>Exclusion regions</p>
+</div></blockquote>
+<p><strong>ncounts_min</strong> : int</p>
+<blockquote class="last">
+<div><p>Minimum counts required for one observation</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.background_norm_factor" title="gammapy.scripts.ImageAnalysis.background_norm_factor"><code class="xref py py-obj docutils literal"><span class="pre">background_norm_factor</span></code></a>(counts,&nbsp;bkg)</td>
+<td>Determine the scaling factor to apply to the background map.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_background" title="gammapy.scripts.ImageAnalysis.make_background"><code class="xref py py-obj docutils literal"><span class="pre">make_background</span></code></a>(obs_id[,&nbsp;bkg_norm])</td>
+<td>Make the background map for one observation from a bkg model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_counts" title="gammapy.scripts.ImageAnalysis.make_counts"><code class="xref py py-obj docutils literal"><span class="pre">make_counts</span></code></a>(obs_id)</td>
+<td>Fill the counts image for the events of one observation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_exposure" title="gammapy.scripts.ImageAnalysis.make_exposure"><code class="xref py py-obj docutils literal"><span class="pre">make_exposure</span></code></a>(obs_id[,&nbsp;spectral_index,&nbsp;...])</td>
+<td>Compute the exposure map for one observation.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_maps" title="gammapy.scripts.ImageAnalysis.make_maps"><code class="xref py py-obj docutils literal"><span class="pre">make_maps</span></code></a>(radius[,&nbsp;bkg_norm,&nbsp;...])</td>
+<td>Compute the counts, bkg, exclusion_mask and significance images for a set of observation.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_psf" title="gammapy.scripts.ImageAnalysis.make_psf"><code class="xref py py-obj docutils literal"><span class="pre">make_psf</span></code></a>()</td>
+<td>Make PSF.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_significance" title="gammapy.scripts.ImageAnalysis.make_significance"><code class="xref py py-obj docutils literal"><span class="pre">make_significance</span></code></a>(radius)</td>
+<td>Make the significance image from the counts and bkg images.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_bkg" title="gammapy.scripts.ImageAnalysis.make_total_bkg"><code class="xref py py-obj docutils literal"><span class="pre">make_total_bkg</span></code></a>([bkg_norm])</td>
+<td>Stack the total bkg from the observation in the &#8216;DataStore&#8217;.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_counts" title="gammapy.scripts.ImageAnalysis.make_total_counts"><code class="xref py py-obj docutils literal"><span class="pre">make_total_counts</span></code></a>()</td>
+<td>Stack the total count from the observation in the &#8216;DataStore&#8217;.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_excess" title="gammapy.scripts.ImageAnalysis.make_total_excess"><code class="xref py py-obj docutils literal"><span class="pre">make_total_excess</span></code></a>()</td>
+<td>Compute excess between counts and bkg map.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_exposure" title="gammapy.scripts.ImageAnalysis.make_total_exposure"><code class="xref py py-obj docutils literal"><span class="pre">make_total_exposure</span></code></a>([spectral_index,&nbsp;...])</td>
+<td>Compute the exposure map for all the observations in the obs_table.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.background_norm_factor">
+<code class="descname">background_norm_factor</code><span class="sig-paren">(</span><em>counts</em>, <em>bkg</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.background_norm_factor"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.background_norm_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine the scaling factor to apply to the background map.</p>
+<p>Compares the events in the counts maps and the bkg map outside the exclusion maps.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>counts</strong> : <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a></p>
+<blockquote>
+<div><p>counts image</p>
+</div></blockquote>
+<p><strong>bkg</strong> : <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a></p>
+<blockquote>
+<div><p>bkg image</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>scale</strong> : float</p>
+<blockquote class="last">
+<div><p>scaling factor between the counts and the bkg maps outside the exclusion region.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_background">
+<code class="descname">make_background</code><span class="sig-paren">(</span><em>obs_id</em>, <em>bkg_norm=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_background"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the background map for one observation from a bkg model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>obs_id</strong> : int</p>
+<blockquote>
+<div><p>Observation ID</p>
+</div></blockquote>
+<p><strong>bkg_norm</strong> : bool</p>
+<blockquote class="last">
+<div><p>If true, apply the scaling factor  to the bkg map</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_counts">
+<code class="descname">make_counts</code><span class="sig-paren">(</span><em>obs_id</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_counts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill the counts image for the events of one observation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>obs_id</strong> : int</p>
+<blockquote class="last">
+<div><p>Observation ID</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_exposure">
+<code class="descname">make_exposure</code><span class="sig-paren">(</span><em>obs_id</em>, <em>spectral_index=2.3</em>, <em>for_integral_flux=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_exposure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_exposure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the exposure map for one observation.</p>
+<p>Excess/exposure will give the differential flux at the energy Eref at the middle of the <code class="docutils literal"><span class="pre">self.energy_band</span></code></p>
+<p>If <code class="docutils literal"><span class="pre">for_integral_flux</span></code> is true, it will give the integrated flux over the <code class="docutils literal"><span class="pre">self.energy_band</span></code></p>
+<p>Exposure is define as follow:</p>
+<div class="math">
+\[EXPOSURE = \int_{E_1}^{E_2} A(E) \phi(E) * T \, dE\]</div>
+<p>with <code class="docutils literal"><span class="pre">T</span></code> the observation livetime, <code class="docutils literal"><span class="pre">A(E)</span></code> the effective area,
+the energy integration range <span class="math">\([E_1,E_2]\)</span> given by <code class="docutils literal"><span class="pre">self.energy_range</span></code>
+and assuming a power law for the flux <span class="math">\(\phi(E) = \phi_{Eref} \times \frac{E}{E_{ref}}^{\gamma}\)</span>
+with <span class="math">\(\gamma\)</span> the spectral index of the assumed power law.</p>
+<p>If <code class="docutils literal"><span class="pre">for_integral_flux</span></code> is true,
+<span class="math">\(EXPOSURE = \int_{E_1}^{E_2} A(E) \phi_{E} * T \, dE / \int \phi_{E} \, dE\)</span></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>obs_id</strong> : int</p>
+<blockquote>
+<div><p>Number of the observation</p>
+</div></blockquote>
+<p><strong>spectral_index</strong> : float</p>
+<blockquote>
+<div><p>Assumed power-law spectral index</p>
+</div></blockquote>
+<p><strong>for_integral_flux</strong> : bool</p>
+<blockquote class="last">
+<div><p>True if you want that the total excess / exposure gives the integrated flux</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_maps">
+<code class="descname">make_maps</code><span class="sig-paren">(</span><em>radius</em>, <em>bkg_norm=True</em>, <em>spectral_index=2.3</em>, <em>for_integral_flux=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_maps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the counts, bkg, exclusion_mask and significance images for a set of observation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>radius</strong> : float</p>
+<blockquote>
+<div><p>Disk radius in pixels for the significance map.</p>
+</div></blockquote>
+<p><strong>bkg_norm</strong> : bool</p>
+<blockquote>
+<div><p>If true, apply the scaling factor to the bkg map</p>
+</div></blockquote>
+<p><strong>spectral_index</strong> : float</p>
+<blockquote>
+<div><p>Assumed power-law spectral index</p>
+</div></blockquote>
+<p><strong>for_integral_flux</strong> : bool</p>
+<blockquote class="last">
+<div><p>True if you want that the total excess / exposure gives the integrated flux</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_psf">
+<code class="descname">make_psf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_psf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_psf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make PSF.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_significance">
+<code class="descname">make_significance</code><span class="sig-paren">(</span><em>radius</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_significance"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_significance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make the significance image from the counts and bkg images.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>radius</strong> : float</p>
+<blockquote>
+<div><p>Disk radius in pixels.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>s_maps</strong> : <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a></p>
+<blockquote class="last">
+<div><p>significance map</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_total_bkg">
+<code class="descname">make_total_bkg</code><span class="sig-paren">(</span><em>bkg_norm=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_total_bkg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_bkg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack the total bkg from the observation in the &#8216;DataStore&#8217;.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>bkg_norm</strong> : bool</p>
+<blockquote class="last">
+<div><p>If true, apply the scaling factor  to the bkg map</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_total_counts">
+<code class="descname">make_total_counts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_total_counts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_counts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack the total count from the observation in the &#8216;DataStore&#8217;.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_total_excess">
+<code class="descname">make_total_excess</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_total_excess"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_excess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute excess between counts and bkg map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.scripts.ImageAnalysis.make_total_exposure">
+<code class="descname">make_total_exposure</code><span class="sig-paren">(</span><em>spectral_index=2.3</em>, <em>for_integral_flux=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/scripts/image_pipe.html#ImageAnalysis.make_total_exposure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.ImageAnalysis.html#gammapy.scripts.ImageAnalysis.make_total_exposure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the exposure map for all the observations in the obs_table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>spectral_index</strong> : float</p>
+<blockquote>
+<div><p>Assumed power-law spectral index</p>
+</div></blockquote>
+<p><strong>for_integral_flux</strong> : bool</p>
+<blockquote class="last">
+<div><p>True if you want that the total excess / exposure gives the integrated flux</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.scripts.ImageAnalysis.html#">ImageAnalysis</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.scripts.ImageAnalysis.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.scripts.ImageAnalysis.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

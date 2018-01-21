@@ -1,0 +1,42 @@
+
+
+SourceCatalogObjectHGPS
+=======================================
+
+.. currentmodule:: gammapy.catalog
+
+.. autoclass:: SourceCatalogObjectHGPS
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SourceCatalogObjectHGPS.summary
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: summary
+
+   
+   

@@ -1,0 +1,8 @@
+
+
+binary_dilation_circle
+====================================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: binary_dilation_circle

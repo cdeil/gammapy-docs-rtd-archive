@@ -1,0 +1,89 @@
+
+
+SkyCube
+====================
+
+.. currentmodule:: gammapy.cube
+
+.. autoclass:: SkyCube
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SkyCube.solid_angle_image
+      ~SkyCube.spatial_coordinate_images
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyCube.empty
+      ~SkyCube.empty_like
+      ~SkyCube.fill
+      ~SkyCube.flux
+      ~SkyCube.info
+      ~SkyCube.integral_flux_image
+      ~SkyCube.pix2world
+      ~SkyCube.read
+      ~SkyCube.read_hdu
+      ~SkyCube.reproject_to
+      ~SkyCube.spectral_index
+      ~SkyCube.to_fits
+      ~SkyCube.to_sherpa_data3d
+      ~SkyCube.world2pix
+      ~SkyCube.writeto
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: solid_angle_image
+   .. autoattribute:: spatial_coordinate_images
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: empty
+   .. automethod:: empty_like
+   .. automethod:: fill
+   .. automethod:: flux
+   .. automethod:: info
+   .. automethod:: integral_flux_image
+   .. automethod:: pix2world
+   .. automethod:: read
+   .. automethod:: read_hdu
+   .. automethod:: reproject_to
+   .. automethod:: spectral_index
+   .. automethod:: to_fits
+   .. automethod:: to_sherpa_data3d
+   .. automethod:: world2pix
+   .. automethod:: writeto
+
+   
+   

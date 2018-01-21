@@ -1,0 +1,8 @@
+
+
+fits_table_to_pandas
+=======================================
+
+.. currentmodule:: gammapy.utils.fits
+
+.. autofunction:: fits_table_to_pandas

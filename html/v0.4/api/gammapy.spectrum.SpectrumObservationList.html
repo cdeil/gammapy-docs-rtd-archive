@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SpectrumObservationList &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="SpectrumResult" href="gammapy.spectrum.SpectrumResult.html" />
+    <link rel="prev" title="SpectrumObservation" href="gammapy.spectrum.SpectrumObservation.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.SpectrumObservationList.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.SpectrumObservationList'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumResult.html" title="SpectrumResult">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumObservation.html" title="SpectrumObservation">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>SpectrumObservationList</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spectrumobservationlist">
+<h1>SpectrumObservationList<a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#spectrumobservationlist" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.SpectrumObservationList">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">SpectrumObservationList</code><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_extraction.html#SpectrumObservationList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/library/functions.html#list" title="(in Python v2.7)"><code class="xref py py-class docutils literal"><span class="pre">list</span></code></a></p>
+<p>List of <a class="reference internal" href="gammapy.spectrum.SpectrumObservation.html#gammapy.spectrum.SpectrumObservation" title="gammapy.spectrum.SpectrumObservation"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservation</span></code></a>.</p>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.total_spectrum" title="gammapy.spectrum.SpectrumObservationList.total_spectrum"><code class="xref py py-obj docutils literal"><span class="pre">total_spectrum</span></code></a></td>
+<td>Stack all observations belongig to the list</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.filter_by_reflected_regions" title="gammapy.spectrum.SpectrumObservationList.filter_by_reflected_regions"><code class="xref py py-obj docutils literal"><span class="pre">filter_by_reflected_regions</span></code></a>(n_min)</td>
+<td>Filter observation list according to number of reflected regions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.from_observation_table" title="gammapy.spectrum.SpectrumObservationList.from_observation_table"><code class="xref py py-obj docutils literal"><span class="pre">from_observation_table</span></code></a>(obs_table)</td>
+<td>Create <a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList" title="gammapy.spectrum.SpectrumObservationList"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationList</span></code></a> from an observation table.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.get_obslist_from_ids" title="gammapy.spectrum.SpectrumObservationList.get_obslist_from_ids"><code class="xref py py-obj docutils literal"><span class="pre">get_obslist_from_ids</span></code></a>(id_list)</td>
+<td>Return an subset of the observation list</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.info" title="gammapy.spectrum.SpectrumObservationList.info"><code class="xref py py-obj docutils literal"><span class="pre">info</span></code></a>()</td>
+<td>Info string</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.write_ogip" title="gammapy.spectrum.SpectrumObservationList.write_ogip"><code class="xref py py-obj docutils literal"><span class="pre">write_ogip</span></code></a>([outdir])</td>
+<td>Create OGIP files</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.spectrum.SpectrumObservationList.total_spectrum">
+<code class="descname">total_spectrum</code><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.total_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack all observations belongig to the list</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumObservationList.filter_by_reflected_regions">
+<code class="descname">filter_by_reflected_regions</code><span class="sig-paren">(</span><em>n_min</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_extraction.html#SpectrumObservationList.filter_by_reflected_regions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.filter_by_reflected_regions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter observation list according to number of reflected regions.</p>
+<p>Condition: number of reflected regions &gt;= nmin.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>n_min</strong> : int</p>
+<blockquote>
+<div><p>Minimum number of reflected regions</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>idx</strong> : <code class="xref py py-obj docutils literal"><span class="pre">array</span></code></p>
+<blockquote class="last">
+<div><p>Indices of element fulfilling the condition</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.SpectrumObservationList.from_observation_table">
+<em class="property">classmethod </em><code class="descname">from_observation_table</code><span class="sig-paren">(</span><em>obs_table</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_extraction.html#SpectrumObservationList.from_observation_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.from_observation_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create <a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList" title="gammapy.spectrum.SpectrumObservationList"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationList</span></code></a> from an
+observation table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>obs_table</strong> : <a class="reference internal" href="gammapy.data.ObservationTable.html#gammapy.data.ObservationTable" title="gammapy.data.ObservationTable"><code class="xref py py-obj docutils literal"><span class="pre">ObservationTable</span></code></a></p>
+<blockquote class="last">
+<div><p>Observation table with column <code class="docutils literal"><span class="pre">PHAFILE</span></code></p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumObservationList.get_obslist_from_ids">
+<code class="descname">get_obslist_from_ids</code><span class="sig-paren">(</span><em>id_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_extraction.html#SpectrumObservationList.get_obslist_from_ids"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.get_obslist_from_ids" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an subset of the observation list</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>id_list</strong> : list of int</p>
+<blockquote>
+<div><p>List of Observation Id (runnumber)</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>observation</strong> : <a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList" title="gammapy.spectrum.SpectrumObservationList"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationList</span></code></a></p>
+<blockquote class="last">
+<div><p>Subset of observations</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumObservationList.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_extraction.html#SpectrumObservationList.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Info string</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumObservationList.write_ogip">
+<code class="descname">write_ogip</code><span class="sig-paren">(</span><em>outdir=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_extraction.html#SpectrumObservationList.write_ogip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList.write_ogip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create OGIP files</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>outdir</strong> : str, <code class="xref py py-obj docutils literal"><span class="pre">Path</span></code></p>
+<blockquote class="last">
+<div><p>write directory</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#">SpectrumObservationList</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.SpectrumObservationList.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.SpectrumObservationList.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

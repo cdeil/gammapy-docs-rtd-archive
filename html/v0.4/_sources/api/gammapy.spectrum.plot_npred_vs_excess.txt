@@ -1,0 +1,8 @@
+
+
+plot_npred_vs_excess
+=====================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: plot_npred_vs_excess

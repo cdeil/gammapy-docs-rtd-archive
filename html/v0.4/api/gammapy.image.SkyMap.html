@@ -1,0 +1,638 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SkyMap &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Image processing and analysis tools (gammapy.image)" href="../image/index.html" />
+    <link rel="next" title="SkyMapCollection" href="gammapy.image.SkyMapCollection.html" />
+    <link rel="prev" title="GalacticPlaneSurveyPanelPlot" href="gammapy.image.GalacticPlaneSurveyPanelPlot.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.image.SkyMap.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.image.SkyMap'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.image.SkyMapCollection.html" title="SkyMapCollection">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.image.GalacticPlaneSurveyPanelPlot.html" title="GalacticPlaneSurveyPanelPlot">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../image/index.html" accesskey="U">Image processing and analysis tools (<code class="docutils literal"><span class="pre">gammapy.image</span></code>)</a> &raquo;</li>
+      
+      <li>SkyMap</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="skymap">
+<h1>SkyMap<a class="headerlink" href="gammapy.image.SkyMap.html#skymap" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.image.SkyMap">
+<em class="property">class </em><code class="descclassname">gammapy.image.</code><code class="descname">SkyMap</code><span class="sig-paren">(</span><em>name=None</em>, <em>data=None</em>, <em>wcs=None</em>, <em>unit=None</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Base class to represent sky maps.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of the sky map.</p>
+</div></blockquote>
+<p><strong>data</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">ndarray</span></code></a></p>
+<blockquote>
+<div><p>Data array.</p>
+</div></blockquote>
+<p><strong>wcs</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.wcs.WCS.html#astropy.wcs.WCS" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">WCS</span></code></a></p>
+<blockquote>
+<div><p>WCS transformation object.</p>
+</div></blockquote>
+<p><strong>unit</strong> : str</p>
+<blockquote>
+<div><p>String specifying the data units.</p>
+</div></blockquote>
+<p><strong>meta</strong> : dict</p>
+<blockquote class="last">
+<div><p>Dictionary to store meta data.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.center" title="gammapy.image.SkyMap.center"><code class="xref py py-obj docutils literal"><span class="pre">center</span></code></a>()</td>
+<td>Center coordinates of the sky map.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.coordinates" title="gammapy.image.SkyMap.coordinates"><code class="xref py py-obj docutils literal"><span class="pre">coordinates</span></code></a>([coord_type,&nbsp;origin,&nbsp;mode])</td>
+<td>Sky coordinate images.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.copy" title="gammapy.image.SkyMap.copy"><code class="xref py py-obj docutils literal"><span class="pre">copy</span></code></a>()</td>
+<td>Copy sky map.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty" title="gammapy.image.SkyMap.empty"><code class="xref py py-obj docutils literal"><span class="pre">empty</span></code></a>([name,&nbsp;nxpix,&nbsp;nypix,&nbsp;binsz,&nbsp;xref,&nbsp;...])</td>
+<td>Create an empty sky map from scratch.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty_like" title="gammapy.image.SkyMap.empty_like"><code class="xref py py-obj docutils literal"><span class="pre">empty_like</span></code></a>(skymap[,&nbsp;name,&nbsp;unit,&nbsp;fill,&nbsp;meta])</td>
+<td>Create an empty sky map with the same WCS specification as given sky map.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.fill" title="gammapy.image.SkyMap.fill"><code class="xref py py-obj docutils literal"><span class="pre">fill</span></code></a>(value[,&nbsp;origin])</td>
+<td>Fill sky map with events.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.info" title="gammapy.image.SkyMap.info"><code class="xref py py-obj docutils literal"><span class="pre">info</span></code></a>()</td>
+<td>Print summary info about the sky map.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.lookup" title="gammapy.image.SkyMap.lookup"><code class="xref py py-obj docutils literal"><span class="pre">lookup</span></code></a>(position[,&nbsp;interpolation,&nbsp;origin])</td>
+<td>Lookup value at given sky position.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.plot" title="gammapy.image.SkyMap.plot"><code class="xref py py-obj docutils literal"><span class="pre">plot</span></code></a>([ax,&nbsp;fig])</td>
+<td>Plot sky map on matplotlib WCS axes.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.read" title="gammapy.image.SkyMap.read"><code class="xref py py-obj docutils literal"><span class="pre">read</span></code></a>(fobj,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>Read sky map from Fits file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.reproject" title="gammapy.image.SkyMap.reproject"><code class="xref py py-obj docutils literal"><span class="pre">reproject</span></code></a>(reference[,&nbsp;mode])</td>
+<td>Reproject sky map to given reference.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.show" title="gammapy.image.SkyMap.show"><code class="xref py py-obj docutils literal"><span class="pre">show</span></code></a>([viewer,&nbsp;ds9options])</td>
+<td>Show sky map in image viewer.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.solid_angle" title="gammapy.image.SkyMap.solid_angle"><code class="xref py py-obj docutils literal"><span class="pre">solid_angle</span></code></a>()</td>
+<td>Solid angle image</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.threshold" title="gammapy.image.SkyMap.threshold"><code class="xref py py-obj docutils literal"><span class="pre">threshold</span></code></a>(threshold)</td>
+<td>Threshold sykmap data to create a <a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask" title="gammapy.image.ExclusionMask"><code class="xref py py-obj docutils literal"><span class="pre">ExclusionMask</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_image_hdu" title="gammapy.image.SkyMap.to_image_hdu"><code class="xref py py-obj docutils literal"><span class="pre">to_image_hdu</span></code></a>()</td>
+<td>Convert sky map to <code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code>.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_quantity" title="gammapy.image.SkyMap.to_quantity"><code class="xref py py-obj docutils literal"><span class="pre">to_quantity</span></code></a>()</td>
+<td>Convert sky map to <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_sherpa_data2d" title="gammapy.image.SkyMap.to_sherpa_data2d"><code class="xref py py-obj docutils literal"><span class="pre">to_sherpa_data2d</span></code></a>([dstype])</td>
+<td>Convert sky map to <code class="xref py py-obj docutils literal"><span class="pre">Data2D</span></code> or <code class="xref py py-obj docutils literal"><span class="pre">Data2DInt</span></code> class.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.write" title="gammapy.image.SkyMap.write"><code class="xref py py-obj docutils literal"><span class="pre">write</span></code></a>(filename,&nbsp;*args,&nbsp;**kwargs)</td>
+<td>Write sky map to Fits file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.image.SkyMap.center">
+<code class="descname">center</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.center"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.center" title="Permalink to this definition">¶</a></dt>
+<dd><p>Center coordinates of the sky map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.coordinates">
+<code class="descname">coordinates</code><span class="sig-paren">(</span><em>coord_type=u'skycoord'</em>, <em>origin=0</em>, <em>mode=u'center'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.coordinates"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.coordinates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sky coordinate images.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>coord_type</strong> : {&#8216;pix&#8217;, &#8216;skycoord&#8217;, &#8216;galactic&#8217;}</p>
+<blockquote>
+<div><p>Which type of coordinates to return.</p>
+</div></blockquote>
+<p><strong>origin</strong> : {0, 1}</p>
+<blockquote>
+<div><p>Pixel coordinate origin.</p>
+</div></blockquote>
+<p><strong>mode</strong> : {&#8216;center&#8217;, &#8216;edges&#8217;}</p>
+<blockquote class="last">
+<div><p>Return coordinate values at the pixels edges or pixel centers.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.copy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Copy sky map.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.image.SkyMap.empty">
+<em class="property">classmethod </em><code class="descname">empty</code><span class="sig-paren">(</span><em>name=None</em>, <em>nxpix=200</em>, <em>nypix=200</em>, <em>binsz=0.02</em>, <em>xref=0</em>, <em>yref=0</em>, <em>fill=0</em>, <em>proj=u'CAR'</em>, <em>coordsys=u'GAL'</em>, <em>xrefpix=None</em>, <em>yrefpix=None</em>, <em>dtype=u'float64'</em>, <em>unit=None</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.empty"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty sky map from scratch.</p>
+<p>Uses the same parameter names as the Fermi tool gtbin
+(see <a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/analysis/scitools/help/gtbin.txt">http://fermi.gsfc.nasa.gov/ssc/data/analysis/scitools/help/gtbin.txt</a>).</p>
+<p>If no reference pixel position is given it is assumed to be
+at the center of the image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of the sky map.</p>
+</div></blockquote>
+<p><strong>nxpix</strong> : int, optional</p>
+<blockquote>
+<div><p>Number of pixels in x axis. Default is 200.</p>
+</div></blockquote>
+<p><strong>nypix</strong> : int, optional</p>
+<blockquote>
+<div><p>Number of pixels in y axis. Default is 200.</p>
+</div></blockquote>
+<p><strong>binsz</strong> : float, optional</p>
+<blockquote>
+<div><p>Bin size for x and y axes in units of degrees. Default is 0.02.</p>
+</div></blockquote>
+<p><strong>xref</strong> : float, optional</p>
+<blockquote>
+<div><p>Coordinate system value at reference pixel for x axis. Default is 0.</p>
+</div></blockquote>
+<p><strong>yref</strong> : float, optional</p>
+<blockquote>
+<div><p>Coordinate system value at reference pixel for y axis. Default is 0.</p>
+</div></blockquote>
+<p><strong>fill</strong> : float, optional</p>
+<blockquote>
+<div><p>Fill sky map with constant value. Default is 0.</p>
+</div></blockquote>
+<p><strong>proj</strong> : string, optional</p>
+<blockquote>
+<div><p>Any valid WCS projection type. Default is &#8216;CAR&#8217; (cartesian).</p>
+</div></blockquote>
+<p><strong>coordsys</strong> : {&#8216;CEL&#8217;, &#8216;GAL&#8217;}, optional</p>
+<blockquote>
+<div><p>Coordinate system, either Galactic (&#8216;GAL&#8217;) or Equatorial (&#8216;CEL&#8217;).
+Default is &#8216;GAL&#8217; (Galactic).</p>
+</div></blockquote>
+<p><strong>xrefpix</strong> : float, optional</p>
+<blockquote>
+<div><p>Coordinate system reference pixel for x axis. Default is None.</p>
+</div></blockquote>
+<p><strong>yrefpix: float, optional</strong></p>
+<blockquote>
+<div><p>Coordinate system reference pixel for y axis. Default is None.</p>
+</div></blockquote>
+<p><strong>dtype</strong> : str, optional</p>
+<blockquote>
+<div><p>Data type, default is float32</p>
+</div></blockquote>
+<p><strong>unit</strong> : str</p>
+<blockquote>
+<div><p>Data unit.</p>
+</div></blockquote>
+<p><strong>meta</strong> : dict</p>
+<blockquote>
+<div><p>Meta data attached to the sky map.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>skymap</strong> : <code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></p>
+<blockquote class="last">
+<div><p>Empty sky map.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.image.SkyMap.empty_like">
+<em class="property">classmethod </em><code class="descname">empty_like</code><span class="sig-paren">(</span><em>skymap</em>, <em>name=None</em>, <em>unit=None</em>, <em>fill=0</em>, <em>meta=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.empty_like"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty_like" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty sky map with the same WCS specification as given sky map.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>skymap</strong> : <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a> or <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a></p>
+<blockquote>
+<div><p>Instance of <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a>.</p>
+</div></blockquote>
+<p><strong>fill</strong> : float, optional</p>
+<blockquote>
+<div><p>Fill sky map with constant value. Default is 0.</p>
+</div></blockquote>
+<p><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Name of the sky map.</p>
+</div></blockquote>
+<p><strong>unit</strong> : str</p>
+<blockquote>
+<div><p>String specifying the data units.</p>
+</div></blockquote>
+<p><strong>meta</strong> : dict</p>
+<blockquote class="last">
+<div><p>Dictionary to store meta data.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.fill">
+<code class="descname">fill</code><span class="sig-paren">(</span><em>value</em>, <em>origin=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.fill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.fill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fill sky map with events.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>value</strong> : float or <a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList" title="gammapy.data.EventList"><code class="xref py py-obj docutils literal"><span class="pre">EventList</span></code></a></p>
+<blockquote>
+<div><p>Value to fill in the map. If an event list is given, events will be
+binned in the map.</p>
+</div></blockquote>
+<p><strong>origin</strong> : {0, 1}</p>
+<blockquote class="last">
+<div><p>Pixel coordinate origin.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print summary info about the sky map.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.lookup">
+<code class="descname">lookup</code><span class="sig-paren">(</span><em>position</em>, <em>interpolation=None</em>, <em>origin=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup value at given sky position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>position</strong> : tuple or <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></code></a></p>
+<blockquote>
+<div><p>Position on the sky. Can be either an instance of
+<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></code></a> or a tuple of <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">ndarray</span></code></a>
+of the form (lon, lat) or (ra, dec), depending on the WCS
+transformation that is set for the sky map.</p>
+</div></blockquote>
+<p><strong>interpolation</strong> : {&#8216;None&#8217;}</p>
+<blockquote>
+<div><p>Interpolation mode.</p>
+</div></blockquote>
+<p><strong>origin</strong> : {0, 1}</p>
+<blockquote class="last">
+<div><p>Pixel coordinate origin.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.plot">
+<code class="descname">plot</code><span class="sig-paren">(</span><em>ax=None</em>, <em>fig=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot sky map on matplotlib WCS axes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">WCSAxes</span></code>, optional</p>
+<blockquote class="last">
+<div><p>WCS axis object to plot on.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.image.SkyMap.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>fobj</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read sky map from Fits file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fobj</strong> : file like object or <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a> or <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdus.html#astropy.io.fits.PrimaryHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">PrimaryHDU</span></code></a></p>
+<blockquote>
+<div><p>Name of the Fits file or ImageHDU object.</p>
+</div></blockquote>
+<p><strong>*args</strong> : list</p>
+<blockquote>
+<div><p>Arguments passed <code class="xref py py-obj docutils literal"><span class="pre">gedata</span></code>.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Keyword arguments passed <code class="xref py py-obj docutils literal"><span class="pre">gedata</span></code>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.reproject">
+<code class="descname">reproject</code><span class="sig-paren">(</span><em>reference</em>, <em>mode=u'interp'</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.reproject"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.reproject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reproject sky map to given reference.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>reference</strong> : <code class="xref py py-obj docutils literal"><span class="pre">Header</span></code>, or <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a></p>
+<blockquote>
+<div><p>Reference map specification to reproject the data on.</p>
+</div></blockquote>
+<p><strong>mode</strong> : {&#8216;interp&#8217;, &#8216;exact&#8217;}</p>
+<blockquote>
+<div><p>Interpolation mode.</p>
+</div></blockquote>
+<p><strong>*args</strong> : list</p>
+<blockquote>
+<div><p>Arguments passed to <a class="reference external" href="http://reproject.readthedocs.org/en/latest/api/reproject.reproject_interp.html#reproject.reproject_interp" title="(in reproject v0.3.dev310)"><code class="xref py py-obj docutils literal"><span class="pre">reproject_interp</span></code></a> or
+<a class="reference external" href="http://reproject.readthedocs.org/en/latest/api/reproject.reproject_exact.html#reproject.reproject_exact" title="(in reproject v0.3.dev310)"><code class="xref py py-obj docutils literal"><span class="pre">reproject_exact</span></code></a>.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong> : dict</p>
+<blockquote>
+<div><p>Keyword arguments passed to <a class="reference external" href="http://reproject.readthedocs.org/en/latest/api/reproject.reproject_interp.html#reproject.reproject_interp" title="(in reproject v0.3.dev310)"><code class="xref py py-obj docutils literal"><span class="pre">reproject_interp</span></code></a> or
+<a class="reference external" href="http://reproject.readthedocs.org/en/latest/api/reproject.reproject_exact.html#reproject.reproject_exact" title="(in reproject v0.3.dev310)"><code class="xref py py-obj docutils literal"><span class="pre">reproject_exact</span></code></a>.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>skymap</strong> : <a class="reference internal" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a></p>
+<blockquote class="last">
+<div><p>Skymap reprojected onto <code class="docutils literal"><span class="pre">reference</span></code>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.show">
+<code class="descname">show</code><span class="sig-paren">(</span><em>viewer=u'mpl'</em>, <em>ds9options=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.show"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.show" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show sky map in image viewer.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>viewer</strong> : {&#8216;mpl&#8217;, &#8216;ds9&#8217;}</p>
+<blockquote>
+<div><p>Which image viewer to use. Option &#8216;ds9&#8217; requires ds9 to be installed.</p>
+</div></blockquote>
+<p><strong>ds9options</strong> : list, optional</p>
+<blockquote>
+<div><p>List of options passed to ds9. E.g. [&#8216;-cmap&#8217;, &#8216;heat&#8217;, &#8216;-scale&#8217;, &#8216;log&#8217;].
+Any valid ds9 command line option can be passed.
+See <a class="reference external" href="http://ds9.si.edu/doc/ref/command.html">http://ds9.si.edu/doc/ref/command.html</a> for details.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Keyword arguments passed to <a class="reference external" href="http://matplotlib.org/api/pyplot_api.html#matplotlib.pyplot.imshow" title="(in Matplotlib v1.5.1)"><code class="xref py py-obj docutils literal"><span class="pre">imshow</span></code></a>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.solid_angle">
+<code class="descname">solid_angle</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.solid_angle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.solid_angle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solid angle image</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.threshold">
+<code class="descname">threshold</code><span class="sig-paren">(</span><em>threshold</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.threshold"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.threshold" title="Permalink to this definition">¶</a></dt>
+<dd><p>Threshold sykmap data to create a <a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask" title="gammapy.image.ExclusionMask"><code class="xref py py-obj docutils literal"><span class="pre">ExclusionMask</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>threshold</strong> : float</p>
+<blockquote>
+<div><p>Threshold value.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mask</strong> : <a class="reference internal" href="gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask" title="gammapy.image.ExclusionMask"><code class="xref py py-obj docutils literal"><span class="pre">ExclusionMask</span></code></a></p>
+<blockquote>
+<div><p>Exclusion mask object.</p>
+</div></blockquote>
+<p class="last">TODO: some more docs and example</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.to_image_hdu">
+<code class="descname">to_image_hdu</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.to_image_hdu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_image_hdu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sky map to <code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.to_quantity">
+<code class="descname">to_quantity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.to_quantity"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_quantity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sky map to <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.to_sherpa_data2d">
+<code class="descname">to_sherpa_data2d</code><span class="sig-paren">(</span><em>dstype=u'Data2D'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.to_sherpa_data2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_sherpa_data2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert sky map to <code class="xref py py-obj docutils literal"><span class="pre">Data2D</span></code> or <code class="xref py py-obj docutils literal"><span class="pre">Data2DInt</span></code> class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.image.SkyMap.write">
+<code class="descname">write</code><span class="sig-paren">(</span><em>filename</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/image/maps.html#SkyMap.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.image.SkyMap.html#gammapy.image.SkyMap.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write sky map to Fits file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>Name of the Fits file.</p>
+</div></blockquote>
+<p><strong>*args</strong> : list</p>
+<blockquote>
+<div><p>Arguments passed to <code class="xref py py-obj docutils literal"><span class="pre">writeto</span></code>.</p>
+</div></blockquote>
+<p><strong>**kwargs</strong> : dict</p>
+<blockquote class="last">
+<div><p>Keyword arguments passed to <code class="xref py py-obj docutils literal"><span class="pre">writeto</span></code>.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.image.SkyMap.html#">SkyMap</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.image.SkyMap.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.image.SkyMap.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

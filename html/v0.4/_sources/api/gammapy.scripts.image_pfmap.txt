@@ -1,0 +1,8 @@
+
+
+image_pfmap
+===========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_pfmap

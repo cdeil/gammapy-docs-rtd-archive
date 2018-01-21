@@ -1,0 +1,71 @@
+
+
+SpectrumObservation
+====================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SpectrumObservation
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectrumObservation.alpha
+      ~SpectrumObservation.excess_vector
+      ~SpectrumObservation.spectrum_stats
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectrumObservation.from_datastore
+      ~SpectrumObservation.read_ogip
+      ~SpectrumObservation.restrict_energy_range
+      ~SpectrumObservation.stack_observation_list
+      ~SpectrumObservation.write_ogip
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: alpha
+   .. autoattribute:: excess_vector
+   .. autoattribute:: spectrum_stats
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_datastore
+   .. automethod:: read_ogip
+   .. automethod:: restrict_energy_range
+   .. automethod:: stack_observation_list
+   .. automethod:: write_ogip
+
+   
+   

@@ -1,0 +1,8 @@
+
+
+spectrum_pfsim
+==============================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: spectrum_pfsim

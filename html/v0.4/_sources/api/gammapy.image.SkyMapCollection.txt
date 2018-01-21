@@ -1,0 +1,67 @@
+
+
+SkyMapCollection
+==============================
+
+.. currentmodule:: gammapy.image
+
+.. autoclass:: SkyMapCollection
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SkyMapCollection.meta
+      ~SkyMapCollection.name
+      ~SkyMapCollection.wcs
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyMapCollection.info
+      ~SkyMapCollection.read
+      ~SkyMapCollection.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: meta
+   .. autoattribute:: name
+   .. autoattribute:: wcs
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: info
+   .. automethod:: read
+   .. automethod:: write
+
+   
+   

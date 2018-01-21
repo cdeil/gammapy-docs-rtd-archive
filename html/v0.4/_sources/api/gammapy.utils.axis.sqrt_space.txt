@@ -1,0 +1,8 @@
+
+
+sqrt_space
+=============================
+
+.. currentmodule:: gammapy.utils.axis
+
+.. autofunction:: sqrt_space

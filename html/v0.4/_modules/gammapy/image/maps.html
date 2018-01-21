@@ -1,0 +1,740 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.image.maps &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/image/maps.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/image/maps'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.image.maps</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+<span class="kn">from</span> <span class="nn">tempfile</span> <span class="kn">import</span> <span class="n">NamedTemporaryFile</span>
+<span class="kn">from</span> <span class="nn">copy</span> <span class="kn">import</span> <span class="n">deepcopy</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span><span class="p">,</span> <span class="n">Longitude</span><span class="p">,</span> <span class="n">Latitude</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs.utils</span> <span class="kn">import</span> <span class="n">pixel_to_skycoord</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span><span class="p">,</span> <span class="n">Unit</span>
+<span class="kn">from</span> <span class="nn">astropy.extern</span> <span class="kn">import</span> <span class="n">six</span>
+
+<span class="kn">from</span> <span class="nn">..extern.bunch</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..image.utils</span> <span class="kn">import</span> <span class="n">make_header</span><span class="p">,</span> <span class="n">_bin_events_in_cube</span>
+<span class="kn">from</span> <span class="nn">..utils.wcs</span> <span class="kn">import</span> <span class="n">get_wcs_ctype</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">make_path</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">EventList</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;SkyMap&#39;</span><span class="p">,</span> <span class="s1">&#39;SkyMapCollection&#39;</span><span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="c1"># It might be a good option to inherit from `~astropy.nddata.NDData` later, but</span>
+<span class="c1"># as astropy.nddata is still in development, I decided to not inherit for now.</span>
+
+<span class="c1"># The class provides Fits I/O and generic methods, that are not specific to the</span>
+<span class="c1"># data it contains. Special data classes, such as an ExclusionMap, FluxMap or</span>
+<span class="c1"># CountsMap should inherit from this class and implement special, data related</span>
+<span class="c1"># methods themselves.</span>
+
+<span class="c1"># Actually this class is generic enough to be rather in astropy and not in</span>
+<span class="c1"># gammapy and should maybe be moved to there...</span>
+
+<div class="viewcode-block" id="SkyMap"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap">[docs]</a><span class="k">class</span> <span class="nc">SkyMap</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class to represent sky maps.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str</span>
+<span class="sd">        Name of the sky map.</span>
+<span class="sd">    data : `~numpy.ndarray`</span>
+<span class="sd">        Data array.</span>
+<span class="sd">    wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">        WCS transformation object.</span>
+<span class="sd">    unit : str</span>
+<span class="sd">        String specifying the data units.</span>
+<span class="sd">    meta : dict</span>
+<span class="sd">        Dictionary to store meta data.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="c1"># TODO: validate inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span> <span class="o">=</span> <span class="n">wcs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="n">unit</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyMap.read"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">fobj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read sky map from Fits file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fobj : file like object or `~astropy.io.fits.ImageHDU` or `~astropy.io.fits.PrimaryHDU`</span>
+<span class="sd">            Name of the Fits file or ImageHDU object.</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            Arguments passed `~astropy.io.fits.gedata`.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments passed `~astropy.io.fits.gedata`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">,</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">)):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="n">fobj</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">fobj</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="n">six</span><span class="o">.</span><span class="n">string_types</span><span class="p">):</span>
+                <span class="n">fobj</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">make_path</span><span class="p">(</span><span class="n">fobj</span><span class="p">))</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">fobj</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="n">header</span>
+
+        <span class="n">name</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;HDUNAME&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;EXTNAME&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c1"># Valitade unit string</span>
+            <span class="n">unit</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BUNIT&#39;</span><span class="p">],</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;fits&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_string</span><span class="p">()</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">KeyError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="n">unit</span> <span class="o">=</span> <span class="bp">None</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s1">&#39;No valid units found for extension {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyMap.empty"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty">[docs]</a>    <span class="k">def</span> <span class="nf">empty</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">nxpix</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">nypix</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="n">binsz</span><span class="o">=</span><span class="mf">0.02</span><span class="p">,</span> <span class="n">xref</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">yref</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+              <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">proj</span><span class="o">=</span><span class="s1">&#39;CAR&#39;</span><span class="p">,</span> <span class="n">coordsys</span><span class="o">=</span><span class="s1">&#39;GAL&#39;</span><span class="p">,</span> <span class="n">xrefpix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">yrefpix</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+              <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;float64&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an empty sky map from scratch.</span>
+
+<span class="sd">        Uses the same parameter names as the Fermi tool gtbin</span>
+<span class="sd">        (see http://fermi.gsfc.nasa.gov/ssc/data/analysis/scitools/help/gtbin.txt).</span>
+
+<span class="sd">        If no reference pixel position is given it is assumed to be</span>
+<span class="sd">        at the center of the image.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the sky map.</span>
+<span class="sd">        nxpix : int, optional</span>
+<span class="sd">            Number of pixels in x axis. Default is 200.</span>
+<span class="sd">        nypix : int, optional</span>
+<span class="sd">            Number of pixels in y axis. Default is 200.</span>
+<span class="sd">        binsz : float, optional</span>
+<span class="sd">            Bin size for x and y axes in units of degrees. Default is 0.02.</span>
+<span class="sd">        xref : float, optional</span>
+<span class="sd">            Coordinate system value at reference pixel for x axis. Default is 0.</span>
+<span class="sd">        yref : float, optional</span>
+<span class="sd">            Coordinate system value at reference pixel for y axis. Default is 0.</span>
+<span class="sd">        fill : float, optional</span>
+<span class="sd">            Fill sky map with constant value. Default is 0.</span>
+<span class="sd">        proj : string, optional</span>
+<span class="sd">            Any valid WCS projection type. Default is &#39;CAR&#39; (cartesian).</span>
+<span class="sd">        coordsys : {&#39;CEL&#39;, &#39;GAL&#39;}, optional</span>
+<span class="sd">            Coordinate system, either Galactic (&#39;GAL&#39;) or Equatorial (&#39;CEL&#39;).</span>
+<span class="sd">            Default is &#39;GAL&#39; (Galactic).</span>
+<span class="sd">        xrefpix : float, optional</span>
+<span class="sd">            Coordinate system reference pixel for x axis. Default is None.</span>
+<span class="sd">        yrefpix: float, optional</span>
+<span class="sd">            Coordinate system reference pixel for y axis. Default is None.</span>
+<span class="sd">        dtype : str, optional</span>
+<span class="sd">            Data type, default is float32</span>
+<span class="sd">        unit : str</span>
+<span class="sd">            Data unit.</span>
+<span class="sd">        meta : dict</span>
+<span class="sd">            Meta data attached to the sky map.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        skymap : `~gammapy.data.SkyMap`</span>
+<span class="sd">            Empty sky map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">make_header</span><span class="p">(</span><span class="n">nxpix</span><span class="p">,</span> <span class="n">nypix</span><span class="p">,</span> <span class="n">binsz</span><span class="p">,</span> <span class="n">xref</span><span class="p">,</span> <span class="n">yref</span><span class="p">,</span>
+                             <span class="n">proj</span><span class="p">,</span> <span class="n">coordsys</span><span class="p">,</span> <span class="n">xrefpix</span><span class="p">,</span> <span class="n">yrefpix</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fill</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">nypix</span><span class="p">,</span> <span class="n">nxpix</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">)</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">header</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyMap.empty_like"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.empty_like">[docs]</a>    <span class="k">def</span> <span class="nf">empty_like</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">skymap</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create an empty sky map with the same WCS specification as given sky map.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        skymap : `~gammapy.image.SkyMap` or `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">            Instance of `~gammapy.image.SkyMap`.</span>
+<span class="sd">        fill : float, optional</span>
+<span class="sd">            Fill sky map with constant value. Default is 0.</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Name of the sky map.</span>
+<span class="sd">        unit : str</span>
+<span class="sd">            String specifying the data units.</span>
+<span class="sd">        meta : dict</span>
+<span class="sd">            Dictionary to store meta data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">skymap</span><span class="p">,</span> <span class="n">SkyMap</span><span class="p">):</span>
+            <span class="n">wcs</span> <span class="o">=</span> <span class="n">skymap</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">skymap</span><span class="p">,</span> <span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">,</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">)):</span>
+            <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">skymap</span><span class="o">.</span><span class="n">header</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t create sky map from type {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">skymap</span><span class="p">)))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fill</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">skymap</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">unit</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="SkyMap.fill"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.fill">[docs]</a>    <span class="k">def</span> <span class="nf">fill</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fill sky map with events.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        value : float or `~gammapy.data.EventList`</span>
+<span class="sd">             Value to fill in the map. If an event list is given, events will be</span>
+<span class="sd">             binned in the map.</span>
+<span class="sd">        origin : {0, 1}</span>
+<span class="sd">            Pixel coordinate origin.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">EventList</span><span class="p">):</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">_bin_events_in_cube</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span>
+                                         <span class="n">origin</span><span class="o">=</span><span class="n">origin</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">counts</span><span class="o">.</span><span class="n">value</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s1">&#39;ct&#39;</span>
+        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fill</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Can&#39;t fill value of type {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">value</span><span class="p">)))</span></div>
+
+
+<div class="viewcode-block" id="SkyMap.write"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write sky map to Fits file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Name of the Fits file.</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            Arguments passed to `~astropy.fits.ImageHDU.writeto`.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments passed to `~astropy.fits.ImageHDU.writeto`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_image_hdu</span><span class="p">()</span>
+        <span class="n">hdu</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.coordinates"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coord_type</span><span class="o">=</span><span class="s1">&#39;skycoord&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Sky coordinate images.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coord_type : {&#39;pix&#39;, &#39;skycoord&#39;, &#39;galactic&#39;}</span>
+<span class="sd">            Which type of coordinates to return.</span>
+<span class="sd">        origin : {0, 1}</span>
+<span class="sd">            Pixel coordinate origin.</span>
+<span class="sd">        mode : {&#39;center&#39;, &#39;edges&#39;}</span>
+<span class="sd">            Return coordinate values at the pixels edges or pixel centers.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;center&#39;</span><span class="p">:</span>
+            <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;edges&#39;</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">x</span> <span class="o">-</span> <span class="mf">0.5</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid mode to compute coordinates.&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">coord_type</span> <span class="o">==</span> <span class="s1">&#39;pix&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coordinates</span> <span class="o">=</span> <span class="n">pixel_to_skycoord</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">coord_type</span> <span class="o">==</span> <span class="s1">&#39;skycoord&#39;</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">coordinates</span>
+            <span class="k">elif</span> <span class="n">coord_type</span> <span class="o">==</span> <span class="s1">&#39;galactic&#39;</span><span class="p">:</span>
+                <span class="n">l</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">wrap_at</span><span class="p">(</span><span class="s1">&#39;180d&#39;</span><span class="p">)</span>
+                <span class="n">b</span> <span class="o">=</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span>
+                <span class="k">return</span> <span class="n">l</span><span class="p">,</span> <span class="n">b</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Not a valid coordinate type. Choose either&quot;</span>
+                                 <span class="s2">&quot; &#39;pix&#39; or &#39;skycoord&#39;.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.solid_angle"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.solid_angle">[docs]</a>    <span class="k">def</span> <span class="nf">solid_angle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Solid angle image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">xsky</span><span class="p">,</span> <span class="n">ysky</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edges&#39;</span><span class="p">)</span>
+        <span class="n">omega</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">xsky</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">ysky</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">:]</span>
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">omega</span><span class="p">,</span> <span class="s1">&#39;deg2&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;sr&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.center"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.center">[docs]</a>    <span class="k">def</span> <span class="nf">center</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Center coordinates of the sky map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SkyCoord</span><span class="o">.</span><span class="n">from_pixel</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span>
+                                   <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span>
+                                    <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.lookup"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.lookup">[docs]</a>    <span class="k">def</span> <span class="nf">lookup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Lookup value at given sky position.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        position : tuple or `~astropy.coordinates.SkyCoord`</span>
+<span class="sd">            Position on the sky. Can be either an instance of</span>
+<span class="sd">            `~astropy.coordinates.SkyCoord` or a tuple of `~numpy.ndarray`</span>
+<span class="sd">            of the form (lon, lat) or (ra, dec), depending on the WCS</span>
+<span class="sd">            transformation that is set for the sky map.</span>
+<span class="sd">        interpolation : {&#39;None&#39;}</span>
+<span class="sd">            Interpolation mode.</span>
+<span class="sd">        origin : {0, 1}</span>
+<span class="sd">            Pixel coordinate origin.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">SkyCoord</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">get_wcs_ctype</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;galactic&#39;</span><span class="p">:</span>
+                <span class="n">xsky</span><span class="p">,</span> <span class="n">ysky</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">position</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">xsky</span><span class="p">,</span> <span class="n">ysky</span> <span class="o">=</span> <span class="n">position</span><span class="o">.</span><span class="n">icrs</span><span class="o">.</span><span class="n">ra</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">position</span><span class="o">.</span><span class="n">icrs</span><span class="o">.</span><span class="n">dec</span><span class="o">.</span><span class="n">value</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="p">(</span><span class="nb">tuple</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">xsky</span><span class="p">,</span> <span class="n">ysky</span> <span class="o">=</span> <span class="n">position</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">position</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs_world2pix</span><span class="p">(</span><span class="n">xsky</span><span class="p">,</span> <span class="n">ysky</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">&#39;int&#39;</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="SkyMap.to_quantity"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_quantity">[docs]</a>    <span class="k">def</span> <span class="nf">to_quantity</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert sky map to `~astropy.units.Quantity`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.to_sherpa_data2d"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_sherpa_data2d">[docs]</a>    <span class="k">def</span> <span class="nf">to_sherpa_data2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dstype</span><span class="o">=</span><span class="s1">&#39;Data2D&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert sky map to `~sherpa.data.Data2D` or `~sherpa.data.Data2DInt` class.</span>
+
+<span class="sd">        Parameter</span>
+<span class="sd">        ---------</span>
+<span class="sd">        dstype : {&#39;Data2D&#39;, &#39;Data2DInt&#39;}</span>
+<span class="sd">            Sherpa data type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">sherpa.data</span> <span class="kn">import</span> <span class="n">Data2D</span><span class="p">,</span> <span class="n">Data2DInt</span>
+
+        <span class="k">if</span> <span class="n">dstype</span> <span class="o">==</span> <span class="s1">&#39;Data2D&#39;</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">(</span><span class="s1">&#39;galactic&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">Data2D</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+                          <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dstype</span> <span class="o">==</span> <span class="s1">&#39;Data2DInt&#39;</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coordinates</span><span class="p">(</span><span class="s1">&#39;galactic&#39;</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;edges&#39;</span><span class="p">)</span>
+            <span class="n">xlo</span><span class="p">,</span> <span class="n">xhi</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">ylo</span><span class="p">,</span> <span class="n">yhi</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="k">return</span> <span class="n">Data2DInt</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">xlo</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">xhi</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+                             <span class="n">ylo</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yhi</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span>
+                             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Invalid sherpa data type.&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.copy"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.copy">[docs]</a>    <span class="k">def</span> <span class="nf">copy</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Copy sky map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">deepcopy</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.to_image_hdu"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.to_image_hdu">[docs]</a>    <span class="k">def</span> <span class="nf">to_image_hdu</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert sky map to `~astropy.fits.ImageHDU`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+        
+            <span class="c1"># Add meta data</span>
+            <span class="n">header</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;BUNIT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.reproject"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.reproject">[docs]</a>    <span class="k">def</span> <span class="nf">reproject</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reference</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;interp&#39;</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Reproject sky map to given reference.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        reference : `~astropy.fits.Header`, or `SkyMap`</span>
+<span class="sd">            Reference map specification to reproject the data on.</span>
+<span class="sd">        mode : {&#39;interp&#39;, &#39;exact&#39;}</span>
+<span class="sd">            Interpolation mode.</span>
+<span class="sd">        *args : list</span>
+<span class="sd">            Arguments passed to `~reproject.reproject_interp` or</span>
+<span class="sd">            `~reproject.reproject_exact`.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments passed to `~reproject.reproject_interp` or</span>
+<span class="sd">            `~reproject.reproject_exact`.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        skymap : `SkyMap`</span>
+<span class="sd">            Skymap reprojected onto ``reference``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">from</span> <span class="nn">reproject</span> <span class="kn">import</span> <span class="n">reproject_interp</span><span class="p">,</span> <span class="n">reproject_exact</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">SkyMap</span><span class="p">):</span>
+            <span class="n">wcs_reference</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">wcs</span>
+            <span class="n">shape_out</span> <span class="o">=</span> <span class="n">reference</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reference</span><span class="p">,</span> <span class="n">fits</span><span class="o">.</span><span class="n">Header</span><span class="p">):</span>
+            <span class="n">wcs_reference</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">reference</span><span class="p">)</span>
+            <span class="n">shape_out</span> <span class="o">=</span> <span class="p">(</span><span class="n">reference</span><span class="p">[</span><span class="s1">&#39;NAXIS2&#39;</span><span class="p">],</span> <span class="n">reference</span><span class="p">[</span><span class="s1">&#39;NAXIS1&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid reference map must be either instance&quot;</span>
+                            <span class="s2">&quot;of `Header`, `WCS` or `SkyMap`.&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;interp&#39;</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">reproject_interp</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">),</span> <span class="n">wcs_reference</span><span class="p">,</span>
+                                    <span class="n">shape_out</span><span class="o">=</span><span class="n">shape_out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;exact&#39;</span><span class="p">:</span>
+            <span class="n">out</span> <span class="o">=</span> <span class="n">reproject_exact</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">),</span> <span class="n">wcs_reference</span><span class="p">,</span>
+                                   <span class="n">shape_out</span><span class="o">=</span><span class="n">shape_out</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Invalid reprojection mode, either choose &#39;interp&#39; or &#39;exact&#39;&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SkyMap</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">wcs</span><span class="o">=</span><span class="n">wcs_reference</span><span class="p">,</span>
+                      <span class="n">unit</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.show"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">viewer</span><span class="o">=</span><span class="s1">&#39;mpl&#39;</span><span class="p">,</span> <span class="n">ds9options</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Show sky map in image viewer.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        viewer : {&#39;mpl&#39;, &#39;ds9&#39;}</span>
+<span class="sd">            Which image viewer to use. Option &#39;ds9&#39; requires ds9 to be installed.</span>
+<span class="sd">        ds9options : list, optional</span>
+<span class="sd">            List of options passed to ds9. E.g. [&#39;-cmap&#39;, &#39;heat&#39;, &#39;-scale&#39;, &#39;log&#39;].</span>
+<span class="sd">            Any valid ds9 command line option can be passed.</span>
+<span class="sd">            See http://ds9.si.edu/doc/ref/command.html for details.</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            Keyword arguments passed to `~matplotlib.pyplot.imshow`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">viewer</span> <span class="o">==</span> <span class="s1">&#39;mpl&#39;</span><span class="p">:</span>
+            <span class="c1"># TODO: replace by better MPL or web based image viewer</span>
+            <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">([</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">],</span> <span class="n">projection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">fig</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">viewer</span> <span class="o">==</span> <span class="s1">&#39;ds9&#39;</span><span class="p">:</span>
+            <span class="n">ds9options</span> <span class="o">=</span> <span class="n">ds9options</span> <span class="ow">or</span> <span class="p">[]</span>
+            <span class="k">with</span> <span class="n">NamedTemporaryFile</span><span class="p">()</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="n">call</span><span class="p">([</span><span class="s1">&#39;ds9&#39;</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s1">&#39;-cmap&#39;</span><span class="p">,</span> <span class="s1">&#39;bb&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">ds9options</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Invalid image viewer option, choose either&quot;</span>
+                             <span class="s2">&quot; &#39;mpl&#39; or &#39;ds9&#39;.&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.plot"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot sky map on matplotlib WCS axes.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~astropy.wcsaxes.WCSAxes`, optional</span>
+<span class="sd">            WCS axis object to plot on.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="k">if</span> <span class="n">fig</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span>
+
+        <span class="n">caxes</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">unit</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">unit</span> <span class="ow">or</span> <span class="s1">&#39;A.E.&#39;</span>
+        <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s1">&#39;ct&#39;</span><span class="p">:</span>
+            <span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;counts&#39;</span>
+        <span class="k">elif</span> <span class="n">unit</span> <span class="ow">is</span> <span class="s1">&#39;A.E.&#39;</span><span class="p">:</span>
+            <span class="n">quantity</span> <span class="o">=</span> <span class="s1">&#39;Unknown&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">quantity</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="n">unit</span><span class="p">)</span><span class="o">.</span><span class="n">physical_type</span> 
+        <span class="n">cbar</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">colorbar</span><span class="p">(</span><span class="n">caxes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;{0} ({1})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">quantity</span><span class="p">,</span> <span class="n">unit</span><span class="p">))</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;glon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_axislabel</span><span class="p">(</span><span class="s1">&#39;Galactic Longitude&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;glat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_axislabel</span><span class="p">(</span><span class="s1">&#39;Galactic Latitude&#39;</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;ra&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_axislabel</span><span class="p">(</span><span class="s1">&#39;Right Ascension&#39;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="s1">&#39;dec&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">set_axislabel</span><span class="p">(</span><span class="s1">&#39;Declination&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMap.info"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print summary info about the sky map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation of the class.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="s2">&quot;Name: {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="s2">&quot;Data shape: {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="s2">&quot;Data type: {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="s2">&quot;Data unit: {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="s2">&quot;Data mean: {:.3e}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanmean</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="s2">&quot;WCS type: {}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">info</span>
+
+    <span class="k">def</span> <span class="nf">__array__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Array representation of sky map.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+
+<div class="viewcode-block" id="SkyMap.threshold"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap.threshold">[docs]</a>    <span class="k">def</span> <span class="nf">threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Threshold sykmap data to create a `~gammapy.image.ExclusionMask`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        threshold : float</span>
+<span class="sd">            Threshold value.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        mask : `~gammapy.image.ExclusionMask`</span>
+<span class="sd">            Exclusion mask object.</span>
+
+<span class="sd">        TODO: some more docs and example</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.mask</span> <span class="kn">import</span> <span class="n">ExclusionMask</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">ExclusionMask</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">mask</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mask</span></div></div>
+
+
+<div class="viewcode-block" id="SkyMapCollection"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMapCollection.html#gammapy.image.SkyMapCollection">[docs]</a><span class="k">class</span> <span class="nc">SkyMapCollection</span><span class="p">(</span><span class="n">Bunch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Container for a collection of sky maps.</span>
+
+<span class="sd">    This class bundles as set of SkyMaps in single data container and provides</span>
+<span class="sd">    convenience methods for Fits I/O and `~gammapy.extern.bunch.Bunch` like</span>
+<span class="sd">    handling of the data members.</span>
+
+<span class="sd">    Here&#39;s an example how to use it:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from gammapy.image import SkyMapCollection</span>
+<span class="sd">        skymaps = SkyMapCollection.read(&#39;$GAMMAPY_EXTRA/datasets/fermi_survey/all.fits.gz&#39;)</span>
+
+<span class="sd">    Then try tab completion on the ``skymaps`` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Real class attributes have to be defined here</span>
+    <span class="n">_map_names</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">meta</span> <span class="o">=</span> <span class="bp">None</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Set real class attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span> <span class="o">=</span> <span class="n">wcs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">meta</span>
+
+        <span class="c1"># Everything else is stored as dict entries</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__setitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Overwrite __setitem__ operator to remember order the sky maps are added</span>
+<span class="sd">        to the collection, by storing it in the _map_names list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">key</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">item</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">SkyMap</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_map_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SkyMapCollection</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__setitem__</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyMapCollection.read"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMapCollection.html#gammapy.image.SkyMapCollection.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create collection of sky maps from Fits file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Fits file name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">make_path</span><span class="p">(</span><span class="n">filename</span><span class="p">)))</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">_map_names</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c1"># list of map names to save order in fits file</span>
+
+        <span class="k">for</span> <span class="n">hdu</span> <span class="ow">in</span> <span class="n">hdulist</span><span class="p">:</span>
+            <span class="n">skymap</span> <span class="o">=</span> <span class="n">SkyMap</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+
+            <span class="c1"># This forces lower case map names, but only on the collection object</span>
+            <span class="c1"># When writing to fits again the skymap.name attribute is used.</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">skymap</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">skymap</span>
+            <span class="n">_map_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="n">_</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">_</span><span class="o">.</span><span class="n">_map_names</span> <span class="o">=</span> <span class="n">_map_names</span>
+        <span class="k">return</span> <span class="n">_</span></div>
+
+<div class="viewcode-block" id="SkyMapCollection.write"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMapCollection.html#gammapy.image.SkyMapCollection.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Write Bunch of maps to Fits file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Fits file name.</span>
+<span class="sd">        header : `~astropy.io.fits.Header`</span>
+<span class="sd">            Reference header to be used for all maps.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdulist</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_map_names&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">SkyMap</span><span class="p">):</span>
+                <span class="n">hdu</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">to_image_hdu</span><span class="p">()</span>
+                <span class="c1"># For now add common collection meta info to the single map headers</span>
+                <span class="n">hdu</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
+                <span class="n">hdu</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+                <span class="n">hdulist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s2">&quot;Can&#39;t save {} to file, not a sky map.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">hdulist</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyMapCollection.info"><a class="viewcode-back" href="../../../api/gammapy.image.SkyMapCollection.html#gammapy.image.SkyMapCollection.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print summary info about the sky map collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        String representation of the sky map collection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;_map_names&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="p">)):</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">__str__</span><span class="p">()</span>
+            <span class="n">info</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">info</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="maps.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

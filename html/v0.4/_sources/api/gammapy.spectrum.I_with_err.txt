@@ -1,0 +1,8 @@
+
+
+I_with_err
+===========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: I_with_err

@@ -1,0 +1,8 @@
+
+
+lookup_max
+========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: lookup_max

@@ -1,0 +1,8 @@
+
+
+image_lookup
+============================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_lookup

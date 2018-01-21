@@ -1,0 +1,8 @@
+
+
+image_fit
+=========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_fit

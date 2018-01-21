@@ -1,0 +1,8 @@
+
+
+image_coordinates
+=================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_coordinates

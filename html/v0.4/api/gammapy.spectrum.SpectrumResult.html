@@ -1,0 +1,323 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SpectrumResult &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="SpectrumResultDict" href="gammapy.spectrum.SpectrumResultDict.html" />
+    <link rel="prev" title="SpectrumObservationList" href="gammapy.spectrum.SpectrumObservationList.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.SpectrumResult.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.SpectrumResult'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumResultDict.html" title="SpectrumResultDict">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumObservationList.html" title="SpectrumObservationList">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>SpectrumResult</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spectrumresult">
+<h1>SpectrumResult<a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#spectrumresult" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.SpectrumResult">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">SpectrumResult</code><span class="sig-paren">(</span><em>stats=None</em>, <em>fit=None</em>, <em>points=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class holding all results of a spectral analysis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>stats: `~gammapy.spectrum.results.SpectrumStats`, optional</strong></p>
+<blockquote>
+<div><p>Spectrum stats</p>
+</div></blockquote>
+<p><strong>fit: `~gammapy.spectrum.results.SpectrumFitResult`, optional</strong></p>
+<blockquote>
+<div><p>Spectrum fit result</p>
+</div></blockquote>
+<p><strong>points: `~gammapy.spectrum.DifferentialFluxPoints`, optional</strong></p>
+<blockquote class="last">
+<div><p>Flux points</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.calculate_residuals" title="gammapy.spectrum.SpectrumResult.calculate_residuals"><code class="xref py py-obj docutils literal"><span class="pre">calculate_residuals</span></code></a>()</td>
+<td>Calculate residuals and residual errors</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_all" title="gammapy.spectrum.SpectrumResult.from_all"><code class="xref py py-obj docutils literal"><span class="pre">from_all</span></code></a>(filename)</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_fitspectrum_json" title="gammapy.spectrum.SpectrumResult.from_fitspectrum_json"><code class="xref py py-obj docutils literal"><span class="pre">from_fitspectrum_json</span></code></a>(filename[,&nbsp;model])</td>
+<td></td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_yaml" title="gammapy.spectrum.SpectrumResult.from_yaml"><code class="xref py py-obj docutils literal"><span class="pre">from_yaml</span></code></a>(filename)</td>
+<td>Read YAML file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.plot_residuals" title="gammapy.spectrum.SpectrumResult.plot_residuals"><code class="xref py py-obj docutils literal"><span class="pre">plot_residuals</span></code></a>([ax,&nbsp;energy_unit])</td>
+<td>Plot residuals</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.plot_spectrum" title="gammapy.spectrum.SpectrumResult.plot_spectrum"><code class="xref py py-obj docutils literal"><span class="pre">plot_spectrum</span></code></a>([energy_unit,&nbsp;flux_unit,&nbsp;...])</td>
+<td>Plot full spectrum including flux points and residuals</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.to_table" title="gammapy.spectrum.SpectrumResult.to_table"><code class="xref py py-obj docutils literal"><span class="pre">to_table</span></code></a>(**kwargs)</td>
+<td>Return <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a> containing all results</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumResult.calculate_residuals">
+<code class="descname">calculate_residuals</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.calculate_residuals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.calculate_residuals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate residuals and residual errors</p>
+<p>Based on <a class="reference internal" href="gammapy.spectrum.SpectrumFitResult.html#gammapy.spectrum.SpectrumFitResult" title="gammapy.spectrum.results.SpectrumFitResult"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumFitResult</span></code></a> and
+<code class="xref py py-obj docutils literal"><span class="pre">FluxPoints</span></code></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>residuals</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Residuals</p>
+</div></blockquote>
+<p><strong>residuals_err</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote class="last">
+<div><p>Residual errors</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.SpectrumResult.from_all">
+<em class="property">classmethod </em><code class="descname">from_all</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.from_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.SpectrumResult.from_fitspectrum_json">
+<em class="property">classmethod </em><code class="descname">from_fitspectrum_json</code><span class="sig-paren">(</span><em>filename</em>, <em>model=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.from_fitspectrum_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_fitspectrum_json" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.spectrum.SpectrumResult.from_yaml">
+<em class="property">classmethod </em><code class="descname">from_yaml</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.from_yaml"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.from_yaml" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read YAML file</p>
+<p>This method searches the highest-level key in a YAML file and
+creates <code class="xref py py-obj docutils literal"><span class="pre">Result</span></code> instances depending
+on the available keys</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumResult.plot_residuals">
+<code class="descname">plot_residuals</code><span class="sig-paren">(</span><em>ax=None</em>, <em>energy_unit=u'TeV'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.plot_residuals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.plot_residuals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot residuals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">axes</span></code>, optional</p>
+<blockquote>
+<div><p>Axis</p>
+</div></blockquote>
+<p><strong>energy_unit</strong> : str, <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Unit.html#astropy.units.Unit" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Unit</span></code></a>, optional</p>
+<blockquote>
+<div><p>Unit of the energy axis</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">axes</span></code>, optional</p>
+<blockquote class="last">
+<div><p>Axis</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumResult.plot_spectrum">
+<code class="descname">plot_spectrum</code><span class="sig-paren">(</span><em>energy_unit=u'TeV'</em>, <em>flux_unit=u'cm-2 s-1 TeV-1'</em>, <em>energy_power=0</em>, <em>fit_kwargs=None</em>, <em>point_kwargs=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.plot_spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.plot_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot full spectrum including flux points and residuals</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">axes</span></code>, optional</p>
+<blockquote>
+<div><p>Axis</p>
+</div></blockquote>
+<p><strong>energy_unit</strong> : str, <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Unit.html#astropy.units.Unit" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Unit</span></code></a>, optional</p>
+<blockquote>
+<div><p>Unit of the energy axis</p>
+</div></blockquote>
+<p><strong>flux_unit</strong> : str, <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Unit.html#astropy.units.Unit" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Unit</span></code></a>, optional</p>
+<blockquote>
+<div><p>Unit of the flux axis</p>
+</div></blockquote>
+<p><strong>energy_power</strong> : int</p>
+<blockquote>
+<div><p>Power of energy to multiply flux axis with</p>
+</div></blockquote>
+<p><strong>fit_kwargs</strong> : dict, optional</p>
+<blockquote>
+<div><p>forwarded to <code class="xref py py-func docutils literal"><span class="pre">gammapy.spectrum.results.SpectrumFitResult.plot_fit_function()</span></code></p>
+</div></blockquote>
+<p><strong>point_kwargs</strong> : dict, optional</p>
+<blockquote>
+<div><p>forwarded to <code class="xref py py-func docutils literal"><span class="pre">gammapy.spectrum.results.SpectrumFitResult.plot_points()</span></code></p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>ax</strong> : <code class="xref py py-obj docutils literal"><span class="pre">axes</span></code>, optional</p>
+<blockquote class="last">
+<div><p>Axis</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumResult.to_table">
+<code class="descname">to_table</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/results.html#SpectrumResult.to_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumResult.html#gammapy.spectrum.SpectrumResult.to_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a> containing all results</p>
+<p>only SpectrumStats and SpectrumFitResult are taken into account</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.SpectrumResult.html#">SpectrumResult</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.SpectrumResult.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.SpectrumResult.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

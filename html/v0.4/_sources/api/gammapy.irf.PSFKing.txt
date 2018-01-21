@@ -1,0 +1,52 @@
+
+
+PSFKing
+===================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: PSFKing
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PSFKing.evaluate
+      ~PSFKing.evaluate_direct
+      ~PSFKing.from_table
+      ~PSFKing.info
+      ~PSFKing.read
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+   .. automethod:: evaluate_direct
+   .. automethod:: from_table
+   .. automethod:: info
+   .. automethod:: read
+
+   
+   

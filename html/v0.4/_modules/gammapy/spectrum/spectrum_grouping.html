@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.spectrum_grouping &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/spectrum_grouping.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/spectrum_grouping'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.spectrum_grouping</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">gammapy.extern.pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">..spectrum</span> <span class="kn">import</span> <span class="n">SpectrumObservationList</span><span class="p">,</span> <span class="n">SpectrumObservation</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">ObservationGroupAxis</span><span class="p">,</span> <span class="n">ObservationGroups</span><span class="p">,</span> <span class="n">ObservationTable</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;SpectrumGrouping&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;group_obs_table&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="group_obs_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.group_obs_table.html#gammapy.spectrum.group_obs_table">[docs]</a><span class="k">def</span> <span class="nf">group_obs_table</span><span class="p">(</span><span class="n">obs_table</span><span class="p">,</span> <span class="n">offset_range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">],</span> <span class="n">n_off_bin</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                    <span class="n">eff_range</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">],</span> <span class="n">n_eff_bin</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">zen_range</span><span class="o">=</span><span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">],</span>
+                    <span class="n">n_zen_bin</span><span class="o">=</span><span class="mi">7</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Helper function to provide an observation grouping in offset,</span>
+<span class="sd">    muon_efficiency, and zenith.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obs_table : `~gammapy.data.ObservationTable`</span>
+<span class="sd">        Obs table to group</span>
+<span class="sd">    offset_range : tuple</span>
+<span class="sd">        Range of the offset band</span>
+<span class="sd">    n_off_bin : int</span>
+<span class="sd">        Number of offset bins</span>
+<span class="sd">    eff_range : tuple</span>
+<span class="sd">        Range of the muon efficiency band</span>
+<span class="sd">    n_eff_bin : int</span>
+<span class="sd">        Number of muon efficiency bins</span>
+<span class="sd">    zen_range : tuple</span>
+<span class="sd">        Range of the zenith angle band</span>
+<span class="sd">    n_zen_bin : int</span>
+<span class="sd">        Number of zenith bins</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    grouped_table : `~gammapy.data.ObservationTable`</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">offmin</span><span class="p">,</span> <span class="n">offmax</span> <span class="o">=</span> <span class="n">offset_range</span>
+    <span class="n">effmin</span><span class="p">,</span> <span class="n">effmax</span> <span class="o">=</span> <span class="n">eff_range</span>
+    <span class="n">zenmin</span><span class="p">,</span> <span class="n">zenmax</span> <span class="o">=</span> <span class="n">zen_range</span>
+    <span class="n">offtab</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">offmin</span><span class="p">,</span> <span class="n">offmax</span><span class="p">,</span> <span class="n">n_off_bin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+    <span class="n">efftab</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">effmin</span><span class="p">,</span> <span class="n">effmax</span><span class="p">,</span> <span class="n">n_eff_bin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">zentab</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">zenmin</span><span class="p">,</span> <span class="n">zenmax</span><span class="p">,</span> <span class="n">n_zen_bin</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+    <span class="n">coszentab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">zentab</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">val</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+    <span class="n">val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ObservationGroupAxis</span><span class="p">(</span><span class="s1">&#39;MUONEFF&#39;</span><span class="p">,</span> <span class="n">efftab</span><span class="p">,</span> <span class="s1">&#39;edges&#39;</span><span class="p">))</span>
+    <span class="n">val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ObservationGroupAxis</span><span class="p">(</span><span class="s1">&#39;COSZEN&#39;</span><span class="p">,</span> <span class="n">coszentab</span><span class="p">,</span> <span class="s1">&#39;edges&#39;</span><span class="p">))</span>
+    <span class="n">val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ObservationGroupAxis</span><span class="p">(</span><span class="s1">&#39;OFFSET&#39;</span><span class="p">,</span> <span class="n">offtab</span><span class="p">,</span> <span class="s1">&#39;edges&#39;</span><span class="p">))</span>
+
+    <span class="n">obs_groups</span> <span class="o">=</span> <span class="n">ObservationGroups</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+    <span class="n">cos_zen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">obs_table</span><span class="p">[</span><span class="s1">&#39;ZEN_PNT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantity</span><span class="p">)</span>
+    <span class="n">obs_table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">cos_zen</span><span class="p">,</span> <span class="s1">&#39;COSZEN&#39;</span><span class="p">))</span>
+    <span class="n">grouped_table</span> <span class="o">=</span> <span class="n">obs_groups</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">obs_table</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">grouped_table</span></div>
+
+
+<div class="viewcode-block" id="SpectrumGrouping"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping">[docs]</a><span class="k">class</span> <span class="nc">SpectrumGrouping</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class for stacking observations in groups</span>
+
+<span class="sd">    The format of the input observation table</span>
+<span class="sd">    is described in :ref:`dataformats_observation_lists`. The column</span>
+<span class="sd">    ``PHAFILE`` is added after a `~gammapy.spectrum.SpectrumExtraction`. The</span>
+<span class="sd">    column ``GROUP_ID`` can be added as described in</span>
+<span class="sd">    :ref:`obs_observation_grouping`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obs_table : `~gammapy.spectrum.SpectrumObservationList`</span>
+<span class="sd">        Observation table with group ID column</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_table</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacked_observations</span> <span class="o">=</span> <span class="bp">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacked_obs_table</span> <span class="o">=</span> <span class="bp">None</span>
+
+<div class="viewcode-block" id="SpectrumGrouping.stack_groups"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.stack_groups">[docs]</a>    <span class="k">def</span> <span class="nf">stack_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Stack observations in each group &quot;&quot;&quot;</span>
+        <span class="n">stacked_obs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+
+        <span class="n">sorted_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">obs_table</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s1">&#39;GROUP_ID&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">sorted_table</span><span class="o">.</span><span class="n">groups</span><span class="p">:</span>
+            <span class="n">group_id</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;GROUP_ID&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Stacking observations in group {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">group_id</span><span class="p">))</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">([</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]]))</span>
+            <span class="n">temp</span> <span class="o">=</span> <span class="n">SpectrumObservationList</span><span class="o">.</span><span class="n">from_observation_table</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+            <span class="n">stacked</span> <span class="o">=</span> <span class="n">SpectrumObservation</span><span class="o">.</span><span class="n">stack_observation_list</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+            <span class="n">stacked</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">phafile</span> <span class="o">=</span> <span class="s1">&#39;pha_group{}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">group_id</span><span class="p">)</span>
+            <span class="n">stacked</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">ogip_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;ogip_data_stacked&#39;</span>
+
+            <span class="n">stacked_obs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stacked</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacked_observations</span> <span class="o">=</span> <span class="n">SpectrumObservationList</span><span class="p">(</span><span class="n">stacked_obs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumGrouping.make_observation_table"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.make_observation_table">[docs]</a>    <span class="k">def</span> <span class="nf">make_observation_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create observation table for the stacked observations&quot;&quot;&quot;</span>
+        <span class="n">phafile</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">ogip_dir</span> <span class="o">/</span> <span class="n">o</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">phafile</span><span class="p">)</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">stacked_observations</span><span class="p">]</span>
+        <span class="n">col1</span> <span class="o">=</span> <span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">phafile</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;PHAFILE&#39;</span><span class="p">)</span>
+        <span class="c1"># Todo: Put meta information about the groups in the table</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacked_obs_table</span> <span class="o">=</span> <span class="n">ObservationTable</span><span class="p">([</span><span class="n">col1</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="SpectrumGrouping.write"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write stacked observations and observation table&quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacked_observations</span><span class="o">.</span><span class="n">write_ogip</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stacked_obs_table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;observation_table_stacked.fits&#39;</span><span class="p">,</span>
+                                     <span class="n">overwrite</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SpectrumGrouping.run"><a class="viewcode-back" href="../../../api/gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run all steps&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stack_groups</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">make_observation_table</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">write</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="spectrum_grouping.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

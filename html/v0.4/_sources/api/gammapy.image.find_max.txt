@@ -1,0 +1,8 @@
+
+
+find_max
+======================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: find_max

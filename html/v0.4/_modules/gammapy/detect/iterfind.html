@@ -1,0 +1,480 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.detect.iterfind &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/detect/iterfind.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/detect/iterfind'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.detect.iterfind</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;An iterative multi-scale source detection method.</span>
+
+<span class="sd">This is a prototype implementation of the following algorithm:</span>
+<span class="sd">1. Input is: count, background and exposure map and list of scales</span>
+<span class="sd">2. Compute significance maps on multiple scales (disk-correlate)</span>
+<span class="sd">3. Largest peak on any scale gives a seed position / extension (the scale)</span>
+<span class="sd">4. Fit a 2D Gauss-model source using the seed parameters</span>
+<span class="sd">5. Add the source to a list of detected sources and the background model</span>
+<span class="sd">6. Restart at 2, but this time with detected sources added to the background</span>
+<span class="sd">   model, i.e. significance maps will be &quot;residual significance&quot; maps.</span>
+
+<span class="sd">TODO: tons of things, e.g.</span>
+<span class="sd">* Use Sherpa catalog pipeline for `fit_source_parameters step.</span>
+<span class="sd">  This will automatically take care of these points:</span>
+<span class="sd">    * Keep parameters of previously found sources free when adding a new source</span>
+<span class="sd">    * Write more debug maps (e.g. excess)</span>
+<span class="sd">      and info (e.g. sources_guess positions).</span>
+<span class="sd">    * Add PSF convolution</span>
+<span class="sd">* Use TS maps with Gauss source morphology instead of disk.</span>
+<span class="sd">* Make it more modular and more abstract; put in gammapy.detect</span>
+<span class="sd">  - user should be able to plug-in their significance map computation?</span>
+<span class="sd">  - support different source models?</span>
+<span class="sd">  - Separate Iterator, SignificanceMapCalculator, Guesser, Fitter ...</span>
+<span class="sd">    and implement different methods as sub-classes or via callbacks?</span>
+<span class="sd">  - e.g. list of peaks should be replaced with some abstract class that</span>
+<span class="sd">    allows different characteristics / methods to be implemented.</span>
+<span class="sd">* Introduce parameters that allow us to vary the procedure</span>
+<span class="sd">* Check if Python garbage collection for iter_maps sets in OK</span>
+<span class="sd">  or if explicit garbage collection is needed.</span>
+<span class="sd">* Use photutils aperture photometry for estimate_flux?</span>
+<span class="sd">* Introduce FLUX_SCALE = 1e-10 parameter to avoid roundoff error problems?</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">..extern.pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stats</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">disk_correlate</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;IterativeSourceDetector&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">FitFailedError</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fit failed error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">pass</span>
+
+
+<span class="k">def</span> <span class="nf">gauss2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">flux</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;2D Gaussian source model.&quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+    <span class="n">theta2</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="n">xpos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">y</span> <span class="o">-</span> <span class="n">ypos</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">sigma2</span> <span class="o">=</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">sigma</span>
+    <span class="n">term_a</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">sigma2</span><span class="p">)</span>
+    <span class="n">term_b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">theta2</span> <span class="o">/</span> <span class="n">sigma2</span><span class="p">)</span>
+    <span class="n">image</span> <span class="o">=</span> <span class="n">term_a</span> <span class="o">*</span> <span class="n">term_b</span>
+    <span class="k">return</span> <span class="n">flux</span> <span class="o">*</span> <span class="n">image</span> <span class="o">/</span> <span class="n">image</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="IterativeSourceDetector"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector">[docs]</a><span class="k">class</span> <span class="nc">IterativeSourceDetector</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;An iterative source detection algorithm.</span>
+
+<span class="sd">    TODO: document</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    debug_output_folder : str</span>
+<span class="sd">        Use empty string for no debug output.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">maps</span><span class="p">,</span> <span class="n">scales</span><span class="p">,</span> <span class="n">max_sources</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">significance_threshold</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
+                 <span class="n">max_ncall</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">debug_output_folder</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span> <span class="o">=</span> <span class="n">maps</span>
+        <span class="c1"># Note: FITS convention is to start counting pixels at 1</span>
+        <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">(</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+
+        <span class="c1"># Temp maps that change in each iteration</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">find_peaks</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">scales</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_sources</span> <span class="o">=</span> <span class="n">max_sources</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">significance_threshold</span> <span class="o">=</span> <span class="n">significance_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_ncall</span> <span class="o">=</span> <span class="n">max_ncall</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">debug_output_folder</span> <span class="o">=</span> <span class="n">debug_output_folder</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span> <span class="o">=</span> <span class="n">overwrite</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">sources_guess</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sources</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># At the moment we only</span>
+        <span class="c1"># self.peaks = np.zeros_like(self.scales)</span>
+
+<div class="viewcode-block" id="IterativeSourceDetector.run"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Run source detection.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Running source detection&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_sources</span><span class="p">):</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Starting iteration number {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">_</span><span class="p">))</span>
+            <span class="n">debug_folder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_output_folder</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_output_folder</span><span class="p">:</span>
+                <span class="n">Path</span><span class="p">(</span><span class="n">debug_folder</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">()</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;mkdir {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">debug_folder</span><span class="p">))</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">compute_iter_maps</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_output_folder</span><span class="p">:</span>
+                <span class="c1"># Save per iteration maps</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]:</span>
+                    <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;{0}/{1}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">debug_folder</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+                    <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+                    <span class="n">fits</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">)</span>
+
+                <span class="c1"># Save per iteration and scale maps</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;significance&#39;</span><span class="p">]:</span>
+                    <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">:</span>
+                        <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;{0}/{1}_{2}.fits&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">debug_folder</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">scale</span><span class="p">)</span>
+                        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+                        <span class="n">fits</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="n">name</span><span class="p">][</span><span class="n">scale</span><span class="p">],</span> <span class="n">clobber</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">overwrite</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">find_peaks</span><span class="p">()</span>
+            <span class="c1"># TODO: debug output to JSON here and for later steps</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">stop_iteration</span><span class="p">():</span>
+                <span class="k">break</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">guess_source_parameters</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug_output_folder</span><span class="p">:</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;{0}/{1}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">debug_folder</span><span class="p">,</span> <span class="s1">&#39;sources_guess.reg&#39;</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">save_regions</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;guess&#39;</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fit_source_parameters</span><span class="p">()</span>
+            <span class="k">except</span> <span class="n">FitFailedError</span><span class="p">:</span>
+                <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;Fit failed. Full stop.&#39;</span><span class="p">)</span>
+                <span class="k">break</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.compute_iter_maps"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.compute_iter_maps">[docs]</a>    <span class="k">def</span> <span class="nf">compute_iter_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute maps for this iteration.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Computing maps for this iteration.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="n">background</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]</span>
+        <span class="n">background</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_excess</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">background</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;significance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">:</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="n">disk_correlate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">],</span> <span class="n">scale</span><span class="p">)</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="n">disk_correlate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">],</span> <span class="n">scale</span><span class="p">)</span>
+            <span class="n">significance</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">significance</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;significance&#39;</span><span class="p">][</span><span class="n">scale</span><span class="p">]</span> <span class="o">=</span> <span class="n">significance</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.model_excess"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.model_excess">[docs]</a>    <span class="k">def</span> <span class="nf">model_excess</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sources</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute model excess image.&quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">sources</span><span class="p">:</span>
+            <span class="n">source_flux</span> <span class="o">=</span> <span class="n">gauss2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="o">**</span><span class="n">source</span><span class="p">)</span>
+            <span class="n">flux</span> <span class="o">+=</span> <span class="n">source_flux</span>
+        <span class="n">excess</span> <span class="o">=</span> <span class="n">flux</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exposure&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">excess</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.find_peaks"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.find_peaks">[docs]</a>    <span class="k">def</span> <span class="nf">find_peaks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Find peaks in residual significance image.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Finding peaks.&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;significance&#39;</span><span class="p">][</span><span class="n">scale</span><span class="p">]</span>
+            <span class="c1"># Note: significance images sometimes contain Inf or NaN values.</span>
+            <span class="c1"># We set them here to a value so that they will be ignored</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
+            <span class="n">image</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1e10</span>
+
+            <span class="c1"># This is how to find the peak position in a 2D numpy array</span>
+            <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unravel_index</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nanargmax</span><span class="p">(</span><span class="n">image</span><span class="p">),</span> <span class="n">image</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">image</span><span class="p">[</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">]</span>
+            <span class="n">peak</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+            <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;xpos&#39;</span><span class="p">],</span> <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;ypos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span>
+            <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">],</span> <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span><span class="p">,</span> <span class="n">scale</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">peak</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Peak on scale {scale:5.2f} is at ({xpos:5d}, {ypos:5d}) with value {val:7.2f}&#39;</span>
+                      <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">peak</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.stop_iteration"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.stop_iteration">[docs]</a>    <span class="k">def</span> <span class="nf">stop_iteration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Criteria to stop the iteration process.&quot;&quot;&quot;</span>
+        <span class="n">max_significance</span> <span class="o">=</span> <span class="nb">max</span><span class="p">([</span><span class="n">_</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">max_significance</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">significance_threshold</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Max peak significance of {0:7.2f} is smaller than detection threshold {1:7.2f}&#39;</span>
+                      <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">max_significance</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">significance_threshold</span><span class="p">))</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Stopping iteration.&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">False</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.guess_source_parameters"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.guess_source_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">guess_source_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Guess source start parameters for the fit.</span>
+
+<span class="sd">        At the moment take the position and scale of the maximum residual peak</span>
+<span class="sd">        and compute the excess within a circle around that position.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Guessing Gauss source parameters:&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Find the scale with the most significant peak</span>
+        <span class="n">peak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scales</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="n">_</span><span class="p">][</span><span class="s1">&#39;val&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">]:</span>
+                <span class="n">peak</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">peaks</span><span class="p">[</span><span class="n">_</span><span class="p">]</span>
+
+        <span class="n">source</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">source</span><span class="p">[</span><span class="s1">&#39;xpos&#39;</span><span class="p">],</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;ypos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;xpos&#39;</span><span class="p">],</span> <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;ypos&#39;</span><span class="p">]</span>
+        <span class="c1"># TODO: introduce rough scale factor disk -&gt; gauss here</span>
+        <span class="n">SIGMA_SCALE_FACTOR</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">source</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SIGMA_SCALE_FACTOR</span> <span class="o">*</span> <span class="n">peak</span><span class="p">[</span><span class="s1">&#39;scale&#39;</span><span class="p">]</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;xpos: {xpos}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">source</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;ypos: {ypos}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">source</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;sigma: {sigma}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">source</span><span class="p">))</span>
+        <span class="n">source</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">estimate_flux</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sources_guess</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">source</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.fit_source_parameters"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.fit_source_parameters">[docs]</a>    <span class="k">def</span> <span class="nf">fit_source_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Fit source parameters using the guess as start values.</span>
+
+<span class="sd">        For this prototype we simply roll our own using iminuit,</span>
+<span class="sd">        this should probably be changed to astropy or Sherpa.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Fitting source parameters&#39;</span><span class="p">)</span>
+        <span class="kn">from</span> <span class="nn">iminuit</span> <span class="kn">import</span> <span class="n">Minuit</span>
+
+        <span class="k">def</span> <span class="nf">fit_stat</span><span class="p">(</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">flux</span><span class="p">):</span>
+            <span class="sd">&quot;&quot;&quot;Define CASH fit statistic for Gauss model&quot;&quot;&quot;</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">]</span>
+            <span class="c1"># Note: No need to re-compute excess model for all previous source,</span>
+            <span class="c1"># that is already contained in the background in iter_maps.</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="p">[</span><span class="nb">dict</span><span class="p">(</span><span class="n">xpos</span><span class="o">=</span><span class="n">xpos</span><span class="p">,</span> <span class="n">ypos</span><span class="o">=</span><span class="n">ypos</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="n">sigma</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">flux</span><span class="p">)]</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">background</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_excess</span><span class="p">(</span><span class="n">sources</span><span class="p">)</span>
+            <span class="n">cash</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">cash</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">cash</span>
+
+        <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources_guess</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Source parameters before fit: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;error_xpos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;error_ypos&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.01</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;error_flux&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;flux&#39;</span><span class="p">]</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;error_sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="o">*</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span>
+        <span class="n">SIGMA_LIMITS</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">1e6</span><span class="p">)</span>
+        <span class="n">pars</span><span class="p">[</span><span class="s1">&#39;limit_sigma&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">SIGMA_LIMITS</span>
+        <span class="n">minuit</span> <span class="o">=</span> <span class="n">Minuit</span><span class="p">(</span><span class="n">fit_stat</span><span class="p">,</span> <span class="n">pedantic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">print_level</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="o">**</span><span class="n">pars</span><span class="p">)</span>
+        <span class="c1"># minuit.print_initial_param()</span>
+        <span class="n">minuit</span><span class="o">.</span><span class="n">migrad</span><span class="p">(</span><span class="n">ncall</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">max_ncall</span><span class="p">)</span>
+
+        <span class="n">source</span> <span class="o">=</span> <span class="n">minuit</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Source parameters  after fit: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">minuit</span><span class="o">.</span><span class="n">migrad_ok</span><span class="p">():</span>
+            <span class="c1"># If fit doesn&#39;t converge we simply abort</span>
+            <span class="c1"># TODO: should we use exceptions here or return False as signal?</span>
+            <span class="n">minuit</span><span class="o">.</span><span class="n">print_fmin</span><span class="p">()</span>
+            <span class="k">raise</span> <span class="n">FitFailedError</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Store best-fit source parameters</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">source</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.estimate_flux"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.estimate_flux">[docs]</a>    <span class="k">def</span> <span class="nf">estimate_flux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;sum_and_divide&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Estimate flux in a circular region around the source.</span>
+
+<span class="sd">        Note: It&#39;s not clear which is the better flux estimate.</span>
+
+<span class="sd">        * ``method == &#39;sum_and_divide&#39;``::</span>
+
+<span class="sd">              flux = (counts.sum() - background.sum()) / exposure.mean()</span>
+
+<span class="sd">        * ``method = &#39;divide_and_sum&#39;``::</span>
+
+<span class="sd">              flux = ((counts - background) / exposure).sum()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Estimating flux&#39;</span><span class="p">)</span>
+        <span class="n">SOURCE_RADIUS_FACTOR</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">SOURCE_RADIUS_FACTOR</span> <span class="o">*</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span>
+        <span class="n">r2</span> <span class="o">=</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;xpos&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span>
+              <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;ypos&#39;</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">r2</span> <span class="o">&lt;</span> <span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="n">npix</span> <span class="o">=</span> <span class="n">mask</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;sum_and_divide&#39;</span><span class="p">:</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="c1"># Note: exposure is not per pixel.</span>
+            <span class="c1"># It has units m^2 s TeV</span>
+            <span class="n">exposure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exposure&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">excess</span> <span class="o">=</span> <span class="n">counts</span> <span class="o">-</span> <span class="n">background</span>
+            <span class="c1"># TODO: check if true:</span>
+            <span class="c1"># Flux is differential flux at 1 TeV in units m^-2 s^-1 TeV^-1</span>
+            <span class="c1"># Or is it integral flux above 1 TeV in units of m^-2 s^-1?</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="n">excess</span> <span class="o">/</span> <span class="n">exposure</span>
+        <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;divide_and_sum&#39;</span><span class="p">:</span>
+            <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">exposure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exposure&#39;</span><span class="p">][</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+            <span class="n">excess_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">]</span>
+            <span class="n">excess</span> <span class="o">=</span> <span class="n">excess_image</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+            <span class="n">flux_image</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;counts&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">iter_maps</span><span class="p">[</span><span class="s1">&#39;background&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">maps</span><span class="p">[</span><span class="s1">&#39;exposure&#39;</span><span class="p">]</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="n">flux_image</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Flux estimation for source region radius: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radius</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;npix: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">npix</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;counts: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">counts</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;background: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">background</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;excess: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">excess</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;exposure: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">exposure</span><span class="p">))</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;flux: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">flux</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.save_fits"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.save_fits">[docs]</a>    <span class="k">def</span> <span class="nf">save_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save source catalog to FITS file.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing source detections in FITS format to {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span></div>
+        <span class="c1"># TODO</span>
+
+<div class="viewcode-block" id="IterativeSourceDetector.save_regions"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.save_regions">[docs]</a>    <span class="k">def</span> <span class="nf">save_regions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="s1">&#39;fit&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save ds9 region file.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing source detections in ds9 region format to {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">selection</span> <span class="o">==</span> <span class="s1">&#39;fit&#39;</span><span class="p">:</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;green&#39;</span>
+        <span class="k">elif</span> <span class="n">selection</span> <span class="o">==</span> <span class="s1">&#39;guess&#39;</span><span class="p">:</span>
+            <span class="n">sources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sources_guess</span>
+            <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;magenta&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Unknown selection: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selection</span><span class="p">))</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+            <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;image</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ii</span><span class="p">,</span> <span class="n">source</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sources</span><span class="p">):</span>
+                <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;circle({xpos:3.3f},{ypos:3.3f},{radius:3.3f}) # text=&quot;{name}&quot; color={color}</span><span class="se">\n</span><span class="s1">&#39;</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">xpos</span><span class="o">=</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;xpos&#39;</span><span class="p">],</span> <span class="n">ypos</span><span class="o">=</span><span class="n">source</span><span class="p">[</span><span class="s1">&#39;ypos&#39;</span><span class="p">])</span>
+                <span class="n">N_SIGMA</span> <span class="o">=</span> <span class="mi">3</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">N_SIGMA</span> <span class="o">*</span> <span class="n">source</span><span class="p">[</span><span class="s1">&#39;sigma&#39;</span><span class="p">]</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Source {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ii</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+                <span class="n">text</span> <span class="o">=</span> <span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">outfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="IterativeSourceDetector.save_json"><a class="viewcode-back" href="../../../api/gammapy.detect.IterativeSourceDetector.html#gammapy.detect.IterativeSourceDetector.save_json">[docs]</a>    <span class="k">def</span> <span class="nf">save_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Save source catalog to JSON file.&quot;&quot;&quot;</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Writing source detections in JSON format to {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="kn">import</span> <span class="nn">json</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">sources</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sources</span><span class="p">,</span> <span class="n">sources_guess</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">sources_guess</span><span class="p">)</span>
+        <span class="c1"># TODO: this fails because data contains np.float32 values, which are not JSON serializable:</span>
+        <span class="c1"># TypeError: 1.2617354e-10 is not JSON serializable</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">outfile</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="iterfind.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

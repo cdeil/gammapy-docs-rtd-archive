@@ -1,0 +1,8 @@
+
+
+find_reflected_regions
+=====================================
+
+.. currentmodule:: gammapy.region
+
+.. autofunction:: find_reflected_regions

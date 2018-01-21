@@ -1,0 +1,29 @@
+
+
+BlackBody
+==========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: BlackBody
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

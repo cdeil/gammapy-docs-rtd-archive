@@ -1,0 +1,46 @@
+
+
+GammaImages
+==============================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: GammaImages
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~GammaImages.compute_correlated_maps
+      ~GammaImages.initial_background
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute_correlated_maps
+   .. automethod:: initial_background
+
+   
+   

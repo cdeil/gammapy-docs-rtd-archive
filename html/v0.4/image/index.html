@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Image processing and analysis tools (gammapy.image) &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="next" title="Sky Maps" href="skymaps.html" />
+    <link rel="prev" title="IterativeSourceDetector" href="../api/gammapy.detect.IterativeSourceDetector.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/image/" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'image/index'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="skymaps.html" title="Sky Maps">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.detect.IterativeSourceDetector.html" title="IterativeSourceDetector">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      
+      <li>Image processing and analysis tools (<code class="docutils literal"><span class="pre">gammapy.image</span></code>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="image-processing-and-analysis-tools-gammapy-image">
+<span id="image"></span><h1>Image processing and analysis tools (<a class="reference internal" href="index.html#module-gammapy.image" title="gammapy.image"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.image</span></code></a>)<a class="headerlink" href="index.html#image-processing-and-analysis-tools-gammapy-image" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-gammapy.image" title="gammapy.image"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.image</span></code></a> contains data classes and methods for image based analysis
+of gamma-ray data. Currently it includes multi purpose image processing
+methods as well. The goal longterm goal is to contribute most of these methods
+to <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/ndimage.html#module-scipy.ndimage" title="(in SciPy v0.17.0)"><code class="xref py py-obj docutils literal"><span class="pre">scipy.ndimage</span></code></a>, <a class="reference external" href="http://scikit-image.org">scikit-image</a>, <a class="reference external" href="http://astropy.org">astropy</a> or <a class="reference external" href="http://photutils.readthedocs.org">photutils</a>, and to only keep
+gamma-ray analysis specific functionality here.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="index.html#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>Most of the functions in this module have objects of type <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.10)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></code></a>
+or an <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">astropy.io.fits.ImageHDU</span></code></a> or <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdus.html#astropy.io.fits.PrimaryHDU" title="(in Astropy v1.2.dev14947)"><code class="xref py py-obj docutils literal"><span class="pre">astropy.io.fits.PrimaryHDU</span></code></a>
+as input and output:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">poisson_stats_image</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.image</span> <span class="kn">import</span> <span class="n">lookup</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">image</span> <span class="o">=</span> <span class="n">poisson_stats_image</span><span class="p">()</span> <span class="c1"># image is a 2D numpy array</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">lookup</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="mi">42</span><span class="p">,</span> <span class="mi">44</span><span class="p">,</span> <span class="n">world</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+<span class="go">3.0</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-gammapy-image">
+<h2>Using <a class="reference internal" href="index.html#module-gammapy.image" title="gammapy.image"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.image</span></code></a><a class="headerlink" href="index.html#using-gammapy-image" title="Permalink to this headline">¶</a></h2>
+<p>If you&#8217;d like to learn more about using <a class="reference internal" href="index.html#module-gammapy.image" title="gammapy.image"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.image</span></code></a>, read the following sub-pages:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="skymaps.html">Sky Maps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plotting.html">Image plotting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bounding_box.html">Bounding boxes</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.image">
+<span id="gammapy-image-package"></span><h3>gammapy.image Package<a class="headerlink" href="index.html#module-gammapy.image" title="Permalink to this headline">¶</a></h3>
+<p>Image processing and analysis tools.</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.atrous_hdu.html#gammapy.image.atrous_hdu" title="gammapy.image.atrous_hdu"><code class="xref py py-obj docutils literal"><span class="pre">atrous_hdu</span></code></a>(hdu,&nbsp;n_levels)</td>
+<td>Compute a trous transform for a given FITS HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.atrous_image.html#gammapy.image.atrous_image" title="gammapy.image.atrous_image"><code class="xref py py-obj docutils literal"><span class="pre">atrous_image</span></code></a>(image,&nbsp;n_levels)</td>
+<td>Compute a trous transform for a given image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.bbox.html#gammapy.image.bbox" title="gammapy.image.bbox"><code class="xref py py-obj docutils literal"><span class="pre">bbox</span></code></a>(mask,&nbsp;margin,&nbsp;binsz)</td>
+<td>Determine the bounding box of a mask.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.bin_events_in_image.html#gammapy.image.bin_events_in_image" title="gammapy.image.bin_events_in_image"><code class="xref py py-obj docutils literal"><span class="pre">bin_events_in_image</span></code></a>(events,&nbsp;reference_image)</td>
+<td>Bin events into an image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.binary_dilation_circle.html#gammapy.image.binary_dilation_circle" title="gammapy.image.binary_dilation_circle"><code class="xref py py-obj docutils literal"><span class="pre">binary_dilation_circle</span></code></a>(input,&nbsp;radius)</td>
+<td>Dilate with disk of given radius.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.binary_disk.html#gammapy.image.binary_disk" title="gammapy.image.binary_disk"><code class="xref py py-obj docutils literal"><span class="pre">binary_disk</span></code></a>(radius)</td>
+<td>Generate a binary disk mask.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.binary_opening_circle.html#gammapy.image.binary_opening_circle" title="gammapy.image.binary_opening_circle"><code class="xref py py-obj docutils literal"><span class="pre">binary_opening_circle</span></code></a>(input,&nbsp;radius)</td>
+<td>Binary opening with circle as structuring element.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.binary_ring.html#gammapy.image.binary_ring" title="gammapy.image.binary_ring"><code class="xref py py-obj docutils literal"><span class="pre">binary_ring</span></code></a>(r_in,&nbsp;r_out)</td>
+<td>Generate a binary ring mask.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.block_reduce_hdu.html#gammapy.image.block_reduce_hdu" title="gammapy.image.block_reduce_hdu"><code class="xref py py-obj docutils literal"><span class="pre">block_reduce_hdu</span></code></a>(input_hdu,&nbsp;block_size,&nbsp;func)</td>
+<td>Provides block reduce functionality for image HDUs.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.catalog_image.html#gammapy.image.catalog_image" title="gammapy.image.catalog_image"><code class="xref py py-obj docutils literal"><span class="pre">catalog_image</span></code></a>(reference,&nbsp;psf[,&nbsp;catalog,&nbsp;...])</td>
+<td>Creates an image from a simulated catalog, or from 1FHL or 2FGL sources.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.catalog_table.html#gammapy.image.catalog_table" title="gammapy.image.catalog_table"><code class="xref py py-obj docutils literal"><span class="pre">catalog_table</span></code></a>(catalog[,&nbsp;energy_bands])</td>
+<td>Creates catalog table from published source catalog.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.colormap_hess.html#gammapy.image.colormap_hess" title="gammapy.image.colormap_hess"><code class="xref py py-obj docutils literal"><span class="pre">colormap_hess</span></code></a>([transition,&nbsp;width])</td>
+<td>Colormap often used in H.E.S.S.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.colormap_milagro.html#gammapy.image.colormap_milagro" title="gammapy.image.colormap_milagro"><code class="xref py py-obj docutils literal"><span class="pre">colormap_milagro</span></code></a>([transition,&nbsp;width,&nbsp;huestart])</td>
+<td>Colormap often used in Milagro collaboration publications.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.compute_binning.html#gammapy.image.compute_binning" title="gammapy.image.compute_binning"><code class="xref py py-obj docutils literal"><span class="pre">compute_binning</span></code></a>(data,&nbsp;n_bins[,&nbsp;method,&nbsp;eps])</td>
+<td>Computes 1D array of bin edges.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.contains.html#gammapy.image.contains" title="gammapy.image.contains"><code class="xref py py-obj docutils literal"><span class="pre">contains</span></code></a>(image,&nbsp;x,&nbsp;y[,&nbsp;world])</td>
+<td>Check if given pixel or world positions are in an image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.crop_image.html#gammapy.image.crop_image" title="gammapy.image.crop_image"><code class="xref py py-obj docutils literal"><span class="pre">crop_image</span></code></a>(image,&nbsp;bounding_box)</td>
+<td>Crop an image (cut out a rectangular part).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.cube_to_image.html#gammapy.image.cube_to_image" title="gammapy.image.cube_to_image"><code class="xref py py-obj docutils literal"><span class="pre">cube_to_image</span></code></a>(cube[,&nbsp;slicepos])</td>
+<td>Slice or project 3-dim cube into a 2-dim image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.cube_to_spec.html#gammapy.image.cube_to_spec" title="gammapy.image.cube_to_spec"><code class="xref py py-obj docutils literal"><span class="pre">cube_to_spec</span></code></a>(cube,&nbsp;mask[,&nbsp;weighting])</td>
+<td>Integrate spatial dimensions of a FITS cube to give a spectrum.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.dict_to_hdulist.html#gammapy.image.dict_to_hdulist" title="gammapy.image.dict_to_hdulist"><code class="xref py py-obj docutils literal"><span class="pre">dict_to_hdulist</span></code></a>(image_dict,&nbsp;header)</td>
+<td>Take a dictionary of image data and a header to create a HDUList.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.disk_correlate.html#gammapy.image.disk_correlate" title="gammapy.image.disk_correlate"><code class="xref py py-obj docutils literal"><span class="pre">disk_correlate</span></code></a>(image,&nbsp;radius[,&nbsp;mode])</td>
+<td>Correlate image with binary disk kernel.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.downsample_2N.html#gammapy.image.downsample_2N" title="gammapy.image.downsample_2N"><code class="xref py py-obj docutils literal"><span class="pre">downsample_2N</span></code></a>(image,&nbsp;factor[,&nbsp;method,&nbsp;shape])</td>
+<td>Down sample image by a power of two.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.exclusion_distance.html#gammapy.image.exclusion_distance" title="gammapy.image.exclusion_distance"><code class="xref py py-obj docutils literal"><span class="pre">exclusion_distance</span></code></a>(exclusion)</td>
+<td>Distance to nearest exclusion region.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.find_max.html#gammapy.image.find_max" title="gammapy.image.find_max"><code class="xref py py-obj docutils literal"><span class="pre">find_max</span></code></a>(image)</td>
+<td>Find position of maximum in an image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.fits_to_png.html#gammapy.image.fits_to_png" title="gammapy.image.fits_to_png"><code class="xref py py-obj docutils literal"><span class="pre">fits_to_png</span></code></a>(infile,&nbsp;outfile,&nbsp;draw[,&nbsp;dpi])</td>
+<td>Plot FITS image in PNG format.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.fitsfigure_add_psf_inset.html#gammapy.image.fitsfigure_add_psf_inset" title="gammapy.image.fitsfigure_add_psf_inset"><code class="xref py py-obj docutils literal"><span class="pre">fitsfigure_add_psf_inset</span></code></a>(ff,&nbsp;psf,&nbsp;box[,&nbsp;...])</td>
+<td>Add PSF inset to <a class="reference external" href="http://aplpy.readthedocs.org/en/latest/api/aplpy.FITSFigure.html#aplpy.FITSFigure" title="(in aplpy v2.0.dev857)"><code class="xref py py-obj docutils literal"><span class="pre">FITSFigure</span></code></a> instance.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.grayify_colormap.html#gammapy.image.grayify_colormap" title="gammapy.image.grayify_colormap"><code class="xref py py-obj docutils literal"><span class="pre">grayify_colormap</span></code></a>(cmap[,&nbsp;mode])</td>
+<td>Return a grayscale version a the colormap.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.illustrate_colormap.html#gammapy.image.illustrate_colormap" title="gammapy.image.illustrate_colormap"><code class="xref py py-obj docutils literal"><span class="pre">illustrate_colormap</span></code></a>(cmap,&nbsp;**kwargs)</td>
+<td>Illustrate color distribution and perceived luminance of a colormap.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.image_groupby.html#gammapy.image.image_groupby" title="gammapy.image.image_groupby"><code class="xref py py-obj docutils literal"><span class="pre">image_groupby</span></code></a>(images,&nbsp;labels)</td>
+<td>Group pixel by labels.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.image_profile.html#gammapy.image.image_profile" title="gammapy.image.image_profile"><code class="xref py py-obj docutils literal"><span class="pre">image_profile</span></code></a>(profile_axis,&nbsp;image,&nbsp;lats,&nbsp;...)</td>
+<td>Creates a latitude or longitude profile from input flux image HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.images_to_cube.html#gammapy.image.images_to_cube" title="gammapy.image.images_to_cube"><code class="xref py py-obj docutils literal"><span class="pre">images_to_cube</span></code></a>(hdu_list)</td>
+<td>Convert a list of image HDUs into one cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.lon_lat_circle_mask.html#gammapy.image.lon_lat_circle_mask" title="gammapy.image.lon_lat_circle_mask"><code class="xref py py-obj docutils literal"><span class="pre">lon_lat_circle_mask</span></code></a>(lons,&nbsp;lats,&nbsp;center_lon,&nbsp;...)</td>
+<td>Produces a circular boolean mask array.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.lon_lat_rectangle_mask.html#gammapy.image.lon_lat_rectangle_mask" title="gammapy.image.lon_lat_rectangle_mask"><code class="xref py py-obj docutils literal"><span class="pre">lon_lat_rectangle_mask</span></code></a>(lons,&nbsp;lats[,&nbsp;...])</td>
+<td>Produces a rectangular boolean mask array based on lat and lon limits.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.lookup_max.html#gammapy.image.lookup_max" title="gammapy.image.lookup_max"><code class="xref py py-obj docutils literal"><span class="pre">lookup_max</span></code></a>(image,&nbsp;GLON,&nbsp;GLAT,&nbsp;theta)</td>
+<td>Look up the max image values within a circle of radius theta</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.make_header.html#gammapy.image.make_header" title="gammapy.image.make_header"><code class="xref py py-obj docutils literal"><span class="pre">make_header</span></code></a>([nxpix,&nbsp;nypix,&nbsp;binsz,&nbsp;xref,&nbsp;...])</td>
+<td>Generate a FITS header from scratch.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.make_tevcat_exclusion_mask.html#gammapy.image.make_tevcat_exclusion_mask" title="gammapy.image.make_tevcat_exclusion_mask"><code class="xref py py-obj docutils literal"><span class="pre">make_tevcat_exclusion_mask</span></code></a>()</td>
+<td>Create an all-sky exclusion mask containing all TeVCat sources</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.measure_containment.html#gammapy.image.measure_containment" title="gammapy.image.measure_containment"><code class="xref py py-obj docutils literal"><span class="pre">measure_containment</span></code></a>(image,&nbsp;glon,&nbsp;glat,&nbsp;radius)</td>
+<td>Measure containment in a given circle around the source position.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.measure_containment_fraction.html#gammapy.image.measure_containment_fraction" title="gammapy.image.measure_containment_fraction"><code class="xref py py-obj docutils literal"><span class="pre">measure_containment_fraction</span></code></a>(r,&nbsp;rr,&nbsp;image)</td>
+<td>Measure containment fraction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.measure_containment_radius.html#gammapy.image.measure_containment_radius" title="gammapy.image.measure_containment_radius"><code class="xref py py-obj docutils literal"><span class="pre">measure_containment_radius</span></code></a>(image,&nbsp;glon,&nbsp;glat)</td>
+<td>Measure containment radius.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.measure_curve_of_growth.html#gammapy.image.measure_curve_of_growth" title="gammapy.image.measure_curve_of_growth"><code class="xref py py-obj docutils literal"><span class="pre">measure_curve_of_growth</span></code></a>(image,&nbsp;glon,&nbsp;glat[,&nbsp;...])</td>
+<td>Measure the curve of growth for a given source position.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.measure_image_moments.html#gammapy.image.measure_image_moments" title="gammapy.image.measure_image_moments"><code class="xref py py-obj docutils literal"><span class="pre">measure_image_moments</span></code></a>(image)</td>
+<td>Compute 0th, 1st and 2nd moments of an image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.measure_labeled_regions.html#gammapy.image.measure_labeled_regions" title="gammapy.image.measure_labeled_regions"><code class="xref py py-obj docutils literal"><span class="pre">measure_labeled_regions</span></code></a>(data,&nbsp;labels[,&nbsp;tag,&nbsp;...])</td>
+<td>Measure source properties in image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.paste_cutout_into_image.html#gammapy.image.paste_cutout_into_image" title="gammapy.image.paste_cutout_into_image"><code class="xref py py-obj docutils literal"><span class="pre">paste_cutout_into_image</span></code></a>(total,&nbsp;cutout[,&nbsp;method])</td>
+<td>Paste cutout into a total image.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.process_image_pixels.html#gammapy.image.process_image_pixels" title="gammapy.image.process_image_pixels"><code class="xref py py-obj docutils literal"><span class="pre">process_image_pixels</span></code></a>(images,&nbsp;kernel,&nbsp;out,&nbsp;...)</td>
+<td>Process images for a given kernel and per-pixel function.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.ring_correlate.html#gammapy.image.ring_correlate" title="gammapy.image.ring_correlate"><code class="xref py py-obj docutils literal"><span class="pre">ring_correlate</span></code></a>(image,&nbsp;r_in,&nbsp;r_out[,&nbsp;mode])</td>
+<td>Correlate image with binary ring kernel.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.separation.html#gammapy.image.separation" title="gammapy.image.separation"><code class="xref py py-obj docutils literal"><span class="pre">separation</span></code></a>(image,&nbsp;center[,&nbsp;world,&nbsp;radians])</td>
+<td>Compute distance image from a given center point.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.shape_2N.html#gammapy.image.shape_2N" title="gammapy.image.shape_2N"><code class="xref py py-obj docutils literal"><span class="pre">shape_2N</span></code></a>(shape[,&nbsp;N])</td>
+<td>Round a given shape to values that are divisible by 2^N.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.solid_angle.html#gammapy.image.solid_angle" title="gammapy.image.solid_angle"><code class="xref py py-obj docutils literal"><span class="pre">solid_angle</span></code></a>(image)</td>
+<td>Compute the solid angle of each pixel.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.threshold.html#gammapy.image.threshold" title="gammapy.image.threshold"><code class="xref py py-obj docutils literal"><span class="pre">threshold</span></code></a>(array[,&nbsp;threshold])</td>
+<td>Set all pixels below threshold to zero.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.upsample_2N.html#gammapy.image.upsample_2N" title="gammapy.image.upsample_2N"><code class="xref py py-obj docutils literal"><span class="pre">upsample_2N</span></code></a>(image,&nbsp;factor[,&nbsp;order,&nbsp;shape])</td>
+<td>Up sample image by a power of two.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.wcs_histogram2d.html#gammapy.image.wcs_histogram2d" title="gammapy.image.wcs_histogram2d"><code class="xref py py-obj docutils literal"><span class="pre">wcs_histogram2d</span></code></a>(header,&nbsp;lon,&nbsp;lat[,&nbsp;weights])</td>
+<td>Histogram in world coordinates.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.BoundingBox.html#gammapy.image.BoundingBox" title="gammapy.image.BoundingBox"><code class="xref py py-obj docutils literal"><span class="pre">BoundingBox</span></code></a>(x_start,&nbsp;y_start,&nbsp;x_stop,&nbsp;y_stop)</td>
+<td>Rectangular bounding box.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.ExclusionMask.html#gammapy.image.ExclusionMask" title="gammapy.image.ExclusionMask"><code class="xref py py-obj docutils literal"><span class="pre">ExclusionMask</span></code></a>([name,&nbsp;data,&nbsp;wcs,&nbsp;unit,&nbsp;meta])</td>
+<td>Exclusion mask</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.FluxProfile.html#gammapy.image.FluxProfile" title="gammapy.image.FluxProfile"><code class="xref py py-obj docutils literal"><span class="pre">FluxProfile</span></code></a>(x_image,&nbsp;x_edges,&nbsp;counts,&nbsp;...[,&nbsp;...])</td>
+<td>Flux profile.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html#gammapy.image.GalacticPlaneSurveyPanelPlot" title="gammapy.image.GalacticPlaneSurveyPanelPlot"><code class="xref py py-obj docutils literal"><span class="pre">GalacticPlaneSurveyPanelPlot</span></code></a>([npanels,&nbsp;...])</td>
+<td>Plot Galactic plane survey images in multiple panels.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.image.SkyMap.html#gammapy.image.SkyMap" title="gammapy.image.SkyMap"><code class="xref py py-obj docutils literal"><span class="pre">SkyMap</span></code></a>([name,&nbsp;data,&nbsp;wcs,&nbsp;unit,&nbsp;meta])</td>
+<td>Base class to represent sky maps.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.image.SkyMapCollection.html#gammapy.image.SkyMapCollection" title="gammapy.image.SkyMapCollection"><code class="xref py py-obj docutils literal"><span class="pre">SkyMapCollection</span></code></a>([name,&nbsp;wcs,&nbsp;meta])</td>
+<td>Container for a collection of sky maps.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Image processing and analysis tools (<code class="docutils literal"><span class="pre">gammapy.image</span></code>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="index.html#using-gammapy-image">Using <code class="docutils literal"><span class="pre">gammapy.image</span></code></a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.image">gammapy.image Package</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/image/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

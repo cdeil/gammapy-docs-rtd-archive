@@ -1,0 +1,8 @@
+
+
+fit_th1
+============================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: fit_th1

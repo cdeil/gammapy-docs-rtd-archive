@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.region.circle &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/region/circle.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/region/circle'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.region.circle</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="kn">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span><span class="p">,</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs.utils</span> <span class="kn">import</span> <span class="n">skycoord_to_pixel</span><span class="p">,</span> <span class="n">pixel_to_skycoord</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">SkyRegion</span><span class="p">,</span> <span class="n">PixRegion</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;PixCircleRegion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SkyCircleRegion&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<div class="viewcode-block" id="PixCircleRegion"><a class="viewcode-back" href="../../../api/gammapy.region.PixCircleRegion.html#gammapy.region.PixCircleRegion">[docs]</a><span class="k">class</span> <span class="nc">PixCircleRegion</span><span class="p">(</span><span class="n">PixRegion</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Circular region, defined in pixel coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pos : tuple, list, array</span>
+<span class="sd">        Pixel coordinates of the circle center</span>
+<span class="sd">    radius : float</span>
+<span class="sd">        Circle radius, in pixels</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="p">(</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">radius</span>
+
+<div class="viewcode-block" id="PixCircleRegion.to_sky"><a class="viewcode-back" href="../../../api/gammapy.region.PixCircleRegion.html#gammapy.region.PixCircleRegion.to_sky">[docs]</a>    <span class="k">def</span> <span class="nf">to_sky</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;galactic&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a `~gammapy.regions.SkyCircleRegion`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">            WCS object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">pixel_to_skycoord</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wcs&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="o">==</span> <span class="s1">&#39;galactic&#39;</span><span class="p">:</span>
+            <span class="n">sky_position</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">galactic</span>
+        <span class="k">elif</span> <span class="n">frame</span> <span class="o">==</span> <span class="s1">&#39;icrs&#39;</span><span class="p">:</span>
+            <span class="n">sky_position</span> <span class="o">=</span> <span class="n">val</span><span class="o">.</span><span class="n">icrs</span>
+
+        <span class="n">sky_radius</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SkyCircleRegion</span><span class="p">(</span><span class="n">sky_position</span><span class="p">,</span> <span class="n">sky_radius</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PixCircleRegion.offset"><a class="viewcode-back" href="../../../api/gammapy.region.PixCircleRegion.html#gammapy.region.PixCircleRegion.offset">[docs]</a>    <span class="k">def</span> <span class="nf">offset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute offset wrt to a certain pixel position</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pos : tuple</span>
+<span class="sd">            Position to which offset is computed</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        offset : float</span>
+<span class="sd">            Offset in pix</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x2</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">y2</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x2</span> <span class="o">+</span> <span class="n">y2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">offset</span></div>
+
+<div class="viewcode-block" id="PixCircleRegion.angle"><a class="viewcode-back" href="../../../api/gammapy.region.PixCircleRegion.html#gammapy.region.PixCircleRegion.angle">[docs]</a>    <span class="k">def</span> <span class="nf">angle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute angle wrt to a certain pixel position</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pos : tuple</span>
+<span class="sd">            Position to which angle is computed</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        angle : `~astropy.units.Quantity`</span>
+<span class="sd">            Angle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dx</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">angle</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Angle</span><span class="p">(</span><span class="n">angle</span><span class="p">,</span> <span class="s1">&#39;rad&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="PixCircleRegion.is_inside_exclusion"><a class="viewcode-back" href="../../../api/gammapy.region.PixCircleRegion.html#gammapy.region.PixCircleRegion.is_inside_exclusion">[docs]</a>    <span class="k">def</span> <span class="nf">is_inside_exclusion</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exclusion_mask</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Check if region overlaps with a given exclusion mask</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        exclusion_mask : `~gammapy.region.ExclusionMask`</span>
+<span class="sd">            Exclusion mask</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        bool</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span>
+        <span class="n">excl_dist</span> <span class="o">=</span> <span class="n">exclusion_mask</span><span class="o">.</span><span class="n">distance_image</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">excl_dist</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">val</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span></div>
+
+<div class="viewcode-block" id="PixCircleRegion.to_mpl_artist"><a class="viewcode-back" href="../../../api/gammapy.region.PixCircleRegion.html#gammapy.region.PixCircleRegion.to_mpl_artist">[docs]</a>    <span class="k">def</span> <span class="nf">to_mpl_artist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to mpl patch.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="kn">as</span> <span class="nn">mpatches</span>
+
+        <span class="n">patch</span> <span class="o">=</span> <span class="n">mpatches</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">patch</span></div></div>
+
+
+<div class="viewcode-block" id="SkyCircleRegion"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion">[docs]</a><span class="k">class</span> <span class="nc">SkyCircleRegion</span><span class="p">(</span><span class="n">SkyRegion</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Circular region, defined in sky coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pos : `~astropy.coordinates.SkyCoord`</span>
+<span class="sd">        Sky coordinates of the circe center</span>
+<span class="sd">    radius : `~astropy.units.Quantity`</span>
+<span class="sd">        Circle radius</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pos</span><span class="p">,</span> <span class="n">radius</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pos</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">radius</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Circle area (solid angle [sr])</span>
+
+<span class="sd">        For a circular region with radius :math:`2\\theta`</span>
+<span class="sd">        the solid angle :math:`\\Theta` reads</span>
+
+<span class="sd">        .. math:: \\Theta = 2\\pi (1-\\cos(\\theta))</span>
+
+<span class="sd">        see: https://en.wikipedia.org/wiki/Solid_angle#Cone.2C_spherical_cap.2C_hemisphere</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">val</span> <span class="o">*</span> <span class="n">u</span><span class="o">.</span><span class="n">steradian</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinate</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">coordinate</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span>
+
+<div class="viewcode-block" id="SkyCircleRegion.intersects"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.intersects">[docs]</a>    <span class="k">def</span> <span class="nf">intersects</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if two sky circles overlap.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        other : `~gammapy.region.SkyCircleRegion`</span>
+<span class="sd">            Other region.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">separation</span><span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">radius</span></div>
+
+<div class="viewcode-block" id="SkyCircleRegion.info"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print some basic information&quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">SkyCircleRegion&#39;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Center: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Radius: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+<div class="viewcode-block" id="SkyCircleRegion.to_pixel"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_pixel">[docs]</a>    <span class="k">def</span> <span class="nf">to_pixel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wcs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a `~gammapy.regions.PixCircleRegion`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">            WCS object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">skycoord_to_pixel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;wcs&#39;</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">pix_radius</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">deg</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># TODO understand what is going on here</span>
+        <span class="c1"># from photutils.utils.wcs_helpers import skycoord_to_pixel_scale_angle</span>
+        <span class="c1"># central_pos = SkyCoord([wcs.wcs.crval], frame=self.pos.name, unit=wcs.wcs.cunit)</span>
+        <span class="c1"># xc, yc, scale, angle = skycoord_to_pixel_scale_angle(central_pos, wcs)</span>
+        <span class="c1"># val = (scale * self.radius).to(u.pixel).value</span>
+        <span class="c1"># pix_radius = np.round(val[0],4)</span>
+        <span class="c1"># pix_position = np.array([x, y]).transpose()</span>
+
+        <span class="k">return</span> <span class="n">PixCircleRegion</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">pix_radius</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyCircleRegion.to_mpl_artist"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_mpl_artist">[docs]</a>    <span class="k">def</span> <span class="nf">to_mpl_artist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to mpl patch using a given wcs transformation</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~astropy.wcsaxes.WCSAxes`</span>
+<span class="sd">            WCS axis object</span>
+<span class="sd">        kwargs : dict</span>
+<span class="sd">            kwargs are forwarded to mpatches.Circle</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        patch : `~matplotlib.mpatches.Circle`</span>
+<span class="sd">            Matplotlib patch object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="kn">as</span> <span class="nn">mpatches</span>
+
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">galactic</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="p">(</span><span class="n">val</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">val</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="n">temp</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_transform</span><span class="p">(</span><span class="s1">&#39;galactic&#39;</span><span class="p">),</span>
+                    <span class="n">radius</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+        <span class="n">patch</span> <span class="o">=</span> <span class="n">mpatches</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">patch</span></div>
+
+<div class="viewcode-block" id="SkyCircleRegion.plot"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot region</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~astropy.wcsaxes.WCSAxes`</span>
+<span class="sd">            WCS axis object</span>
+<span class="sd">        kwargs : dict</span>
+<span class="sd">            kwargs are forwarded to mpatches.Circle</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">patch</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_mpl_artist</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyCircleRegion.to_ds9"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_ds9">[docs]</a>    <span class="k">def</span> <span class="nf">to_ds9</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to ds9 region string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">b</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">sys</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">name</span>
+
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;{sys}; circle({l},{b},{r})</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">**</span><span class="nb">locals</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+<div class="viewcode-block" id="SkyCircleRegion.to_dict"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">rtdict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">rtdict</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">radius</span><span class="p">)</span>
+        <span class="n">rtdict</span><span class="p">[</span><span class="s1">&#39;center_x&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">icrs</span><span class="o">.</span><span class="n">ra</span><span class="p">)</span>
+        <span class="n">rtdict</span><span class="p">[</span><span class="s1">&#39;center_y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;{}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pos</span><span class="o">.</span><span class="n">icrs</span><span class="o">.</span><span class="n">dec</span><span class="p">)</span>
+        <span class="n">rtdict</span><span class="p">[</span><span class="s1">&#39;system&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;icrs&#39;</span>
+        <span class="k">return</span> <span class="n">rtdict</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyCircleRegion.from_dict"><a class="viewcode-back" href="../../../api/gammapy.region.SkyCircleRegion.html#gammapy.region.SkyCircleRegion.from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;radius&#39;</span><span class="p">])</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;center_x&#39;</span><span class="p">]</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;center_y&#39;</span><span class="p">]</span>
+        <span class="n">frame</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">[</span><span class="s1">&#39;system&#39;</span><span class="p">]</span>
+        <span class="n">center</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">center</span><span class="p">,</span> <span class="n">radius</span><span class="p">)</span></div></div>
+
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="circle.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

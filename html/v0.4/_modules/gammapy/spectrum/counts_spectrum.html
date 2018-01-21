@@ -1,0 +1,485 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.counts_spectrum &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/spectrum/counts_spectrum.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/spectrum/counts_spectrum'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.counts_spectrum</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">print_function</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+
+<span class="kn">from</span> <span class="nn">..extern.bunch</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..utils.array</span> <span class="kn">import</span> <span class="n">array_stats_str</span>
+<span class="kn">from</span> <span class="nn">..utils.scripts</span> <span class="kn">import</span> <span class="n">make_path</span>
+<span class="kn">from</span> <span class="nn">..utils.energy</span> <span class="kn">import</span> <span class="n">Energy</span><span class="p">,</span> <span class="n">EnergyBounds</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">..data</span> <span class="kn">import</span> <span class="n">EventList</span><span class="p">,</span> <span class="n">EventListDataset</span>
+<span class="kn">from</span> <span class="nn">..extern.pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CountsSpectrum&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="CountsSpectrum"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum">[docs]</a><span class="k">class</span> <span class="nc">CountsSpectrum</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Counts spectrum dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    counts : `~numpy.array`, list</span>
+<span class="sd">        Counts</span>
+<span class="sd">    energy : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">        Energy axis</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        from gammapy.utils.energy import Energy, EnergyBounds</span>
+<span class="sd">        from gammapy.data import CountsSpectrum</span>
+<span class="sd">        ebounds = EnergyBounds.equal_log_spacing(1,10,10,&#39;TeV&#39;)</span>
+<span class="sd">        counts = [6,3,8,4,9,5,9,5,5,1]</span>
+<span class="sd">        spec = CountsSpectrum(counts, ebounds)</span>
+<span class="sd">        hdu = spec.to_fits()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">energy</span><span class="o">.</span><span class="n">nbins</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Dimension of {0} and {1} do not&quot;</span>
+                             <span class="s2">&quot; match&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">energy</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">counts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span> <span class="o">=</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">meta</span><span class="p">)</span> <span class="k">if</span> <span class="n">meta</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">Bunch</span><span class="p">()</span>
+        <span class="c1"># This is needed to write valid OGIP files</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;livetime&#39;</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s1">&#39;backscal&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span><span class="o">.</span><span class="n">nbins</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CountsSpectrum.read_pha"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.read_pha">[docs]</a>    <span class="k">def</span> <span class="nf">read_pha</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">phafile</span><span class="p">,</span> <span class="n">rmffile</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read PHA fits file</span>
+
+<span class="sd">        The energy binning is not contained in the PHA standard. Therefore is</span>
+<span class="sd">        is inferred from the corresponding RMF EBOUNDS extension.</span>
+<span class="sd">        Todo: Should the energy binning be in the PHA file?</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phafile : str</span>
+<span class="sd">            PHA file with ``SPECTRUM`` extension</span>
+<span class="sd">        rmffile : str</span>
+<span class="sd">            RMF file with ``EBOUNDS`` extennsion, optional</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">phafile</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">phafile</span><span class="p">)</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">phafile</span><span class="p">))[</span><span class="s1">&#39;SPECTRUM&#39;</span><span class="p">]</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">header</span>
+        <span class="k">if</span> <span class="n">rmffile</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;RESPFILE&#39;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="s1">&#39;&#39;</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;RMF file not set in PHA header. &#39;</span>
+                                 <span class="s1">&#39;Please provide RMF file for energy binning&#39;</span><span class="p">)</span>
+            <span class="n">parts</span> <span class="o">=</span> <span class="n">phafile</span><span class="o">.</span><span class="n">parts</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">rmffile</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">:</span>
+                <span class="n">rmffile</span> <span class="o">=</span> <span class="n">rmffile</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">part</span><span class="p">)</span>
+            <span class="n">rmffile</span> <span class="o">=</span> <span class="n">rmffile</span><span class="o">.</span><span class="n">joinpath</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+
+        <span class="n">rmffile</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">rmffile</span><span class="p">)</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rmffile</span><span class="p">))[</span><span class="s1">&#39;EBOUNDS&#39;</span><span class="p">]</span>
+        <span class="n">bins</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">from_ebounds</span><span class="p">(</span><span class="n">ebounds</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+
+        <span class="c1"># Todo: think about better way to handle this</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">backscal</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BACKSCAL&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">obs_id</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="n">Quantity</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPOSURE&#39;</span><span class="p">],</span> <span class="s1">&#39;s&#39;</span><span class="p">))</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">rmf</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;RESPFILE&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">arf</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;ANCRFILE&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">bkg</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BACKFILE&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">&#39;LO_THRES&#39;</span> <span class="ow">in</span> <span class="n">header</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">rng</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="p">([</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;LO_THRES&#39;</span><span class="p">],</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HI_THRES&#39;</span><span class="p">]],</span> <span class="s1">&#39;TeV&#39;</span><span class="p">)</span>
+            <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">safe_energy_range</span><span class="o">=</span><span class="n">rng</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">m</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CountsSpectrum.read_bkg"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.read_bkg">[docs]</a>    <span class="k">def</span> <span class="nf">read_bkg</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">bkgfile</span><span class="p">,</span> <span class="n">rmffile</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read BKG fits file</span>
+
+<span class="sd">        The energy binning is not contained in the PHA standard. Therefore is</span>
+<span class="sd">        is inferred from the corresponding RMF EBOUNDS extension.</span>
+<span class="sd">        Todo: Should the energy binning be in the BKG file?</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        phafile : str</span>
+<span class="sd">            PHA file with ``SPECTRUM`` extension</span>
+<span class="sd">        rmffile : str</span>
+<span class="sd">            RMF file with ``EBOUNDS`` extennsion</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">bkgfile</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">bkgfile</span><span class="p">)</span>
+        <span class="n">spectrum</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">bkgfile</span><span class="p">))[</span><span class="s1">&#39;SPECTRUM&#39;</span><span class="p">]</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+        <span class="n">rmffile</span> <span class="o">=</span> <span class="n">make_path</span><span class="p">(</span><span class="n">rmffile</span><span class="p">)</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">rmffile</span><span class="p">))[</span><span class="s1">&#39;EBOUNDS&#39;</span><span class="p">]</span>
+        <span class="n">bins</span> <span class="o">=</span> <span class="n">EnergyBounds</span><span class="o">.</span><span class="n">from_ebounds</span><span class="p">(</span><span class="n">ebounds</span><span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">header</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">backscal</span><span class="o">=</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;BACKSCAL&#39;</span><span class="p">])</span>
+        <span class="n">m</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="n">Quantity</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPOSURE&#39;</span><span class="p">],</span> <span class="s1">&#39;s&#39;</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">m</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CountsSpectrum.from_eventlist"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.from_eventlist">[docs]</a>    <span class="k">def</span> <span class="nf">from_eventlist</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">event_list</span><span class="p">,</span> <span class="n">bins</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create CountsSpectrum from fits &#39;EVENTS&#39; extension (`CountsSpectrum`).</span>
+
+<span class="sd">        Subsets of the event list should be chosen via the appropriate methods</span>
+<span class="sd">        in `~gammapy.data.EventList`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        event_list : `~astropy.io.fits.BinTableHDU, `gammapy.data.EventListDataSet`,</span>
+<span class="sd">                     `gammapy.data.EventList`, str (filename)</span>
+<span class="sd">        bins : `gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">            Energy bin edges</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_list</span><span class="p">,</span> <span class="n">fits</span><span class="o">.</span><span class="n">BinTableHDU</span><span class="p">):</span>
+            <span class="n">event_list</span> <span class="o">=</span> <span class="n">EventList</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">event_list</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_list</span><span class="p">,</span> <span class="n">EventListDataset</span><span class="p">):</span>
+            <span class="n">event_list</span> <span class="o">=</span> <span class="n">event_list</span><span class="o">.</span><span class="n">event_list</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">event_list</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="n">event_list</span> <span class="o">=</span> <span class="n">EventList</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">event_list</span><span class="p">,</span> <span class="n">hdu</span><span class="o">=</span><span class="s1">&#39;EVENTS&#39;</span><span class="p">)</span>
+
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Energy</span><span class="p">(</span><span class="n">event_list</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">bins</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">val</span><span class="p">,</span> <span class="n">dummy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">bins</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">livetime</span> <span class="o">=</span> <span class="n">event_list</span><span class="o">.</span><span class="n">observation_live_time_duration</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="n">livetime</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">bins</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="CountsSpectrum.get_npred"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.get_npred">[docs]</a>    <span class="k">def</span> <span class="nf">get_npred</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">fit</span><span class="p">,</span> <span class="n">obs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get N_pred vector from spectral fit</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fit : SpectrumFitResult</span>
+<span class="sd">            Fitted spectrum</span>
+<span class="sd">        obs : SpectrumObservationList</span>
+<span class="sd">            Spectrum observation holding the irfs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">m</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">to_sherpa_model</span><span class="p">()</span>
+
+        <span class="c1"># Get differential flux at true energy log bin center</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">ebounds</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">log_centers</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;keV&#39;</span><span class="p">)</span>
+        <span class="n">diff_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">m</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="s1">&#39;cm-2 s-1 keV-1&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Multiply with bin width = integration</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="p">(</span><span class="n">diff_flux</span> <span class="o">*</span> <span class="n">ebounds</span><span class="o">.</span><span class="n">bands</span><span class="p">)</span><span class="o">.</span><span class="n">decompose</span><span class="p">()</span>
+
+        <span class="c1"># Apply ARF and RMF to get n_pred</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">int_flux</span> <span class="o">*</span> <span class="n">obs</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span> <span class="o">*</span> <span class="n">obs</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">effective_area</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="o">.</span><span class="n">pdf_matrix</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span>
+
+        <span class="n">e_reco</span> <span class="o">=</span> <span class="n">obs</span><span class="o">.</span><span class="n">energy_dispersion</span><span class="o">.</span><span class="n">reco_energy</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">decompose</span><span class="p">(),</span> <span class="n">e_reco</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">total_counts</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Total number of counts</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+<div class="viewcode-block" id="CountsSpectrum.info"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Info string</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Summary CountsSpectrum info</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s2">&quot;----------------</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="c1"># Summarise data members</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="n">array_stats_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">,</span> <span class="s1">&#39;counts&#39;</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="n">array_stats_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">),</span> <span class="s1">&#39;energy&#39;</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s1">&#39;Total Counts: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">total_counts</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add two counts spectra and returns new instance</span>
+<span class="sd">        The two spectra need to have the same binning</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span> <span class="o">!=</span> <span class="n">other</span><span class="o">.</span><span class="n">energy_bounds</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Cannot add counts spectra with different binning&quot;</span><span class="p">)</span>
+        <span class="n">counts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">counts</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span> <span class="o">+</span> <span class="n">other</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">CountsSpectrum</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__mul__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Scale counts by a factor&quot;&quot;&quot;</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">*</span> <span class="n">other</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">livetime</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">CountsSpectrum</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="n">meta</span><span class="p">)</span>
+
+<div class="viewcode-block" id="CountsSpectrum.write"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">bkg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rmf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">arf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+              <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write PHA to FITS file.</span>
+
+<span class="sd">        Calls `gammapy.spectrum.CountsSpectrum.to_fits` and</span>
+<span class="sd">        `~astropy.io.fits.HDUList.writeto`, forwarding all arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_fits</span><span class="p">(</span><span class="n">bkg</span><span class="o">=</span><span class="n">bkg</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="n">corr</span><span class="p">,</span> <span class="n">rmf</span><span class="o">=</span><span class="n">rmf</span><span class="p">,</span> <span class="n">arf</span><span class="o">=</span><span class="n">arf</span><span class="p">)</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span>
+            <span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="CountsSpectrum.to_fits"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.to_fits">[docs]</a>    <span class="k">def</span> <span class="nf">to_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bkg</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">corr</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rmf</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">arf</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to FITS format</span>
+
+<span class="sd">        This can be used to write a :ref:`gadf:ogip-pha`. Meta info is written</span>
+<span class="sd">        in the fits header.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        bkg : str</span>
+<span class="sd">            :ref:`gadf:ogip-bkg` containing the corresponding background spectrum</span>
+<span class="sd">        corr : str</span>
+<span class="sd">            name of the corresponding correction file</span>
+<span class="sd">        rmf : str</span>
+<span class="sd">            :ref:`gadf:ogip-rmf` containing the corresponding energy resolution</span>
+<span class="sd">        arf : str</span>
+<span class="sd">            :ref:`gadf:ogip-arf` containing the corresponding effective area</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pha : `~astropy.io.fits.BinTableHDU`</span>
+<span class="sd">            PHA FITS HDU</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        For more info on the PHA FITS file format see:</span>
+<span class="sd">        http://heasarc.gsfc.nasa.gov/docs/heasarc/ofwg/docs/summary/</span>
+<span class="sd">        ogip_92_007_summary.html</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">col1</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;CHANNEL&quot;</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">,</span>
+                           <span class="n">format</span><span class="o">=</span><span class="s1">&#39;I&#39;</span><span class="p">)</span>
+        <span class="n">col2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;COUNTS&quot;</span><span class="p">,</span> <span class="n">array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">counts</span><span class="p">,</span>
+                           <span class="n">format</span><span class="o">=</span><span class="s1">&#39;J&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;count&#39;</span><span class="p">)</span>
+
+        <span class="n">cols</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ColDefs</span><span class="p">([</span><span class="n">col1</span><span class="p">,</span> <span class="n">col2</span><span class="p">])</span>
+
+        <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">BinTableHDU</span><span class="o">.</span><span class="n">from_columns</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">hdu</span><span class="o">.</span><span class="n">header</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXTNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;SPECTRUM&#39;</span><span class="p">,</span> <span class="s1">&#39;name of this binary table extension&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;TELESCOP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;DUMMY&#39;</span><span class="p">,</span> <span class="s1">&#39;Telescope (mission) name&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;INSTRUME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;DUMMY&#39;</span><span class="p">,</span> <span class="s1">&#39;Instrument name&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;FILTER&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;NONE&#39;</span><span class="p">,</span> <span class="s1">&#39;Instrument filter in use&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;EXPOSURE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">livetime</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;second&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;Exposure time&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;BACKFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bkg</span><span class="p">,</span> <span class="s1">&#39;Background FITS file&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;CORRFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">corr</span><span class="p">,</span> <span class="s1">&#39;Correlation FITS file&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;RESPFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">rmf</span><span class="p">,</span> <span class="s1">&#39;Redistribution matrix file (RMF)&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;ANCRFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">arf</span><span class="p">,</span> <span class="s1">&#39;Ancillary response file (ARF)&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUCLASS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;OGIP&#39;</span><span class="p">,</span> <span class="s1">&#39;Format conforms to OGIP/GSFC spectral standards&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUCLAS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;SPECTRUM&#39;</span><span class="p">,</span> <span class="s1">&#39;Extension contains a spectrum&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUVERS &#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1.2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;Version number of the format&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;CHANTYPE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;PHA&#39;</span><span class="p">,</span> <span class="s1">&#39;Channels assigned by detector electronics&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;DETCHANS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">size</span><span class="p">,</span> <span class="s1">&#39;Total number of detector channels available&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;TLMIN1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Lowest Legal channel number&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;TLMAX1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="s1">&#39;Highest Legal channel number&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;XFLT0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="s1">&#39;XSPEC selection filter description&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUCLAS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;NET&#39;</span><span class="p">,</span> <span class="s1">&#39;Extension contains a bkgr substr. spec.&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUCLAS3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;COUNT&#39;</span><span class="p">,</span> <span class="s1">&#39;Extension contains counts&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUCLAS4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;TYPE:I&#39;</span><span class="p">,</span> <span class="s1">&#39;Single PHA file contained&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HDUVERS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1.2.1&#39;</span><span class="p">,</span> <span class="s1">&#39;Obsolete - included for backwards compatibility&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;POISSERR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">True</span><span class="p">,</span> <span class="s1">&#39;Are Poisson Distribution errors assumed&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;STAT_ERR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;No statisitcal error was specified&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;SYS_ERR&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;No systematic error was specified&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;GROUPING&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;No grouping data has been specified&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;QUALITY &#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;No data quality information specified&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;AREASCAL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span><span class="p">,</span> <span class="s1">&#39;Area scaling factor&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;BACKSCAL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">backscal</span><span class="p">,</span> <span class="s1">&#39;Background scale factor&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;CORRSCAL&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.</span><span class="p">,</span> <span class="s1">&#39;Correlation scale factor&#39;</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;FILENAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;several&#39;</span><span class="p">,</span> <span class="s1">&#39;Spectrum was produced from more than one file&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;ORIGIN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;dummy&#39;</span><span class="p">,</span> <span class="s1">&#39;origin of fits file&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">today</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s1">&#39;%Y-%m-</span><span class="si">%d</span><span class="s1">&#39;</span><span class="p">),</span> <span class="s1">&#39;FITS file creation date (yyyy-mm-dd)&#39;</span>
+        <span class="n">header</span><span class="p">[</span><span class="s1">&#39;PHAVERSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1992a&#39;</span><span class="p">,</span> <span class="s1">&#39;OGIP memo number for file format&#39;</span>
+
+        <span class="c1"># Todo: think about better way to handel this</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s1">&#39;obs_id&#39;</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;OBS_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">obs_id</span>
+        <span class="k">if</span> <span class="s1">&#39;safe_energy_range&#39;</span> <span class="ow">in</span> <span class="n">val</span><span class="p">:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;HI_THRES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">safe_energy_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;Low energy threshold [TeV] for spectral fit&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s1">&#39;LO_THRES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="o">.</span><span class="n">safe_energy_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;TeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;High energy threshold [TeV] for spectral fit&#39;</span>
+
+        <span class="k">return</span> <span class="n">hdu</span></div>
+
+<div class="viewcode-block" id="CountsSpectrum.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s1">&#39;TeV&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot counts vector</span>
+
+<span class="sd">        kwargs are forwarded to matplotlib.pyplot.hist</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : `~matplotlib.axis` (optional)</span>
+<span class="sd">            Axis instance to be used for the plot</span>
+<span class="sd">        weight : float</span>
+<span class="sd">            Weighting factor for the counts</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ax: `~matplotlib.axis`</span>
+<span class="sd">            Axis instance used for the plot</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+        <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">counts</span> <span class="o">*</span> <span class="n">weight</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">log_centers</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="n">e</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="n">w</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Energy [{0}]&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Counts&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="CountsSpectrum.peek"><a class="viewcode-back" href="../../../api/gammapy.spectrum.CountsSpectrum.html#gammapy.spectrum.CountsSpectrum.peek">[docs]</a>    <span class="k">def</span> <span class="nf">peek</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;Quick-look summary plots.&quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="counts_spectrum.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

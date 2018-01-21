@@ -1,0 +1,213 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SpectrumGrouping &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="SpectrumObservation" href="gammapy.spectrum.SpectrumObservation.html" />
+    <link rel="prev" title="SpectrumFitResult" href="gammapy.spectrum.SpectrumFitResult.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/api/gammapy.spectrum.SpectrumGrouping.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'api/gammapy.spectrum.SpectrumGrouping'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumObservation.html" title="SpectrumObservation">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.SpectrumFitResult.html" title="SpectrumFitResult">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>SpectrumGrouping</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spectrumgrouping">
+<h1>SpectrumGrouping<a class="headerlink" href="gammapy.spectrum.SpectrumGrouping.html#spectrumgrouping" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.spectrum.SpectrumGrouping">
+<em class="property">class </em><code class="descclassname">gammapy.spectrum.</code><code class="descname">SpectrumGrouping</code><span class="sig-paren">(</span><em>obs_table</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_grouping.html#SpectrumGrouping"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Class for stacking observations in groups</p>
+<p>The format of the input observation table
+is described in <a class="reference internal" href="../dataformats/observation_lists.html#dataformats-observation-lists"><span>Observation lists</span></a>. The column
+<code class="docutils literal"><span class="pre">PHAFILE</span></code> is added after a <a class="reference internal" href="gammapy.spectrum.SpectrumExtraction.html#gammapy.spectrum.SpectrumExtraction" title="gammapy.spectrum.SpectrumExtraction"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumExtraction</span></code></a>. The
+column <code class="docutils literal"><span class="pre">GROUP_ID</span></code> can be added as described in
+<a class="reference internal" href="../data/obs_group.html#obs-observation-grouping"><span>Observation grouping</span></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>obs_table</strong> : <a class="reference internal" href="gammapy.spectrum.SpectrumObservationList.html#gammapy.spectrum.SpectrumObservationList" title="gammapy.spectrum.SpectrumObservationList"><code class="xref py py-obj docutils literal"><span class="pre">SpectrumObservationList</span></code></a></p>
+<blockquote class="last">
+<div><p>Observation table with group ID column</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.make_observation_table" title="gammapy.spectrum.SpectrumGrouping.make_observation_table"><code class="xref py py-obj docutils literal"><span class="pre">make_observation_table</span></code></a>()</td>
+<td>Create observation table for the stacked observations</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.run" title="gammapy.spectrum.SpectrumGrouping.run"><code class="xref py py-obj docutils literal"><span class="pre">run</span></code></a>()</td>
+<td>Run all steps</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.stack_groups" title="gammapy.spectrum.SpectrumGrouping.stack_groups"><code class="xref py py-obj docutils literal"><span class="pre">stack_groups</span></code></a>()</td>
+<td>Stack observations in each group</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.write" title="gammapy.spectrum.SpectrumGrouping.write"><code class="xref py py-obj docutils literal"><span class="pre">write</span></code></a>()</td>
+<td>Write stacked observations and observation table</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumGrouping.make_observation_table">
+<code class="descname">make_observation_table</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_grouping.html#SpectrumGrouping.make_observation_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.make_observation_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create observation table for the stacked observations</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumGrouping.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_grouping.html#SpectrumGrouping.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run all steps</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumGrouping.stack_groups">
+<code class="descname">stack_groups</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_grouping.html#SpectrumGrouping.stack_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.stack_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stack observations in each group</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.spectrum.SpectrumGrouping.write">
+<code class="descname">write</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/spectrum_grouping.html#SpectrumGrouping.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.SpectrumGrouping.html#gammapy.spectrum.SpectrumGrouping.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write stacked observations and observation table</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.SpectrumGrouping.html#">SpectrumGrouping</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.SpectrumGrouping.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.SpectrumGrouping.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

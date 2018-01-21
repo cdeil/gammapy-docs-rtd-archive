@@ -1,0 +1,29 @@
+
+
+PLExpCutoff
+============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: PLExpCutoff
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

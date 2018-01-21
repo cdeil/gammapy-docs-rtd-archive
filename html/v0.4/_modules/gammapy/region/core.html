@@ -1,0 +1,336 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.region.core &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/region/core.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/region/core'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.region.core</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">abc</span>
+<span class="kn">from</span> <span class="nn">astropy.extern</span> <span class="kn">import</span> <span class="n">six</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">&#39;Region&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PixRegion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;PixRegionList&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SkyRegion&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;SkyRegionList&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="nd">@six.add_metaclass</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">)</span>
+<div class="viewcode-block" id="Region"><a class="viewcode-back" href="../../../api/gammapy.region.Region.html#gammapy.region.Region">[docs]</a><span class="k">class</span> <span class="nc">Region</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all regions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Region.intersection"><a class="viewcode-back" href="../../../api/gammapy.region.Region.html#gammapy.region.Region.intersection">[docs]</a>    <span class="k">def</span> <span class="nf">intersection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a region representing the intersection of this region with ``other``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Region.symmetric_difference"><a class="viewcode-back" href="../../../api/gammapy.region.Region.html#gammapy.region.Region.symmetric_difference">[docs]</a>    <span class="k">def</span> <span class="nf">symmetric_difference</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns the union of the two regions minus any areas contained in the</span>
+<span class="sd">        intersection of the two regions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="Region.union"><a class="viewcode-back" href="../../../api/gammapy.region.Region.html#gammapy.region.Region.union">[docs]</a>    <span class="k">def</span> <span class="nf">union</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a region representing the union of this region with ``other``.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<span class="nd">@six.add_metaclass</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">)</span>
+<div class="viewcode-block" id="PixRegion"><a class="viewcode-back" href="../../../api/gammapy.region.PixRegion.html#gammapy.region.PixRegion">[docs]</a><span class="k">class</span> <span class="nc">PixRegion</span><span class="p">(</span><span class="n">Region</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all regions defined in pixel coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pixcoord</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether a position or positions fall inside the region.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        pixcoord : tuple</span>
+<span class="sd">            The position or positions to check, as a tuple of scalars or</span>
+<span class="sd">            arrays. In future this could also be a `PixCoord` instance.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="PixRegion.area"><a class="viewcode-back" href="../../../api/gammapy.region.PixRegion.html#gammapy.region.PixRegion.area">[docs]</a>    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the area of the region as a `~astropy.units.Quantity`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="PixRegion.to_sky"><a class="viewcode-back" href="../../../api/gammapy.region.PixRegion.html#gammapy.region.PixRegion.to_sky">[docs]</a>    <span class="k">def</span> <span class="nf">to_sky</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wcs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a region defined in sky coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">            The world coordinate system transformation to assume</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="PixRegion.to_mask"><a class="viewcode-back" href="../../../api/gammapy.region.PixRegion.html#gammapy.region.PixRegion.to_mask">[docs]</a>    <span class="k">def</span> <span class="nf">to_mask</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a mask for the aperture.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        mode : { &#39;center&#39; | &#39;any&#39; | &#39;all&#39; | &#39;exact&#39; }</span>
+<span class="sd">            The following modes are available:</span>
+<span class="sd">                * ``&#39;center&#39;``: returns 1 for pixels where the center is in</span>
+<span class="sd">                  the region, and 0 otherwise.</span>
+<span class="sd">                * ``&#39;any&#39;``: returns 1 for pixels where any of the pixel is</span>
+<span class="sd">                  in the region, and 0 otherwise.</span>
+<span class="sd">                * ``&#39;all&#39;``: returns 1 for pixels that are completely inside</span>
+<span class="sd">                  the region, 0 otherwise.</span>
+<span class="sd">                * ``&#39;exact&#39;``: returns a value between 0 and 1 giving the</span>
+<span class="sd">                  fractional level of overlap of the pixel with the region.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        mask : `~numpy.ndarray`</span>
+<span class="sd">            A mask indicating whether each pixel is contained in the region.</span>
+<span class="sd">            slice_x, slice_y : `slice`</span>
+<span class="sd">            Slices for x and y which can be used on an array to extract the</span>
+<span class="sd">            same region as the mask.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<span class="nd">@six.add_metaclass</span><span class="p">(</span><span class="n">abc</span><span class="o">.</span><span class="n">ABCMeta</span><span class="p">)</span>
+<div class="viewcode-block" id="SkyRegion"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegion.html#gammapy.region.SkyRegion">[docs]</a><span class="k">class</span> <span class="nc">SkyRegion</span><span class="p">(</span><span class="n">Region</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all regions defined in celestial coordinates.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__contains__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">skycoord</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks whether a position or positions fall inside the region.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        skycoord : `~astropy.coordinates.SkyCoord`</span>
+<span class="sd">            The position or positions to check</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        contains : bool</span>
+<span class="sd">            Does this region contain the coordinate?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="SkyRegion.area"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegion.html#gammapy.region.SkyRegion.area">[docs]</a>    <span class="k">def</span> <span class="nf">area</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the area of the region as a `~astropy.units.Quantity`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="SkyRegion.to_pixel"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegion.html#gammapy.region.SkyRegion.to_pixel">[docs]</a>    <span class="k">def</span> <span class="nf">to_pixel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wcs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns a region defined in pixel coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        wcs : `~astropy.wcs.WCS` instance</span>
+<span class="sd">            The world coordinate system transformation to assume</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+<div class="viewcode-block" id="SkyRegion.to_dict"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegion.html#gammapy.region.SkyRegion.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create dict that can be used for serialization&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyRegion.from_dict"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegion.html#gammapy.region.SkyRegion.from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create from dict&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+
+
+<div class="viewcode-block" id="SkyRegionList"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList">[docs]</a><span class="k">class</span> <span class="nc">SkyRegionList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;List of sky regions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SkyRegionList.to_ds9"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.to_ds9">[docs]</a>    <span class="k">def</span> <span class="nf">to_ds9</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to ds9 region string.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="n">region</span><span class="o">.</span><span class="n">to_ds9</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ss</span></div>
+
+<div class="viewcode-block" id="SkyRegionList.write"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s1">&#39;ds9&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write list of regions to file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Name of file to write</span>
+<span class="sd">        format : {&#39;ds9&#39;}</span>
+<span class="sd">            File format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">format</span> <span class="o">==</span> <span class="s1">&#39;ds9&#39;</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_ds9</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Format {} not definded&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">format</span><span class="p">))</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fh</span><span class="p">:</span>
+            <span class="n">fh</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyRegionList.plot"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot all regions in the list&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">reg</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SkyRegionList.to_dict"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.to_dict">[docs]</a>    <span class="k">def</span> <span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert all regions to a list of dicts&quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reg</span><span class="o">.</span><span class="n">to_dict</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">out</span></div>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="SkyRegionList.from_dict"><a class="viewcode-back" href="../../../api/gammapy.region.SkyRegionList.html#gammapy.region.SkyRegionList.from_dict">[docs]</a>    <span class="k">def</span> <span class="nf">from_dict</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">inlist</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read a list of regions from list of dicts</span>
+
+<span class="sd">        Only Circle regions are supported at the Moment</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">.circle</span> <span class="kn">import</span> <span class="n">SkyCircleRegion</span>
+        <span class="n">reglist</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">reg</span> <span class="ow">in</span> <span class="n">inlist</span><span class="p">:</span>
+            <span class="n">reglist</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SkyCircleRegion</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">reg</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">reglist</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="PixRegionList"><a class="viewcode-back" href="../../../api/gammapy.region.PixRegionList.html#gammapy.region.PixRegionList">[docs]</a><span class="k">class</span> <span class="nc">PixRegionList</span><span class="p">(</span><span class="nb">list</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;List of pix regions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PixRegionList.to_sky"><a class="viewcode-back" href="../../../api/gammapy.region.PixRegionList.html#gammapy.region.PixRegionList.to_sky">[docs]</a>    <span class="k">def</span> <span class="nf">to_sky</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s1">&#39;galactic&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert to SkyRegions.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        sky_list : `~gammapy.region.SkyRegionList`</span>
+<span class="sd">            List of SkyRegions</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">val</span> <span class="o">=</span> <span class="n">SkyRegionList</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">region</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">:</span>
+            <span class="n">sky</span> <span class="o">=</span> <span class="n">region</span><span class="o">.</span><span class="n">to_sky</span><span class="p">(</span><span class="n">wcs</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">)</span>
+            <span class="n">val</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sky</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">val</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="core.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

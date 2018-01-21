@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Spectral fitting with gammapy-spectrum &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../index.html" />
+    <link rel="up" title="Tutorials and Examples" href="../index.html" />
+    <link rel="next" title="Background Estimation" href="../background/index.html" />
+    <link rel="prev" title="Skymaps with gammapy-pfmap and Sherpa" href="../gammapy-pfmap/index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/tutorials/gammapy-spectrum/" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'tutorials/gammapy-spectrum/index'
+</script>
+
+<script type="text/javascript" src="../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../background/index.html" title="Background Estimation">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../gammapy-pfmap/index.html" title="Skymaps with gammapy-pfmap and Sherpa">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../index.html" accesskey="U">Tutorials and Examples</a> &raquo;</li>
+      
+      <li>Spectral fitting with <code class="docutils literal"><span class="pre">gammapy-spectrum</span></code></li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="spectral-fitting-with-gammapy-spectrum">
+<span id="tutorials-gammapy-spectrum"></span><h1>Spectral fitting with <code class="docutils literal"><span class="pre">gammapy-spectrum</span></code><a class="headerlink" href="index.html#spectral-fitting-with-gammapy-spectrum" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial you will perform a spectra fit using 4 simulated
+Crab observations with the H.E.S.S. array. They data is available in the
+gammapy-extra repo.</p>
+<div class="section" id="running-the-fit">
+<h2>Running the fit<a class="headerlink" href="index.html#running-the-fit" title="Permalink to this headline">¶</a></h2>
+<p>Create a new folder on your machine, e.g. <code class="xref py py-obj docutils literal"><span class="pre">gammapy_crab_analysis</span></code> and put the
+following <a class="reference download internal" href="../../_downloads/spectrum_analysis_example.yaml"><code class="xref download docutils literal"><span class="pre">example</span> <span class="pre">config</span> <span class="pre">file</span></code></a>
+into this folder</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>mkdir gammapy_crab_analysis
+<span class="nb">cd</span> gammapy_crab_analysis
+wget https://gammapy.readthedocs.org/en/latest/_downloads/spectrum_analysis_example.yaml
+</pre></div>
+</div>
+<p>Now run</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gammapy-spectrum all spectrum_analysis_example.yaml
+</pre></div>
+</div>
+<p>and check out the result of the spectral fit</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gammapy-spectrum display
+
+                Spectrum Stats
+                --------------
+n_on n_off alpha n_bkg excess energy_range <span class="o">[</span>2<span class="o">]</span>
+                                    TeV
+---- ----- ----- ----- ------ ----------------
+ <span class="m">785</span>   <span class="m">736</span> 0.155   <span class="m">114</span>    <span class="m">671</span>    0.567 .. 99.1
+
+                Spectral Fit
+                ------------
+ model   index index_err      norm         norm_err    reference reference_err fit_range <span class="o">[</span>2<span class="o">]</span>   flux<span class="o">[</span>1TeV<span class="o">]</span>   flux_err<span class="o">[</span>1TeV<span class="o">]</span>
+                         <span class="m">1</span> / <span class="o">(</span>m2 s TeV<span class="o">)</span> <span class="m">1</span> / <span class="o">(</span>m2 s TeV<span class="o">)</span>    TeV         TeV           TeV      <span class="m">1</span> / <span class="o">(</span>m2 s TeV<span class="o">)</span> <span class="m">1</span> / <span class="o">(</span>m2 s TeV<span class="o">)</span>
+-------- ----- --------- -------------- -------------- --------- ------------- ------------- -------------- --------------
+PowerLaw  2.27    0.0486       2.34e-07       1.21e-08         <span class="m">1</span>             <span class="m">0</span>  0.722 .. <span class="m">102</span>       2.34e-07              0
+</pre></div>
+</div>
+<p>To plot the fitted spectrum use</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gammapy-spectrum plot
+TODO: Implement
+</pre></div>
+</div>
+</div>
+<div class="section" id="results-files">
+<h2>Results files<a class="headerlink" href="index.html#results-files" title="Permalink to this headline">¶</a></h2>
+<p>To get a better idea of what happend in the analysis have a look
+at your analysis folder</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ tree .
+.
+├── fit_result_PowerLaw.yaml
+├── observation_table.fits
+├── ogip_data
+│   ├── arf_run23523.fits
+│   ├── arf_run23526.fits
+│   ├── arf_run23559.fits
+│   ├── arf_run23592.fits
+│   ├── bkg_run23523.fits
+│   ├── bkg_run23526.fits
+│   ├── bkg_run23559.fits
+│   ├── bkg_run23592.fits
+│   ├── pha_run23523.pha
+│   ├── pha_run23526.pha
+│   ├── pha_run23559.pha
+│   ├── pha_run23592.pha
+│   ├── rmf_run23523.fits
+│   ├── rmf_run23526.fits
+│   ├── rmf_run23559.fits
+│   └── rmf_run23592.fits
+├── spectrum_analysis_example.yaml
+└── total_spectrum_stats.yaml
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">gammapy-spectrum</span></code> has created a folder <code class="docutils literal"><span class="pre">ogip_data</span></code> holding the extracted
+spectrum for each observation and an <code class="docutils literal"><span class="pre">observation_table.fits</span></code> with meta
+information about each observation. The statistics of the total, i.e. stacked
+spectrum is stored in <code class="docutils literal"><span class="pre">total_spectrum_stats.yaml</span></code></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cat total_spectrum_stats.yaml
+spectrum:
+  alpha: 0.15508291527313264
+  energy_range:
+    max: 99.0831944892862
+    min: 0.567081905662225
+    unit: TeV
+  excess: 670.8589743589744
+  n_off: 736
+  n_on: 785
+</pre></div>
+</div>
+<p>The result of the spectral fit is contained in <code class="docutils literal"><span class="pre">fit_result_PowerLaw.yaml</span></code></p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ cat fit_result_PowerLaw.yaml
+fit_result:
+  fit_range:
+     max: 101.7654126750981
+    min: 0.7220744794075009
+    unit: TeV
+  fluxes:
+    1TeV:
+      error: 0.0
+      unit: <span class="m">1</span> / <span class="o">(</span>m2 s TeV<span class="o">)</span>
+      value: 2.3400361534892314e-07
+  parameters:
+    index:
+      error: 0.04861329659992716
+      unit: <span class="s1">&#39;&#39;</span>
+      value: 2.269721726027529
+    norm:
+      error: 1.2070508525157752e-08
+      unit: <span class="m">1</span> / <span class="o">(</span>m2 s TeV<span class="o">)</span>
+      value: 2.3400361534892314e-07
+    reference:
+      error: 0.0
+      unit: TeV
+      value: 0.9999999999999999
+  spectral_model: PowerLaw
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-individual-steps">
+<h2>Running individual steps<a class="headerlink" href="index.html#running-individual-steps" title="Permalink to this headline">¶</a></h2>
+<p>You can also run the individual steps of the analysis</p>
+<div class="highlight-bash"><div class="highlight"><pre><span></span>$ gammapy-spectrum --help
+Usage: gammapy-spectrum <span class="o">[</span>OPTIONS<span class="o">]</span> COMMAND <span class="o">[</span>ARGS<span class="o">]</span>...
+
+Gammapy tool <span class="k">for</span> spectrum extraction and fitting.
+
+  Examples
+  --------
+
+  gammapy-spectrum extract config.yaml
+  gammapy-spectrum fit config.yaml
+  gammapy-spectrum all config.yaml
+
+Options:
+   -h, --help  Show this message and exit.
+
+Commands:
+  all      Fit spectral model to 1D spectrum
+  display  Display results of spectrum fit
+  extract  Extract 1D spectral information from event...
+  fit      Fit spectral model to 1D spectrum
+  plot     Plot spectrum results file
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Spectral fitting with <code class="docutils literal"><span class="pre">gammapy-spectrum</span></code></a><ul>
+<li><a class="reference internal" href="index.html#running-the-fit">Running the fit</a></li>
+<li><a class="reference internal" href="index.html#results-files">Results files</a></li>
+<li><a class="reference internal" href="index.html#running-individual-steps">Running individual steps</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../../_sources/tutorials/gammapy-spectrum/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

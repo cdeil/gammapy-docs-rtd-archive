@@ -1,0 +1,42 @@
+
+
+PixRegionList
+============================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: PixRegionList
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PixRegionList.to_sky
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: to_sky
+
+   
+   

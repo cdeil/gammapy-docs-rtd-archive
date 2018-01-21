@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.cube.utils &mdash; gammapy v0.4</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.4',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.4" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+  
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://docs.gammapy.org/en/latest/_modules/gammapy/cube/utils.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../../../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = '_modules/gammapy/cube/utils'
+</script>
+
+<script type="text/javascript" src="../../../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.4/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.4</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.cube.utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Cube analysis utility functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">unicode_literals</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">SkyCube</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;compute_npred_cube&#39;</span><span class="p">,</span> <span class="s1">&#39;convolve_cube&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="compute_npred_cube"><a class="viewcode-back" href="../../../api/gammapy.cube.compute_npred_cube.html#gammapy.cube.compute_npred_cube">[docs]</a><span class="k">def</span> <span class="nf">compute_npred_cube</span><span class="p">(</span><span class="n">flux_cube</span><span class="p">,</span> <span class="n">exposure_cube</span><span class="p">,</span> <span class="n">energy_bins</span><span class="p">,</span>
+                       <span class="n">integral_resolution</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes predicted counts cube in energy bins.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    flux_cube : `SkyCube`</span>
+<span class="sd">        Differential flux cube.</span>
+<span class="sd">    exposure_cube : `SkyCube`</span>
+<span class="sd">        Instrument exposure cube.</span>
+<span class="sd">    energy_bins : `~gammapy.utils.energy.EnergyBounds`</span>
+<span class="sd">        An array of Quantities specifying the edges of the energy band</span>
+<span class="sd">        required for the predicted counts cube.</span>
+<span class="sd">    integral_resolution : int (optional)</span>
+<span class="sd">        Number of integration steps in energy bin when computing integral flux.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    npred_cube : `SkyCube`</span>
+<span class="sd">        Predicted counts cube in energy bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">flux_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;flux_cube and exposure cube must have the same shape!</span><span class="se">\n</span><span class="s1">&#39;</span>
+                         <span class="s1">&#39;flux_cube: {0}</span><span class="se">\n</span><span class="s1">exposure_cube: {1}&#39;</span>
+                         <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+
+    <span class="n">energy_centers</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="o">.</span><span class="n">log_centers</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">wcs</span>
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">spatial_coordinate_images</span>
+    <span class="n">solid_angle</span> <span class="o">=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">solid_angle_image</span>
+    <span class="n">npred_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                           <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">energy_bound</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">flux_cube</span><span class="o">.</span><span class="n">integral_flux_image</span><span class="p">(</span><span class="n">energy_bound</span><span class="p">,</span> <span class="n">integral_resolution</span><span class="p">)</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">int_flux</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;1 / (cm2 s sr)&#39;</span><span class="p">)</span>
+        <span class="n">exposure</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">exposure_cube</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span>
+                                               <span class="n">energy_centers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s1">&#39;cm2 s&#39;</span><span class="p">)</span>
+        <span class="n">npred_image</span> <span class="o">=</span> <span class="n">int_flux</span> <span class="o">*</span> <span class="n">exposure</span> <span class="o">*</span> <span class="n">solid_angle</span>
+        <span class="n">npred_cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">npred_image</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">npred_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">npred_cube</span><span class="p">)</span>
+
+    <span class="n">npred_cube</span> <span class="o">=</span> <span class="n">SkyCube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">npred_cube</span><span class="p">,</span>
+                         <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">,</span>
+                         <span class="n">energy</span><span class="o">=</span><span class="n">energy_bins</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">npred_cube</span></div>
+
+
+<div class="viewcode-block" id="convolve_cube"><a class="viewcode-back" href="../../../api/gammapy.cube.convolve_cube.html#gammapy.cube.convolve_cube">[docs]</a><span class="k">def</span> <span class="nf">convolve_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">psf</span><span class="p">,</span> <span class="n">offset_max</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convolves a predicted counts cube in energy bins with the an</span>
+<span class="sd">    energy-dependent PSF.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube : `SkyCube`</span>
+<span class="sd">        Counts cube in energy bins.</span>
+<span class="sd">    psf : `~gammapy.irf.EnergyDependentTablePSF`</span>
+<span class="sd">        Energy dependent PSF.</span>
+<span class="sd">    offset_max : `~astropy.units.Quantity`</span>
+<span class="sd">        Maximum offset in degrees of the PSF convolution kernel from its center.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    convolved_cube : `SkyCube`</span>
+<span class="sd">        PSF convolved predicted counts cube in energy bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">convolve</span>
+    <span class="n">energy</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">energy</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">convolved_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">pixel_size</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s1">&#39;deg&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+        <span class="n">energy_band</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">psf_at_energy</span> <span class="o">=</span> <span class="n">psf</span><span class="o">.</span><span class="n">table_psf_in_energy_band</span><span class="p">(</span><span class="n">energy_band</span><span class="p">)</span>
+        <span class="n">kernel_image</span> <span class="o">=</span> <span class="n">psf_at_energy</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">pixel_size</span><span class="p">,</span> <span class="n">offset_max</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">convolved_cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">kernel_image</span><span class="p">,</span>
+                                     <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;mirror&#39;</span><span class="p">)</span>
+    <span class="n">convolved_cube</span> <span class="o">=</span> <span class="n">SkyCube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">convolved_cube</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span>
+                             <span class="n">energy</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">convolved_cube</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="utils.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2016, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.5. &nbsp;
+    Last built 20 Apr 2016. <br/>
+  </p>
+</footer>
+  </body>
+</html>

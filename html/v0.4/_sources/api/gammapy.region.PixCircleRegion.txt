@@ -1,0 +1,52 @@
+
+
+PixCircleRegion
+==============================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: PixCircleRegion
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PixCircleRegion.angle
+      ~PixCircleRegion.is_inside_exclusion
+      ~PixCircleRegion.offset
+      ~PixCircleRegion.to_mpl_artist
+      ~PixCircleRegion.to_sky
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: angle
+   .. automethod:: is_inside_exclusion
+   .. automethod:: offset
+   .. automethod:: to_mpl_artist
+   .. automethod:: to_sky
+
+   
+   

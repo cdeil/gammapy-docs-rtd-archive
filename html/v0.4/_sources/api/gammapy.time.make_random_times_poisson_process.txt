@@ -1,0 +1,8 @@
+
+
+make_random_times_poisson_process
+==============================================
+
+.. currentmodule:: gammapy.time
+
+.. autofunction:: make_random_times_poisson_process

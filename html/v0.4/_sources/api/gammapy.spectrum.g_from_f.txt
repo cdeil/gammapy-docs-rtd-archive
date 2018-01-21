@@ -1,0 +1,8 @@
+
+
+g_from_f
+=========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: g_from_f

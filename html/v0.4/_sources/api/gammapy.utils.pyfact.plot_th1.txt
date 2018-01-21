@@ -1,0 +1,8 @@
+
+
+plot_th1
+=============================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: plot_th1

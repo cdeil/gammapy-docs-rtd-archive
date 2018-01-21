@@ -1,0 +1,44 @@
+
+
+AnalyticModel
+==============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: AnalyticModel
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~AnalyticModel.error
+      ~AnalyticModel.plot
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: error
+   .. automethod:: plot
+
+   
+   

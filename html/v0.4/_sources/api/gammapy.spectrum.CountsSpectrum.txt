@@ -1,0 +1,75 @@
+
+
+CountsSpectrum
+===============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: CountsSpectrum
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~CountsSpectrum.total_counts
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~CountsSpectrum.from_eventlist
+      ~CountsSpectrum.get_npred
+      ~CountsSpectrum.info
+      ~CountsSpectrum.peek
+      ~CountsSpectrum.plot
+      ~CountsSpectrum.read_bkg
+      ~CountsSpectrum.read_pha
+      ~CountsSpectrum.to_fits
+      ~CountsSpectrum.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: total_counts
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_eventlist
+   .. automethod:: get_npred
+   .. automethod:: info
+   .. automethod:: peek
+   .. automethod:: plot
+   .. automethod:: read_bkg
+   .. automethod:: read_pha
+   .. automethod:: to_fits
+   .. automethod:: write
+
+   
+   

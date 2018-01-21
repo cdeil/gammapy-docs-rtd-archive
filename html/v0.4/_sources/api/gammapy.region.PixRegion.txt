@@ -1,0 +1,46 @@
+
+
+PixRegion
+========================
+
+.. currentmodule:: gammapy.region
+
+.. autoclass:: PixRegion
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PixRegion.area
+      ~PixRegion.to_mask
+      ~PixRegion.to_sky
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: area
+   .. automethod:: to_mask
+   .. automethod:: to_sky
+
+   
+   

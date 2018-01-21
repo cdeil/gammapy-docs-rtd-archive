@@ -1,0 +1,8 @@
+
+
+catalog_simulate
+================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: catalog_simulate

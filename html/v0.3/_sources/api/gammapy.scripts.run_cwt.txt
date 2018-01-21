@@ -1,0 +1,8 @@
+
+
+run_cwt
+=======================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: run_cwt

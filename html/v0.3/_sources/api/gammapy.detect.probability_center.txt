@@ -1,0 +1,8 @@
+
+
+probability_center
+=================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: probability_center

@@ -1,0 +1,8 @@
+
+
+load_arf_fits_table
+====================================
+
+.. currentmodule:: gammapy.datasets
+
+.. autofunction:: load_arf_fits_table

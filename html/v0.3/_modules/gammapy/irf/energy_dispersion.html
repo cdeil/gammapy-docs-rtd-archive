@@ -1,0 +1,699 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.irf.energy_dispersion &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/irf/energy_dispersion.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/irf/energy_dispersion",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/irf/energy_dispersion";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.irf.energy_dispersion</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;EnergyDispersion&#39;</span><span class="p">,</span> <span class="s">&#39;np_to_rmf&#39;</span><span class="p">,</span> <span class="s">&#39;gauss_energy_dispersion_matrix&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="EnergyDispersion"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion">[docs]</a><span class="k">class</span> <span class="nc">EnergyDispersion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Energy dispersion matrix.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    pdf_matrix : array_like</span>
+<span class="sd">        2-dim energy dispersion matrix (probability density).</span>
+<span class="sd">        First index for true energy, second index for reco energy.</span>
+<span class="sd">    energy_true_bounds : array_like</span>
+<span class="sd">        1-dim true energy binning array (TeV)</span>
+<span class="sd">    energy_reco_bounds : array_like</span>
+<span class="sd">        1-dim reco energy binning array (TeV)</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    We use a dense matrix (`numpy.ndarray`) for the energy dispersion matrix.</span>
+<span class="sd">    An alternative would be to store a sparse matrix (`scipy.sparse.csc_matrix`).</span>
+<span class="sd">    It&#39;s not clear which would be more efficient for typical gamma-ray</span>
+<span class="sd">    energy dispersion matrices.</span>
+
+<span class="sd">    The most common file format for energy dispersion matrices is the</span>
+<span class="sd">    RMF (Redistribution Matrix File) format from X-ray astronomy:</span>
+<span class="sd">    http://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/summary/cal_gen_92_002_summary.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">DEFAULT_PDF_THRESHOLD</span> <span class="o">=</span> <span class="mf">1e-6</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pdf_matrix</span><span class="p">,</span> <span class="n">energy_true_bounds</span><span class="p">,</span> <span class="n">energy_reco_bounds</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">pdf_threshold</span><span class="o">=</span><span class="n">DEFAULT_PDF_THRESHOLD</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">pdf_matrix</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_energy_true_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">energy_true_bounds</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">energy_reco_bounds</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_energy_reco_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">energy_true_bounds</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_energy_reco_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">energy_reco_bounds</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_threshold</span> <span class="o">=</span> <span class="n">pdf_threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate2d_func</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">pdf_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;PDF matrix zero-suppression threshold (float)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_threshold</span>
+
+    <span class="nd">@pdf_threshold.setter</span>
+    <span class="k">def</span> <span class="nf">pdf_threshold</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_threshold</span> <span class="o">&lt;</span> <span class="n">value</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Lowering the PDF matrix zero-suppression threshold can lead to incorrect results.</span><span class="se">\n</span><span class="s">&#39;</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Old PDF threshold: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_pdf_threshold</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;New PDF threshold: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_threshold</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="c"># Apply new threshold to the matrix</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_matrix</span>
+        <span class="n">m</span><span class="p">[</span><span class="n">m</span> <span class="o">&lt;</span> <span class="n">value</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="EnergyDispersion.energy_bounds"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.energy_bounds">[docs]</a>    <span class="k">def</span> <span class="nf">energy_bounds</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Energy bounds array.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axis : {&#39;true&#39;, &#39;reco&#39;}</span>
+<span class="sd">            Which axis?</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        energy_bounds : array</span>
+<span class="sd">            Energy bounds array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s">&#39;true&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_energy_true_bounds</span>
+        <span class="k">elif</span> <span class="n">axis</span> <span class="o">==</span> <span class="s">&#39;reco&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_energy_reco_bounds</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Invalid axis: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Valid options: true, reco&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="EnergyDispersion.energy_range"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.energy_range">[docs]</a>    <span class="k">def</span> <span class="nf">energy_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s">&#39;true&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Energy axis range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axis : {&#39;true&#39;, &#39;reco&#39;}</span>
+<span class="sd">            Which axis?</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        (emin, emax) : tuple of float</span>
+<span class="sd">            Energy axis range.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_bounds</span><span class="p">(</span><span class="n">axis</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ebounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ebounds</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</div>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Energy dispersion information:</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;PDF matrix threshold: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pdf_threshold</span><span class="p">)</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_matrix</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;PDF matrix filling factor: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">m</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">m</span><span class="o">.</span><span class="n">size</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;True energy range: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">))</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Reco energy range: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="p">(</span><span class="s">&#39;reco&#39;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ss</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EnergyDispersion.read"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;RMF&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `EnergyDispersion` from FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File name</span>
+<span class="sd">        format : {&#39;RMF&#39;}</span>
+<span class="sd">            File format</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">format</span> <span class="o">==</span> <span class="s">&#39;RMF&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">EnergyDispersion</span><span class="o">.</span><span class="n">_read_rmf</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;No reader defined for format &quot;{0}&quot;.</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Available formats: RMF&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_read_rmf</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create EnergyDistribution object from RMF data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_hdu_list</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EnergyDispersion.from_hdu_list"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.from_hdu_list">[docs]</a>    <span class="k">def</span> <span class="nf">from_hdu_list</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">hdu_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `EnergyDistribution` object from `~astropy.io.fits.HDUList`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            HDU list with ``MATRIX`` and ``EBOUNDS`` extensions.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;MATRIX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;MATRIX&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
+
+        <span class="n">energy_true_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;ENERG_LO&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s">&#39;ENERG_HI&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+        <span class="n">pdf_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">),</span> <span class="n">header</span><span class="p">[</span><span class="s">&#39;DETCHANS&#39;</span><span class="p">]],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;N_GRP&#39;</span><span class="p">):</span>
+                <span class="n">m_start</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;N_GRP&#39;</span><span class="p">)):</span>
+                    <span class="n">pdf_matrix</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;F_CHAN&#39;</span><span class="p">)[</span><span class="n">k</span><span class="p">]</span> <span class="p">:</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;F_CHAN&#39;</span><span class="p">)[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;N_CHAN&#39;</span><span class="p">)[</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;MATRIX&#39;</span><span class="p">)[</span><span class="n">m_start</span><span class="p">:</span><span class="n">m_start</span> <span class="o">+</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;N_CHAN&#39;</span><span class="p">)[</span><span class="n">k</span><span class="p">]]</span>
+                    <span class="n">m_start</span> <span class="o">+=</span> <span class="n">l</span><span class="o">.</span><span class="n">field</span><span class="p">(</span><span class="s">&#39;N_CHAN&#39;</span><span class="p">)[</span><span class="n">k</span><span class="p">]</span>
+
+        <span class="n">pdf_threshold</span> <span class="o">=</span> <span class="n">header</span><span class="p">[</span><span class="s">&#39;LO_THRES&#39;</span><span class="p">]</span>
+
+        <span class="c"># The reco energy bounds are stored in the &#39;EBOUNDS&#39; table HDU</span>
+        <span class="n">ebounds</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;EBOUNDS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">energy_reco_bounds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">([</span><span class="n">ebounds</span><span class="p">[</span><span class="s">&#39;E_MIN&#39;</span><span class="p">],</span> <span class="n">ebounds</span><span class="p">[</span><span class="s">&#39;E_MAX&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">pdf_matrix</span><span class="p">,</span> <span class="n">energy_true_bounds</span><span class="p">,</span> <span class="n">energy_reco_bounds</span><span class="p">,</span> <span class="n">pdf_threshold</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="EnergyDispersion.write"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;RMF&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write to file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File name</span>
+<span class="sd">        format : {&#39;RMF&#39;}</span>
+<span class="sd">            File format</span>
+<span class="sd">        pdf_threshold : float</span>
+<span class="sd">            Zero suppression threshold for energy distribution matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">format</span> <span class="o">==</span> <span class="s">&#39;RMF&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_write_rmf</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Invalid format: {0}.</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">format</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Available formats: RMF&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_write_rmf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write to file in RMF format.&quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="EnergyDispersion.__call__"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_true</span><span class="p">,</span> <span class="n">energy_reco</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;step&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute energy dispersion.</span>
+
+<span class="sd">        Available evalutation methods:</span>
+
+<span class="sd">        * ``&quot;step&quot;`` -- TODO</span>
+<span class="sd">        * ``&quot;interpolate2d&quot;`` -- TODO</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy_true : array_like</span>
+<span class="sd">            True energy</span>
+<span class="sd">        energy_reco : array_like</span>
+<span class="sd">            Reconstructed energy</span>
+<span class="sd">        method : {&#39;interpolate2d&#39;}</span>
+<span class="sd">            Evaluation method</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pdf : array</span>
+<span class="sd">            Probability density dP / dlog10E_reco</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy_true</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy_reco</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&#39;interpolate2d&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate2d</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Invalid method: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Available methods: matrix, bias&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_interpolate2d</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate2d_func</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># TODO: set up spline representation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate2d_func</span> <span class="o">=</span> <span class="mi">42</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate2d_func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EnergyDispersion.apply"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.apply">[docs]</a>    <span class="k">def</span> <span class="nf">apply</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply energy dispersion.</span>
+
+<span class="sd">        Computes the matrix product of ``data``</span>
+<span class="sd">        (which typically is model flux or counts in true energy bins)</span>
+<span class="sd">        with the energy dispersion matrix.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : array_like</span>
+<span class="sd">            1-dim data array.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        convolved_data : array</span>
+<span class="sd">            1-dim data array after multiplication with the energy dispersion matrix</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_matrix</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="EnergyDispersion.plot"><a class="viewcode-back" href="../../../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;matrix&#39;</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create energy dispersion plot.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        type : {&#39;matrix&#39;, &#39;bias&#39;, &#39;pdf_energy_true&#39;, &#39;pdf_energy_reco&#39;}</span>
+<span class="sd">            Type of plot to generate</span>
+<span class="sd">        energy : array_like</span>
+<span class="sd">            Energies at which to plot the PDF.</span>
+<span class="sd">            Only applies to type &#39;pdf_energy_true&#39; and &#39;pdf_energy_reco&#39;.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        TODO</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&#39;matrix&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plot_matrix</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&#39;bias&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plot_bias</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&#39;pdf_energy_true&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plot_pdf</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="s">&#39;true&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">type</span> <span class="o">==</span> <span class="s">&#39;pdf_energy_reco&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_plot_pdf</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="s">&#39;reco&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Invalid type: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Available types: matrix, bias&#39;</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_extent</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Extent (x0, x1, y0, y1) for plotting (4x float)</span>
+
+<span class="sd">        x stands for true energy and y for reconstructed energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="p">(</span><span class="s">&#39;true&#39;</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_range</span><span class="p">(</span><span class="s">&#39;reco&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_plot_matrix</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="kn">import</span> <span class="n">LogNorm</span>
+
+        <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_pdf_matrix</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_extent</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s">&#39;none&#39;</span><span class="p">,</span>
+                   <span class="n">origin</span><span class="o">=</span><span class="s">&#39;lower&#39;</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="n">LogNorm</span><span class="p">())</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;True energy (TeV)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Reco energy (TeV)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">()</span>
+
+        <span class="c"># TODO: better colorbar formatting</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_plot_bias</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;True energy (TeV)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Reco energy (TeV)&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_plot_pdf</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+</div>
+<div class="viewcode-block" id="np_to_rmf"><a class="viewcode-back" href="../../../api/gammapy.irf.np_to_rmf.html#gammapy.irf.np_to_rmf">[docs]</a><span class="k">def</span> <span class="nf">np_to_rmf</span><span class="p">(</span><span class="n">rm</span><span class="p">,</span> <span class="n">erange</span><span class="p">,</span> <span class="n">ebounds</span><span class="p">,</span> <span class="n">minprob</span><span class="p">,</span>
+              <span class="n">telescope</span><span class="o">=</span><span class="s">&#39;DUMMY&#39;</span><span class="p">,</span> <span class="n">instrument</span><span class="o">=</span><span class="s">&#39;DUMMY&#39;</span><span class="p">,</span> <span class="nb">filter</span><span class="o">=</span><span class="s">&#39;NONE&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Converts a 2D numpy array to an RMF FITS file.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    rm : 2D float numpy array</span>
+<span class="sd">       Energy distribution matrix (probability density) E_true vs E_reco.</span>
+<span class="sd">    erange : 1D float numpy array</span>
+<span class="sd">       Bin limits E_true [TeV].</span>
+<span class="sd">    ebounds : 1D float numpy array</span>
+<span class="sd">       Bin limits E_reco [TeV].</span>
+<span class="sd">    minprob : float</span>
+<span class="sd">        Minimal probability density to be stored in the RMF.</span>
+<span class="sd">    telescope, instrument, filter : string</span>
+<span class="sd">        Keyword information for the FITS header.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    hdulist : `~astropy.io.fits.HDUList`</span>
+<span class="sd">        RMF in HDUList format.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    For more info on the RMF FITS file format see:</span>
+<span class="sd">    http://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/summary/cal_gen_92_002_summary.html</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Intialize the arrays to be used to construct the RM extension</span>
+    <span class="n">n_rows</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rm</span><span class="p">)</span>
+    <span class="n">energy_lo</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_rows</span><span class="p">)</span>  <span class="c"># Low energy bounds</span>
+    <span class="n">energy_hi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_rows</span><span class="p">)</span>  <span class="c"># High energy bounds</span>
+    <span class="n">n_grp</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c"># Number of channel subsets</span>
+    <span class="n">f_chan</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c"># First channels in each subset</span>
+    <span class="n">n_chan</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c"># Number of channels in each subset</span>
+    <span class="n">matrix</span> <span class="o">=</span> <span class="p">[]</span>  <span class="c"># Matrix elements</span>
+
+    <span class="c"># Loop over the matrix and fill the arrays</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">r</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rm</span><span class="p">):</span>
+        <span class="n">energy_lo</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">erange</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">energy_hi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">erange</span><span class="p">[</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="c"># Create mask for all matrix row values above the minimal probability</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">r</span> <span class="o">&gt;</span> <span class="n">minprob</span>
+        <span class="c"># Intialize variables &amp; arrays for the row</span>
+        <span class="n">n_grp_row</span><span class="p">,</span> <span class="n">n_chan_row_c</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">f_chan_row</span><span class="p">,</span> <span class="n">n_chan_row</span><span class="p">,</span> <span class="n">matrix_row</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[],</span> <span class="p">[]</span>
+        <span class="n">new_subset</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="c"># Loop over row entries and fill arrays appropriately</span>
+        <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">r</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">m</span><span class="p">[</span><span class="n">j</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">new_subset</span><span class="p">:</span>
+                    <span class="n">n_grp_row</span> <span class="o">+=</span> <span class="mi">1</span>
+                    <span class="n">f_chan_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+                    <span class="n">new_subset</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="n">matrix_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="n">n_chan_row_c</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">new_subset</span><span class="p">:</span>
+                    <span class="n">n_chan_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_chan_row_c</span><span class="p">)</span>
+                    <span class="n">n_chan_row_c</span> <span class="o">=</span> <span class="mi">0</span>
+                    <span class="n">new_subset</span> <span class="o">=</span> <span class="bp">True</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">new_subset</span><span class="p">:</span>
+            <span class="n">n_chan_row</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_chan_row_c</span><span class="p">)</span>
+        <span class="n">n_grp</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_grp_row</span><span class="p">)</span>
+        <span class="n">f_chan</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f_chan_row</span><span class="p">)</span>
+        <span class="n">n_chan</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_chan_row</span><span class="p">)</span>
+        <span class="n">matrix</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">matrix_row</span><span class="p">)</span>
+
+    <span class="c"># Create RMF FITS table extension from data</span>
+    <span class="n">tbhdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">new_table</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;ENERG_LO&#39;</span><span class="p">,</span>
+                      <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                      <span class="n">array</span><span class="o">=</span><span class="n">energy_lo</span><span class="p">,</span>
+                      <span class="n">unit</span><span class="o">=</span><span class="s">&#39;TeV&#39;</span><span class="p">),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;ENERG_HI&#39;</span><span class="p">,</span>
+                      <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                      <span class="n">array</span><span class="o">=</span><span class="n">energy_hi</span><span class="p">,</span>
+                      <span class="n">unit</span><span class="o">=</span><span class="s">&#39;TeV&#39;</span><span class="p">),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;N_GRP&#39;</span><span class="p">,</span>
+                       <span class="n">format</span><span class="o">=</span><span class="s">&#39;1I&#39;</span><span class="p">,</span>
+                       <span class="n">array</span><span class="o">=</span><span class="n">n_grp</span><span class="p">),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;F_CHAN&#39;</span><span class="p">,</span>
+                       <span class="n">format</span><span class="o">=</span><span class="s">&#39;PI()&#39;</span><span class="p">,</span>
+                       <span class="n">array</span><span class="o">=</span><span class="n">f_chan</span><span class="p">),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;N_CHAN&#39;</span><span class="p">,</span>
+                       <span class="n">format</span><span class="o">=</span><span class="s">&#39;PI()&#39;</span><span class="p">,</span>
+                       <span class="n">array</span><span class="o">=</span><span class="n">n_chan</span><span class="p">),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;MATRIX&#39;</span><span class="p">,</span>
+                       <span class="n">format</span><span class="o">=</span><span class="s">&#39;PE(()&#39;</span><span class="p">,</span>
+                       <span class="n">array</span><span class="o">=</span><span class="n">matrix</span><span class="p">)</span>
+         <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="c"># Write FITS extension header</span>
+
+    <span class="n">chan_min</span><span class="p">,</span> <span class="n">chan_max</span><span class="p">,</span> <span class="n">chan_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="n">tbhdu</span><span class="o">.</span><span class="n">header</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;EXTNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;MATRIX&#39;</span><span class="p">,</span> <span class="s">&#39;name of this binary table extension&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;TLMIN4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_min</span><span class="p">,</span> <span class="s">&#39;First legal channel number&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;TLMAX4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_max</span><span class="p">,</span> <span class="s">&#39;Highest legal channel number&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;TELESCOP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">telescope</span><span class="p">,</span> <span class="s">&#39;Mission/satellite name&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;INSTRUME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instrument</span><span class="p">,</span> <span class="s">&#39;Instrument/detector&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;FILTER&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">,</span> <span class="s">&#39;Filter information&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CHANTYPE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;PHA&#39;</span><span class="p">,</span> <span class="s">&#39;Type of channels (PHA, PI etc)&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;DETCHANS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_n</span><span class="p">,</span> <span class="s">&#39;Total number of detector PHA channels&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;LO_THRES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">minprob</span><span class="p">,</span> <span class="s">&#39;Lower probability density threshold for matrix&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLASS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;OGIP&#39;</span><span class="p">,</span> <span class="s">&#39;Organisation devising file format&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;RESPONSE&#39;</span><span class="p">,</span> <span class="s">&#39;File relates to response of instrument&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;RSP_MATRIX&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS &#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.3.0&#39;</span><span class="p">,</span> <span class="s">&#39;Version of file format&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;DETECTOR&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CCNM0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;MATRIX&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CCLS0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;CPF&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CDTP0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;DATA&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># UTC date when this calibration should be first used (yyy-mm-dd)</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CVSD0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;2011-01-01 &#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># UTC time on the dat when this calibration should be first used (hh:mm:ss)</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CVST0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;00:00:00&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># String giving a brief summary of this data set</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CDES0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;dummy data&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># Optional, but maybe useful (taken from the example in the RMF/ARF document)</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CBD10001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;CHAN({0}- {1})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">chan_min</span><span class="p">,</span> <span class="n">chan_max</span><span class="p">),</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CBD20001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;ENER({0}-{1})TeV&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">erange</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">erange</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]),</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># Obsolet RMF headers, included for the benefit of old software</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;RMFVERSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1992a&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.1.0&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.2.0&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+
+    <span class="c"># Create EBOUNDS FITS table extension from data</span>
+    <span class="n">tbhdu2</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">new_table</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;CHANNEL&#39;</span><span class="p">,</span>
+                       <span class="n">format</span><span class="o">=</span><span class="s">&#39;1I&#39;</span><span class="p">,</span>
+                       <span class="n">array</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ebounds</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;E_MIN&#39;</span><span class="p">,</span>
+                      <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                      <span class="n">array</span><span class="o">=</span><span class="n">ebounds</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+                      <span class="n">unit</span><span class="o">=</span><span class="s">&#39;TeV&#39;</span><span class="p">),</span>
+         <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;E_MAX&#39;</span><span class="p">,</span>
+                      <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                      <span class="n">array</span><span class="o">=</span><span class="n">ebounds</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span>
+                      <span class="n">unit</span><span class="o">=</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+         <span class="p">]</span>
+        <span class="p">)</span>
+
+    <span class="n">chan_min</span><span class="p">,</span> <span class="n">chan_max</span><span class="p">,</span> <span class="n">chan_n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">rm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">rm</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="n">tbhdu2</span><span class="o">.</span><span class="n">header</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;EXTNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;EBOUNDS&#39;</span><span class="p">,</span> <span class="s">&#39;Name of this binary table extension&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;TELESCOP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">telescope</span><span class="p">,</span> <span class="s">&#39;Mission/satellite name&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;INSTRUME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">instrument</span><span class="p">,</span> <span class="s">&#39;Instrument/detector&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;FILTER&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">filter</span><span class="p">,</span> <span class="s">&#39;Filter information&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CHANTYPE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;PHA&#39;</span><span class="p">,</span> <span class="s">&#39;Type of channels (PHA, PI etc)&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;DETCHANS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_n</span><span class="p">,</span> <span class="s">&#39;Total number of detector PHA channels&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;TLMIN1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_min</span><span class="p">,</span> <span class="s">&#39;First legal channel number&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;TLMAX1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chan_max</span><span class="p">,</span> <span class="s">&#39;Highest legal channel number&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLASS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;OGIP&#39;</span><span class="p">,</span> <span class="s">&#39;Organisation devising file format&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;RESPONSE&#39;</span><span class="p">,</span> <span class="s">&#39;File relates to response of instrument&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;EBOUNDS&#39;</span><span class="p">,</span> <span class="s">&#39;This is an EBOUNDS extension&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.2.0&#39;</span><span class="p">,</span> <span class="s">&#39;Version of file format&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;DETECTOR&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CCNM0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;EBOUNDS&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CCLS0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;CPF&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CDTP0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;DATA&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># UTC date when this calibration should be first used (yyy-mm-dd)</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CVSD0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;2011-01-01 &#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># UTC time on the dat when this calibration should be first used (hh:mm:ss)</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CVST0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;00:00:00&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># Optional - name of the PHA file for which this file was produced</span>
+    <span class="c">#header(&#39;PHAFILE&#39;, &#39;&#39;, &#39;Keyword information for Caltools Software.&#39;)</span>
+
+    <span class="c"># String giving a brief summary of this data set</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;CDES0001&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;dummy description&#39;</span><span class="p">,</span> <span class="s">&#39;Keyword information for Caltools Software.&#39;</span>
+
+    <span class="c"># Obsolet EBOUNDS headers, included for the benefit of old software</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;RMFVERSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1992a&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.0.0&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+    <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.1.0&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+
+    <span class="c"># Create primary HDU and HDU list to be stored in the output file</span>
+    <span class="c"># TODO: can remove PrimaryHDU here?</span>
+    <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">(),</span> <span class="n">tbhdu</span><span class="p">,</span> <span class="n">tbhdu2</span><span class="p">])</span>
+
+    <span class="k">return</span> <span class="n">hdu_list</span>
+
+</div>
+<div class="viewcode-block" id="gauss_energy_dispersion_matrix"><a class="viewcode-back" href="../../../api/gammapy.irf.gauss_energy_dispersion_matrix.html#gammapy.irf.gauss_energy_dispersion_matrix">[docs]</a><span class="k">def</span> <span class="nf">gauss_energy_dispersion_matrix</span><span class="p">(</span><span class="n">ebounds</span><span class="p">,</span> <span class="n">sigma</span><span class="o">=</span><span class="mf">0.2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create Gaussian energy dispersion matrix.</span>
+
+<span class="sd">    TODO: this is Gaussian in e_reco ... should be log(e_reco) I think.</span>
+
+<span class="sd">    TODO: give formula: Gaussian in log(e_reco)</span>
+
+<span class="sd">    TODO: add option to add poisson noise</span>
+
+<span class="sd">    TODO: extend to have a vector of bias and resolution for various true energies.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ebounds : array_like</span>
+<span class="sd">        1-dim energy binning array (TeV)</span>
+<span class="sd">    sigma : float</span>
+<span class="sd">        RMS width of Gaussian energy dispersion.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pdf_matrix : array</span>
+<span class="sd">        PDF matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span>
+
+    <span class="n">nbins</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ebounds</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">logerange</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">ebounds</span><span class="p">)</span>
+
+    <span class="n">logemingrid</span> <span class="o">=</span> <span class="n">logerange</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">nbins</span><span class="p">,</span> <span class="n">nbins</span><span class="p">])</span>
+    <span class="n">logemaxgrid</span> <span class="o">=</span> <span class="n">logerange</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">nbins</span><span class="p">,</span> <span class="n">nbins</span><span class="p">])</span>
+    <span class="n">logecentergrid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(((</span><span class="n">logerange</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">logerange</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">([</span><span class="n">nbins</span><span class="p">,</span> <span class="n">nbins</span><span class="p">]))</span>
+
+    <span class="c"># gauss = lambda p, x: p[0] / np.sqrt(2. * np.pi * p[2] ** 2.) * np.exp(- (x - p[1]) ** 2. / 2. / p[2] ** 2.)</span>
+    <span class="n">gauss_int</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">p</span><span class="p">,</span> <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">:</span> <span class="o">.</span><span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="n">erf</span><span class="p">((</span><span class="n">x_max</span> <span class="o">-</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">**</span> <span class="mf">2.</span><span class="p">))</span> <span class="o">-</span> <span class="n">erf</span><span class="p">((</span><span class="n">x_min</span> <span class="o">-</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mf">2.</span> <span class="o">*</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">**</span> <span class="mf">2.</span><span class="p">)))</span>
+
+    <span class="n">pdf_matrix</span> <span class="o">=</span> <span class="n">gauss_int</span><span class="p">([</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">10.</span> <span class="o">**</span> <span class="n">logecentergrid</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">*</span> <span class="mf">10.</span> <span class="o">**</span> <span class="n">logecentergrid</span><span class="p">],</span> <span class="mf">10.</span> <span class="o">**</span> <span class="n">logemingrid</span><span class="p">,</span> <span class="mf">10.</span> <span class="o">**</span> <span class="n">logemaxgrid</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">pdf_matrix</span>
+
+    <span class="c">#hdu_list = np_to_rmf(rm, ea_erange, ea_erange, 1E-5,</span>
+    <span class="c">#                     telescope=telescope, instrument=instrument)</span>
+    <span class="c">#return hdu_list</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="energy_dispersion.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

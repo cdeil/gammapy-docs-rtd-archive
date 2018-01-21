@@ -1,0 +1,387 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>EffectiveAreaTable2D &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Instrument response function (IRF) functionality (gammapy.irf)" href="../irf/index.html" />
+    <link rel="next" title="EnergyDependentMultiGaussPSF" href="gammapy.irf.EnergyDependentMultiGaussPSF.html" />
+    <link rel="prev" title="EffectiveAreaTable" href="gammapy.irf.EffectiveAreaTable.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.irf.EffectiveAreaTable2D.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "api/gammapy.irf.EffectiveAreaTable2D",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.irf.EffectiveAreaTable2D";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.irf.EnergyDependentMultiGaussPSF.html" title="EnergyDependentMultiGaussPSF">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.irf.EffectiveAreaTable.html" title="EffectiveAreaTable">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../irf/index.html" accesskey="U">Instrument response function (IRF) functionality (<code class="docutils literal"><span class="pre">gammapy.irf</span></code>)</a> &raquo;</li>
+      
+      <li>EffectiveAreaTable2D</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="effectiveareatable2d">
+<h1>EffectiveAreaTable2D<a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#effectiveareatable2d" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.irf.EffectiveAreaTable2D">
+<em class="property">class </em><code class="descclassname">gammapy.irf.</code><code class="descname">EffectiveAreaTable2D</code><span class="sig-paren">(</span><em>energ_lo</em>, <em>energ_hi</em>, <em>offset_lo</em>, <em>offset_hi</em>, <em>eff_area</em>, <em>eff_area_reco</em>, <em>method='linear'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Offset-dependent radially-symmetric table effective area.</p>
+<p>Two interpolation methods area available:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.LinearNDInterpolator.html#scipy.interpolate.LinearNDInterpolator" title="(in SciPy v0.16.0)"><code class="xref py py-obj docutils literal"><span class="pre">LinearNDInterpolator</span></code></a> (default)</li>
+<li><a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.interpolate.RectBivariateSpline.html#scipy.interpolate.RectBivariateSpline" title="(in SciPy v0.16.0)"><code class="xref py py-obj docutils literal"><span class="pre">RectBivariateSpline</span></code></a></li>
+</ul>
+<p>Equivalent to GammaLib/ctools``GCTAAeff2D FITS`` format</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energ_lo</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Lower energy bin edges vector</p>
+</div></blockquote>
+<p><strong>energ_hi</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Upper energy bin edges vector</p>
+</div></blockquote>
+<p><strong>offset_lo</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>Lower offset bin edges vector</p>
+</div></blockquote>
+<p><strong>offset_hi</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>Upper offset bin edges  vector</p>
+</div></blockquote>
+<p><strong>eff_area</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Effective area vector (true energy)</p>
+</div></blockquote>
+<p><strong>eff_area_reco</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Effective area vector (reconstructed energy)</p>
+</div></blockquote>
+<p><strong>method</strong> : str</p>
+<blockquote class="last">
+<div><p>Interpolation method</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>Get effective area vs. energy for a given offset and energy binning:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">gammapy.irf</span> <span class="kn">import</span> <span class="n">EffectiveAreaTable2D</span>
+<span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">load_aeff2D_fits_table</span>
+<span class="n">aeff2D</span> <span class="o">=</span> <span class="n">EffectiveAreaTable2D</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">load_aeff2D_fits_table</span><span class="p">())</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="mf">0.6</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">)</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">60</span><span class="p">),</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+<span class="n">eff_area</span> <span class="o">=</span> <span class="n">aeff2D</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Create ARF fits file for a given offest and energy binning:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">gammapy.irf</span> <span class="kn">import</span> <span class="n">EffectiveAreaTable2D</span>
+<span class="kn">from</span> <span class="nn">gammapy.spectrum</span> <span class="kn">import</span> <span class="n">energy_bounds_equal_log_spacing</span>
+<span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">load_aeff2D_fits_table</span>
+<span class="n">aeff2D</span> <span class="o">=</span> <span class="n">EffectiveAreaTable2D</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">load_aeff2D_fits_table</span><span class="p">())</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="mf">0.43</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">)</span>
+<span class="n">nbins</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">energy</span> <span class="o">=</span> <span class="n">energy_bounds_equal_log_spacing</span><span class="p">(</span><span class="n">Quantity</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="s">&#39;TeV&#39;</span><span class="p">),</span> <span class="n">nbins</span><span class="p">)</span>
+<span class="n">energ_lo</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">energ_hi</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<span class="n">arf_table</span> <span class="o">=</span> <span class="n">aeff2D</span><span class="o">.</span><span class="n">to_effective_area_table</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">energ_lo</span><span class="p">,</span> <span class="n">energ_hi</span><span class="p">)</span>
+<span class="n">arf_table</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&#39;arf.fits&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot energy dependence</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">gammapy.irf</span> <span class="kn">import</span> <span class="n">EffectiveAreaTable2D</span>
+<span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">load_aeff2D_fits_table</span>
+<span class="n">aeff2D</span> <span class="o">=</span> <span class="n">EffectiveAreaTable2D</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">load_aeff2D_fits_table</span><span class="p">())</span>
+<span class="n">aeff2D</span><span class="o">.</span><span class="n">plot_energy_dependence</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">2E4</span><span class="p">,</span> <span class="mf">2E6</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="gammapy-irf-EffectiveAreaTable2D-1.py">Source code</a>, <a class="reference external" href="gammapy-irf-EffectiveAreaTable2D-1.png">png</a>, <a class="reference external" href="gammapy-irf-EffectiveAreaTable2D-1.hires.png">hires.png</a>, <a class="reference external" href="gammapy-irf-EffectiveAreaTable2D-1.pdf">pdf</a>)</p>
+<div class="figure">
+<img alt="../_images/gammapy-irf-EffectiveAreaTable2D-1.png" src="../_images/gammapy-irf-EffectiveAreaTable2D-1.png" />
+</div>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.irf.EffectiveAreaTable2D.evaluate">
+<code class="descname">evaluate</code><span class="sig-paren">(</span><em>offset=None</em>, <em>energy=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D.evaluate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.evaluate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate effective area for a given energy and offset.</p>
+<p>If a parameter is not given, the nodes from the FITS table are used.
+2D input arrays are not supported yet.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>offset</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>offset</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>energy</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eff_area</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote class="last">
+<div><p>Effective Area</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.irf.EffectiveAreaTable2D.from_fits">
+<em class="property">classmethod </em><code class="descname">from_fits</code><span class="sig-paren">(</span><em>hdu_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D.from_fits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.from_fits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create <a class="reference internal" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D" title="gammapy.irf.EffectiveAreaTable2D"><code class="xref py py-obj docutils literal"><span class="pre">EffectiveAreaTable2D</span></code></a> from <code class="docutils literal"><span class="pre">GCTAAeff2D</span></code> format HDU list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">HDUList</span></code></a></p>
+<blockquote class="last">
+<div><p>HDU list with <code class="docutils literal"><span class="pre">EFFECTIVE</span> <span class="pre">AREA</span></code> extension.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EffectiveAreaTable2D.plot_energy_dependence">
+<code class="descname">plot_energy_dependence</code><span class="sig-paren">(</span><em>ax=None</em>, <em>offset=None</em>, <em>energy=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D.plot_energy_dependence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.plot_energy_dependence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot effective area versus energy for a given offset.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EffectiveAreaTable2D.plot_offset_dependence">
+<code class="descname">plot_offset_dependence</code><span class="sig-paren">(</span><em>ax=None</em>, <em>offset=None</em>, <em>energy=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D.plot_offset_dependence"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.plot_offset_dependence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot effective area versus offset for a given energy</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="gammapy.irf.EffectiveAreaTable2D.read">
+<em class="property">classmethod </em><code class="descname">read</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create <a class="reference internal" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D" title="gammapy.irf.EffectiveAreaTable2D"><code class="xref py py-obj docutils literal"><span class="pre">EffectiveAreaTable2D</span></code></a> from <code class="docutils literal"><span class="pre">GCTAAeff2D</span></code> format FITS file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote class="last">
+<div><p>File name</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EffectiveAreaTable2D.to_effective_area_table">
+<code class="descname">to_effective_area_table</code><span class="sig-paren">(</span><em>offset</em>, <em>energy_lo=None</em>, <em>energy_hi=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/irf/effective_area_table.html#EffectiveAreaTable2D.to_effective_area_table"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.to_effective_area_table" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate at a given offset and return effective area table.</p>
+<p>The energy thresholds in the effective area table object are not set.
+If the effective area table is intended to be used for spectral analysis,
+the final energy binning should be given here, since the
+effective area table class does no interpolation.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>offset</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Angle</span></code></a></p>
+<blockquote>
+<div><p>offset</p>
+</div></blockquote>
+<p><strong>energy_lo, energy_hi</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a></p>
+<blockquote>
+<div><p>Energy lower and upper bounds array</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>eff_area_table</strong> : <a class="reference internal" href="gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable" title="gammapy.irf.EffectiveAreaTable"><code class="xref py py-obj docutils literal"><span class="pre">EffectiveAreaTable</span></code></a></p>
+<blockquote class="last">
+<div><p>Effective area table</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.irf.EffectiveAreaTable2D.html#">EffectiveAreaTable2D</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.irf.EffectiveAreaTable2D.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.irf.EffectiveAreaTable2D.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

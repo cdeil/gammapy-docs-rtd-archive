@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>to_ds9_region &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Catalog (gammapy.catalog)" href="../catalog/index.html" />
+    <link rel="next" title="FluxDistribution" href="gammapy.catalog.FluxDistribution.html" />
+    <link rel="prev" title="table_xmatch_circle_criterion" href="gammapy.catalog.table_xmatch_circle_criterion.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.catalog.to_ds9_region.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "api/gammapy.catalog.to_ds9_region",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.catalog.to_ds9_region";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.catalog.FluxDistribution.html" title="FluxDistribution">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.catalog.table_xmatch_circle_criterion.html" title="table_xmatch_circle_criterion">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../catalog/index.html" accesskey="U">Catalog (<code class="docutils literal"><span class="pre">gammapy.catalog</span></code>)</a> &raquo;</li>
+      
+      <li>to_ds9_region</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="to-ds9-region">
+<h1>to_ds9_region<a class="headerlink" href="gammapy.catalog.to_ds9_region.html#to-ds9-region" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.catalog.to_ds9_region">
+<code class="descclassname">gammapy.catalog.</code><code class="descname">to_ds9_region</code><span class="sig-paren">(</span><em>catalog</em>, <em>radius=None</em>, <em>color=u'green'</em>, <em>glon=u'GLON'</em>, <em>unc_glon=None</em>, <em>glat=u'GLAT'</em>, <em>unc_glat=None</em>, <em>label=None</em>, <em>label_position=u'top'</em>, <em>label_additional_info=None</em>, <em>label_distance=1.2</em>, <em>marker=u'diamond'</em>, <em>dashed=False</em>, <em>width=3</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/catalog/utils.html#to_ds9_region"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.catalog.to_ds9_region.html#gammapy.catalog.to_ds9_region" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write ds9 region file from catalog.</p>
+<p>Currently works only for galactic coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>catalog</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a></p>
+<blockquote>
+<div><p>Catalog with position and size information.</p>
+</div></blockquote>
+<p><strong>glon</strong> : str (&#8216;GLON&#8217;)</p>
+<blockquote>
+<div><p>Catalog column containing galactic longitude position.</p>
+</div></blockquote>
+<p><strong>glat</strong> : str (&#8216;GLAT&#8217;)</p>
+<blockquote>
+<div><p>Catalog column containing galactic latitude position.</p>
+</div></blockquote>
+<p><strong>unc_glon</strong> : str (None)</p>
+<blockquote>
+<div><p>Catalog column containing galactic longitude position uncertainty.</p>
+</div></blockquote>
+<p><strong>unc_glat</strong> : str (None)</p>
+<blockquote>
+<div><p>Catalog column containing galactic latitude position uncertainty.</p>
+</div></blockquote>
+<p><strong>radius</strong> : str (None)</p>
+<blockquote>
+<div><p>Catalog column containing extension information.</p>
+</div></blockquote>
+<p><strong>color</strong> : str (&#8216;green&#8217;)</p>
+<blockquote>
+<div><p>Valid ds9 color.</p>
+</div></blockquote>
+<p><strong>label</strong> : str (None)</p>
+<blockquote>
+<div><p>Catalog column to use for the label.</p>
+</div></blockquote>
+<p><strong>label_position: str (&#8216;top&#8217;)</strong></p>
+<blockquote>
+<div><p>Position of the region label. Either &#8216;top&#8217; or &#8216;bottom&#8217;.</p>
+</div></blockquote>
+<p><strong>label_distance: float (1.2)</strong></p>
+<blockquote>
+<div><p>Distance of the label from the regions center. Given
+in multiple of the region&#8217;s radius.</p>
+</div></blockquote>
+<p><strong>label_additional_info: dict</strong></p>
+<blockquote>
+<div><p>Additional info to be shown in the region label.</p>
+</div></blockquote>
+<p><strong>dashed</strong> : bool (False)</p>
+<blockquote>
+<div><p>Dashed region line.</p>
+</div></blockquote>
+<p><strong>width</strong> : int</p>
+<blockquote>
+<div><p>Width of the region line.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>region</strong> : str</p>
+<blockquote class="last">
+<div><p>DS9 region string.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<p>This example reads Greens catalog from <a class="reference internal" href="../datasets/index.html#module-gammapy.datasets" title="gammapy.datasets"><code class="xref py py-obj docutils literal"><span class="pre">gammapy.datasets</span></code></a> and writes it to a
+ds9 region file.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.datasets</span> <span class="kn">import</span> <span class="n">load_catalog_green</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">green</span> <span class="o">=</span> <span class="n">load_catalog_green</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">green</span><span class="p">[</span><span class="s">&#39;MeanDiam&#39;</span><span class="p">]</span> <span class="o">/=</span> <span class="mf">120.</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">green_str</span> <span class="o">=</span> <span class="n">to_ds9_region</span><span class="p">(</span><span class="n">green</span><span class="p">,</span> <span class="n">radius</span><span class="o">=</span><span class="s">&#39;MeanDiam&#39;</span><span class="p">,</span>
+<span class="gp">&gt;&gt;&gt; </span>                          <span class="n">label</span><span class="o">=</span><span class="s">&#39;Source_Name&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s">&#39;red&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;region_green.reg&quot;</span><span class="p">,</span> <span class="s">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">region_file</span><span class="p">:</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="n">region_file</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">green_str</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.catalog.to_ds9_region.html#">to_ds9_region</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.catalog.to_ds9_region.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.catalog.to_ds9_region.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

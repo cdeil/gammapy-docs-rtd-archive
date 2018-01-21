@@ -1,0 +1,8 @@
+
+
+paste_cutout_into_image
+=====================================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: paste_cutout_into_image

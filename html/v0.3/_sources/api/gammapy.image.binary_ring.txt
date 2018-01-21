@@ -1,0 +1,8 @@
+
+
+binary_ring
+=========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: binary_ring

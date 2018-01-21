@@ -1,0 +1,8 @@
+
+
+event_lists_to_counts_image
+========================================
+
+.. currentmodule:: gammapy.data
+
+.. autofunction:: event_lists_to_counts_image

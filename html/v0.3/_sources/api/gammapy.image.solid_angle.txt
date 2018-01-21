@@ -1,0 +1,8 @@
+
+
+solid_angle
+=========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: solid_angle

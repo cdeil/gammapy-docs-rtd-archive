@@ -1,0 +1,54 @@
+
+
+EffectiveAreaTable2D
+================================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EffectiveAreaTable2D
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EffectiveAreaTable2D.evaluate
+      ~EffectiveAreaTable2D.from_fits
+      ~EffectiveAreaTable2D.plot_energy_dependence
+      ~EffectiveAreaTable2D.plot_offset_dependence
+      ~EffectiveAreaTable2D.read
+      ~EffectiveAreaTable2D.to_effective_area_table
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: evaluate
+   .. automethod:: from_fits
+   .. automethod:: plot_energy_dependence
+   .. automethod:: plot_offset_dependence
+   .. automethod:: read
+   .. automethod:: to_effective_area_table
+
+   
+   

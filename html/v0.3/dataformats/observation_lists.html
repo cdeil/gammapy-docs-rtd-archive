@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Observation lists &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Data Formats" href="index.html" />
+    <link rel="next" title="Source models" href="source_models.html" />
+    <link rel="prev" title="Point spread function" href="psf.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/dataformats/observation_lists.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "dataformats/observation_lists",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "dataformats/observation_lists";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="source_models.html" title="Source models">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="psf.html" title="Point spread function">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="index.html" accesskey="U">Data Formats</a> &raquo;</li>
+      
+      <li>Observation lists</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="observation-lists">
+<span id="dataformats-observation-lists"></span><h1>Observation lists<a class="headerlink" href="observation_lists.html#observation-lists" title="Permalink to this headline">¶</a></h1>
+<p>Run lists specify a list of observation runs to be processed by a given tool.</p>
+<p>In the end the tool will usually generate input and output data filenames from
+the information in the run list. These filenames can either be given directly
+or there can be naming conventions, e.g. the event list for run <code class="docutils literal"><span class="pre">42</span></code> could be stored
+at <code class="docutils literal"><span class="pre">$TEV_DATA/RUN_000042/Events.fits</span></code>.</p>
+<p>A run list must have at least a column called <code class="docutils literal"><span class="pre">OBS_ID</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">OBS_ID</span>
+<span class="mi">42</span>
+<span class="mi">43</span>
+</pre></div>
+</div>
+<p>Usually it has many more columns with information about each observation. A list of
+Gammapy supported columns is:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="75%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">column name</th>
+<th class="head">description</th>
+<th class="head">required?</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>OBS_ID</td>
+<td>observation ID as an integer</td>
+<td>yes</td>
+</tr>
+<tr class="row-odd"><td>RA</td>
+<td>pointing position right ascension in equatorial (ICRS) coordinates</td>
+<td>yes?</td>
+</tr>
+<tr class="row-even"><td>DEC</td>
+<td>pointing position declination in equatorial (ICRS) coordinates</td>
+<td>yes?</td>
+</tr>
+<tr class="row-odd"><td>AZ</td>
+<td>average azimuth angle during the observation</td>
+<td>no</td>
+</tr>
+<tr class="row-even"><td>ALT</td>
+<td>average altitude angle during the observation</td>
+<td>no</td>
+</tr>
+<tr class="row-odd"><td>MUON_EFFICIENCY</td>
+<td>average muon efficiency of the telescopes</td>
+<td>yes?</td>
+</tr>
+<tr class="row-even"><td>TIME_START</td>
+<td>start time of the observation stored as number of seconds after <a class="reference internal" href="../references.html#met" id="id1">[MET]</a> or
+as absolute times in UTC (see description of header keyword <code class="xref py py-obj docutils literal"><span class="pre">TIME</span> <span class="pre">FORMAT</span></code>)</td>
+<td>yes?</td>
+</tr>
+<tr class="row-odd"><td>TIME_STOP</td>
+<td>end time of the observation in the same format as TIME_START</td>
+<td>no</td>
+</tr>
+<tr class="row-even"><td>TIME_OBSERVATION</td>
+<td>duration of the observation</td>
+<td>no</td>
+</tr>
+<tr class="row-odd"><td>TIME_LIVE</td>
+<td>duration of the observation without dead time</td>
+<td>no</td>
+</tr>
+<tr class="row-even"><td>TRIGGER_RATE</td>
+<td>average trigger rate of the system</td>
+<td>no</td>
+</tr>
+<tr class="row-odd"><td>MEAN_TEMPERATURE</td>
+<td>average temperature of the atmosphere</td>
+<td>no</td>
+</tr>
+<tr class="row-even"><td>N_TELS</td>
+<td>number of telescopes participating in the observation</td>
+<td>yes?</td>
+</tr>
+<tr class="row-odd"><td>TEL_LIST</td>
+<td>string with a <a class="reference internal" href="../references.html#csv" id="id2">[CSV]</a> list of telescope IDs participating in the observation</td>
+<td>yes?</td>
+</tr>
+<tr class="row-even"><td>QUALITY</td>
+<td>data quality; recommended: &#8220;spectral&#8221; or &#8220;detection&#8221;</td>
+<td>no</td>
+</tr>
+</tbody>
+</table>
+<p>Extra user-defined columns are allowed; Gammapy will ignore them.</p>
+<p>In order for the extra columns to have full meaning the following is needed:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Extra row right after the column name, specifying the unit of the quantity listed on each column.</li>
+<li>A header with at least the following keywords:</li>
+</ul>
+</div></blockquote>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="75%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">keyword</th>
+<th class="head">description</th>
+<th class="head">required?</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>OBSERVATORY_NAME</td>
+<td>name of the observatory where the observations were taken. This is
+important for instance for coordinate transformations between celestial
+(i.e. RA/dec) and terrestrial (i.e. az/alt) coordinate systems</td>
+<td>no</td>
+</tr>
+<tr class="row-odd"><td>MJDREFI</td>
+<td>reference time: integer value in mean julian days; details in
+<a class="reference internal" href="../time/index.html#time-handling"><span>Time handling in Gammapy</span></a></td>
+<td>yes?</td>
+</tr>
+<tr class="row-even"><td>MJDREFF</td>
+<td>reference time: fraction of integer value defined in MJDREFI; details in
+<a class="reference internal" href="../time/index.html#time-handling"><span>Time handling in Gammapy</span></a></td>
+<td>yes?</td>
+</tr>
+<tr class="row-odd"><td>TIME_FORMAT</td>
+<td>format in which times are stored: <code class="xref py py-obj docutils literal"><span class="pre">absolute</span></code> (UTC) or <code class="xref py py-obj docutils literal"><span class="pre">relative</span></code> (<a class="reference internal" href="../references.html#met" id="id3">[MET]</a>);
+see details for both formats in <a class="reference internal" href="../time/index.html#time-handling"><span>Time handling in Gammapy</span></a></td>
+<td>yes?</td>
+</tr>
+</tbody>
+</table>
+<p>Extra user-defined header entries are allowed; Gammapy will ignore them.</p>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="observation_lists.html#example" title="Permalink to this headline">¶</a></h2>
+<p>The tool <a class="reference internal" href="../api/gammapy.datasets.make_test_observation_table.html#gammapy.datasets.make_test_observation_table" title="gammapy.datasets.make_test_observation_table"><code class="xref py py-obj docutils literal"><span class="pre">make_test_observation_table</span></code></a> can generate a <a class="reference internal" href="../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable" title="gammapy.obs.ObservationTable"><code class="xref py py-obj docutils literal"><span class="pre">ObservationTable</span></code></a>
+with dummy values.</p>
+<p>Header (metadata):</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="p">{</span><span class="s">u&#39;MJDREFI&#39;</span><span class="p">:</span> <span class="mf">55197.0</span><span class="p">,</span> <span class="s">u&#39;OBSERVATORY_NAME&#39;</span><span class="p">:</span> <span class="s">u&#39;HESS&#39;</span><span class="p">,</span> <span class="s">u&#39;MJDREFF&#39;</span><span class="p">:</span> <span class="mf">0.0</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Table:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="5%" />
+<col width="12%" />
+<col width="7%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="10%" />
+<col width="11%" />
+<col width="5%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">OBS_ID</th>
+<th class="head">TIME_OBSERVATION</th>
+<th class="head">TIME_LIVE</th>
+<th class="head">TIME_START</th>
+<th class="head">TIME_STOP</th>
+<th class="head">AZ</th>
+<th class="head">ALT</th>
+<th class="head">RA</th>
+<th class="head">DEC</th>
+<th class="head">N_TELS</th>
+<th class="head">MUON_EFFICIENCY</th>
+</tr>
+<tr class="row-even"><th class="head">&nbsp;</th>
+<th class="head">s</th>
+<th class="head">s</th>
+<th class="head">s</th>
+<th class="head">s</th>
+<th class="head">deg</th>
+<th class="head">deg</th>
+<th class="head">deg</th>
+<th class="head">deg</th>
+<th class="head">&nbsp;</th>
+<th class="head">&nbsp;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-odd"><td>1</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>118890428.352</td>
+<td>118892228.352</td>
+<td>130.926874751</td>
+<td>49.6209457026</td>
+<td>96.3849089136</td>
+<td>-43.6914197077</td>
+<td>3</td>
+<td>0.814535992712</td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>112242990.559</td>
+<td>112244790.559</td>
+<td>272.213179564</td>
+<td>70.2673929472</td>
+<td>339.00128923</td>
+<td>-21.1698098192</td>
+<td>3</td>
+<td>0.976469816749</td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>66444741.854</td>
+<td>66446541.854</td>
+<td>346.848818939</td>
+<td>46.138583188</td>
+<td>162.086175054</td>
+<td>19.6398873974</td>
+<td>4</td>
+<td>0.920096961383</td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>22388716.9244</td>
+<td>22390516.9244</td>
+<td>300.850748052</td>
+<td>55.1330124055</td>
+<td>32.9474858892</td>
+<td>-3.19910057294</td>
+<td>3</td>
+<td>0.678431411337</td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>135469063.888</td>
+<td>135470863.888</td>
+<td>355.160931662</td>
+<td>48.734744852</td>
+<td>197.123663537</td>
+<td>17.9411145072</td>
+<td>4</td>
+<td>0.77879533822</td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>21857681.6916</td>
+<td>21859481.6916</td>
+<td>124.846967209</td>
+<td>78.859585347</td>
+<td>14.162859563</td>
+<td>-29.3419432185</td>
+<td>4</td>
+<td>0.709642622408</td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>57554741.106</td>
+<td>57556541.106</td>
+<td>268.541714486</td>
+<td>48.8489560299</td>
+<td>64.8265458802</td>
+<td>-18.2634404823</td>
+<td>3</td>
+<td>0.908426763354</td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>19181027.9045</td>
+<td>19182827.9045</td>
+<td>120.558129392</td>
+<td>49.663761361</td>
+<td>24.791511978</td>
+<td>-37.1789681608</td>
+<td>4</td>
+<td>0.980162662473</td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>120447694.583</td>
+<td>120449494.583</td>
+<td>132.10271454</td>
+<td>78.7455993174</td>
+<td>89.7950895353</td>
+<td>-30.5128854184</td>
+<td>3</td>
+<td>0.807695978946</td>
+</tr>
+<tr class="row-even"><td>10</td>
+<td>1800.0</td>
+<td>1500.0</td>
+<td>144207430.361</td>
+<td>144209230.361</td>
+<td>323.562657045</td>
+<td>45.4005803262</td>
+<td>324.596045439</td>
+<td>13.6761217326</td>
+<td>3</td>
+<td>0.694201696626</td>
+</tr>
+</tbody>
+</table>
+<p>A test observation list file in fits format is located in the
+<code class="xref py py-obj docutils literal"><span class="pre">gammapy-extra</span></code> repository
+(<a class="reference external" href="https://github.com/gammapy/gammapy-extra/blob/master/test_datasets/obs/test_observation_table.fits">test_observation_table.fits</a>).</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="observation_lists.html#">Observation lists</a><ul>
+<li><a class="reference internal" href="observation_lists.html#example">Example</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/dataformats/observation_lists.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="observation_lists.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

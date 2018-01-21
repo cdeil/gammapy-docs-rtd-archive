@@ -1,0 +1,8 @@
+
+
+cta_irf_root_to_fits
+=========================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: cta_irf_root_to_fits

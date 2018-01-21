@@ -1,0 +1,363 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.powerlaw &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/spectrum/powerlaw.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/spectrum/powerlaw",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/spectrum/powerlaw";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.powerlaw</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Power law spectrum helper functions.</span>
+
+<span class="sd">Convert differential and integral fluxes with error propagation.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;power_law_evaluate&#39;</span><span class="p">,</span> <span class="s">&#39;power_law_pivot_energy&#39;</span><span class="p">,</span> <span class="s">&#39;df_over_f&#39;</span><span class="p">,</span>
+           <span class="s">&#39;power_law_flux&#39;</span><span class="p">,</span> <span class="s">&#39;power_law_integral_flux&#39;</span><span class="p">,</span>
+           <span class="s">&#39;g_from_f&#39;</span><span class="p">,</span> <span class="s">&#39;g_from_points&#39;</span><span class="p">,</span> <span class="s">&#39;I_from_points&#39;</span><span class="p">,</span>
+           <span class="s">&#39;f_from_points&#39;</span><span class="p">,</span> <span class="s">&#39;f_with_err&#39;</span><span class="p">,</span> <span class="s">&#39;I_with_err&#39;</span><span class="p">,</span> <span class="s">&#39;compatibility&#39;</span><span class="p">]</span>
+
+<span class="n">E_INF</span> <span class="o">=</span> <span class="mf">1e10</span>  <span class="c"># practically infinitely high flux</span>
+<span class="n">g_DEFAULT</span> <span class="o">=</span> <span class="mi">2</span>
+
+
+<div class="viewcode-block" id="power_law_evaluate"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.power_law_evaluate.html#gammapy.spectrum.powerlaw.power_law_evaluate">[docs]</a><span class="k">def</span> <span class="nf">power_law_evaluate</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">norm</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">energy_ref</span><span class="p">):</span>
+    <span class="sd">r&quot;&quot;&quot;Differential flux at a given energy.</span>
+
+<span class="sd">    .. math:: f(energy) = N (E / E_0) ^ - \Gamma</span>
+
+<span class="sd">    with norm ``N``, energy ``E``, reference energy ``E0`` and spectral index :math:`\Gamma`.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy : array_like</span>
+<span class="sd">        Energy at which to compute the differential flux</span>
+<span class="sd">    gamma : array_like</span>
+<span class="sd">        Power law spectral index</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">norm</span> <span class="o">*</span> <span class="p">(</span><span class="n">energy</span> <span class="o">/</span> <span class="n">energy_ref</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">gamma</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="power_law_pivot_energy"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.power_law_pivot_energy.html#gammapy.spectrum.powerlaw.power_law_pivot_energy">[docs]</a><span class="k">def</span> <span class="nf">power_law_pivot_energy</span><span class="p">(</span><span class="n">energy_ref</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">d_gamma</span><span class="p">,</span> <span class="n">cov</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute pivot (a.k.a. decorrelation) energy.</span>
+
+<span class="sd">    Defined as smallest df / f.</span>
+
+<span class="sd">    Reference: http://arxiv.org/pdf/0910.4881</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">pivot_energy</span> <span class="o">=</span> <span class="n">energy_ref</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">cov</span> <span class="o">/</span> <span class="p">(</span><span class="n">f0</span> <span class="o">*</span> <span class="n">d_gamma</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pivot_energy</span>
+
+</div>
+<div class="viewcode-block" id="df_over_f"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.df_over_f.html#gammapy.spectrum.powerlaw.df_over_f">[docs]</a><span class="k">def</span> <span class="nf">df_over_f</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">e0</span><span class="p">,</span> <span class="n">f0</span><span class="p">,</span> <span class="n">df0</span><span class="p">,</span> <span class="n">dg</span><span class="p">,</span> <span class="n">cov</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute relative flux error at any given energy.</span>
+
+<span class="sd">    Used to draw butterflies.</span>
+
+<span class="sd">    Reference: http://arxiv.org/pdf/0910.4881 Equation (1)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="p">(</span><span class="n">df0</span> <span class="o">/</span> <span class="n">f0</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cov</span> <span class="o">/</span> <span class="n">f0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e</span> <span class="o">/</span> <span class="n">e0</span><span class="p">)</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="p">(</span><span class="n">dg</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e</span> <span class="o">/</span> <span class="n">e0</span><span class="p">))</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">term1</span> <span class="o">-</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_conversion_factor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Conversion factor between differential and integral flux.&quot;&quot;&quot;</span>
+    <span class="c"># In gamma-ray astronomy only falling power-laws are used.</span>
+    <span class="c"># Here we force this, i.e. give &quot;correct&quot; input even if the</span>
+    <span class="c"># user gives a spectral index with an incorrect sign.</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">g</span><span class="p">)</span>
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">e</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="p">(</span><span class="n">e2</span> <span class="o">/</span> <span class="n">e</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">e1</span> <span class="o">/</span> <span class="n">e</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">term1</span> <span class="o">*</span> <span class="n">term2</span>
+
+
+<div class="viewcode-block" id="power_law_flux"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.power_law_flux.html#gammapy.spectrum.powerlaw.power_law_flux">[docs]</a><span class="k">def</span> <span class="nf">power_law_flux</span><span class="p">(</span><span class="n">I</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g_DEFAULT</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e2</span><span class="o">=</span><span class="n">E_INF</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute differential flux for a given integral flux.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    I : array_like</span>
+<span class="sd">        Integral flux in ``energy_min``, ``energy_max`` band</span>
+<span class="sd">    alpha : array_like</span>
+<span class="sd">        Power law spectral index</span>
+<span class="sd">    energy : array_like</span>
+<span class="sd">        Energy at which to compute the differential flux</span>
+<span class="sd">    e_min : array_like</span>
+<span class="sd">        Energy band minimum</span>
+<span class="sd">    e_max : array_like</span>
+<span class="sd">        Energy band maximum</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flux : `numpy.array`</span>
+<span class="sd">        Differential flux at ``energy``.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">I</span> <span class="o">/</span> <span class="n">_conversion_factor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="power_law_integral_flux"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.power_law_integral_flux.html#gammapy.spectrum.powerlaw.power_law_integral_flux">[docs]</a><span class="k">def</span> <span class="nf">power_law_integral_flux</span><span class="p">(</span><span class="n">f</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">g</span><span class="o">=</span><span class="n">g_DEFAULT</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e2</span><span class="o">=</span><span class="n">E_INF</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute integral flux for a given differential flux.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    f : array_like</span>
+<span class="sd">        Differential flux at ``energy``</span>
+<span class="sd">    alpha : array_like</span>
+<span class="sd">        Power law spectral index</span>
+<span class="sd">    energy : array_like</span>
+<span class="sd">        Energy at which the differential flux is given</span>
+<span class="sd">    e_min : array_like</span>
+<span class="sd">        Energy band minimum</span>
+<span class="sd">    e_max : array_like</span>
+<span class="sd">        Energy band maximum</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flux : `numpy.array`</span>
+<span class="sd">        Integral flux in ``energy_min``, ``energy_max`` band</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">f</span> <span class="o">*</span> <span class="n">_conversion_factor</span><span class="p">(</span><span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="g_from_f"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.g_from_f.html#gammapy.spectrum.powerlaw.g_from_f">[docs]</a><span class="k">def</span> <span class="nf">g_from_f</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">de</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spectral index at a given energy e for a given function f(e)&quot;&quot;&quot;</span>
+    <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span> <span class="o">=</span> <span class="n">e</span><span class="p">,</span> <span class="n">e</span> <span class="o">+</span> <span class="n">de</span>
+    <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">e1</span><span class="p">),</span> <span class="n">f</span><span class="p">(</span><span class="n">e2</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">g_from_points</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="g_from_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.g_from_points.html#gammapy.spectrum.powerlaw.g_from_points">[docs]</a><span class="k">def</span> <span class="nf">g_from_points</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spectral index for two given differential flux points&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">f2</span> <span class="o">/</span> <span class="n">f1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e2</span> <span class="o">/</span> <span class="n">e1</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="I_from_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.I_from_points.html#gammapy.spectrum.powerlaw.I_from_points">[docs]</a><span class="k">def</span> <span class="nf">I_from_points</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Integral flux in energy bin for power law&quot;&quot;&quot;</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">g_from_points</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">)</span>
+    <span class="n">pl_int_flux</span> <span class="o">=</span> <span class="p">(</span><span class="n">f1</span> <span class="o">*</span> <span class="n">e1</span> <span class="o">/</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span>
+                   <span class="p">((</span><span class="n">e2</span> <span class="o">/</span> <span class="n">e1</span><span class="p">)</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">pl_int_flux</span>
+
+</div>
+<div class="viewcode-block" id="f_from_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.f_from_points.html#gammapy.spectrum.powerlaw.f_from_points">[docs]</a><span class="k">def</span> <span class="nf">f_from_points</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">,</span> <span class="n">f1</span><span class="p">,</span> <span class="n">f2</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Linear interpolation&quot;&quot;&quot;</span>
+    <span class="n">e1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">e1</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">e2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">e2</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f1</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">f2</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+    <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">logdy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">f2</span> <span class="o">/</span> <span class="n">f1</span><span class="p">)</span>
+    <span class="n">logdx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e2</span> <span class="o">/</span> <span class="n">e1</span><span class="p">)</span>
+    <span class="n">logy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">e</span> <span class="o">/</span> <span class="n">e1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">logdy</span> <span class="o">/</span> <span class="n">logdx</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">logy</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="f_with_err"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.f_with_err.html#gammapy.spectrum.powerlaw.f_with_err">[docs]</a><span class="k">def</span> <span class="nf">f_with_err</span><span class="p">(</span><span class="n">I_val</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">I_err</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_val</span><span class="o">=</span><span class="n">g_DEFAULT</span><span class="p">,</span> <span class="n">g_err</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+               <span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e2</span><span class="o">=</span><span class="n">E_INF</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper for f so the user doesn&#39;t have to know about</span>
+<span class="sd">    the uncertainties module&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">uncertainties</span> <span class="kn">import</span> <span class="n">unumpy</span>
+    <span class="n">I</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">uarray</span><span class="p">(</span><span class="n">I_val</span><span class="p">,</span> <span class="n">I_err</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">uarray</span><span class="p">(</span><span class="n">g_val</span><span class="p">,</span> <span class="n">g_err</span><span class="p">)</span>
+    <span class="n">_f</span> <span class="o">=</span> <span class="n">power_law_flux</span><span class="p">(</span><span class="n">I</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
+    <span class="n">f_val</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">nominal_values</span><span class="p">(</span><span class="n">_f</span><span class="p">)</span>
+    <span class="n">f_err</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">std_devs</span><span class="p">(</span><span class="n">_f</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">f_val</span><span class="p">,</span> <span class="n">f_err</span>
+
+</div>
+<div class="viewcode-block" id="I_with_err"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.I_with_err.html#gammapy.spectrum.powerlaw.I_with_err">[docs]</a><span class="k">def</span> <span class="nf">I_with_err</span><span class="p">(</span><span class="n">f_val</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">f_err</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_val</span><span class="o">=</span><span class="n">g_DEFAULT</span><span class="p">,</span> <span class="n">g_err</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+               <span class="n">e</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e1</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">e2</span><span class="o">=</span><span class="n">E_INF</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Wrapper for f so the user doesn&#39;t have to know about</span>
+<span class="sd">    the uncertainties module&quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">uncertainties</span> <span class="kn">import</span> <span class="n">unumpy</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">uarray</span><span class="p">(</span><span class="n">f_val</span><span class="p">,</span> <span class="n">f_err</span><span class="p">)</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">uarray</span><span class="p">(</span><span class="n">g_val</span><span class="p">,</span> <span class="n">g_err</span><span class="p">)</span>
+    <span class="n">_I</span> <span class="o">=</span> <span class="n">power_law_integral_flux</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">e1</span><span class="p">,</span> <span class="n">e2</span><span class="p">)</span>
+    <span class="n">I_val</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">nominal_values</span><span class="p">(</span><span class="n">_I</span><span class="p">)</span>
+    <span class="n">I_err</span> <span class="o">=</span> <span class="n">unumpy</span><span class="o">.</span><span class="n">std_devs</span><span class="p">(</span><span class="n">_I</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">I_val</span><span class="p">,</span> <span class="n">I_err</span>
+
+</div>
+<div class="viewcode-block" id="compatibility"><a class="viewcode-back" href="../../../api/gammapy.spectrum.powerlaw.compatibility.html#gammapy.spectrum.powerlaw.compatibility">[docs]</a><span class="k">def</span> <span class="nf">compatibility</span><span class="p">(</span><span class="n">par_low</span><span class="p">,</span> <span class="n">par_high</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Quantify spectral compatibility of power-law</span>
+<span class="sd">    measurements in two energy bands.</span>
+
+<span class="sd">    Reference: 2008ApJ...679.1299F Equation (2)</span>
+
+<span class="sd">    Compute spectral compatibility parameters for the</span>
+<span class="sd">    situation where two power laws were measured in a low</span>
+<span class="sd">    and a high spectral energy band.</span>
+<span class="sd">    par_low and par_high are the measured parameters,</span>
+<span class="sd">    which must be lists in the following order:</span>
+<span class="sd">    e, f, f_err, g, g_err</span>
+<span class="sd">    where e is the pivot energy, f is the flux density</span>
+<span class="sd">    and g the spectral index</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Unpack power-law paramters</span>
+    <span class="n">e_high</span><span class="p">,</span> <span class="n">f_high</span><span class="p">,</span> <span class="n">f_err_high</span><span class="p">,</span> <span class="n">g_high</span><span class="p">,</span> <span class="n">g_err_high</span> <span class="o">=</span> <span class="n">par_high</span>
+    <span class="n">e_low</span><span class="p">,</span> <span class="n">f_low</span><span class="p">,</span> <span class="n">f_err_low</span><span class="p">,</span> <span class="n">g_low</span><span class="p">,</span> <span class="n">g_err_low</span> <span class="o">=</span> <span class="n">par_low</span>
+
+    <span class="n">log_delta_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">e_high</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">e_low</span><span class="p">)</span>
+    <span class="n">log_delta_f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">f_high</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">f_low</span><span class="p">)</span>
+    <span class="c"># g_match is the index obtained by connecting the two points</span>
+    <span class="c"># with a power law, i.e. a straight line in the log_e, log_f plot</span>
+    <span class="n">g_match</span> <span class="o">=</span> <span class="o">-</span><span class="n">log_delta_f</span> <span class="o">/</span> <span class="n">log_delta_e</span>
+
+    <span class="c"># sigma is the number of standar deviations the match index</span>
+    <span class="c"># is different from the measured index in one band.</span>
+    <span class="c"># (see Funk et al. (2008ApJ...679.1299F) eqn. 2)</span>
+    <span class="n">sigma_low</span> <span class="o">=</span> <span class="p">(</span><span class="n">g_match</span> <span class="o">-</span> <span class="n">g_low</span><span class="p">)</span> <span class="o">/</span> <span class="n">g_err_low</span>
+    <span class="n">sigma_high</span> <span class="o">=</span> <span class="p">(</span><span class="n">g_match</span> <span class="o">-</span> <span class="n">g_high</span><span class="p">)</span> <span class="o">/</span> <span class="n">g_err_high</span>
+    <span class="n">sigma_comb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sigma_low</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="n">sigma_high</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">g_match</span><span class="p">,</span> <span class="n">sigma_low</span><span class="p">,</span> <span class="n">sigma_high</span><span class="p">,</span> <span class="n">sigma_comb</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="powerlaw.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

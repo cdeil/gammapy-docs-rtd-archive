@@ -1,0 +1,87 @@
+
+
+EventList
+======================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: EventList
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~EventList.altaz
+      ~EventList.energy
+      ~EventList.galactic
+      ~EventList.observation_dead_time_fraction
+      ~EventList.observation_live_time_duration
+      ~EventList.observation_time_duration
+      ~EventList.observatory_earth_location
+      ~EventList.radec
+      ~EventList.summary
+      ~EventList.time
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EventList.add_galactic_columns
+      ~EventList.fill_counts_header
+      ~EventList.fill_counts_image
+      ~EventList.select_energy
+      ~EventList.select_sky_box
+      ~EventList.select_sky_cone
+      ~EventList.select_time
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: altaz
+   .. autoattribute:: energy
+   .. autoattribute:: galactic
+   .. autoattribute:: observation_dead_time_fraction
+   .. autoattribute:: observation_live_time_duration
+   .. autoattribute:: observation_time_duration
+   .. autoattribute:: observatory_earth_location
+   .. autoattribute:: radec
+   .. autoattribute:: summary
+   .. autoattribute:: time
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: add_galactic_columns
+   .. automethod:: fill_counts_header
+   .. automethod:: fill_counts_image
+   .. automethod:: select_energy
+   .. automethod:: select_sky_box
+   .. automethod:: select_sky_cone
+   .. automethod:: select_time
+
+   
+   

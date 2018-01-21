@@ -1,0 +1,8 @@
+
+
+cube_sed
+=========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: cube_sed

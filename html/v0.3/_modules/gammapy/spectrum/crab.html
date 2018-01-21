@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.crab &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/spectrum/crab.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/spectrum/crab",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/spectrum/crab";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.spectrum.crab</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Published Crab nebula reference spectra.</span>
+
+<span class="sd">The Crab is often used as a standard candle in gamma-ray astronomy.</span>
+<span class="sd">Statements like &quot;this source has a flux of 10 % Crab&quot; or</span>
+<span class="sd">&quot;our sensitivity is 2 % Crab&quot; are common.</span>
+
+<span class="sd">Here we provide a reference of what the Crab flux actually is according</span>
+<span class="sd">to several publications:</span>
+
+<span class="sd">* &#39;HEGRA&#39; : http://adsabs.harvard.edu/abs/2000ApJ...539..317A</span>
+<span class="sd">* &#39;HESS PL&#39; and &#39;HESS ECPL&#39; : http://adsabs.harvard.edu/abs/2006A%26A...457..899A</span>
+<span class="sd">* &#39;Meyer&#39; :  http://adsabs.harvard.edu/abs/2010A%26A...523A...2M, Appendix D</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Unit</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;crab_flux&#39;</span><span class="p">,</span> <span class="s">&#39;crab_integral_flux&#39;</span><span class="p">,</span> <span class="s">&#39;crab_spectral_index&#39;</span><span class="p">,</span>
+           <span class="s">&#39;CRAB_DEFAULT_REFERENCE&#39;</span><span class="p">,</span> <span class="s">&#39;CRAB_REFERENCES&#39;</span>
+           <span class="p">]</span>
+
+<span class="c"># HESS publication: 2006A&amp;A...457..899A</span>
+<span class="n">hess_pl</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;diff_flux&#39;</span><span class="p">:</span> <span class="mf">3.45e-11</span><span class="p">,</span>
+           <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="mf">2.63</span><span class="p">,</span>
+           <span class="s">&#39;int_flux&#39;</span><span class="p">:</span> <span class="mf">2.26e-11</span><span class="p">}</span>
+<span class="c"># Note that for ecpl, the diff_flux is not</span>
+<span class="c"># the differential flux at 1 TeV, that you</span>
+<span class="c"># get by multiplying with exp(-e / cutoff)</span>
+<span class="n">hess_ecpl</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;diff_flux&#39;</span><span class="p">:</span> <span class="mf">3.76e-11</span><span class="p">,</span>
+             <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="mf">2.39</span><span class="p">,</span>
+             <span class="s">&#39;cutoff&#39;</span><span class="p">:</span> <span class="mf">14.3</span><span class="p">,</span>
+             <span class="s">&#39;int_flux&#39;</span><span class="p">:</span> <span class="mf">2.27e-11</span><span class="p">}</span>
+<span class="c"># HEGRA publication : 2004ApJ...614..897A</span>
+<span class="n">hegra</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;diff_flux&#39;</span><span class="p">:</span> <span class="mf">2.83e-11</span><span class="p">,</span>
+         <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="mf">2.62</span><span class="p">,</span>
+         <span class="s">&#39;int_flux&#39;</span><span class="p">:</span> <span class="mf">1.75e-11</span><span class="p">}</span>
+<span class="c"># Meyer et al. publication: 2010arXiv1008.4524M</span>
+<span class="c"># diff_flux and index were calculated numerically</span>
+<span class="c"># by hand at 1 TeV as a finite differene</span>
+<span class="n">meyer</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;diff_flux&#39;</span><span class="p">:</span> <span class="mf">3.3457e-11</span><span class="p">,</span>
+         <span class="s">&#39;index&#39;</span><span class="p">:</span> <span class="mf">2.5362</span><span class="p">,</span>
+         <span class="s">&#39;int_flux&#39;</span><span class="p">:</span> <span class="mf">2.0744e-11</span><span class="p">}</span>
+
+<span class="n">CRAB_REFERENCES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;meyer&#39;</span><span class="p">,</span> <span class="s">&#39;hegra&#39;</span><span class="p">,</span> <span class="s">&#39;hess_pl&#39;</span><span class="p">,</span> <span class="s">&#39;hess_ecpl&#39;</span><span class="p">]</span>
+
+<span class="n">CRAB_DEFAULT_REFERENCE</span> <span class="o">=</span> <span class="s">&#39;meyer&#39;</span>
+
+
+<div class="viewcode-block" id="crab_flux"><a class="viewcode-back" href="../../../api/gammapy.spectrum.crab_flux.html#gammapy.spectrum.crab_flux">[docs]</a><span class="k">def</span> <span class="nf">crab_flux</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="n">CRAB_DEFAULT_REFERENCE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Differential Crab flux.</span>
+
+<span class="sd">    See the ``gammapy.spectrum.crab`` module docstring for a description</span>
+<span class="sd">    of the available reference spectra.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy : array_like</span>
+<span class="sd">        Energy (TeV)</span>
+<span class="sd">    reference : {{&#39;hegra&#39;, &#39;hess_pl&#39;, &#39;hess_ecpl&#39;, &#39;meyer&#39;}}</span>
+<span class="sd">        Published Crab reference spectrum</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flux : array</span>
+<span class="sd">        Differential flux (cm^-2 s^-1 TeV^-1) at ``energy``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;hegra&#39;</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">hegra</span><span class="p">[</span><span class="s">&#39;diff_flux&#39;</span><span class="p">]</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">hegra</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">f</span> <span class="o">*</span> <span class="n">energy</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;hess_pl&#39;</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">hess_pl</span><span class="p">[</span><span class="s">&#39;diff_flux&#39;</span><span class="p">]</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">hess_pl</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">f</span> <span class="o">*</span> <span class="n">energy</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;hess_ecpl&#39;</span><span class="p">:</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">hess_ecpl</span><span class="p">[</span><span class="s">&#39;diff_flux&#39;</span><span class="p">]</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">hess_ecpl</span><span class="p">[</span><span class="s">&#39;index&#39;</span><span class="p">]</span>
+        <span class="n">e_c</span> <span class="o">=</span> <span class="n">hess_ecpl</span><span class="p">[</span><span class="s">&#39;cutoff&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">f</span> <span class="o">*</span> <span class="n">energy</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">energy</span> <span class="o">/</span> <span class="n">e_c</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">reference</span> <span class="o">==</span> <span class="s">&#39;meyer&#39;</span><span class="p">:</span>
+        <span class="c"># Meyer et al., 2010arXiv1008.4524M, Appendix D</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mf">0.00449161</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.0473174</span><span class="p">,</span>
+                      <span class="o">-</span> <span class="mf">0.179475</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.53616</span><span class="p">,</span> <span class="o">-</span><span class="mf">10.2708</span><span class="p">])</span>
+        <span class="n">log_energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">energy</span><span class="p">))</span>
+        <span class="n">log_flux</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">poly1d</span><span class="p">(</span><span class="n">p</span><span class="p">)(</span><span class="n">log_energy</span><span class="p">)</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">**</span> <span class="n">log_flux</span>
+        <span class="k">return</span> <span class="n">Unit</span><span class="p">(</span><span class="s">&#39;erg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="n">flux</span> <span class="o">/</span> <span class="n">energy</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unknown reference: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">reference</span><span class="p">))</span>
+
+</div>
+<div class="viewcode-block" id="crab_integral_flux"><a class="viewcode-back" href="../../../api/gammapy.spectrum.crab_integral_flux.html#gammapy.spectrum.crab_integral_flux">[docs]</a><span class="k">def</span> <span class="nf">crab_integral_flux</span><span class="p">(</span><span class="n">energy_min</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">energy_max</span><span class="o">=</span><span class="mf">1e4</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="n">CRAB_DEFAULT_REFERENCE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Integral Crab flux.</span>
+
+<span class="sd">    See the ``gammapy.spectrum.crab`` module docstring for a description</span>
+<span class="sd">    of the available reference spectra.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy_min, energy_max : array_like</span>
+<span class="sd">        Energy band (TeV)</span>
+<span class="sd">    reference : {{&#39;hegra&#39;, &#39;hess_pl&#39;, &#39;hess_ecpl&#39;, &#39;meyer&#39;}}</span>
+<span class="sd">        Published Crab reference spectrum</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    flux : array</span>
+<span class="sd">        Integral flux (cm^-2 s^-1) in energy band ``energy_min`` to ``energy_max``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+    <span class="c"># @todo How does one usually handle 0-dim and 1-dim</span>
+    <span class="c"># arrays at the same time?</span>
+    <span class="n">energy_min</span><span class="p">,</span> <span class="n">energy_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">energy_min</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">energy_max</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">npoints</span> <span class="o">=</span> <span class="n">energy_min</span><span class="o">.</span><span class="n">size</span>
+    <span class="n">energy_min</span><span class="p">,</span> <span class="n">energy_max</span> <span class="o">=</span> <span class="n">energy_min</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">npoints</span><span class="p">),</span> <span class="n">energy_max</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">npoints</span><span class="p">)</span>
+    <span class="n">I</span><span class="p">,</span> <span class="n">I_err</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">energy_min</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">energy_max</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npoints</span><span class="p">):</span>
+        <span class="n">I</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">I_err</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">quad</span><span class="p">(</span><span class="n">crab_flux</span><span class="p">,</span> <span class="n">energy_min</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">energy_max</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span>
+                                <span class="p">(</span><span class="n">reference</span><span class="p">),</span> <span class="n">epsabs</span><span class="o">=</span><span class="mf">1e-20</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">I</span>
+
+</div>
+<div class="viewcode-block" id="crab_spectral_index"><a class="viewcode-back" href="../../../api/gammapy.spectrum.crab_spectral_index.html#gammapy.spectrum.crab_spectral_index">[docs]</a><span class="k">def</span> <span class="nf">crab_spectral_index</span><span class="p">(</span><span class="n">energy</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="n">CRAB_DEFAULT_REFERENCE</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spectral index (positive number) at a given energy.</span>
+
+<span class="sd">    See the ``gammapy.spectrum.crab`` module docstring for a description</span>
+<span class="sd">    of the available reference spectra.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy : array_like</span>
+<span class="sd">        Energy (TeV)</span>
+<span class="sd">    reference : {{&#39;hegra&#39;, &#39;hess_pl&#39;, &#39;hess_ecpl&#39;, &#39;meyer&#39;}}</span>
+<span class="sd">        Published Crab reference spectrum</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    spectral_index : array</span>
+<span class="sd">        Spectral index at ``energy``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Compute spectral index as slope in log -- log</span>
+    <span class="c"># as a finite difference</span>
+    <span class="n">eps</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="mf">1e-3</span>
+    <span class="n">f1</span> <span class="o">=</span> <span class="n">crab_flux</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span>
+    <span class="n">f2</span> <span class="o">=</span> <span class="n">crab_flux</span><span class="p">(</span><span class="n">eps</span> <span class="o">*</span> <span class="n">energy</span><span class="p">,</span> <span class="n">reference</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">f1</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">f2</span><span class="p">))</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">eps</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="crab.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

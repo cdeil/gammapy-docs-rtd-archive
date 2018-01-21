@@ -1,0 +1,8 @@
+
+
+plot_skymaps
+=================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: plot_skymaps

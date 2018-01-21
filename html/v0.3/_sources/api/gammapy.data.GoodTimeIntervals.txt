@@ -1,0 +1,52 @@
+
+
+GoodTimeIntervals
+==============================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: GoodTimeIntervals
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~GoodTimeIntervals.summary
+      ~GoodTimeIntervals.time_delta
+      ~GoodTimeIntervals.time_start
+      ~GoodTimeIntervals.time_stop
+      ~GoodTimeIntervals.time_sum
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: summary
+   .. autoattribute:: time_delta
+   .. autoattribute:: time_start
+   .. autoattribute:: time_stop
+   .. autoattribute:: time_sum
+
+   
+   
+
+   
+   
+   

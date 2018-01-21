@@ -1,0 +1,8 @@
+
+
+disk_correlate
+============================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: disk_correlate

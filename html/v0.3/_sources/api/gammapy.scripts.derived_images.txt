@@ -1,0 +1,8 @@
+
+
+derived_images
+==============================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: derived_images

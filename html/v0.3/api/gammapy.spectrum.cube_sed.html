@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>cube_sed &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="diffuse_gamma_ray_flux" href="gammapy.spectrum.diffuse_gamma_ray_flux.html" />
+    <link rel="prev" title="crab_spectral_index" href="gammapy.spectrum.crab_spectral_index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.spectrum.cube_sed.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "api/gammapy.spectrum.cube_sed",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.spectrum.cube_sed";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.diffuse_gamma_ray_flux.html" title="diffuse_gamma_ray_flux">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.crab_spectral_index.html" title="crab_spectral_index">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<code class="docutils literal"><span class="pre">gammapy.spectrum</span></code>)</a> &raquo;</li>
+      
+      <li>cube_sed</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="cube-sed">
+<h1>cube_sed<a class="headerlink" href="gammapy.spectrum.cube_sed.html#cube-sed" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.spectrum.cube_sed">
+<code class="descclassname">gammapy.spectrum.</code><code class="descname">cube_sed</code><span class="sig-paren">(</span><em>cube</em>, <em>mask=None</em>, <em>flux_type='differential'</em>, <em>counts=None</em>, <em>errors=False</em>, <em>standard_error=0.1</em>, <em>spectral_index=2.3</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/spectrum/sed.html#cube_sed"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.cube_sed.html#gammapy.spectrum.cube_sed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates SED from SpectralCube within given lat and lon range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><code class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></code></a></p>
+<blockquote>
+<div><p>Spectral cube of either differential or integral fluxes (specified
+with flux_type)</p>
+</div></blockquote>
+<p><strong>mask</strong> : array_like, optional</p>
+<blockquote>
+<div><p>2D mask array, matching spatial dimensions of input cube.
+A mask value of True indicates a value that should be ignored,
+while a mask value of False indicates a valid value.</p>
+</div></blockquote>
+<p><strong>flux_type</strong> : {&#8216;differential&#8217;, &#8216;integral&#8217;}</p>
+<blockquote>
+<div><p>Specify whether input cube includes differential or integral fluxes.</p>
+</div></blockquote>
+<p><strong>counts</strong> :  <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><code class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></code></a>, optional</p>
+<blockquote>
+<div><p>Counts cube to allow Poisson errors to be calculated. If not provided,
+a standard_error should be provided, or zero errors will be returned.</p>
+</div></blockquote>
+<p><strong>errors</strong> : bool</p>
+<blockquote>
+<div><p>If True, computes errors, if possible, according to provided inputs.
+If False (default), returns all errors as zero.</p>
+</div></blockquote>
+<p><strong>standard_error</strong> : float</p>
+<blockquote>
+<div><p>If counts cube not provided, but error values required, this specifies
+a standard fractional error to be applied to values. Default = 0.1.</p>
+</div></blockquote>
+<p><strong>spectral_index</strong> : float</p>
+<blockquote>
+<div><p>If integral flux is provided, this is used to calculate differential
+fluxes and energies (according to the Lafferty &amp; Wyatt model-based
+method, assuming a power-law model).</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>table</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a></p>
+<blockquote class="last">
+<div><p>A spectral energy table of energies, differential fluxes and
+differential flux errors. Units as those input.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.cube_sed.html#">cube_sed</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.cube_sed.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.cube_sed.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

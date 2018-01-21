@@ -1,0 +1,8 @@
+
+
+df_over_f
+===================================
+
+.. currentmodule:: gammapy.spectrum.powerlaw
+
+.. autofunction:: df_over_f

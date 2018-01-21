@@ -1,0 +1,50 @@
+
+
+SEDComponent
+=============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: SEDComponent
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SEDComponent.plot
+      ~SEDComponent.plot_butterfly
+      ~SEDComponent.plot_model
+      ~SEDComponent.plot_points
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: plot
+   .. automethod:: plot_butterfly
+   .. automethod:: plot_model
+   .. automethod:: plot_points
+
+   
+   

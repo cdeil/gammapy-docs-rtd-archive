@@ -1,0 +1,8 @@
+
+
+skycircle_from_str
+=======================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: skycircle_from_str

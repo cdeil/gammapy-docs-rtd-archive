@@ -1,0 +1,8 @@
+
+
+load_psf_fits_table
+====================================
+
+.. currentmodule:: gammapy.datasets
+
+.. autofunction:: load_psf_fits_table

@@ -1,0 +1,8 @@
+
+
+add_spec
+=========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: add_spec

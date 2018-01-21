@@ -1,0 +1,8 @@
+
+
+load_chi2asym_stat
+===================================================
+
+.. currentmodule:: gammapy.spectrum.sherpa_chi2asym
+
+.. autofunction:: load_chi2asym_stat

@@ -1,0 +1,8 @@
+
+
+image_decompose_a_trous
+=======================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: image_decompose_a_trous

@@ -1,0 +1,46 @@
+
+
+ThetaCalculator
+==================================
+
+.. currentmodule:: gammapy.morphology
+
+.. autoclass:: ThetaCalculator
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ThetaCalculator.containment_fraction
+      ~ThetaCalculator.containment_radius
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: containment_fraction
+   .. automethod:: containment_radius
+
+   
+   

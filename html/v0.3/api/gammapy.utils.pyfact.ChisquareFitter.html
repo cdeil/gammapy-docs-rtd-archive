@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ChisquareFitter &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Utility functions and classes (gammapy.utils)" href="../utils/index.html" />
+    <link rel="next" title="SkyCircle" href="gammapy.utils.pyfact.SkyCircle.html" />
+    <link rel="prev" title="cta_irf_root_to_fits" href="gammapy.utils.pyfact.cta_irf_root_to_fits.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.utils.pyfact.ChisquareFitter.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "api/gammapy.utils.pyfact.ChisquareFitter",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.utils.pyfact.ChisquareFitter";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.utils.pyfact.SkyCircle.html" title="SkyCircle">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.utils.pyfact.cta_irf_root_to_fits.html" title="cta_irf_root_to_fits">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../utils/index.html" accesskey="U">Utility functions and classes (<code class="docutils literal"><span class="pre">gammapy.utils</span></code>)</a> &raquo;</li>
+      
+      <li>ChisquareFitter</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="chisquarefitter">
+<h1>ChisquareFitter<a class="headerlink" href="gammapy.utils.pyfact.ChisquareFitter.html#chisquarefitter" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.utils.pyfact.ChisquareFitter">
+<em class="property">class </em><code class="descclassname">gammapy.utils.pyfact.</code><code class="descname">ChisquareFitter</code><span class="sig-paren">(</span><em>fitfunc</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/utils/pyfact.html#ChisquareFitter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Convenience class to perform Chi^2 fits.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>fitfunc</strong> : function</p>
+<blockquote class="last">
+<div><p>Fit function.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="88%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>fitfunc</td>
+<td>(function) Fitfunction</td>
+</tr>
+<tr class="row-even"><td>results</td>
+<td>(array) Fit results from scipy.optimize.leastsq()</td>
+</tr>
+<tr class="row-odd"><td>chi_arr</td>
+<td>(float array) Array with the final chi values</td>
+</tr>
+<tr class="row-even"><td>chi2</td>
+<td>(float) Summed Chi^2</td>
+</tr>
+<tr class="row-odd"><td>dof</td>
+<td>(float) Degrees of freedom</td>
+</tr>
+<tr class="row-even"><td>prob</td>
+<td>(float) Probability of the fit</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter.chi_func" title="gammapy.utils.pyfact.ChisquareFitter.chi_func"><code class="xref py py-obj docutils literal"><span class="pre">chi_func</span></code></a>(p,&nbsp;x,&nbsp;y,&nbsp;err)</td>
+<td>Returns Chi</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter.fit_data" title="gammapy.utils.pyfact.ChisquareFitter.fit_data"><code class="xref py py-obj docutils literal"><span class="pre">fit_data</span></code></a>(p0,&nbsp;x,&nbsp;y,&nbsp;y_err)</td>
+<td>Perform actual fit.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter.print_results" title="gammapy.utils.pyfact.ChisquareFitter.print_results"><code class="xref py py-obj docutils literal"><span class="pre">print_results</span></code></a>()</td>
+<td>Prints out results to the command line using the logging module.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.utils.pyfact.ChisquareFitter.chi_func">
+<code class="descname">chi_func</code><span class="sig-paren">(</span><em>p</em>, <em>x</em>, <em>y</em>, <em>err</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/utils/pyfact.html#ChisquareFitter.chi_func"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter.chi_func" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Chi</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.utils.pyfact.ChisquareFitter.fit_data">
+<code class="descname">fit_data</code><span class="sig-paren">(</span><em>p0</em>, <em>x</em>, <em>y</em>, <em>y_err</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/utils/pyfact.html#ChisquareFitter.fit_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter.fit_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform actual fit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>p0</strong> : float array</p>
+<blockquote>
+<div><p>Start parameters</p>
+</div></blockquote>
+<p><strong>x, y, y_err</strong> : float arrays</p>
+<blockquote class="last">
+<div><p>Data to be fitted.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.utils.pyfact.ChisquareFitter.print_results">
+<code class="descname">print_results</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/utils/pyfact.html#ChisquareFitter.print_results"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.utils.pyfact.ChisquareFitter.html#gammapy.utils.pyfact.ChisquareFitter.print_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>Prints out results to the command line using the logging module.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.utils.pyfact.ChisquareFitter.html#">ChisquareFitter</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.utils.pyfact.ChisquareFitter.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.utils.pyfact.ChisquareFitter.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

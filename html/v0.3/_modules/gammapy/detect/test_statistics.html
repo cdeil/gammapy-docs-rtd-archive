@@ -1,0 +1,763 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.detect.test_statistics &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/detect/test_statistics.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/detect/test_statistics",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/detect/test_statistics";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.detect.test_statistics</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Functions to compute TS maps</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">log</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="n">__name__</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">product</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">multiprocessing</span> <span class="kn">import</span> <span class="n">Pool</span><span class="p">,</span> <span class="n">cpu_count</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.convolution</span> <span class="kn">import</span> <span class="n">Tophat2DKernel</span><span class="p">,</span> <span class="n">Model2DKernel</span><span class="p">,</span> <span class="n">Gaussian2DKernel</span>
+<span class="kn">from</span> <span class="nn">astropy.convolution.kernels</span> <span class="kn">import</span> <span class="n">_round_up_to_odd_integer</span>
+<span class="kn">from</span> <span class="nn">astropy.nddata.utils</span> <span class="kn">import</span> <span class="n">extract_array</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+
+<span class="kn">from</span> <span class="nn">._test_statistics_cython</span> <span class="kn">import</span> <span class="p">(</span><span class="n">_cash_cython</span><span class="p">,</span> <span class="n">_amplitude_bounds_cython</span><span class="p">,</span>
+                                      <span class="n">_cash_sum_cython</span><span class="p">,</span> <span class="n">_f_cash_root_cython</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..irf</span> <span class="kn">import</span> <span class="n">multi_gauss_psf_kernel</span>
+<span class="kn">from</span> <span class="nn">..morphology</span> <span class="kn">import</span> <span class="n">Shell2D</span>
+<span class="kn">from</span> <span class="nn">..extern.zeros</span> <span class="kn">import</span> <span class="n">newton</span>
+<span class="kn">from</span> <span class="nn">..extern.bunch</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="p">(</span><span class="n">measure_containment_radius</span><span class="p">,</span> <span class="n">upsample_2N</span><span class="p">,</span> <span class="n">downsample_2N</span><span class="p">,</span>
+                     <span class="n">shape_2N</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s">&#39;compute_ts_map&#39;</span><span class="p">,</span>
+    <span class="s">&#39;compute_ts_map_multiscale&#39;</span><span class="p">,</span>
+    <span class="s">&#39;compute_maximum_ts_map&#39;</span><span class="p">,</span>
+    <span class="s">&#39;TSMapResult&#39;</span>
+<span class="p">]</span>
+
+
+<span class="n">FLUX_FACTOR</span> <span class="o">=</span> <span class="mf">1E-12</span>
+<span class="n">MAX_NITER</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">CONTAINMENT</span> <span class="o">=</span> <span class="mf">0.8</span>
+
+
+<div class="viewcode-block" id="TSMapResult"><a class="viewcode-back" href="../../../api/gammapy.detect.TSMapResult.html#gammapy.detect.TSMapResult">[docs]</a><span class="k">class</span> <span class="nc">TSMapResult</span><span class="p">(</span><span class="n">Bunch</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Represents the TS map computation result.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ts : `~numpy.ndarray`</span>
+<span class="sd">        Estimated TS map</span>
+<span class="sd">    sqrt_ts : `~numpy.ndarray`</span>
+<span class="sd">        Estimated sqrt(TS) map</span>
+<span class="sd">    amplitude : `~numpy.ndarray`</span>
+<span class="sd">        Estimated best fit flux amplitude map</span>
+<span class="sd">    niter : `~numpy.ndarray`</span>
+<span class="sd">        Number of iterations map</span>
+<span class="sd">    runtime : float</span>
+<span class="sd">        Time needed to compute TS map.</span>
+<span class="sd">    scale : float</span>
+<span class="sd">        Scale parameter.</span>
+<span class="sd">    morphology : str</span>
+<span class="sd">        Source morphology assumption.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="TSMapResult.read"><a class="viewcode-back" href="../../../api/gammapy.detect.TSMapResult.html#gammapy.detect.TSMapResult.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Read TS map result from file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">ts</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;ts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="n">sqrt_ts</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;sqrt_ts&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="n">amplitude</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;amplitude&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="n">niter</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;niter&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">)</span>
+        <span class="n">scale</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;SCALE&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">scale</span> <span class="o">==</span> <span class="s">&#39;max&#39;</span><span class="p">:</span>
+            <span class="n">scale</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;scale&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">morphology</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;MORPH&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts</span><span class="p">,</span> <span class="n">sqrt_ts</span><span class="o">=</span><span class="n">sqrt_ts</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="n">niter</span><span class="p">,</span>
+                   <span class="n">scale</span><span class="o">=</span><span class="n">scale</span><span class="p">,</span> <span class="n">morphology</span><span class="o">=</span><span class="n">morphology</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TSMapResult.write"><a class="viewcode-back" href="../../../api/gammapy.detect.TSMapResult.html#gammapy.detect.TSMapResult.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write TS map results to file&quot;&quot;&quot;</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">header</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">()</span>
+        <span class="k">if</span> <span class="s">&#39;MORPH&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">header</span> <span class="ow">and</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;morphology&#39;</span><span class="p">):</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;MORPH&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">morphology</span><span class="p">,</span> <span class="s">&#39;Source morphology assumption.&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">):</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;EXTNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;scale&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;scale&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;SCALE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;max&#39;</span><span class="p">,</span>  <span class="s">&#39;Source morphology scale parameter.&#39;</span>
+            <span class="n">hdu_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">),</span> <span class="n">header</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;SCALE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span>  <span class="s">&#39;Source morphology scale parameter.&#39;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;ts&#39;</span><span class="p">,</span> <span class="s">&#39;sqrt_ts&#39;</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">,</span> <span class="s">&#39;niter&#39;</span><span class="p">]:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;EXTNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">key</span>
+            <span class="n">hdu_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;float64&#39;</span><span class="p">),</span> <span class="n">header</span><span class="p">))</span>
+
+        <span class="n">hdu_list</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">clobber</span><span class="o">=</span><span class="n">overwrite</span><span class="p">)</span>
+
+</div></div>
+<span class="k">def</span> <span class="nf">f_cash</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wrapper for cash statistics, that defines the model function.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    x : float</span>
+<span class="sd">        Model amplitude.</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Count map slice, where model is defined.</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Background map slice, where model is defined.</span>
+<span class="sd">    model : `~numpy.ndarray`</span>
+<span class="sd">        Source template (multiplied with exposure).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">_cash_sum_cython</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span> <span class="o">+</span> <span class="n">x</span> <span class="o">*</span> <span class="n">FLUX_FACTOR</span> <span class="o">*</span> <span class="n">model</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="compute_ts_map_multiscale"><a class="viewcode-back" href="../../../api/gammapy.detect.compute_ts_map_multiscale.html#gammapy.detect.compute_ts_map_multiscale">[docs]</a><span class="k">def</span> <span class="nf">compute_ts_map_multiscale</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">psf_parameters</span><span class="p">,</span> <span class="n">scales</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">downsample</span><span class="o">=</span><span class="s">&#39;auto&#39;</span><span class="p">,</span>
+                              <span class="n">residual</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">morphology</span><span class="o">=</span><span class="s">&#39;Gaussian2D&#39;</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                              <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute multiscale TS maps using compute_ts_map.</span>
+
+<span class="sd">    High level TS map computation using a multi gauss PSF kernel and assuming</span>
+<span class="sd">    a given source morphology. To optimize the performance the input data</span>
+<span class="sd">    can be sampled down when computing TS maps on larger scales.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    maps : `astropy.io.fits.HDUList`</span>
+<span class="sd">        HDU list containing the data. The list must contain the following HDU extensions:</span>
+<span class="sd">            * &#39;On&#39;, Counts image</span>
+<span class="sd">            * &#39;Background&#39;, Background image</span>
+<span class="sd">            * &#39;Diffuse&#39;, Diffuse model image</span>
+<span class="sd">            * &#39;ExpGammaMap&#39;, Exposure image</span>
+<span class="sd">    psf_parameters : dict</span>
+<span class="sd">        Dict defining the multi gauss PSF parameters.</span>
+<span class="sd">        See `~gammapy.irf.multi_gauss_psf` for details.</span>
+<span class="sd">    scales : list ([0])</span>
+<span class="sd">        List of scales to use for TS map computation.</span>
+<span class="sd">    downsample : int (&#39;auto&#39;)</span>
+<span class="sd">        Down sampling factor. Can be set to &#39;auto&#39; if the down sampling</span>
+<span class="sd">        factor should be chosen automatically.</span>
+<span class="sd">    residual : bool (False)</span>
+<span class="sd">        Compute a TS residual map.</span>
+<span class="sd">    morphology : str (&#39;Gaussian2D&#39;)</span>
+<span class="sd">        Source morphology assumption. Either &#39;Gaussian2D&#39; or &#39;Shell2D&#39;.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    multiscale_result : list</span>
+<span class="sd">        List of `TSMapResult` objects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">BINSZ</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">maps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;CDELT1&#39;</span><span class="p">])</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">maps</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">multiscale_result</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">scale</span> <span class="ow">in</span> <span class="n">scales</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Computing {0}TS map for scale {1:.3f} deg and {2}&#39;</span>
+                 <span class="s">&#39; morphology.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;residual &#39;</span> <span class="k">if</span> <span class="n">residual</span> <span class="k">else</span> <span class="s">&#39;&#39;</span><span class="p">,</span>
+                                       <span class="n">scale</span><span class="p">,</span> <span class="n">morphology</span><span class="p">))</span>
+
+        <span class="c"># Sample down and require that scale parameters is at least 5 pix</span>
+        <span class="k">if</span> <span class="n">downsample</span> <span class="o">==</span> <span class="s">&#39;auto&#39;</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">scale</span> <span class="o">&lt;</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">BINSZ</span><span class="p">,</span> <span class="n">scale</span> <span class="o">&lt;</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">BINSZ</span><span class="p">,</span>
+                                    <span class="n">scale</span> <span class="o">&lt;</span> <span class="mi">20</span> <span class="o">*</span> <span class="n">BINSZ</span><span class="p">,</span> <span class="n">scale</span> <span class="o">&lt;</span> <span class="mi">40</span> <span class="o">*</span> <span class="n">BINSZ</span><span class="p">],</span>
+                                   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="mi">16</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">factor</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">downsample</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">factor</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;No down sampling used.&#39;</span><span class="p">)</span>
+            <span class="n">downsampled</span> <span class="o">=</span> <span class="bp">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">morphology</span> <span class="o">==</span> <span class="s">&#39;Shell2D&#39;</span><span class="p">:</span>
+                <span class="n">factor</span> <span class="o">/=</span> <span class="mi">2</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Using down sampling factor of {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">factor</span><span class="p">))</span>
+            <span class="n">downsampled</span> <span class="o">=</span> <span class="bp">True</span>
+
+        <span class="n">funcs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nansum</span><span class="p">]</span>
+        <span class="n">maps_</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">map_</span><span class="p">,</span> <span class="n">func</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">maps</span><span class="p">,</span> <span class="n">funcs</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">downsampled</span><span class="p">:</span>
+                <span class="n">maps_</span><span class="p">[</span><span class="n">map_</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">downsample_2N</span><span class="p">(</span><span class="n">map_</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">factor</span><span class="p">,</span> <span class="n">func</span><span class="p">,</span>
+                                                         <span class="n">shape</span><span class="o">=</span><span class="n">shape_2N</span><span class="p">(</span><span class="n">shape</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">maps_</span><span class="p">[</span><span class="n">map_</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()]</span> <span class="o">=</span> <span class="n">map_</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="c"># Set up PSF and source kernel</span>
+        <span class="n">kernel</span> <span class="o">=</span> <span class="n">multi_gauss_psf_kernel</span><span class="p">(</span><span class="n">psf_parameters</span><span class="p">,</span> <span class="n">BINSZ</span><span class="o">=</span><span class="n">BINSZ</span><span class="p">,</span>
+                                        <span class="n">NEW_BINSZ</span><span class="o">=</span><span class="n">BINSZ</span> <span class="o">*</span> <span class="n">factor</span><span class="p">,</span>
+                                        <span class="n">mode</span><span class="o">=</span><span class="s">&#39;oversample&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">scale</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">astropy.convolution</span> <span class="kn">import</span> <span class="n">convolve</span>
+            <span class="n">sigma</span> <span class="o">=</span> <span class="n">scale</span> <span class="o">/</span> <span class="p">(</span><span class="n">BINSZ</span> <span class="o">*</span> <span class="n">factor</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">morphology</span> <span class="o">==</span> <span class="s">&#39;Gaussian2D&#39;</span><span class="p">:</span>
+                <span class="n">source_kernel</span> <span class="o">=</span> <span class="n">Gaussian2DKernel</span><span class="p">(</span><span class="n">sigma</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;oversample&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">morphology</span> <span class="o">==</span> <span class="s">&#39;Shell2D&#39;</span><span class="p">:</span>
+                <span class="n">model</span> <span class="o">=</span> <span class="n">Shell2D</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">sigma</span> <span class="o">*</span> <span class="n">width</span><span class="p">)</span>
+                <span class="n">x_size</span> <span class="o">=</span> <span class="n">_round_up_to_odd_integer</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">sigma</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">width</span><span class="p">)</span>
+                                                  <span class="o">+</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+                <span class="n">source_kernel</span> <span class="o">=</span> <span class="n">Model2DKernel</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">x_size</span><span class="o">=</span><span class="n">x_size</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;oversample&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unknown morphology: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">morphology</span><span class="p">))</span>
+            <span class="n">kernel</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">source_kernel</span><span class="p">,</span> <span class="n">kernel</span><span class="p">)</span>
+            <span class="n">kernel</span><span class="o">.</span><span class="n">normalize</span><span class="p">()</span>
+
+        <span class="c"># Compute TS map</span>
+        <span class="k">if</span> <span class="n">residual</span><span class="p">:</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="p">(</span><span class="n">maps_</span><span class="p">[</span><span class="s">&#39;background&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">maps_</span><span class="p">[</span><span class="s">&#39;diffuse&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">maps_</span><span class="p">[</span><span class="s">&#39;onmodel&#39;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">background</span> <span class="o">=</span> <span class="n">maps_</span><span class="p">[</span><span class="s">&#39;background&#39;</span><span class="p">]</span>  <span class="c"># + maps_[&#39;diffuse&#39;]</span>
+        <span class="n">ts_results</span> <span class="o">=</span> <span class="n">compute_ts_map</span><span class="p">(</span><span class="n">maps_</span><span class="p">[</span><span class="s">&#39;on&#39;</span><span class="p">],</span> <span class="n">background</span><span class="p">,</span> <span class="n">maps_</span><span class="p">[</span><span class="s">&#39;expgammamap&#39;</span><span class="p">],</span>
+                                    <span class="n">kernel</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;TS map computation took {0:.1f} s </span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ts_results</span><span class="o">.</span><span class="n">runtime</span><span class="p">))</span>
+        <span class="n">ts_results</span><span class="p">[</span><span class="s">&#39;scale&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="n">ts_results</span><span class="p">[</span><span class="s">&#39;morphology&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">morphology</span>
+        <span class="k">if</span> <span class="n">downsampled</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">order</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">([</span><span class="s">&#39;ts&#39;</span><span class="p">,</span> <span class="s">&#39;sqrt_ts&#39;</span><span class="p">,</span> <span class="s">&#39;amplitude&#39;</span><span class="p">,</span> <span class="s">&#39;niter&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]):</span>
+                <span class="n">ts_results</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">upsample_2N</span><span class="p">(</span><span class="n">ts_results</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">factor</span><span class="p">,</span>
+                                               <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">multiscale_result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ts_results</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">multiscale_result</span>
+
+</div>
+<div class="viewcode-block" id="compute_maximum_ts_map"><a class="viewcode-back" href="../../../api/gammapy.detect.compute_maximum_ts_map.html#gammapy.detect.compute_maximum_ts_map">[docs]</a><span class="k">def</span> <span class="nf">compute_maximum_ts_map</span><span class="p">(</span><span class="n">ts_map_results</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute maximum TS map across a list of given `TSMapResult` objects.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ts_map_results : list</span>
+<span class="sd">        List of `TSMapResult` objects.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TS : `TSMapResult`</span>
+<span class="sd">        `TSMapResult` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c"># Get data</span>
+    <span class="n">ts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">result</span><span class="o">.</span><span class="n">ts</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">ts_map_results</span><span class="p">])</span>
+    <span class="n">niter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">result</span><span class="o">.</span><span class="n">niter</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">ts_map_results</span><span class="p">])</span>
+    <span class="n">amplitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">result</span><span class="o">.</span><span class="n">amplitude</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">ts_map_results</span><span class="p">])</span>
+    <span class="n">scales</span> <span class="o">=</span> <span class="p">[</span><span class="n">result</span><span class="o">.</span><span class="n">scale</span> <span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">ts_map_results</span><span class="p">]</span>
+
+    <span class="c"># Set up max arrays</span>
+    <span class="n">ts_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ts</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">scale_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">niter_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="n">amplitude_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">ts</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">scale</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">scales</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">ts</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">ts_max</span><span class="p">)</span>
+        <span class="n">scale_max</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="n">niter_max</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">niter</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+        <span class="n">amplitude_max</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">amplitude</span><span class="p">[:,</span> <span class="p">:,</span> <span class="n">i</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">TSMapResult</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">ts_max</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="n">niter_max</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitude_max</span><span class="p">,</span>
+                       <span class="n">morphology</span><span class="o">=</span><span class="n">ts_map_results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">morphology</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">scale_max</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="compute_ts_map"><a class="viewcode-back" href="../../../api/gammapy.detect.compute_ts_map.html#gammapy.detect.compute_ts_map">[docs]</a><span class="k">def</span> <span class="nf">compute_ts_map</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">exposure</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                   <span class="n">method</span><span class="o">=</span><span class="s">&#39;root brentq&#39;</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">&#39;Brent&#39;</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span>
+                   <span class="n">threshold</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute TS map using different optimization methods.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Count map</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Background map</span>
+<span class="sd">    exposure : `~numpy.ndarray`</span>
+<span class="sd">        Exposure map</span>
+<span class="sd">    kernel : `astropy.convolution.Kernel2D`</span>
+<span class="sd">        Source model kernel.</span>
+<span class="sd">    flux : float (None)</span>
+<span class="sd">        Flux map used as a starting value for the amplitude fit.</span>
+<span class="sd">    method : str (&#39;root&#39;)</span>
+<span class="sd">        The following options are available:</span>
+<span class="sd">            * ``&#39;root&#39;`` (default)</span>
+<span class="sd">                Fit amplitude finding roots of the the derivative of</span>
+<span class="sd">                the fit statistics. Described in Appendix A in Stewart (2009).</span>
+<span class="sd">            * ``&#39;fit scipy&#39;``</span>
+<span class="sd">                Use `scipy.optimize.minimize_scalar` for fitting.</span>
+<span class="sd">            * ``&#39;fit minuit&#39;``</span>
+<span class="sd">                Use minuit for fitting.</span>
+<span class="sd">    optimizer : str (&#39;Brent&#39;)</span>
+<span class="sd">        Which optimizing algorithm to use from scipy. See</span>
+<span class="sd">        `scipy.optimize.minimize_scalar` for options.</span>
+<span class="sd">    parallel : bool (True)</span>
+<span class="sd">        Whether to use multiple cores for parallel processing.</span>
+<span class="sd">    threshold : float (None)</span>
+<span class="sd">        If the TS value corresponding to the initial flux estimate is not above</span>
+<span class="sd">        this threshold, the optimizing step is omitted to save computing time.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TS : `TSMapResult`</span>
+<span class="sd">        `TSMapResult` object.</span>
+
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Negative :math:`TS` values are defined as following:</span>
+
+<span class="sd">    .. math::</span>
+
+<span class="sd">        TS = \\left \\{</span>
+<span class="sd">                 \\begin{array}{ll}</span>
+<span class="sd">                   -TS &amp; : \\textnormal{if} \\ F &lt; 0 \\\\</span>
+<span class="sd">                   \\ \\ TS &amp; : \\textnormal{else}</span>
+<span class="sd">                 \\end{array}</span>
+<span class="sd">               \\right.</span>
+
+<span class="sd">    Where :math:`F` is the fitted flux amplitude.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [Stewart2009]_</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage.morphology</span> <span class="kn">import</span> <span class="n">binary_erosion</span>
+    <span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">time</span>
+    <span class="n">t_0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+
+    <span class="k">assert</span> <span class="n">counts</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">background</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">assert</span> <span class="n">counts</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">exposure</span><span class="o">.</span><span class="n">shape</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">flux</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">method</span> <span class="o">!=</span> <span class="s">&#39;root brentq&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">convolve</span>
+        <span class="n">radius</span> <span class="o">=</span> <span class="n">_flux_correlation_radius</span><span class="p">(</span><span class="n">kernel</span><span class="p">)</span>
+        <span class="n">tophat</span> <span class="o">=</span> <span class="n">Tophat2DKernel</span><span class="p">(</span><span class="n">radius</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s">&#39;oversample&#39;</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">radius</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Using correlation radius of {0:.1f} pix to estimate&#39;</span>
+                 <span class="s">&#39; initial flux.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">radius</span><span class="p">))</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">flux</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span> <span class="o">-</span> <span class="n">background</span><span class="p">)</span> <span class="o">/</span> <span class="n">exposure</span> <span class="o">/</span> <span class="n">FLUX_FACTOR</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">flux</span><span class="p">,</span> <span class="n">tophat</span><span class="o">.</span><span class="n">array</span><span class="p">)</span> <span class="o">/</span> <span class="n">CONTAINMENT</span>
+
+    <span class="c"># Compute null statistics for the whole map</span>
+    <span class="n">C_0_map</span> <span class="o">=</span> <span class="n">_cash_cython</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">),</span> <span class="n">background</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+
+    <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">counts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="n">counts</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">//</span> <span class="mi">2</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="n">product</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">))</span>
+
+    <span class="c"># Positions where exposure == 0 are not processed</span>
+    <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">binary_erosion</span><span class="p">(</span><span class="n">exposure</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">+</span> <span class="mi">2</span><span class="p">))</span>
+    <span class="n">positions</span> <span class="o">=</span> <span class="p">[(</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">positions</span> <span class="k">if</span> <span class="n">mask</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]]</span>
+
+    <span class="n">wrap</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">_ts_value</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="n">counts</span><span class="p">,</span> <span class="n">exposure</span><span class="o">=</span><span class="n">exposure</span><span class="p">,</span>
+                   <span class="n">background</span><span class="o">=</span><span class="n">background</span><span class="p">,</span> <span class="n">C_0_map</span><span class="o">=</span><span class="n">C_0_map</span><span class="p">,</span> <span class="n">kernel</span><span class="o">=</span><span class="n">kernel</span><span class="p">,</span> <span class="n">flux</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span>
+                   <span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">parallel</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Using {0} cores to compute TS map.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cpu_count</span><span class="p">()))</span>
+        <span class="n">pool</span> <span class="o">=</span> <span class="n">Pool</span><span class="p">()</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">pool</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">wrap</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">wrap</span><span class="p">,</span> <span class="n">positions</span><span class="p">)</span>
+
+    <span class="c"># Set TS values at given positions</span>
+    <span class="n">j</span><span class="p">,</span> <span class="n">i</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">positions</span><span class="p">)</span>
+    <span class="n">TS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">niter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">counts</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">TS</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+    <span class="n">amplitudes</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+    <span class="n">niter</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">_</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">results</span><span class="p">]</span>
+
+    <span class="c"># Handle negative TS values</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">):</span>
+        <span class="n">sqrt_TS</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">TS</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">TS</span><span class="p">),</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="o">-</span><span class="n">TS</span><span class="p">))</span>
+    <span class="c"># TODO: this is a dummy value for `scale` ... is there a better way to do this?</span>
+    <span class="k">return</span> <span class="n">TSMapResult</span><span class="p">(</span><span class="n">ts</span><span class="o">=</span><span class="n">TS</span><span class="p">,</span> <span class="n">sqrt_ts</span><span class="o">=</span><span class="n">sqrt_TS</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="n">amplitudes</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                       <span class="n">niter</span><span class="o">=</span><span class="n">niter</span><span class="p">,</span> <span class="n">runtime</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t_0</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_ts_value</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">exposure</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">C_0_map</span><span class="p">,</span> <span class="n">kernel</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span>
+              <span class="n">method</span><span class="p">,</span> <span class="n">optimizer</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute TS value at a given pixel position i, j using the approach described</span>
+<span class="sd">    in Stewart (2009).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    position : tuple (i, j)</span>
+<span class="sd">        Pixel position.</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Count map.</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Background map.</span>
+<span class="sd">    exposure : `~numpy.ndarray`</span>
+<span class="sd">        Exposure map.</span>
+<span class="sd">    kernel : `astropy.convolution.Kernel2D`</span>
+<span class="sd">        Source model kernel.</span>
+<span class="sd">    flux : `~numpy.ndarray`</span>
+<span class="sd">        Flux map. The flux value at the given pixel position is used as</span>
+<span class="sd">        starting value for the minimization.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    TS : float</span>
+<span class="sd">        TS value at the given pixel position.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Get data slices</span>
+    <span class="n">counts_</span> <span class="o">=</span> <span class="n">extract_array</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">background_</span> <span class="o">=</span> <span class="n">extract_array</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">exposure_</span> <span class="o">=</span> <span class="n">extract_array</span><span class="p">(</span><span class="n">exposure</span><span class="p">,</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="n">C_0_</span> <span class="o">=</span> <span class="n">extract_array</span><span class="p">(</span><span class="n">C_0_map</span><span class="p">,</span> <span class="n">kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="p">(</span><span class="n">exposure_</span> <span class="o">*</span> <span class="n">kernel</span><span class="o">.</span><span class="n">_array</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">C_0</span> <span class="o">=</span> <span class="n">C_0_</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">threshold</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+        <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">):</span>
+            <span class="n">C_1</span> <span class="o">=</span> <span class="n">f_cash</span><span class="p">(</span><span class="n">flux</span><span class="p">[</span><span class="n">position</span><span class="p">],</span> <span class="n">counts_</span><span class="p">,</span> <span class="n">background_</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+        <span class="c"># Don&#39;t fit if pixel is low significant</span>
+        <span class="k">if</span> <span class="n">C_0</span> <span class="o">-</span> <span class="n">C_1</span> <span class="o">&lt;</span> <span class="n">threshold</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">C_0</span> <span class="o">-</span> <span class="n">C_1</span><span class="p">,</span> <span class="n">flux</span><span class="p">[</span><span class="n">position</span><span class="p">]</span> <span class="o">*</span> <span class="n">FLUX_FACTOR</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&#39;fit minuit&#39;</span><span class="p">:</span>
+        <span class="n">amplitude</span><span class="p">,</span> <span class="n">niter</span> <span class="o">=</span> <span class="n">_fit_amplitude_minuit</span><span class="p">(</span><span class="n">counts_</span><span class="p">,</span> <span class="n">background_</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span>
+                                                 <span class="n">flux</span><span class="p">[</span><span class="n">position</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&#39;fit scipy&#39;</span><span class="p">:</span>
+        <span class="n">amplitude</span><span class="p">,</span> <span class="n">niter</span> <span class="o">=</span> <span class="n">_fit_amplitude_scipy</span><span class="p">(</span><span class="n">counts_</span><span class="p">,</span> <span class="n">background_</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&#39;root newton&#39;</span><span class="p">:</span>
+        <span class="n">amplitude</span><span class="p">,</span> <span class="n">niter</span> <span class="o">=</span> <span class="n">_root_amplitude</span><span class="p">(</span><span class="n">counts_</span><span class="p">,</span> <span class="n">background_</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span>
+                                           <span class="n">flux</span><span class="p">[</span><span class="n">position</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">method</span> <span class="o">==</span> <span class="s">&#39;root brentq&#39;</span><span class="p">:</span>
+        <span class="n">amplitude</span><span class="p">,</span> <span class="n">niter</span> <span class="o">=</span> <span class="n">_root_amplitude_brentq</span><span class="p">(</span><span class="n">counts_</span><span class="p">,</span> <span class="n">background_</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid fitting method.&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">niter</span> <span class="o">&gt;</span> <span class="n">MAX_NITER</span><span class="p">:</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;Exceeded maximum number of function evaluations!&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">FLUX_FACTOR</span><span class="p">,</span> <span class="n">niter</span>
+
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">,</span> <span class="n">divide</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">):</span>
+        <span class="n">C_1</span> <span class="o">=</span> <span class="n">f_cash</span><span class="p">(</span><span class="n">amplitude</span><span class="p">,</span> <span class="n">counts_</span><span class="p">,</span> <span class="n">background_</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+
+    <span class="c"># Compute and return TS value</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">C_0</span> <span class="o">-</span> <span class="n">C_1</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">amplitude</span><span class="p">),</span> <span class="n">amplitude</span> <span class="o">*</span> <span class="n">FLUX_FACTOR</span><span class="p">,</span> <span class="n">niter</span>
+
+
+<span class="k">def</span> <span class="nf">_root_amplitude</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flux</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fit amplitude by finding roots using newton algorithm.</span>
+
+<span class="sd">    See Appendix A Stewart (2009).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Slice of count map.</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Slice of background map.</span>
+<span class="sd">    model : `~numpy.ndarray`</span>
+<span class="sd">        Model template to fit.</span>
+<span class="sd">    flux : float</span>
+<span class="sd">        Starting value for the fit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    amplitude : float</span>
+<span class="sd">        Fitted flux amplitude.</span>
+<span class="sd">    niter : int</span>
+<span class="sd">        Number of function evaluations needed for the fit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s">&quot;ignore&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">newton</span><span class="p">(</span><span class="n">_f_cash_root_cython</span><span class="p">,</span> <span class="n">flux</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">maxiter</span><span class="o">=</span><span class="n">MAX_NITER</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span>
+            <span class="c"># Where the root finding fails NaN is set as amplitude</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">MAX_NITER</span>
+
+
+<span class="k">def</span> <span class="nf">_root_amplitude_brentq</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fit amplitude by finding roots using Brent algorithm.</span>
+
+<span class="sd">    See Appendix A Stewart (2009).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Slice of count map.</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Slice of background map.</span>
+<span class="sd">    model : `~numpy.ndarray`</span>
+<span class="sd">        Model template to fit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    amplitude : float</span>
+<span class="sd">        Fitted flux amplitude.</span>
+<span class="sd">    niter : int</span>
+<span class="sd">        Number of function evaluations needed for the fit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">brentq</span>
+
+    <span class="c"># Compute amplitude bounds and assert counts &gt; 0</span>
+    <span class="n">amplitude_min</span><span class="p">,</span> <span class="n">amplitude_max</span> <span class="o">=</span> <span class="n">_amplitude_bounds_cython</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">counts</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">amplitude_min</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+        <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s">&quot;ignore&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">brentq</span><span class="p">(</span><span class="n">_f_cash_root_cython</span><span class="p">,</span> <span class="n">amplitude_min</span><span class="p">,</span> <span class="n">amplitude_max</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span>
+                            <span class="n">maxiter</span><span class="o">=</span><span class="n">MAX_NITER</span><span class="p">,</span> <span class="n">full_output</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">rtol</span><span class="o">=</span><span class="mf">1E-2</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">iterations</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">RuntimeError</span><span class="p">,</span> <span class="ne">ValueError</span><span class="p">):</span>
+            <span class="c"># Where the root finding fails NaN is set as amplitude</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">MAX_NITER</span>
+
+
+<span class="k">def</span> <span class="nf">_fit_amplitude_scipy</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">optimizer</span><span class="o">=</span><span class="s">&#39;Brent&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fit amplitude using scipy.optimize.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Slice of count map.</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Slice of background map.</span>
+<span class="sd">    model : `~numpy.ndarray`</span>
+<span class="sd">        Model template to fit.</span>
+<span class="sd">    flux : float</span>
+<span class="sd">        Starting value for the fit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    amplitude : float</span>
+<span class="sd">        Fitted flux amplitude.</span>
+<span class="sd">    niter : int</span>
+<span class="sd">        Number of function evaluations needed for the fit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.optimize</span> <span class="kn">import</span> <span class="n">minimize_scalar</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">amplitude_min</span><span class="p">,</span> <span class="n">amplitude_max</span> <span class="o">=</span> <span class="n">_amplitude_bounds_cython</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">f_cash</span><span class="p">,</span> <span class="n">bracket</span><span class="o">=</span><span class="p">(</span><span class="n">amplitude_min</span><span class="p">,</span> <span class="n">amplitude_max</span><span class="p">),</span>
+                                 <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">nfev</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">minimize_scalar</span><span class="p">(</span><span class="n">f_cash</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="n">optimizer</span><span class="p">,</span> <span class="n">tol</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">nfev</span>
+
+
+<span class="k">def</span> <span class="nf">_fit_amplitude_minuit</span><span class="p">(</span><span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">flux</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fit amplitude using minuit.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    counts : `~numpy.ndarray`</span>
+<span class="sd">        Slice of count map.</span>
+<span class="sd">    background : `~numpy.ndarray`</span>
+<span class="sd">        Slice of background map.</span>
+<span class="sd">    model : `~numpy.ndarray`</span>
+<span class="sd">        Model template to fit.</span>
+<span class="sd">    flux : float</span>
+<span class="sd">        Starting value for the fit.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    amplitude : float</span>
+<span class="sd">        Fitted flux amplitude.</span>
+<span class="sd">    niter : int</span>
+<span class="sd">        Number of function evaluations needed for the fit.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">iminuit</span> <span class="kn">import</span> <span class="n">Minuit</span>
+
+    <span class="k">def</span> <span class="nf">stat</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">f_cash</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">counts</span><span class="p">,</span> <span class="n">background</span><span class="p">,</span> <span class="n">model</span><span class="p">)</span>
+    <span class="n">minuit</span> <span class="o">=</span> <span class="n">Minuit</span><span class="p">(</span><span class="n">f_cash</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="n">flux</span><span class="p">,</span> <span class="n">pedantic</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">print_level</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">minuit</span><span class="o">.</span><span class="n">migrad</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">minuit</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">],</span> <span class="n">minuit</span><span class="o">.</span><span class="n">ncalls</span>
+
+
+<span class="k">def</span> <span class="nf">_flux_correlation_radius</span><span class="p">(</span><span class="n">kernel</span><span class="p">,</span> <span class="n">containment</span><span class="o">=</span><span class="n">CONTAINMENT</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute equivalent top-hat kernel radius for a given kernel instance and</span>
+<span class="sd">    containment fraction.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    kernel : `astropy.convolution.Kernel2D`</span>
+<span class="sd">        Astropy kernel instance.</span>
+<span class="sd">    containment : float (default = 0.8)</span>
+<span class="sd">        Containment fraction.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    kernel : float</span>
+<span class="sd">        Equivalent Tophat kernel radius.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">kernel_image</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">kernel</span><span class="o">.</span><span class="n">array</span><span class="p">)</span>
+    <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="n">kernel</span><span class="o">.</span><span class="n">center</span>
+    <span class="n">r_c</span> <span class="o">=</span> <span class="n">measure_containment_radius</span><span class="p">(</span><span class="n">kernel_image</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">containment</span><span class="p">)</span>
+    <span class="c"># Containment radius of Tophat kernel is given by r_c_tophat = r_0 * sqrt(C)</span>
+    <span class="c"># by setting r_c = r_c_tophat we can estimate the equivalent containment radius r_0</span>
+    <span class="k">return</span> <span class="n">r_c</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">containment</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="test_statistics.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

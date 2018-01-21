@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.obs.observation &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/obs/observation.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/obs/observation",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/obs/observation";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.obs.observation</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">astropy.time</span> <span class="kn">import</span> <span class="n">Time</span>
+<span class="kn">from</span> <span class="nn">..time</span> <span class="kn">import</span> <span class="n">time_ref_from_dict</span><span class="p">,</span> <span class="n">time_relative_to_ref</span>
+<span class="kn">from</span> <span class="nn">..catalog</span> <span class="kn">import</span> <span class="n">select_sky_box</span><span class="p">,</span> <span class="n">select_sky_circle</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="c"># &#39;Observation&#39;,</span>
+    <span class="s">&#39;ObservationTable&#39;</span><span class="p">,</span>
+<span class="p">]</span>
+
+
+<span class="k">class</span> <span class="nc">Observation</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Observation.</span>
+
+<span class="sd">    An observation is a.k.a. run.</span>
+<span class="sd">    TODO: not clear if this class is useful.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    TODO</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">GLON</span><span class="p">,</span> <span class="n">GLAT</span><span class="p">,</span> <span class="n">livetime</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>
+                 <span class="n">eff_area</span><span class="o">=</span><span class="mf">1e12</span><span class="p">,</span> <span class="n">background</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GLON</span> <span class="o">=</span> <span class="n">GLON</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">GLAT</span> <span class="o">=</span> <span class="n">GLAT</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">livetime</span> <span class="o">=</span> <span class="n">livetime</span>
+
+    <span class="k">def</span> <span class="nf">wcs_header</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">system</span><span class="o">=</span><span class="s">&#39;FOV&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a WCS FITS header for an per-run image.</span>
+
+<span class="sd">        The image is centered on the run position in one of these systems:</span>
+<span class="sd">        FOV, Galactic, Equatorial</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="ObservationTable"><a class="viewcode-back" href="../../../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable">[docs]</a><span class="k">class</span> <span class="nc">ObservationTable</span><span class="p">(</span><span class="n">Table</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;Observation table (a.k.a. run list).</span>
+
+<span class="sd">    This is an `~astropy.table.Table` sub-class, with a few</span>
+<span class="sd">    convenience methods. The format of the observation table</span>
+<span class="sd">    is described in :ref:`dataformats_observation_lists`.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ObservationTable.summary"><a class="viewcode-back" href="../../../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Observation table:</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="n">obs_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">&#39;OBSERVATORY_NAME&#39;</span><span class="p">]</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Observatory name: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_name</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Number of observations: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">ontime</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s">&#39;TIME_OBSERVATION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="bp">self</span><span class="p">[</span><span class="s">&#39;TIME_OBSERVATION&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Total observation time: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ontime</span><span class="p">)</span>
+        <span class="n">livetime</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s">&#39;TIME_LIVE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">(),</span> <span class="bp">self</span><span class="p">[</span><span class="s">&#39;TIME_LIVE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Total live time: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">livetime</span><span class="p">)</span>
+        <span class="n">dtf</span> <span class="o">=</span> <span class="mf">100.</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">livetime</span> <span class="o">/</span> <span class="n">ontime</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Average dead time fraction: {:5.2f}%</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtf</span><span class="p">)</span>
+        <span class="n">time_ref</span> <span class="o">=</span> <span class="n">time_ref_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
+        <span class="n">time_ref_unit</span> <span class="o">=</span> <span class="n">time_ref_from_dict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span><span class="o">.</span><span class="n">format</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Time reference: {} {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">time_ref</span><span class="p">,</span> <span class="n">time_ref_unit</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ss</span>
+</div>
+<div class="viewcode-block" id="ObservationTable.select_linspace_subset"><a class="viewcode-back" href="../../../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_linspace_subset">[docs]</a>    <span class="k">def</span> <span class="nf">select_linspace_subset</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Select subset of observations.</span>
+
+<span class="sd">        This is mostly useful for testing, if you want to make</span>
+<span class="sd">        the analysis run faster.</span>
+
+<span class="sd">        TODO: implement more methods to subset and split observation lists</span>
+<span class="sd">        as well as functions to summarise differences between</span>
+<span class="sd">        observation lists and e.g. select the common subset.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        num : int</span>
+<span class="sd">            Number of samples to select.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        table : `ObservationTable`</span>
+<span class="sd">            Subset observation table (a copy).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">stop</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+        <span class="c"># Round down to nearest integer</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">indices</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s">&#39;int&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="ObservationTable.select_range"><a class="viewcode-back" href="../../../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_range">[docs]</a>    <span class="k">def</span> <span class="nf">select_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_variable</span><span class="p">,</span> <span class="n">value_range</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make an observation table, applying some selection.</span>
+
+<span class="sd">        Generic function to apply a 1D box selection (min, max) to a</span>
+<span class="sd">        table on any variable that is in the observation table and can</span>
+<span class="sd">        be casted into a `~astropy.units.Quantity` object.</span>
+
+<span class="sd">        If the inverted flag is activated, the selection is applied to</span>
+<span class="sd">        keep all elements outside the selected range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection_variable : str</span>
+<span class="sd">            Name of variable to apply a cut (it should exist on the table).</span>
+<span class="sd">        value_range : `~astropy.units.Quantity`-like</span>
+<span class="sd">            Allowed range of values (min, max). The type should be</span>
+<span class="sd">            consistent with the selection_variable.</span>
+<span class="sd">        inverted : bool, optional</span>
+<span class="sd">            Invert selection: keep all entries outside the (min, max) range.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obs_table : `~gammapy.obs.ObservationTable`</span>
+<span class="sd">            Observation table after selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obs_table</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="c"># check that variable exists on the table</span>
+        <span class="k">if</span> <span class="n">selection_variable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&#39;Key not present in table: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selection_variable</span><span class="p">))</span>
+
+        <span class="c"># read values into a quantity in case units have to be taken into account</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">obs_table</span><span class="p">[</span><span class="n">selection_variable</span><span class="p">])</span>
+
+        <span class="c"># build and apply mask</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">value_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">value</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">value</span> <span class="o">&lt;</span> <span class="n">value_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">inverted</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">obs_table</span>
+</div>
+<div class="viewcode-block" id="ObservationTable.select_time_range"><a class="viewcode-back" href="../../../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_time_range">[docs]</a>    <span class="k">def</span> <span class="nf">select_time_range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_variable</span><span class="p">,</span> <span class="n">time_range</span><span class="p">,</span> <span class="n">inverted</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make an observation table, applying a time selection.</span>
+
+<span class="sd">        Apply a 1D box selection (min, max) to a</span>
+<span class="sd">        table on any time variable that is in the observation table.</span>
+<span class="sd">        It supports both fomats: absolute times in</span>
+<span class="sd">        `~astropy.time.Time` variables and [MET]_.</span>
+
+<span class="sd">        If the inverted flag is activated, the selection is applied to</span>
+<span class="sd">        keep all elements outside the selected range.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection_variable : str</span>
+<span class="sd">            Name of variable to apply a cut (it should exist on the table).</span>
+<span class="sd">        time_range : `~astropy.time.Time`</span>
+<span class="sd">            Allowed time range (min, max).</span>
+<span class="sd">        inverted : bool, optional</span>
+<span class="sd">            Invert selection: keep all entries outside the (min, max) range.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obs_table : `~gammapy.obs.ObservationTable`</span>
+<span class="sd">            Observation table after selection.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obs_table</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="c"># check that variable exists on the table</span>
+        <span class="k">if</span> <span class="n">selection_variable</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s">&#39;Key not present in table: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selection_variable</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">&#39;TIME_FORMAT&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;absolute&#39;</span><span class="p">:</span>
+            <span class="c"># read times into a Time object</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">Time</span><span class="p">(</span><span class="n">obs_table</span><span class="p">[</span><span class="n">selection_variable</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># transform time to MET</span>
+            <span class="n">time_range</span> <span class="o">=</span> <span class="n">time_relative_to_ref</span><span class="p">(</span><span class="n">time_range</span><span class="p">,</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">meta</span><span class="p">)</span>
+            <span class="c"># read values into a quantity in case units have to be taken into account</span>
+            <span class="n">time</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">obs_table</span><span class="p">[</span><span class="n">selection_variable</span><span class="p">])</span>
+
+        <span class="c"># build and apply mask</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">time_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">time</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">time</span> <span class="o">&lt;</span> <span class="n">time_range</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">inverted</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+        <span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">obs_table</span>
+</div>
+<div class="viewcode-block" id="ObservationTable.select_observations"><a class="viewcode-back" href="../../../api/gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_observations">[docs]</a>    <span class="k">def</span> <span class="nf">select_observations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make an observation table, applying some selection.</span>
+
+<span class="sd">        There are 3 main kinds of selection criteria, according to the</span>
+<span class="sd">        value of the `type` keyword in the `selection` dictionary:</span>
+
+<span class="sd">        - sky regions (boxes or circles)</span>
+
+<span class="sd">        - time intervals (min, max)</span>
+
+<span class="sd">        - intervals (min, max) on any other parameter present in the</span>
+<span class="sd">          observation table, that can be casted into an</span>
+<span class="sd">          `~astropy.units.Quantity` object</span>
+
+<span class="sd">        Allowed selection criteria are interpreted using the following</span>
+<span class="sd">        keywords in the `selection` dictionary:</span>
+
+<span class="sd">        - `type`: ``sky_box``, ``sky_circle``, ``time_box``, ``par_box``</span>
+
+<span class="sd">            - ``sky_box`` and ``sky_circle`` are 2D selection criteria acting</span>
+<span class="sd">              on sky coordinates</span>
+
+<span class="sd">                - ``sky_box`` is a squared region delimited by the `lon` and</span>
+<span class="sd">                  `lat` keywords: both tuples of format (min, max); uses</span>
+<span class="sd">                  `~gammapy.catalog.select_sky_box`</span>
+
+<span class="sd">                - ``sky_circle`` is a circular region centered in the coordinate</span>
+<span class="sd">                  marked by the `lon` and `lat` keywords, and radius `radius`;</span>
+<span class="sd">                  uses `~gammapy.catalog.select_sky_circle`</span>
+
+<span class="sd">              in each case, the coordinate system can be specified by the `frame`</span>
+<span class="sd">              keyword (built-in Astropy coordinate frames are supported, e.g.</span>
+<span class="sd">              \&#39;icrs\&#39; or \&#39;galactic\&#39;); an aditional border can be defined using</span>
+<span class="sd">              the `border` keyword</span>
+
+<span class="sd">            - ``time_box`` is a 1D selection criterion acting on the observation</span>
+<span class="sd">              time (`TIME_START` and `TIME_STOP`); the interval is set via the</span>
+<span class="sd">              `time_range` keyword; uses</span>
+<span class="sd">              `~gammapy.obs.ObservationTable.select_time_range`</span>
+
+<span class="sd">            - ``par_box`` is a 1D selection criterion acting on any</span>
+<span class="sd">              parameter defined in the observation table that can be casted</span>
+<span class="sd">              into an `~astropy.units.Quantity` object; the parameter name</span>
+<span class="sd">              and interval can be specified using the keywords &#39;variable&#39; and</span>
+<span class="sd">              &#39;value_range&#39; respectively; uses</span>
+<span class="sd">              `~gammapy.obs.ObservationTable.select_range`</span>
+
+<span class="sd">        In all cases, the selection can be inverted by activating the</span>
+<span class="sd">        `inverted` flag, in which case, the selection is applied to keep all</span>
+<span class="sd">        elements outside the selected range.</span>
+
+<span class="sd">        A few examples of selection criteria are given below and more can be</span>
+<span class="sd">        found in the tests in `test_select_observations`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection : dict</span>
+<span class="sd">            Dictionary with a few keywords for applying selection cuts.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        obs_table : `~gammapy.obs.ObservationTable`</span>
+<span class="sd">            Observation table after selection.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; selection = dict(type=&#39;sky_box&#39;, frame=&#39;icrs&#39;,</span>
+<span class="sd">        ...                  lon=Angle([150, 300], &#39;degree&#39;),</span>
+<span class="sd">        ...                  lat=Angle([-50, 0], &#39;degree&#39;),</span>
+<span class="sd">        ...                  border=Angle(2, &#39;degree&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; selected_obs_table = obs_table.select_observations(selection)</span>
+
+<span class="sd">        &gt;&gt;&gt; selection = dict(type=&#39;sky_circle&#39;, frame=&#39;galactic&#39;,</span>
+<span class="sd">        ...                  lon=Angle(0, &#39;degree&#39;),</span>
+<span class="sd">        ...                  lat=Angle(0, &#39;degree&#39;),</span>
+<span class="sd">        ...                  radius=Angle(5, &#39;degree&#39;),</span>
+<span class="sd">        ...                  border=Angle(2, &#39;degree&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; selected_obs_table = obs_table.select_observations(selection)</span>
+
+<span class="sd">        &gt;&gt;&gt; selection = dict(type=&#39;time_box&#39;,</span>
+<span class="sd">        ...                  time_range=Time([&#39;2012-01-01T01:00:00&#39;, &#39;2012-01-01T02:00:00&#39;],</span>
+<span class="sd">        ...                                  format=&#39;isot&#39;, scale=&#39;utc&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; selected_obs_table = obs_table.select_observations(selection)</span>
+
+<span class="sd">        &gt;&gt;&gt; selection = dict(type=&#39;par_box&#39;, variable=&#39;ALT&#39;,</span>
+<span class="sd">        ...                  value_range=Angle([60., 70.], &#39;degree&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; selected_obs_table = obs_table.select_observations(selection)</span>
+
+<span class="sd">        &gt;&gt;&gt; selection = dict(type=&#39;par_box&#39;, variable=&#39;OBS_ID&#39;,</span>
+<span class="sd">        ...                  value_range=[2, 5])</span>
+<span class="sd">        &gt;&gt;&gt; selected_obs_table = obs_table.select_observations(selection)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">obs_table</span> <span class="o">=</span> <span class="bp">self</span>
+
+        <span class="k">if</span> <span class="n">selection</span><span class="p">:</span>
+            <span class="n">selection_type</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;type&#39;</span><span class="p">]</span>
+
+            <span class="k">if</span> <span class="s">&#39;inverted&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">selection</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">selection</span><span class="p">[</span><span class="s">&#39;inverted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+
+            <span class="k">if</span> <span class="n">selection_type</span> <span class="o">==</span> <span class="s">&#39;sky_circle&#39;</span><span class="p">:</span>
+                <span class="n">lon</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;lon&#39;</span><span class="p">]</span>
+                <span class="n">lat</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">]</span>
+                <span class="n">radius</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;radius&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;border&#39;</span><span class="p">]</span>
+                <span class="n">obs_table</span> <span class="o">=</span> <span class="n">select_sky_circle</span><span class="p">(</span><span class="n">obs_table</span><span class="p">,</span>
+                                              <span class="n">lon_cen</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat_cen</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                                              <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+                                              <span class="n">frame</span><span class="o">=</span><span class="n">selection</span><span class="p">[</span><span class="s">&#39;frame&#39;</span><span class="p">],</span>
+                                              <span class="n">inverted</span><span class="o">=</span><span class="n">selection</span><span class="p">[</span><span class="s">&#39;inverted&#39;</span><span class="p">])</span>
+
+            <span class="k">elif</span> <span class="n">selection_type</span> <span class="o">==</span> <span class="s">&#39;sky_box&#39;</span><span class="p">:</span>
+                <span class="n">lon</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;lon&#39;</span><span class="p">]</span>
+                <span class="n">lat</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;lat&#39;</span><span class="p">]</span>
+                <span class="n">border</span> <span class="o">=</span> <span class="n">selection</span><span class="p">[</span><span class="s">&#39;border&#39;</span><span class="p">]</span>
+                <span class="n">lon</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">([</span><span class="n">lon</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">border</span><span class="p">,</span> <span class="n">lon</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">border</span><span class="p">])</span>
+                <span class="n">lat</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">([</span><span class="n">lat</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">border</span><span class="p">,</span> <span class="n">lat</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">border</span><span class="p">])</span>
+                <span class="n">obs_table</span> <span class="o">=</span> <span class="n">select_sky_box</span><span class="p">(</span><span class="n">obs_table</span><span class="p">,</span>
+                                           <span class="n">lon_lim</span><span class="o">=</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat_lim</span><span class="o">=</span><span class="n">lat</span><span class="p">,</span>
+                                           <span class="n">frame</span><span class="o">=</span><span class="n">selection</span><span class="p">[</span><span class="s">&#39;frame&#39;</span><span class="p">],</span>
+                                           <span class="n">inverted</span><span class="o">=</span><span class="n">selection</span><span class="p">[</span><span class="s">&#39;inverted&#39;</span><span class="p">])</span>
+
+            <span class="k">elif</span> <span class="n">selection_type</span> <span class="o">==</span> <span class="s">&#39;time_box&#39;</span><span class="p">:</span>
+                <span class="c"># apply twice the mask: to TIME_START and TIME_STOP</span>
+                <span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_time_range</span><span class="p">(</span><span class="s">&#39;TIME_START&#39;</span><span class="p">,</span>
+                                                        <span class="n">selection</span><span class="p">[</span><span class="s">&#39;time_range&#39;</span><span class="p">],</span>
+                                                        <span class="n">selection</span><span class="p">[</span><span class="s">&#39;inverted&#39;</span><span class="p">])</span>
+                <span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_time_range</span><span class="p">(</span><span class="s">&#39;TIME_STOP&#39;</span><span class="p">,</span>
+                                                        <span class="n">selection</span><span class="p">[</span><span class="s">&#39;time_range&#39;</span><span class="p">],</span>
+                                                        <span class="n">selection</span><span class="p">[</span><span class="s">&#39;inverted&#39;</span><span class="p">])</span>
+
+            <span class="k">elif</span> <span class="n">selection_type</span> <span class="o">==</span> <span class="s">&#39;par_box&#39;</span><span class="p">:</span>
+                <span class="n">obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_range</span><span class="p">(</span><span class="n">selection</span><span class="p">[</span><span class="s">&#39;variable&#39;</span><span class="p">],</span>
+                                                   <span class="n">selection</span><span class="p">[</span><span class="s">&#39;value_range&#39;</span><span class="p">],</span>
+                                                   <span class="n">selection</span><span class="p">[</span><span class="s">&#39;inverted&#39;</span><span class="p">])</span>
+
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid selection type: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selection_type</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">obs_table</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="observation.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

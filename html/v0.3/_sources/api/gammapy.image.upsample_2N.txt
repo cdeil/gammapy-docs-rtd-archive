@@ -1,0 +1,8 @@
+
+
+upsample_2N
+=========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: upsample_2N

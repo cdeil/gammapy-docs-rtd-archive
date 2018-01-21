@@ -1,0 +1,8 @@
+
+
+fetch_catalog_snrcat
+=====================================
+
+.. currentmodule:: gammapy.datasets
+
+.. autofunction:: fetch_catalog_snrcat

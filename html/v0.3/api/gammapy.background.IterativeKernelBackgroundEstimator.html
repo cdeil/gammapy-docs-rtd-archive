@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>IterativeKernelBackgroundEstimator &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Background estimation and modeling (gammapy.background)" href="../background/index.html" />
+    <link rel="next" title="Maps" href="gammapy.background.Maps.html" />
+    <link rel="prev" title="GaussianBand2D" href="gammapy.background.GaussianBand2D.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.background.IterativeKernelBackgroundEstimator.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "api/gammapy.background.IterativeKernelBackgroundEstimator",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.background.IterativeKernelBackgroundEstimator";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.background.Maps.html" title="Maps">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.background.GaussianBand2D.html" title="GaussianBand2D">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../background/index.html" accesskey="U">Background estimation and modeling  (<code class="docutils literal"><span class="pre">gammapy.background</span></code>)</a> &raquo;</li>
+      
+      <li>IterativeKernelBackgroundEstimator</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="iterativekernelbackgroundestimator">
+<h1>IterativeKernelBackgroundEstimator<a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#iterativekernelbackgroundestimator" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator">
+<em class="property">class </em><code class="descclassname">gammapy.background.</code><code class="descname">IterativeKernelBackgroundEstimator</code><span class="sig-paren">(</span><em>images</em>, <em>source_kernel</em>, <em>background_kernel</em>, <em>significance_threshold</em>, <em>mask_dilation_radius</em>, <em>delete_intermediate_results=True</em>, <em>save_intermediate_results=False</em>, <em>filebase='temp'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/background/kernel.html#IterativeKernelBackgroundEstimator"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><code class="xref py py-class docutils literal"><span class="pre">object</span></code></a></p>
+<p>Iteratively estimate a background model.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>images</strong> : <a class="reference internal" href="gammapy.background.GammaImages.html#gammapy.background.GammaImages" title="gammapy.background.GammaImages"><code class="xref py py-obj docutils literal"><span class="pre">GammaImages</span></code></a></p>
+<blockquote>
+<div><p>GammaImages object containing counts image and (optional) initial
+background estimation.</p>
+</div></blockquote>
+<p><strong>source_kernel</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.ndarray</span></code></a></p>
+<blockquote>
+<div><p>Source kernel as a numpy array.</p>
+</div></blockquote>
+<p><strong>background_kernel</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><code class="xref py py-obj docutils literal"><span class="pre">numpy.ndarray</span></code></a></p>
+<blockquote>
+<div><p>Background convolution kernel as a numpy array.</p>
+</div></blockquote>
+<p><strong>significance_threshold</strong> : float</p>
+<blockquote>
+<div><p>Significance threshold above which regions are excluded.</p>
+</div></blockquote>
+<p><strong>mask_dilation_radius</strong> : float</p>
+<blockquote>
+<div><p>Amount by which mask is dilated with each iteration.</p>
+</div></blockquote>
+<p><strong>delete_intermediate_results</strong> : bool</p>
+<blockquote>
+<div><p>Specify whether results of intermediate iterations should be deleted.
+(Otherwise, these are held in memory). Default True.</p>
+</div></blockquote>
+<p><strong>save_intermediate_results</strong> : bool</p>
+<blockquote>
+<div><p>Specify whether to save intermediate results as FITS files to disk.
+Default False.</p>
+</div></blockquote>
+<p><strong>filebase</strong> : str (optional)</p>
+<blockquote class="last">
+<div><p>Base of filenames if save_intermediate_results = True. Default &#8216;temp&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.background_image_hdu" title="gammapy.background.IterativeKernelBackgroundEstimator.background_image_hdu"><code class="xref py py-obj docutils literal"><span class="pre">background_image_hdu</span></code></a></td>
+<td>Background estimate (<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.mask_image_hdu" title="gammapy.background.IterativeKernelBackgroundEstimator.mask_image_hdu"><code class="xref py py-obj docutils literal"><span class="pre">mask_image_hdu</span></code></a></td>
+<td>Mask (<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.significance_image_hdu" title="gammapy.background.IterativeKernelBackgroundEstimator.significance_image_hdu"><code class="xref py py-obj docutils literal"><span class="pre">significance_image_hdu</span></code></a></td>
+<td>Significance estimate (<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a>)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator.background_image_hdu">
+<code class="descname">background_image_hdu</code><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.background_image_hdu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background estimate (<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator.mask_image_hdu">
+<code class="descname">mask_image_hdu</code><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.mask_image_hdu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mask (<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator.significance_image_hdu">
+<code class="descname">significance_image_hdu</code><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.significance_image_hdu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Significance estimate (<a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></code></a>)</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator.run">
+<code class="descname">run</code><span class="sig-paren">(</span><em>filebase=None</em>, <em>max_iterations=10</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/background/kernel.html#IterativeKernelBackgroundEstimator.run"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run iterations until mask does not change (stopping condition).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filebase</strong> : str</p>
+<blockquote>
+<div><p>Base string for filenames if iterations are saved to disk.
+Default None.</p>
+</div></blockquote>
+<p><strong>max_iterations</strong> : int</p>
+<blockquote>
+<div><p>Maximum number of iterations after which the algorithm is
+terminated, if the termination condition (no change of mask between
+iterations) is not already satisfied.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>mask</strong> : array-like</p>
+<blockquote>
+<div><p>Boolean array for the final mask after iterations are ended.</p>
+</div></blockquote>
+<p><strong>background</strong> : array-like</p>
+<blockquote class="last">
+<div><p>Array of floats for the final background estimation after
+iterations are complete.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator.run_iteration">
+<code class="descname">run_iteration</code><span class="sig-paren">(</span><em>update_mask=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/background/kernel.html#IterativeKernelBackgroundEstimator.run_iteration"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.run_iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run one iteration.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>update_mask</strong> : bool</p>
+<blockquote class="last">
+<div><p>Specify whether to update the exclusion mask stored in the input
+<a class="reference internal" href="gammapy.background.GammaImages.html#gammapy.background.GammaImages" title="gammapy.background.GammaImages"><code class="xref py py-obj docutils literal"><span class="pre">GammaImages</span></code></a> object with the exclusion mask
+newly calculated in this method.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.background.IterativeKernelBackgroundEstimator.save_files">
+<code class="descname">save_files</code><span class="sig-paren">(</span><em>filebase</em>, <em>index</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/background/kernel.html#IterativeKernelBackgroundEstimator.save_files"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator.save_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves files to fits.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.background.IterativeKernelBackgroundEstimator.html#">IterativeKernelBackgroundEstimator</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.background.IterativeKernelBackgroundEstimator.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.background.IterativeKernelBackgroundEstimator.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

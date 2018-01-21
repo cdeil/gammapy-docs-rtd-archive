@@ -1,0 +1,776 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.irf.effective_area_table &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/irf/effective_area_table.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/irf/effective_area_table",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/irf/effective_area_table";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.irf.effective_area_table</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">log</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span><span class="p">,</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">..extern.validator</span> <span class="kn">import</span> <span class="n">validate_physical_type</span>
+<span class="kn">from</span> <span class="nn">..utils.array</span> <span class="kn">import</span> <span class="n">array_stats_str</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;abramowski_effective_area&#39;</span><span class="p">,</span> <span class="s">&#39;EffectiveAreaTable&#39;</span><span class="p">,</span>
+           <span class="s">&#39;EffectiveAreaTable2D&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="abramowski_effective_area"><a class="viewcode-back" href="../../../api/gammapy.irf.abramowski_effective_area.html#gammapy.irf.abramowski_effective_area">[docs]</a><span class="k">def</span> <span class="nf">abramowski_effective_area</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">instrument</span><span class="o">=</span><span class="s">&#39;HESS&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Simple IACT effective area parametrizations from Abramowski et al. (2010).</span>
+
+<span class="sd">    TODO: give formula</span>
+
+<span class="sd">    Parametrizations of the effective areas of Cherenkov telescopes</span>
+<span class="sd">    taken from Appendix B of http://adsabs.harvard.edu/abs/2010MNRAS.402.1342A .</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy : `~astropy.units.Quantity`</span>
+<span class="sd">        Energy</span>
+<span class="sd">    instrument : {&#39;HESS&#39;, &#39;HESS2&#39;, &#39;CTA&#39;}</span>
+<span class="sd">        Instrument name</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    effective_area : `~astropy.units.Quantity`</span>
+<span class="sd">        Effective area in cm^2</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># Put the parameters g in a dictionary.</span>
+    <span class="c"># Units: g1 (cm^2), g2 (), g3 (MeV)</span>
+    <span class="c"># Note that whereas in the paper the parameter index is 1-based,</span>
+    <span class="c"># here it is 0-based</span>
+    <span class="n">pars</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;HESS&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">6.85e9</span><span class="p">,</span> <span class="mf">0.0891</span><span class="p">,</span> <span class="mf">5e5</span><span class="p">],</span>
+            <span class="s">&#39;HESS2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">2.05e9</span><span class="p">,</span> <span class="mf">0.0891</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">],</span>
+            <span class="s">&#39;CTA&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.71e11</span><span class="p">,</span> <span class="mf">0.0891</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">]}</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;energy must be a Quantity object.&quot;</span><span class="p">)</span>
+
+    <span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+    <span class="k">if</span> <span class="n">instrument</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pars</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Unknown instrument: {0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instrument</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Valid instruments: HESS, HESS2, CTA&#39;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss</span><span class="p">)</span>
+
+    <span class="n">g1</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="n">instrument</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">g2</span> <span class="o">=</span> <span class="n">pars</span><span class="p">[</span><span class="n">instrument</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">g3</span> <span class="o">=</span> <span class="o">-</span><span class="n">pars</span><span class="p">[</span><span class="n">instrument</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+    <span class="n">value</span> <span class="o">=</span> <span class="n">g1</span> <span class="o">*</span> <span class="n">energy</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">g2</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">g3</span> <span class="o">/</span> <span class="n">energy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="s">&#39;cm^2&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable">[docs]</a><span class="k">class</span> <span class="nc">EffectiveAreaTable</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Effective area table class.</span>
+
+<span class="sd">    Not interpolation is used.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energy_lo : `~astropy.units.Quantity`</span>
+<span class="sd">        Lower energy boundary of the energy bin.</span>
+<span class="sd">    energy_hi : `~astropy.units.Quantity`</span>
+<span class="sd">        Upper energy boundary of the energy bin.</span>
+<span class="sd">    effective_area : `~astropy.units.Quantity`</span>
+<span class="sd">        Effective area at the given energy bins.</span>
+<span class="sd">    energy_thresh_lo : `~astropy.units.Quantity`</span>
+<span class="sd">        Lower save energy threshold of the psf.</span>
+<span class="sd">    energy_thresh_hi : `~astropy.units.Quantity`</span>
+<span class="sd">        Upper save energy threshold of the psf.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Plot effective area vs. energy:</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        from gammapy.irf import EffectiveAreaTable</span>
+<span class="sd">        from gammapy.datasets import load_arf_fits_table</span>
+<span class="sd">        arf = EffectiveAreaTable.from_fits(load_arf_fits_table())</span>
+<span class="sd">        arf.plot_area_vs_energy(show_save_energy=False)</span>
+<span class="sd">        plt.show()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_lo</span><span class="p">,</span> <span class="n">energy_hi</span><span class="p">,</span> <span class="n">effective_area</span><span class="p">,</span>
+                 <span class="n">energy_thresh_lo</span><span class="o">=</span><span class="n">Quantity</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="s">&#39;TeV&#39;</span><span class="p">),</span>
+                 <span class="n">energy_thresh_hi</span><span class="o">=</span><span class="n">Quantity</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="s">&#39;TeV&#39;</span><span class="p">)):</span>
+
+        <span class="c"># Validate input</span>
+        <span class="n">validate_physical_type</span><span class="p">(</span><span class="s">&#39;energy_lo&#39;</span><span class="p">,</span> <span class="n">energy_lo</span><span class="p">,</span> <span class="s">&#39;energy&#39;</span><span class="p">)</span>
+        <span class="n">validate_physical_type</span><span class="p">(</span><span class="s">&#39;energy_hi&#39;</span><span class="p">,</span> <span class="n">energy_hi</span><span class="p">,</span> <span class="s">&#39;energy&#39;</span><span class="p">)</span>
+        <span class="n">validate_physical_type</span><span class="p">(</span><span class="s">&#39;effective_area&#39;</span><span class="p">,</span> <span class="n">effective_area</span><span class="p">,</span> <span class="s">&#39;area&#39;</span><span class="p">)</span>
+        <span class="n">validate_physical_type</span><span class="p">(</span><span class="s">&#39;energy_thresh_lo&#39;</span><span class="p">,</span> <span class="n">energy_thresh_lo</span><span class="p">,</span> <span class="s">&#39;energy&#39;</span><span class="p">)</span>
+        <span class="n">validate_physical_type</span><span class="p">(</span><span class="s">&#39;energy_thresh_hi&#39;</span><span class="p">,</span> <span class="n">energy_thresh_hi</span><span class="p">,</span> <span class="s">&#39;energy&#39;</span><span class="p">)</span>
+
+        <span class="c"># Set attributes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span> <span class="o">=</span> <span class="n">energy_hi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span> <span class="o">=</span> <span class="n">energy_lo</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span> <span class="o">=</span> <span class="n">effective_area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_lo</span> <span class="o">=</span> <span class="n">energy_thresh_lo</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_hi</span> <span class="o">=</span> <span class="n">energy_thresh_hi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EffectiveAreaTable.to_fits"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.to_fits">[docs]</a>    <span class="k">def</span> <span class="nf">to_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_unit</span><span class="o">=</span><span class="s">&#39;TeV&#39;</span><span class="p">,</span> <span class="n">effarea_unit</span><span class="o">=</span><span class="s">&#39;m2&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Convert ARF to FITS HDU list format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        header : `~astropy.io.fits.header.Header`</span>
+<span class="sd">            Header to be written in the fits file.</span>
+<span class="sd">        energy_unit : str</span>
+<span class="sd">            Unit in which the energy is written in the fits file</span>
+<span class="sd">        effarea__u : str</span>
+<span class="sd">            Unit in which the effective area is written in the fits file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            ARF in HDU list format.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        For more info on the ARF FITS file format see:</span>
+<span class="sd">        http://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/summary/cal_gen_92_002_summary.html</span>
+
+<span class="sd">        Recommended units for ARF tables in X-ray astronomy are keV and cm^2,</span>
+<span class="sd">        but TeV and m^2 are chosen here by default, as they are the more</span>
+<span class="sd">        natural units for IACTs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">energy_unit</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">effarea_unit</span><span class="p">)</span>
+
+        <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">new_table</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;ENERG_LO&#39;</span><span class="p">,</span>
+                         <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                         <span class="n">array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                         <span class="n">unit</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span><span class="o">.</span><span class="n">unit</span><span class="p">)),</span>
+             <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;ENERG_HI&#39;</span><span class="p">,</span>
+                         <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                         <span class="n">array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                         <span class="n">unit</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span><span class="o">.</span><span class="n">unit</span><span class="p">)),</span>
+             <span class="n">fits</span><span class="o">.</span><span class="n">Column</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">,</span>
+                         <span class="n">format</span><span class="o">=</span><span class="s">&#39;1E&#39;</span><span class="p">,</span>
+                         <span class="n">array</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                         <span class="n">unit</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+             <span class="p">]</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">header</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">..datasets</span> <span class="kn">import</span> <span class="n">load_arf_fits_table</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="n">load_arf_fits_table</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">header</span>
+
+        <span class="k">if</span> <span class="n">header</span> <span class="o">==</span> <span class="s">&#39;pyfact&#39;</span><span class="p">:</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="n">hdu</span><span class="o">.</span><span class="n">header</span>
+
+            <span class="c"># Write FITS extension header</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;EXTNAME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;SPECRESP&#39;</span><span class="p">,</span> <span class="s">&#39;Name of this binary table extension&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;TELESCOP&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;DUMMY&#39;</span><span class="p">,</span> <span class="s">&#39;Mission/satellite name&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;INSTRUME&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;DUMMY&#39;</span><span class="p">,</span> <span class="s">&#39;Instrument/detector&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;FILTER&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;NONE&#39;</span><span class="p">,</span> <span class="s">&#39;Filter information&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLASS&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;OGIP&#39;</span><span class="p">,</span> <span class="s">&#39;Organisation devising file format&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;RESPONSE&#39;</span><span class="p">,</span> <span class="s">&#39;File relates to response of instrument&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUCLAS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;SPECRESP&#39;</span><span class="p">,</span> <span class="s">&#39;Effective area data is stored&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS &#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.1.0&#39;</span><span class="p">,</span> <span class="s">&#39;Version of file format&#39;</span>
+
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;PHAFILE&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">,</span> <span class="s">&#39;PHA file for which ARF was produced&#39;</span><span class="p">)</span>
+
+            <span class="c"># Obsolete ARF headers, included for the benefit of old software</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;ARFVERSN&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1992a&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.0.0&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;HDUVERS2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;1.1.0&#39;</span><span class="p">,</span> <span class="s">&#39;Obsolete&#39;</span>
+
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">header</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+        <span class="n">header</span><span class="p">[</span><span class="s">&#39;LO_THRES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">header</span><span class="p">[</span><span class="s">&#39;HI_THRES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_hi</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="n">prim_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">()</span>
+        <span class="n">hdu</span><span class="o">.</span><span class="n">header</span> <span class="o">=</span> <span class="n">header</span>
+        <span class="n">hdu</span><span class="o">.</span><span class="n">add_checksum</span><span class="p">()</span>
+        <span class="n">hdu</span><span class="o">.</span><span class="n">add_datasum</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">prim_hdu</span><span class="p">,</span> <span class="n">hdu</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable.write"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.write">[docs]</a>    <span class="k">def</span> <span class="nf">write</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write ARF to FITS file.</span>
+
+<span class="sd">        Calls `~astropy.io.fits.HDUList.writeto`, forwarding all arguments.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_fits</span><span class="p">()</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EffectiveAreaTable.read"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `EffectiveAreaTable` from ARF-format FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cls</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EffectiveAreaTable.from_fits"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.from_fits">[docs]</a>    <span class="k">def</span> <span class="nf">from_fits</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">hdu_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `EffectiveAreaTable` from HDU list.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            HDU list with ``SPECRESP`` extensions.</span>
+
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        For more info on the ARF FITS file format see:</span>
+<span class="sd">        http://heasarc.gsfc.nasa.gov/docs/heasarc/caldb/docs/summary/cal_gen_92_002_summary.html</span>
+
+<span class="sd">        Recommended units for ARF tables are keV and cm^2,</span>
+<span class="sd">        but TeV and m^2 are chosen here as the more natural units for IACTs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">energy_lo</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;ENERG_LO&#39;</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">energy_hi</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;ENERG_HI&#39;</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">effective_area</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">],</span> <span class="s">&#39;m^2&#39;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">energy_thresh_lo</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span>
+                <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;LO_THRES&#39;</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+            <span class="n">energy_thresh_hi</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span>
+                <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;SPECRESP&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;HI_THRES&#39;</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">EffectiveAreaTable</span><span class="p">(</span><span class="n">energy_lo</span><span class="p">,</span> <span class="n">energy_hi</span><span class="p">,</span> <span class="n">effective_area</span><span class="p">,</span>
+                                      <span class="n">energy_thresh_lo</span><span class="p">,</span> <span class="n">energy_thresh_hi</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span><span class="s">&#39;No safe energy thresholds found. Setting to default&#39;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">energy_lo</span><span class="p">,</span> <span class="n">energy_hi</span><span class="p">,</span> <span class="n">effective_area</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable.effective_area_at_energy"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.effective_area_at_energy">[docs]</a>    <span class="k">def</span> <span class="nf">effective_area_at_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get effective area for given energy.</span>
+
+<span class="sd">        Not interpolation is used.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy : `~astropy.units.Quantity`</span>
+<span class="sd">            Energy where to return effective area.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        effective_area : `~astropy.units.Quantity`</span>
+<span class="sd">            Effective area at given energy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;energy must be a Quantity object.&quot;</span><span class="p">)</span>
+
+        <span class="c"># TODO: Use some kind of interpolation here</span>
+        <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span> <span class="o">-</span> <span class="n">energy</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable.info"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energies</span><span class="o">=</span><span class="n">Quantity</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="s">&#39;TeV&#39;</span><span class="p">)):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print some ARF info.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energies : `~astropy.units.Quantity`</span>
+<span class="sd">            Energies for which to print effective areas.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">Summary ARF info</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&quot;----------------</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="c"># Summarise data members</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="n">array_stats_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span><span class="p">,</span> <span class="s">&#39;Energy lo&#39;</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="n">array_stats_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span><span class="p">,</span> <span class="s">&#39;Energy hi&#39;</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="n">array_stats_str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^2&#39;</span><span class="p">),</span> <span class="s">&#39;Effective area&#39;</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Safe energy threshold lo: {0:6.3f}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Safe energy threshold hi: {0:6.3f}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_hi</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">energy</span> <span class="ow">in</span> <span class="n">energies</span><span class="p">:</span>
+            <span class="n">eff_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_area_at_energy</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+            <span class="n">ss</span> <span class="o">+=</span> <span class="p">(</span><span class="s">&quot;Effective area at E = {0:4.1f}: {1:10.0f}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">eff_area</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ss</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable.plot_area_vs_energy"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable.plot_area_vs_energy">[docs]</a>    <span class="k">def</span> <span class="nf">plot_area_vs_energy</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">show_save_energy</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot effective area vs. energy.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">energy_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">effective_area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">effective_area</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy_hi</span><span class="p">,</span> <span class="n">effective_area</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">show_save_energy</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_hi</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="mf">1E3</span><span class="p">,</span> <span class="mf">1E7</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s">&#39;--&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_hi</span><span class="o">.</span><span class="n">value</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">3E6</span><span class="p">,</span>
+                     <span class="s">&#39;Safe energy threshold: {0:3.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                         <span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_hi</span><span class="p">),</span>
+                     <span class="n">ha</span><span class="o">=</span><span class="s">&#39;right&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="mf">1E3</span><span class="p">,</span> <span class="mf">1E7</span><span class="p">,</span> <span class="s">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s">&#39;--&#39;</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="o">.</span><span class="n">value</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">3E3</span><span class="p">,</span>
+                     <span class="s">&#39;Safe energy threshold: {0:3.2f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy_thresh_lo</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">1E3</span><span class="p">,</span> <span class="mf">1E7</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">loglog</span><span class="p">()</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Energy (TeV)&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Effective Area (m2)&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Wrote {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+</div></div>
+<div class="viewcode-block" id="EffectiveAreaTable2D"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D">[docs]</a><span class="k">class</span> <span class="nc">EffectiveAreaTable2D</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Offset-dependent radially-symmetric table effective area.</span>
+
+<span class="sd">    Two interpolation methods area available:</span>
+
+<span class="sd">    * `~scipy.interpolate.LinearNDInterpolator` (default)</span>
+<span class="sd">    * `~scipy.interpolate.RectBivariateSpline`</span>
+
+<span class="sd">    Equivalent to GammaLib/ctools``GCTAAeff2D FITS`` format</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    energ_lo : `~astropy.units.Quantity`</span>
+<span class="sd">        Lower energy bin edges vector</span>
+<span class="sd">    energ_hi : `~astropy.units.Quantity`</span>
+<span class="sd">        Upper energy bin edges vector</span>
+<span class="sd">    offset_lo : `~astropy.coordinates.Angle`</span>
+<span class="sd">        Lower offset bin edges vector</span>
+<span class="sd">    offset_hi : `~astropy.coordinates.Angle`</span>
+<span class="sd">        Upper offset bin edges  vector</span>
+<span class="sd">    eff_area : `~astropy.units.Quantity`</span>
+<span class="sd">        Effective area vector (true energy)</span>
+<span class="sd">    eff_area_reco : `~astropy.units.Quantity`</span>
+<span class="sd">        Effective area vector (reconstructed energy)</span>
+<span class="sd">    method : str</span>
+<span class="sd">        Interpolation method</span>
+
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    Get effective area vs. energy for a given offset and energy binning:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from astropy.coordinates import Angle</span>
+<span class="sd">        from astropy.units import Quantity</span>
+<span class="sd">        from gammapy.irf import EffectiveAreaTable2D</span>
+<span class="sd">        from gammapy.datasets import load_aeff2D_fits_table</span>
+<span class="sd">        aeff2D = EffectiveAreaTable2D.from_fits(load_aeff2D_fits_table())</span>
+<span class="sd">        offset = Angle(0.6, &#39;degree&#39;)</span>
+<span class="sd">        energy = Quantity(np.logspace(0, 1, 60), &#39;TeV&#39;)</span>
+<span class="sd">        eff_area = aeff2D.evaluate(offset, energy)</span>
+
+<span class="sd">    Create ARF fits file for a given offest and energy binning:</span>
+
+<span class="sd">    .. code-block:: python</span>
+
+<span class="sd">        import numpy as np</span>
+<span class="sd">        from astropy.coordinates import Angle</span>
+<span class="sd">        from astropy.units import Quantity</span>
+<span class="sd">        from gammapy.irf import EffectiveAreaTable2D</span>
+<span class="sd">        from gammapy.spectrum import energy_bounds_equal_log_spacing</span>
+<span class="sd">        from gammapy.datasets import load_aeff2D_fits_table</span>
+<span class="sd">        aeff2D = EffectiveAreaTable2D.from_fits(load_aeff2D_fits_table())</span>
+<span class="sd">        offset = Angle(0.43, &#39;degree&#39;)</span>
+<span class="sd">        nbins = 50</span>
+<span class="sd">        energy = energy_bounds_equal_log_spacing(Quantity((1,10), &#39;TeV&#39;), nbins)</span>
+<span class="sd">        energ_lo = energy[:-1]</span>
+<span class="sd">        energ_hi = energy[1:]</span>
+<span class="sd">        arf_table = aeff2D.to_effective_area_table(offset, energ_lo, energ_hi)</span>
+<span class="sd">        arf_table.write(&#39;arf.fits&#39;)</span>
+
+<span class="sd">    Plot energy dependence</span>
+
+<span class="sd">    .. plot::</span>
+<span class="sd">        :include-source:</span>
+
+<span class="sd">        import matplotlib.pyplot as plt</span>
+<span class="sd">        from gammapy.irf import EffectiveAreaTable2D</span>
+<span class="sd">        from gammapy.datasets import load_aeff2D_fits_table</span>
+<span class="sd">        aeff2D = EffectiveAreaTable2D.from_fits(load_aeff2D_fits_table())</span>
+<span class="sd">        aeff2D.plot_energy_dependence()</span>
+<span class="sd">        plt.loglog()</span>
+<span class="sd">        plt.xlim(0.8, 100)</span>
+<span class="sd">        plt.ylim(2E4, 2E6)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energ_lo</span><span class="p">,</span> <span class="n">energ_hi</span><span class="p">,</span> <span class="n">offset_lo</span><span class="p">,</span>
+                 <span class="n">offset_hi</span><span class="p">,</span> <span class="n">eff_area</span><span class="p">,</span> <span class="n">eff_area_reco</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;linear&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energ_lo</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energ_hi</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Energies must be Quantity objects.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset_lo</span><span class="p">,</span> <span class="n">Angle</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset_hi</span><span class="p">,</span> <span class="n">Angle</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Offsets must be Angle objects.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eff_area</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">eff_area_reco</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Effective areas must be Quantity objects.&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">energ_lo</span> <span class="o">=</span> <span class="n">energ_lo</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energ_hi</span> <span class="o">=</span> <span class="n">energ_hi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_lo</span> <span class="o">=</span> <span class="n">offset_lo</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;degree&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset_hi</span> <span class="o">=</span> <span class="n">offset_hi</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;degree&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span> <span class="o">=</span> <span class="n">eff_area</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^2&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">eff_area_reco</span> <span class="o">=</span> <span class="n">eff_area_reco</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;m^2&#39;</span><span class="p">)</span>
+
+        <span class="c"># actually offset_hi = offset_lo</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">offset</span> <span class="o">=</span> <span class="p">(</span><span class="n">offset_hi</span> <span class="o">+</span> <span class="n">offset_lo</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">energ_lo</span> <span class="o">*</span> <span class="n">energ_hi</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_linear_interpolator</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_prepare_spline_interpolator</span><span class="p">()</span>
+
+        <span class="c"># set to linear interpolation by default</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_method</span> <span class="o">=</span> <span class="n">method</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EffectiveAreaTable2D.from_fits"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.from_fits">[docs]</a>    <span class="k">def</span> <span class="nf">from_fits</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">hdu_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `EffectiveAreaTable2D` from ``GCTAAeff2D`` format HDU list.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            HDU list with ``EFFECTIVE AREA`` extension.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="s">&#39;EFFECTIVE AREA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">e_lo</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;ENERG_LO&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">e_hi</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;ENERG_HI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+        <span class="n">o_lo</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;THETA_LO&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="s">&#39;degree&#39;</span><span class="p">)</span>
+        <span class="n">o_hi</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;THETA_HI&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="s">&#39;degree&#39;</span><span class="p">)</span>
+        <span class="n">ef</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;EFFAREA&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="s">&#39;m^2&#39;</span><span class="p">)</span>
+        <span class="n">efrec</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;EFFAREA_RECO&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span> <span class="s">&#39;m^2&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">cls</span><span class="p">(</span><span class="n">e_lo</span><span class="p">,</span> <span class="n">e_hi</span><span class="p">,</span> <span class="n">o_lo</span><span class="p">,</span> <span class="n">o_hi</span><span class="p">,</span> <span class="n">ef</span><span class="p">,</span> <span class="n">efrec</span><span class="p">)</span>
+</div>
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="EffectiveAreaTable2D.read"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create `EffectiveAreaTable2D` from ``GCTAAeff2D`` format FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">EffectiveAreaTable2D</span><span class="o">.</span><span class="n">from_fits</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable2D.to_effective_area_table"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.to_effective_area_table">[docs]</a>    <span class="k">def</span> <span class="nf">to_effective_area_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="p">,</span> <span class="n">energy_lo</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy_hi</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate at a given offset and return effective area table.</span>
+
+<span class="sd">        The energy thresholds in the effective area table object are not set.</span>
+<span class="sd">        If the effective area table is intended to be used for spectral analysis,</span>
+<span class="sd">        the final energy binning should be given here, since the</span>
+<span class="sd">        effective area table class does no interpolation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        offset : `~astropy.coordinates.Angle`</span>
+<span class="sd">            offset</span>
+<span class="sd">        energy_lo, energy_hi : `~astropy.units.Quantity`</span>
+<span class="sd">            Energy lower and upper bounds array</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        eff_area_table : `EffectiveAreaTable`</span>
+<span class="sd">             Effective area table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">energy_lo</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">and</span> <span class="n">energy_hi</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">energy_lo</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_lo</span>
+            <span class="n">energy_hi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_hi</span>
+        <span class="k">elif</span> <span class="n">energy_lo</span> <span class="ow">is</span> <span class="bp">None</span> <span class="ow">or</span> <span class="n">energy_hi</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Only 1 energy vector given, need 2&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy_lo</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy_hi</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Energy must be a Quantity object.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_lo</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy_hi</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Energy Vectors must have same length&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">Angle</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Offset must be an angle object.&quot;</span><span class="p">)</span>
+
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">energy_lo</span> <span class="o">*</span> <span class="n">energy_hi</span><span class="p">)</span>
+        <span class="n">area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">EffectiveAreaTable</span><span class="p">(</span><span class="n">energy_lo</span><span class="p">,</span> <span class="n">energy_hi</span><span class="p">,</span> <span class="n">area</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable2D.evaluate"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.evaluate">[docs]</a>    <span class="k">def</span> <span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate effective area for a given energy and offset.</span>
+
+<span class="sd">        If a parameter is not given, the nodes from the FITS table are used.</span>
+<span class="sd">        2D input arrays are not supported yet.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        offset : `~astropy.coordinates.Angle`</span>
+<span class="sd">            offset</span>
+<span class="sd">        energy : `~astropy.units.Quantity`</span>
+<span class="sd">            energy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        eff_area : `~astropy.units.Quantity`</span>
+<span class="sd">            Effective Area</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
+        <span class="k">if</span> <span class="n">energy</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">Quantity</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Energy must be a Quantity object.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">Angle</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Offset must be an Angle object.&quot;</span><span class="p">)</span>
+
+        <span class="n">offset</span> <span class="o">=</span> <span class="n">offset</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;degree&#39;</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;TeV&#39;</span><span class="p">)</span>
+
+        <span class="c"># support energy=1Darray &amp; offset=1Darray</span>
+        <span class="k">if</span> <span class="n">offset</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">()</span> <span class="ow">and</span> <span class="n">energy</span><span class="o">.</span><span class="n">shape</span> <span class="o">!=</span> <span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">offset</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">energy</span><span class="p">)])</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">offset</span><span class="p">)):</span>
+                <span class="n">val</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">offset</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">energy</span><span class="p">)</span>
+        <span class="c"># default</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_eval</span><span class="p">(</span><span class="n">offset</span><span class="o">=</span><span class="n">offset</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="n">energy</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_eval</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="n">method</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interpolation_method</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;linear&#39;</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_linear</span><span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">value</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="n">method</span> <span class="o">==</span> <span class="s">&#39;spline&#39;</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_spline</span><span class="p">(</span><span class="n">offset</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">energy</span><span class="o">.</span><span class="n">value</span><span class="p">))</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid interpolation method: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">method</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+<div class="viewcode-block" id="EffectiveAreaTable2D.plot_energy_dependence"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.plot_energy_dependence">[docs]</a>    <span class="k">def</span> <span class="nf">plot_energy_dependence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot effective area versus energy for a given offset.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+
+        <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">energy</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+
+        <span class="k">for</span> <span class="n">off</span> <span class="ow">in</span> <span class="n">offset</span><span class="p">:</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">off</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;offset = {:.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">off</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">area</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Energy ({0})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Effective Area ({0})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s">&#39;lower right&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ax</span>
+</div>
+<div class="viewcode-block" id="EffectiveAreaTable2D.plot_offset_dependence"><a class="viewcode-back" href="../../../api/gammapy.irf.EffectiveAreaTable2D.html#gammapy.irf.EffectiveAreaTable2D.plot_offset_dependence">[docs]</a>    <span class="k">def</span> <span class="nf">plot_offset_dependence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">offset</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">energy</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot effective area versus offset for a given energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span> <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="bp">None</span> <span class="k">else</span> <span class="n">ax</span>
+
+        <span class="k">if</span> <span class="n">energy</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+            <span class="n">energy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">val</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">offset</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">offset</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span>
+
+        <span class="k">for</span> <span class="n">ener</span> <span class="ow">in</span> <span class="n">energy</span><span class="p">:</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">ener</span><span class="p">)</span>
+            <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;energy = {:.1f}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ener</span><span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">offset</span><span class="p">,</span> <span class="n">area</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s">&#39;Offset ({0})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s">&#39;Effective Area ({0})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span><span class="o">.</span><span class="n">unit</span><span class="p">))</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">ax</span>
+</div>
+    <span class="k">def</span> <span class="nf">_prepare_linear_interpolator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Could be generalized for non-radial symmetric input files (N&gt;2)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">LinearNDInterpolator</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="p">[(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">)</span> <span class="k">for</span> <span class="n">xx</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">yy</span> <span class="ow">in</span> <span class="n">y</span><span class="p">]</span>
+
+        <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_linear</span> <span class="o">=</span> <span class="n">LinearNDInterpolator</span><span class="p">(</span><span class="n">coord</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_prepare_spline_interpolator</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Only works for radial symmetric input files (N=2)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">RectBivariateSpline</span>
+
+        <span class="n">x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">value</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_spline</span> <span class="o">=</span> <span class="n">RectBivariateSpline</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">eff_area</span><span class="o">.</span><span class="n">value</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="effective_area_table.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

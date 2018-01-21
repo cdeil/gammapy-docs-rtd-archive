@@ -1,0 +1,8 @@
+
+
+iterative_source_detect
+=======================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: iterative_source_detect

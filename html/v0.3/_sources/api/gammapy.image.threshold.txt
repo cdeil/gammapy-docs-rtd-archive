@@ -1,0 +1,8 @@
+
+
+threshold
+=======================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: threshold

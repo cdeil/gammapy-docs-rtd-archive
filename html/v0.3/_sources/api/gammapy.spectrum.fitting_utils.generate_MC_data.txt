@@ -1,0 +1,8 @@
+
+
+generate_MC_data
+===============================================
+
+.. currentmodule:: gammapy.spectrum.fitting_utils
+
+.. autofunction:: generate_MC_data

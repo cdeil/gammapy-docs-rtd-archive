@@ -1,0 +1,8 @@
+
+
+info
+====================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: info

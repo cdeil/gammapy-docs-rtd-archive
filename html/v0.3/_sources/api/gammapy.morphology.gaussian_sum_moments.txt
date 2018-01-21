@@ -1,0 +1,8 @@
+
+
+gaussian_sum_moments
+=======================================
+
+.. currentmodule:: gammapy.morphology
+
+.. autofunction:: gaussian_sum_moments

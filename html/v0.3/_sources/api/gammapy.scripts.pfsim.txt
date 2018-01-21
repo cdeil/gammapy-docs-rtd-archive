@@ -1,0 +1,8 @@
+
+
+pfsim
+=====================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: pfsim

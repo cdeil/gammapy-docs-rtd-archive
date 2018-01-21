@@ -1,0 +1,8 @@
+
+
+bin_image
+=========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: bin_image

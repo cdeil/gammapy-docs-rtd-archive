@@ -1,0 +1,412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>ObservationTable &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../index.html" />
+    <link rel="up" title="Observation handling (gammapy.obs)" href="../obs/index.html" />
+    <link rel="next" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="prev" title="DataStoreIndexTable" href="gammapy.obs.DataStoreIndexTable.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.obs.ObservationTable.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "api/gammapy.obs.ObservationTable",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.obs.ObservationTable";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../spectrum/index.html" title="Spectrum estimation and modeling (gammapy.spectrum)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.obs.DataStoreIndexTable.html" title="DataStoreIndexTable">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../obs/index.html" accesskey="U">Observation handling  (<code class="docutils literal"><span class="pre">gammapy.obs</span></code>)</a> &raquo;</li>
+      
+      <li>ObservationTable</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="observationtable">
+<h1>ObservationTable<a class="headerlink" href="gammapy.obs.ObservationTable.html#observationtable" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.obs.ObservationTable">
+<em class="property">class </em><code class="descclassname">gammapy.obs.</code><code class="descname">ObservationTable</code><span class="sig-paren">(</span><em>data=None</em>, <em>masked=None</em>, <em>names=None</em>, <em>dtype=None</em>, <em>meta=None</em>, <em>copy=True</em>, <em>rows=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/obs/observation.html#ObservationTable"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="astropy.table.Table"><code class="docutils literal"><span class="pre">astropy.table.Table</span></code></a></p>
+<p>Observation table (a.k.a. run list).</p>
+<p>This is an <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Table</span></code></a> sub-class, with a few
+convenience methods. The format of the observation table
+is described in <a class="reference internal" href="../dataformats/observation_lists.html#dataformats-observation-lists"><span>Observation lists</span></a>.</p>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.obs.ObservationTable.select_linspace_subset">
+<code class="descname">select_linspace_subset</code><span class="sig-paren">(</span><em>num</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/obs/observation.html#ObservationTable.select_linspace_subset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_linspace_subset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Select subset of observations.</p>
+<p>This is mostly useful for testing, if you want to make
+the analysis run faster.</p>
+<p>TODO: implement more methods to subset and split observation lists
+as well as functions to summarise differences between
+observation lists and e.g. select the common subset.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>num</strong> : int</p>
+<blockquote>
+<div><p>Number of samples to select.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>table</strong> : <a class="reference internal" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable" title="gammapy.obs.ObservationTable"><code class="xref py py-obj docutils literal"><span class="pre">ObservationTable</span></code></a></p>
+<blockquote class="last">
+<div><p>Subset observation table (a copy).</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.obs.ObservationTable.select_observations">
+<code class="descname">select_observations</code><span class="sig-paren">(</span><em>selection=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/obs/observation.html#ObservationTable.select_observations"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_observations" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an observation table, applying some selection.</p>
+<p>There are 3 main kinds of selection criteria, according to the
+value of the <a class="reference external" href="http://docs.python.org/library/functions.html#type" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">type</span></code></a> keyword in the <code class="xref py py-obj docutils literal"><span class="pre">selection</span></code> dictionary:</p>
+<ul class="simple">
+<li>sky regions (boxes or circles)</li>
+<li>time intervals (min, max)</li>
+<li>intervals (min, max) on any other parameter present in the
+observation table, that can be casted into an
+<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a> object</li>
+</ul>
+<p>Allowed selection criteria are interpreted using the following
+keywords in the <code class="xref py py-obj docutils literal"><span class="pre">selection</span></code> dictionary:</p>
+<ul>
+<li><p class="first"><a class="reference external" href="http://docs.python.org/library/functions.html#type" title="(in Python v2.7)"><code class="xref py py-obj docutils literal"><span class="pre">type</span></code></a>: <code class="docutils literal"><span class="pre">sky_box</span></code>, <code class="docutils literal"><span class="pre">sky_circle</span></code>, <code class="docutils literal"><span class="pre">time_box</span></code>, <code class="docutils literal"><span class="pre">par_box</span></code></p>
+<blockquote>
+<div><ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">sky_box</span></code> and <code class="docutils literal"><span class="pre">sky_circle</span></code> are 2D selection criteria acting
+on sky coordinates</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">sky_box</span></code> is a squared region delimited by the <code class="xref py py-obj docutils literal"><span class="pre">lon</span></code> and
+<code class="xref py py-obj docutils literal"><span class="pre">lat</span></code> keywords: both tuples of format (min, max); uses
+<a class="reference internal" href="gammapy.catalog.select_sky_box.html#gammapy.catalog.select_sky_box" title="gammapy.catalog.select_sky_box"><code class="xref py py-obj docutils literal"><span class="pre">select_sky_box</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">sky_circle</span></code> is a circular region centered in the coordinate
+marked by the <code class="xref py py-obj docutils literal"><span class="pre">lon</span></code> and <code class="xref py py-obj docutils literal"><span class="pre">lat</span></code> keywords, and radius <code class="xref py py-obj docutils literal"><span class="pre">radius</span></code>;
+uses <a class="reference internal" href="gammapy.catalog.select_sky_circle.html#gammapy.catalog.select_sky_circle" title="gammapy.catalog.select_sky_circle"><code class="xref py py-obj docutils literal"><span class="pre">select_sky_circle</span></code></a></li>
+</ul>
+</div></blockquote>
+<p>in each case, the coordinate system can be specified by the <code class="xref py py-obj docutils literal"><span class="pre">frame</span></code>
+keyword (built-in Astropy coordinate frames are supported, e.g.
+&#8216;icrs&#8217; or &#8216;galactic&#8217;); an aditional border can be defined using
+the <code class="xref py py-obj docutils literal"><span class="pre">border</span></code> keyword</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">time_box</span></code> is a 1D selection criterion acting on the observation
+time (<code class="xref py py-obj docutils literal"><span class="pre">TIME_START</span></code> and <code class="xref py py-obj docutils literal"><span class="pre">TIME_STOP</span></code>); the interval is set via the
+<code class="xref py py-obj docutils literal"><span class="pre">time_range</span></code> keyword; uses
+<a class="reference internal" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_time_range" title="gammapy.obs.ObservationTable.select_time_range"><code class="xref py py-obj docutils literal"><span class="pre">select_time_range</span></code></a></p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">par_box</span></code> is a 1D selection criterion acting on any
+parameter defined in the observation table that can be casted
+into an <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a> object; the parameter name
+and interval can be specified using the keywords &#8216;variable&#8217; and
+&#8216;value_range&#8217; respectively; uses
+<a class="reference internal" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_range" title="gammapy.obs.ObservationTable.select_range"><code class="xref py py-obj docutils literal"><span class="pre">select_range</span></code></a></p>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>In all cases, the selection can be inverted by activating the
+<code class="xref py py-obj docutils literal"><span class="pre">inverted</span></code> flag, in which case, the selection is applied to keep all
+elements outside the selected range.</p>
+<p>A few examples of selection criteria are given below and more can be
+found in the tests in <code class="xref py py-obj docutils literal"><span class="pre">test_select_observations</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>selection</strong> : dict</p>
+<blockquote>
+<div><p>Dictionary with a few keywords for applying selection cuts.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>obs_table</strong> : <a class="reference internal" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable" title="gammapy.obs.ObservationTable"><code class="xref py py-obj docutils literal"><span class="pre">ObservationTable</span></code></a></p>
+<blockquote class="last">
+<div><p>Observation table after selection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">&#39;sky_box&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s">&#39;icrs&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="n">lon</span><span class="o">=</span><span class="n">Angle</span><span class="p">([</span><span class="mi">150</span><span class="p">,</span> <span class="mi">300</span><span class="p">],</span> <span class="s">&#39;degree&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                 <span class="n">lat</span><span class="o">=</span><span class="n">Angle</span><span class="p">([</span><span class="o">-</span><span class="mi">50</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s">&#39;degree&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                 <span class="n">border</span><span class="o">=</span><span class="n">Angle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_observations</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">&#39;sky_circle&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s">&#39;galactic&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="n">lon</span><span class="o">=</span><span class="n">Angle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                 <span class="n">lat</span><span class="o">=</span><span class="n">Angle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                 <span class="n">radius</span><span class="o">=</span><span class="n">Angle</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">),</span>
+<span class="gp">... </span>                 <span class="n">border</span><span class="o">=</span><span class="n">Angle</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&#39;degree&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_observations</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">&#39;time_box&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="n">time_range</span><span class="o">=</span><span class="n">Time</span><span class="p">([</span><span class="s">&#39;2012-01-01T01:00:00&#39;</span><span class="p">,</span> <span class="s">&#39;2012-01-01T02:00:00&#39;</span><span class="p">],</span>
+<span class="gp">... </span>                                 <span class="n">format</span><span class="o">=</span><span class="s">&#39;isot&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="s">&#39;utc&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_observations</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">&#39;par_box&#39;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="s">&#39;ALT&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="n">value_range</span><span class="o">=</span><span class="n">Angle</span><span class="p">([</span><span class="mf">60.</span><span class="p">,</span> <span class="mf">70.</span><span class="p">],</span> <span class="s">&#39;degree&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_observations</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s">&#39;par_box&#39;</span><span class="p">,</span> <span class="n">variable</span><span class="o">=</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">,</span>
+<span class="gp">... </span>                 <span class="n">value_range</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selected_obs_table</span> <span class="o">=</span> <span class="n">obs_table</span><span class="o">.</span><span class="n">select_observations</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.obs.ObservationTable.select_range">
+<code class="descname">select_range</code><span class="sig-paren">(</span><em>selection_variable</em>, <em>value_range</em>, <em>inverted=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/obs/observation.html#ObservationTable.select_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an observation table, applying some selection.</p>
+<p>Generic function to apply a 1D box selection (min, max) to a
+table on any variable that is in the observation table and can
+be casted into a <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a> object.</p>
+<p>If the inverted flag is activated, the selection is applied to
+keep all elements outside the selected range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>selection_variable</strong> : str</p>
+<blockquote>
+<div><p>Name of variable to apply a cut (it should exist on the table).</p>
+</div></blockquote>
+<p><strong>value_range</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Quantity</span></code></a>-like</p>
+<blockquote>
+<div><p>Allowed range of values (min, max). The type should be
+consistent with the selection_variable.</p>
+</div></blockquote>
+<p><strong>inverted</strong> : bool, optional</p>
+<blockquote>
+<div><p>Invert selection: keep all entries outside the (min, max) range.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>obs_table</strong> : <a class="reference internal" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable" title="gammapy.obs.ObservationTable"><code class="xref py py-obj docutils literal"><span class="pre">ObservationTable</span></code></a></p>
+<blockquote class="last">
+<div><p>Observation table after selection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.obs.ObservationTable.select_time_range">
+<code class="descname">select_time_range</code><span class="sig-paren">(</span><em>selection_variable</em>, <em>time_range</em>, <em>inverted=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/obs/observation.html#ObservationTable.select_time_range"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.select_time_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make an observation table, applying a time selection.</p>
+<p>Apply a 1D box selection (min, max) to a
+table on any time variable that is in the observation table.
+It supports both fomats: absolute times in
+<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.time.Time.html#astropy.time.Time" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Time</span></code></a> variables and <a class="reference internal" href="../references.html#met" id="id1">[MET]</a>.</p>
+<p>If the inverted flag is activated, the selection is applied to
+keep all elements outside the selected range.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>selection_variable</strong> : str</p>
+<blockquote>
+<div><p>Name of variable to apply a cut (it should exist on the table).</p>
+</div></blockquote>
+<p><strong>time_range</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.time.Time.html#astropy.time.Time" title="(in Astropy v1.1.dev13205)"><code class="xref py py-obj docutils literal"><span class="pre">Time</span></code></a></p>
+<blockquote>
+<div><p>Allowed time range (min, max).</p>
+</div></blockquote>
+<p><strong>inverted</strong> : bool, optional</p>
+<blockquote>
+<div><p>Invert selection: keep all entries outside the (min, max) range.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>obs_table</strong> : <a class="reference internal" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable" title="gammapy.obs.ObservationTable"><code class="xref py py-obj docutils literal"><span class="pre">ObservationTable</span></code></a></p>
+<blockquote class="last">
+<div><p>Observation table after selection.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.obs.ObservationTable.summary">
+<code class="descname">summary</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/gammapy/obs/observation.html#ObservationTable.summary"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.obs.ObservationTable.html#gammapy.obs.ObservationTable.summary" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.obs.ObservationTable.html#">ObservationTable</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.obs.ObservationTable.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.obs.ObservationTable.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

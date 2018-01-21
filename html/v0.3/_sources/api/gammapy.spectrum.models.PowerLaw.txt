@@ -1,0 +1,46 @@
+
+
+PowerLaw
+================================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: PowerLaw
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~PowerLaw.factory
+      ~PowerLaw.integral
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: factory
+   .. automethod:: integral
+
+   
+   

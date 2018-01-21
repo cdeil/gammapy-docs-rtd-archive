@@ -1,0 +1,8 @@
+
+
+get_exclusion_region_map
+=============================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: get_exclusion_region_map

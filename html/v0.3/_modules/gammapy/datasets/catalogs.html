@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.datasets.catalogs &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/datasets/catalogs.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/datasets/catalogs",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/datasets/catalogs";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.datasets.catalogs</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;A selection of source catalogs of interest for gamma-ray astronomers.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.extern</span> <span class="kn">import</span> <span class="n">six</span>
+<span class="kn">from</span> <span class="nn">astropy.utils.data</span> <span class="kn">import</span> <span class="n">download_file</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span><span class="p">,</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">..extern.bunch</span> <span class="kn">import</span> <span class="n">Bunch</span>
+<span class="kn">from</span> <span class="nn">..datasets</span> <span class="kn">import</span> <span class="n">get_path</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;load_catalog_atnf&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_catalog_hess_galactic&#39;</span><span class="p">,</span>
+           <span class="c"># &#39;load_catalog_hgps&#39;,</span>
+           <span class="s">&#39;load_catalog_green&#39;</span><span class="p">,</span>
+           <span class="s">&#39;fetch_catalog_snrcat&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_catalog_tevcat&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<div class="viewcode-block" id="load_catalog_atnf"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_atnf.html#gammapy.datasets.load_catalog_atnf">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_atnf</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load ATNF pulsar catalog.</span>
+
+<span class="sd">    The `ATNF pulsar catalog &lt;http://www.atnf.csiro.au/people/pulsar/psrcat/&gt;`__</span>
+<span class="sd">    is **the** collection of information on all pulsars.</span>
+
+<span class="sd">    Unfortunately it&#39;s only available in a database format that can only</span>
+<span class="sd">    be read with their software.</span>
+
+<span class="sd">    This function loads a FITS copy of version 1.51 of the ATNF catalog:</span>
+<span class="sd">    http://www.atnf.csiro.au/research/pulsar/psrcat/catalogueHistory.html</span>
+
+<span class="sd">    The ``ATNF_v1.51.fits.gz`` file and ``make_atnf.py`` script are available</span>
+<span class="sd">    `here &lt;https://github.com/gammapy/gammapy-extra/blob/master/datasets/catalogs/&gt;`__.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/ATNF_v1.51.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_catalog_hess_galactic"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_hess_galactic.html#gammapy.datasets.load_catalog_hess_galactic">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_hess_galactic</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load catalog with info on HESS Galactic sources from individual publications.</span>
+
+<span class="sd">    Note that this is different from the</span>
+<span class="sd">    `official &quot;H.E.S.S. source catalog&quot; &lt;http://www.mpi-hd.mpg.de/hfm/HESS/pages/home/sources/&gt;`__.</span>
+
+<span class="sd">    The main difference is that we only include Galactic sources (and the ones</span>
+<span class="sd">    from the large Magellanic cloud) and that we collect more information</span>
+<span class="sd">    (morphological and spectral parameters, associations, paper links to ADS),</span>
+<span class="sd">    using the latest publication for each source.</span>
+
+<span class="sd">    Please drop us an email if you have any questions or find something incorrect or outdated.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/hess_galactic_catalog.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">load_catalog_hgps</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load the HESS Galactic plane survey (HGPS) catalog.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="load_catalog_green"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_green.html#gammapy.datasets.load_catalog_green">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_green</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load Green&#39;s supernova remnant catalog.</span>
+
+<span class="sd">    This is the May 2014 version of the catalog, which contains 294 sources.</span>
+
+<span class="sd">    References:</span>
+
+<span class="sd">    - http://www.mrao.cam.ac.uk/surveys/snrs/</span>
+<span class="sd">    - http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=VII/272</span>
+<span class="sd">    - http://adsabs.harvard.edu/abs/2014BASI...42...47G</span>
+
+<span class="sd">    The ``Green_2014-05.fits.gz`` file and ``make_green.py`` script are available</span>
+<span class="sd">    `here &lt;https://github.com/gammapy/gammapy-extra/blob/master/datasets/catalogs/&gt;`__.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/Green_2014-05.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_catalog_tevcat"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_tevcat.html#gammapy.datasets.load_catalog_tevcat">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_tevcat</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load TeVCat source catalog.</span>
+
+<span class="sd">    `TeVCat &lt;http://tevcat.uchicago.edu/&gt;`__ is an online catalog</span>
+<span class="sd">    for TeV astronomy.</span>
+
+<span class="sd">    Unfortunately the TeVCat is not available in electronic format.</span>
+
+<span class="sd">    This is a dump of TeVCat as of 2014-09-24 created by scraping their</span>
+<span class="sd">    web page using the script available</span>
+<span class="sd">    `here &lt;https://github.com/astropy/astroquery/pull/41&gt;`__.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/tevcat.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="fetch_catalog_snrcat"><a class="viewcode-back" href="../../../api/gammapy.datasets.fetch_catalog_snrcat.html#gammapy.datasets.fetch_catalog_snrcat">[docs]</a><span class="k">def</span> <span class="nf">fetch_catalog_snrcat</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fetch SNRcat supernova remnant catalog.</span>
+
+<span class="sd">    `SNRcat &lt;http://www.physics.umanitoba.ca/snr/SNRcat/&gt;`__</span>
+<span class="sd">    is a census of high-energy observations of Galactic supernova remnants.</span>
+
+<span class="sd">    This function downloads the following CSV-format tables</span>
+<span class="sd">    and adds some useful columns and unit information:</span>
+
+<span class="sd">    * http://www.physics.umanitoba.ca/snr/SNRcat/SNRdownload.php?table=SNR</span>
+<span class="sd">    * http://www.physics.umanitoba.ca/snr/SNRcat/SNRdownload.php?table=OBS</span>
+
+<span class="sd">    This only represents a subset of the information available in SNRcat,</span>
+<span class="sd">    to get at the rest we would have to scrape their web pages.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cache : bool, optional</span>
+<span class="sd">        Use cached version?</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : `~gammapy.extern.bunch.Bunch`</span>
+<span class="sd">        Dictionary-like object with attributes:</span>
+<span class="sd">          * `snr_table` (`~astropy.table.Table`) -- SNR info table</span>
+<span class="sd">          * `obs_table` (`~astropy.table.Table`) -- High-energy observation info table</span>
+
+<span class="sd">        Each table has a ``version`` string containing the download date in the ``table.meta`` dictionary.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">snr_table</span> <span class="o">=</span> <span class="n">_fetch_catalog_snrcat_snr_table</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+    <span class="n">obs_table</span> <span class="o">=</span> <span class="n">_fetch_catalog_snrcat_obs_table</span><span class="p">(</span><span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Bunch</span><span class="p">(</span><span class="n">snr_table</span><span class="o">=</span><span class="n">snr_table</span><span class="p">,</span> <span class="n">obs_table</span><span class="o">=</span><span class="n">obs_table</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">_fetch_catalog_snrcat_snr_table</span><span class="p">(</span><span class="n">cache</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://www.physics.umanitoba.ca/snr/SNRcat/SNRdownload.php?table=SNR&#39;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+
+    <span class="c"># Note: currently the first line contains this comment, which we skip via `header_start=1`</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii.csv&#39;</span><span class="p">,</span> <span class="n">header_start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;;&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_snrcat_parse_download_date</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c"># TODO: doesn&#39;t work properly ... don&#39;t call for now.</span>
+    <span class="c"># _snrcat_fix_na(table)</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;G&#39;</span><span class="p">,</span> <span class="s">&#39;Source_Name&#39;</span><span class="p">)</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;J2000_ra (hh:mm:ss)&#39;</span><span class="p">,</span> <span class="s">&#39;RAJ2000_str&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;J2000_dec (dd:mm:ss)&#39;</span><span class="p">,</span> <span class="s">&#39;DEJ2000_str&#39;</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;RAJ2000_str&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;hour&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">deg</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index_column</span><span class="p">(</span><span class="s">&#39;RAJ2000_str&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;RAJ2000&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;DEJ2000_str&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">deg</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index_column</span><span class="p">(</span><span class="s">&#39;DEJ2000_str&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;DEJ2000&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">radec</span> <span class="o">=</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;RAJ2000&#39;</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;DEJ2000&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">)</span>
+    <span class="n">galactic</span> <span class="o">=</span> <span class="n">radec</span><span class="o">.</span><span class="n">galactic</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">galactic</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;GLON&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">))</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">galactic</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">deg</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;GLAT&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">))</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;age_min (yr)&#39;</span><span class="p">,</span> <span class="s">&#39;age_min&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;age_min&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s">&#39;year&#39;</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;age_max (yr)&#39;</span><span class="p">,</span> <span class="s">&#39;age_max&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;age_max&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s">&#39;year&#39;</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;age_min&#39;</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;age_max&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index_column</span><span class="p">(</span><span class="s">&#39;age_max&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;age&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;year&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;distance_min (kpc)&#39;</span><span class="p">,</span> <span class="s">&#39;distance_min&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;distance_min&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s">&#39;kpc&#39;</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;distance_max (kpc)&#39;</span><span class="p">,</span> <span class="s">&#39;distance_max&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;distance_max&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s">&#39;kpc&#39;</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;distance_min&#39;</span><span class="p">],</span> <span class="n">table</span><span class="p">[</span><span class="s">&#39;distance_max&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index_column</span><span class="p">(</span><span class="s">&#39;distance_max&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">distance</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;distance&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;kpc&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;size_radio&#39;</span><span class="p">,</span> <span class="s">&#39;diameter_radio_str&#39;</span><span class="p">)</span>
+    <span class="n">diameter_radio_mean</span> <span class="o">=</span> <span class="n">_snrcat_parse_diameter</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;diameter_radio_str&#39;</span><span class="p">])</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index_column</span><span class="p">(</span><span class="s">&#39;diameter_radio_str&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">diameter_radio_mean</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;diameter_radio_mean&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;arcmin&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;size_X&#39;</span><span class="p">,</span> <span class="s">&#39;diameter_xray_str&#39;</span><span class="p">)</span>
+    <span class="n">diameter_xray_mean</span> <span class="o">=</span> <span class="n">_snrcat_parse_diameter</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="s">&#39;diameter_xray_str&#39;</span><span class="p">])</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">index_column</span><span class="p">(</span><span class="s">&#39;diameter_xray_str&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">add_column</span><span class="p">(</span><span class="n">Column</span><span class="p">(</span><span class="n">diameter_xray_mean</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;diameter_xray_mean&#39;</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;arcmin&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;size_coarse (arcmin)&#39;</span><span class="p">,</span> <span class="s">&#39;diameter_mean&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="p">[</span><span class="s">&#39;diameter_mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unit</span> <span class="o">=</span> <span class="s">&#39;arcmin&#39;</span>
+
+    <span class="n">table</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="s">&#39;size_imprecise&#39;</span><span class="p">,</span> <span class="s">&#39;diameter_mean_is_imprecise&#39;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<span class="k">def</span> <span class="nf">_fetch_catalog_snrcat_obs_table</span><span class="p">(</span><span class="n">cache</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s">&#39;http://www.physics.umanitoba.ca/snr/SNRcat/SNRdownload.php?table=OBS&#39;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">download_file</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">cache</span><span class="o">=</span><span class="n">cache</span><span class="p">)</span>
+
+    <span class="c"># Note: currently the first line contains this comment, which we skip via `header_start=1`</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii.csv&#39;</span><span class="p">,</span> <span class="n">header_start</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s">&#39;;&#39;</span><span class="p">)</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">&#39;url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">url</span>
+    <span class="n">table</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">_snrcat_parse_download_date</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+    <span class="c"># TODO: doesn&#39;t work properly ... don&#39;t call for now.</span>
+    <span class="c"># _snrcat_fix_na(table)</span>
+
+    <span class="k">return</span> <span class="n">table</span>
+
+
+<span class="k">def</span> <span class="nf">_snrcat_fix_na</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Fix N/A entries in string columns in SNRcat.&quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">colname</span> <span class="ow">in</span> <span class="n">table</span><span class="o">.</span><span class="n">colnames</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">six</span><span class="o">.</span><span class="n">text_type</span><span class="p">):</span>
+            <span class="n">mask1</span> <span class="o">=</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;N / A&#39;</span><span class="p">)</span>
+            <span class="n">mask2</span> <span class="o">=</span> <span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span> <span class="o">==</span> <span class="s">&#39;N/A&#39;</span><span class="p">)</span>
+            <span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span><span class="o">.</span><span class="n">mask</span> <span class="o">=</span> <span class="n">mask1</span> <span class="o">|</span> <span class="n">mask2</span>
+            <span class="n">table</span><span class="p">[</span><span class="n">colname</span><span class="p">]</span><span class="o">.</span><span class="n">fill_value</span> <span class="o">=</span> <span class="s">&#39;&#39;</span>
+
+
+<span class="k">def</span> <span class="nf">_snrcat_parse_download_date</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span>
+    <span class="c"># Format: &quot;This file was downloaded on 2015-06-07T03:39:53 CDT ...&quot;</span>
+    <span class="n">tokens</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="n">date</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">date</span><span class="p">[:</span><span class="mi">10</span><span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_snrcat_parse_diameter</span><span class="p">(</span><span class="n">text_col</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse SNRcat diameter string column&quot;&quot;&quot;</span>
+    <span class="n">d_means</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">text</span> <span class="ow">in</span> <span class="n">text_col</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="c"># Parse this text field:</span>
+            <span class="k">if</span> <span class="s">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+                <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;x&#39;</span><span class="p">)</span>
+                <span class="n">d_major</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="o">.</span><span class="n">arcmin</span>
+                <span class="n">d_minor</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">b</span><span class="p">)</span><span class="o">.</span><span class="n">arcmin</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">d_major</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">text</span><span class="p">)</span><span class="o">.</span><span class="n">arcmin</span>
+                <span class="n">d_minor</span> <span class="o">=</span> <span class="n">d_major</span>
+            <span class="n">d_mean</span> <span class="o">=</span> <span class="n">_snr_mean_diameter</span><span class="p">(</span><span class="n">d_major</span><span class="p">,</span> <span class="n">d_minor</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="c"># print(&#39;Parsing error:&#39;, text)</span>
+            <span class="n">d_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+        <span class="n">d_means</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">d_mean</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">d_means</span>
+
+
+<span class="k">def</span> <span class="nf">_snr_mean_diameter</span><span class="p">(</span><span class="n">d_major</span><span class="p">,</span> <span class="n">d_minor</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute geometric mean diameter (preserves area)&quot;&quot;&quot;</span>
+    <span class="n">diameter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">d_major</span> <span class="o">*</span> <span class="n">d_minor</span><span class="p">)</span>
+    <span class="c"># If no `d_minor` is given, use `d_major` as mean radius</span>
+    <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">invalid</span><span class="o">=</span><span class="s">&#39;ignore&#39;</span><span class="p">):</span>
+        <span class="n">diameter</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d_minor</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">diameter</span><span class="p">,</span> <span class="n">d_major</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">diameter</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="catalogs.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

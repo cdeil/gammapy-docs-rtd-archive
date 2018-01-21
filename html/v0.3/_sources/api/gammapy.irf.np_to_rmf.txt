@@ -1,0 +1,8 @@
+
+
+np_to_rmf
+=====================
+
+.. currentmodule:: gammapy.irf
+
+.. autofunction:: np_to_rmf

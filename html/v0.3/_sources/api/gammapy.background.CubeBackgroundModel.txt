@@ -1,0 +1,91 @@
+
+
+CubeBackgroundModel
+======================================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: CubeBackgroundModel
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~CubeBackgroundModel.det_wcs
+      ~CubeBackgroundModel.energy_bin_centers
+      ~CubeBackgroundModel.image_bin_centers
+      ~CubeBackgroundModel.image_extent
+      ~CubeBackgroundModel.spectrum_extent
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~CubeBackgroundModel.find_det_bin
+      ~CubeBackgroundModel.find_det_bin_edges
+      ~CubeBackgroundModel.find_energy_bin
+      ~CubeBackgroundModel.find_energy_bin_edges
+      ~CubeBackgroundModel.from_fits_image
+      ~CubeBackgroundModel.from_fits_table
+      ~CubeBackgroundModel.plot_image
+      ~CubeBackgroundModel.plot_spectrum
+      ~CubeBackgroundModel.read
+      ~CubeBackgroundModel.to_fits_image
+      ~CubeBackgroundModel.to_fits_table
+      ~CubeBackgroundModel.to_table
+      ~CubeBackgroundModel.write
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: det_wcs
+   .. autoattribute:: energy_bin_centers
+   .. autoattribute:: image_bin_centers
+   .. autoattribute:: image_extent
+   .. autoattribute:: spectrum_extent
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: find_det_bin
+   .. automethod:: find_det_bin_edges
+   .. automethod:: find_energy_bin
+   .. automethod:: find_energy_bin_edges
+   .. automethod:: from_fits_image
+   .. automethod:: from_fits_table
+   .. automethod:: plot_image
+   .. automethod:: plot_spectrum
+   .. automethod:: read
+   .. automethod:: to_fits_image
+   .. automethod:: to_fits_table
+   .. automethod:: to_table
+   .. automethod:: write
+
+   
+   

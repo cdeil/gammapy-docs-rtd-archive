@@ -1,0 +1,29 @@
+
+
+BrokenPowerLaw
+======================================
+
+.. currentmodule:: gammapy.spectrum.models
+
+.. autoclass:: BrokenPowerLaw
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

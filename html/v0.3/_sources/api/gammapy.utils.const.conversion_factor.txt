@@ -1,0 +1,8 @@
+
+
+conversion_factor
+=====================================
+
+.. currentmodule:: gammapy.utils.const
+
+.. autofunction:: conversion_factor

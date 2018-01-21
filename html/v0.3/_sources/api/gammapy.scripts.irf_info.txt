@@ -1,0 +1,8 @@
+
+
+irf_info
+========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: irf_info

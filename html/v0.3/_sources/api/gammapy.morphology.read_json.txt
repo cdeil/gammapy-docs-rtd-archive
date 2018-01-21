@@ -1,0 +1,8 @@
+
+
+read_json
+============================
+
+.. currentmodule:: gammapy.morphology
+
+.. autofunction:: read_json

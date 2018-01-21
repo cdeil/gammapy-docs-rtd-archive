@@ -1,0 +1,8 @@
+
+
+abramowski_effective_area
+=====================================
+
+.. currentmodule:: gammapy.irf
+
+.. autofunction:: abramowski_effective_area

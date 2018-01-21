@@ -1,0 +1,286 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.utils.wcs &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/utils/wcs.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/utils/wcs",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/utils/wcs";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.utils.wcs</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;WCS related utility functions.&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;linear_wcs_to_arrays&#39;</span><span class="p">,</span>
+           <span class="s">&#39;linear_arrays_to_wcs&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+
+
+<div class="viewcode-block" id="linear_wcs_to_arrays"><a class="viewcode-back" href="../../../api/gammapy.utils.wcs.linear_wcs_to_arrays.html#gammapy.utils.wcs.linear_wcs_to_arrays">[docs]</a><span class="k">def</span> <span class="nf">linear_wcs_to_arrays</span><span class="p">(</span><span class="n">wcs</span><span class="p">,</span> <span class="n">nbins_x</span><span class="p">,</span> <span class="n">nbins_y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a 2D linear binning from a WCS object.</span>
+
+<span class="sd">    This method gives the correct answer only for linear X, Y binning.</span>
+<span class="sd">    The method expects angular quantities in the WCS object.</span>
+<span class="sd">    X is identified with WCS axis 1, Y is identified with WCS axis 2.</span>
+<span class="sd">    The method needs the number of bins as input, since it is not in</span>
+<span class="sd">    the WCS object.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">        WCS object describing the bin coordinates</span>
+<span class="sd">    nbins_x : int</span>
+<span class="sd">        number of bins in X coordinate</span>
+<span class="sd">    nbins_y : int</span>
+<span class="sd">        number of bins in Y coordinate</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    bin_edges_x : `~astropy.coordinates.Angle`</span>
+<span class="sd">        array with the bin edges for the X coordinate</span>
+<span class="sd">    bin_edges_y : `~astropy.coordinates.Angle`</span>
+<span class="sd">        array with the bin edges for the Y coordinate</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># check number of dimensions</span>
+    <span class="k">if</span> <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">naxis</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;Expected exactly 2 dimensions, got {}&quot;</span>
+                         <span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">naxis</span><span class="p">))</span>
+
+    <span class="c"># check that wcs axes are linear</span>
+    <span class="c"># TODO: is there an easy way to do this?</span>
+
+    <span class="c"># set bins</span>
+    <span class="n">unit_x</span><span class="p">,</span> <span class="n">unit_y</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span>
+    <span class="n">delta_x</span><span class="p">,</span> <span class="n">delta_y</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span>
+    <span class="n">delta_x</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">delta_x</span><span class="p">,</span> <span class="n">unit_x</span><span class="p">)</span>
+    <span class="n">delta_y</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">delta_y</span><span class="p">,</span> <span class="n">unit_y</span><span class="p">)</span>
+    <span class="n">bin_edges_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nbins_x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">delta_x</span>
+    <span class="n">bin_edges_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">nbins_y</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">delta_y</span>
+    <span class="c"># translate bins to correct values according to WCS reference</span>
+    <span class="c"># In FITS, the edge of the image is at pixel coordinate +0.5.</span>
+    <span class="n">refpix_x</span><span class="p">,</span> <span class="n">refpix_y</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crpix</span>
+    <span class="n">refval_x</span><span class="p">,</span> <span class="n">refval_y</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crval</span>
+    <span class="n">refval_x</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">refval_x</span><span class="p">,</span> <span class="n">unit_x</span><span class="p">)</span>
+    <span class="n">refval_y</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">refval_y</span><span class="p">,</span> <span class="n">unit_y</span><span class="p">)</span>
+    <span class="n">bin_edges_x</span> <span class="o">+=</span> <span class="n">refval_x</span> <span class="o">-</span> <span class="p">(</span><span class="n">refpix_x</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">delta_x</span>
+    <span class="n">bin_edges_y</span> <span class="o">+=</span> <span class="n">refval_y</span> <span class="o">-</span> <span class="p">(</span><span class="n">refpix_y</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">delta_y</span>
+
+    <span class="c"># set small values (compared to delta (i.e. step)) to 0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bin_edges_x</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">bin_edges_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">delta_x</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.e-10</span><span class="p">:</span>
+            <span class="n">bin_edges_x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">unit_x</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">bin_edges_y</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">bin_edges_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">/</span><span class="n">delta_y</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1.e-10</span><span class="p">:</span>
+            <span class="n">bin_edges_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">unit_y</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bin_edges_x</span><span class="p">,</span> <span class="n">bin_edges_y</span>
+
+</div>
+<div class="viewcode-block" id="linear_arrays_to_wcs"><a class="viewcode-back" href="../../../api/gammapy.utils.wcs.linear_arrays_to_wcs.html#gammapy.utils.wcs.linear_arrays_to_wcs">[docs]</a><span class="k">def</span> <span class="nf">linear_arrays_to_wcs</span><span class="p">(</span><span class="n">name_x</span><span class="p">,</span> <span class="n">name_y</span><span class="p">,</span> <span class="n">bin_edges_x</span><span class="p">,</span> <span class="n">bin_edges_y</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make a 2D linear WCS object from arrays of bin edges.</span>
+
+<span class="sd">    This method gives the correct answer only for linear X, Y binning.</span>
+<span class="sd">    X is identified with WCS axis 1, Y is identified with WCS axis 2.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name_x : str</span>
+<span class="sd">        name of X coordinate, to be used as &#39;CTYPE&#39; value</span>
+<span class="sd">    name_y : str</span>
+<span class="sd">        name of Y coordinate, to be used as &#39;CTYPE&#39; value</span>
+<span class="sd">    bin_edges_x : `~astropy.coordinates.Angle`</span>
+<span class="sd">        array with the bin edges for the X coordinate</span>
+<span class="sd">    bin_edges_y : `~astropy.coordinates.Angle`</span>
+<span class="sd">        array with the bin edges for the Y coordinate</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">        WCS object describing the bin coordinates</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># check units</span>
+    <span class="n">unit_x</span> <span class="o">=</span> <span class="n">bin_edges_x</span><span class="o">.</span><span class="n">unit</span>
+    <span class="n">unit_y</span> <span class="o">=</span> <span class="n">bin_edges_y</span><span class="o">.</span><span class="n">unit</span>
+    <span class="k">if</span> <span class="n">unit_x</span> <span class="o">!=</span> <span class="n">unit_y</span><span class="p">:</span>
+        <span class="n">ss_error</span> <span class="o">=</span> <span class="s">&quot;Units of X ({0}) and Y ({1}) bins do not match!&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">unit_x</span><span class="p">,</span> <span class="n">unit_y</span><span class="p">)</span>
+        <span class="n">ss_error</span> <span class="o">+=</span> <span class="s">&quot; Is this expected?&quot;</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="n">ss_error</span><span class="p">)</span>
+
+    <span class="c"># check that bins are linear (edges equally spaced)</span>
+    <span class="n">bin_widths_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges_x</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">bin_widths_x</span><span class="p">,</span> <span class="n">bin_widths_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The X bins are not linear! Diff = {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges_x</span><span class="o">.</span><span class="n">value</span><span class="p">)))</span>
+    <span class="n">bin_widths_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges_y</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">bin_widths_y</span><span class="p">,</span> <span class="n">bin_widths_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&quot;The Y bins are not linear! Diff = {}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">bin_edges_y</span><span class="o">.</span><span class="n">value</span><span class="p">)))</span>
+
+    <span class="c"># Create a new WCS object. The number of axes must be set from the start</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">naxis</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+    <span class="c"># Set up DET coordinates in degrees</span>
+    <span class="n">nbins_x</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_edges_x</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">nbins_y</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">bin_edges_y</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">range_x</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">([</span><span class="n">bin_edges_x</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bin_edges_x</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">range_y</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">([</span><span class="n">bin_edges_y</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bin_edges_y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">delta_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">range_x</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">range_x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">nbins_x</span>
+    <span class="n">delta_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">range_y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">range_y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">nbins_y</span>
+    <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span> <span class="o">=</span> <span class="p">[</span><span class="n">name_x</span><span class="p">,</span> <span class="n">name_y</span><span class="p">]</span>
+    <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span> <span class="o">=</span> <span class="p">[</span><span class="n">unit_x</span><span class="p">,</span> <span class="n">unit_y</span><span class="p">]</span>
+    <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span> <span class="o">=</span> <span class="p">[</span><span class="n">delta_x</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">unit_x</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">delta_y</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">unit_y</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+    <span class="c"># ref as lower left corner (start of (X, Y) bin coordinates)</span>
+    <span class="c"># coordinate start at pix = 0.5</span>
+    <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crpix</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">]</span>
+    <span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crval</span> <span class="o">=</span> <span class="p">[(</span><span class="n">bin_edges_x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crpix</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">delta_x</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">unit_x</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                   <span class="p">(</span><span class="n">bin_edges_y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">crpix</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span><span class="o">*</span><span class="n">delta_y</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">unit_y</span><span class="p">)</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">wcs</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="wcs.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

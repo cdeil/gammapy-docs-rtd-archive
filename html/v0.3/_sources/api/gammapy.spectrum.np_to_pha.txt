@@ -1,0 +1,8 @@
+
+
+np_to_pha
+==========================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: np_to_pha

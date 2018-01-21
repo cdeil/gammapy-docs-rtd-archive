@@ -1,0 +1,54 @@
+
+
+FluxDistribution
+================================
+
+.. currentmodule:: gammapy.catalog
+
+.. autoclass:: FluxDistribution
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~FluxDistribution.fit_power_law
+      ~FluxDistribution.plot_differential_count
+      ~FluxDistribution.plot_differential_flux
+      ~FluxDistribution.plot_integral_count
+      ~FluxDistribution.plot_integral_flux
+      ~FluxDistribution.print_info
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: fit_power_law
+   .. automethod:: plot_differential_count
+   .. automethod:: plot_differential_flux
+   .. automethod:: plot_integral_count
+   .. automethod:: plot_integral_flux
+   .. automethod:: print_info
+
+   
+   

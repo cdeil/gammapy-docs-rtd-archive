@@ -1,0 +1,433 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.obs.datastore &mdash; gammapy v0.3</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.3',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="top" title="gammapy v0.3" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'/>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/obs/datastore.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.3",
+    language: "en",
+    page: "_modules/gammapy/obs/datastore",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "ca867804d285620b924a351759160108b986f5bd"
+  }
+  // Old variables
+  var doc_version = "v0.3";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/obs/datastore";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body role="document">
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.3/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.3</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for gammapy.obs.datastore</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">SkyCoord</span>
+<span class="kn">from</span> <span class="nn">..catalog</span> <span class="kn">import</span> <span class="n">skycoord_from_table</span>
+<span class="kn">from</span> <span class="nn">..obs</span> <span class="kn">import</span> <span class="n">ObservationTable</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;DataStore&#39;</span><span class="p">,</span>
+           <span class="s">&#39;DataStoreIndexTable&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<span class="k">def</span> <span class="nf">_make_filename_hess_scheme</span><span class="p">(</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="s">&#39;events&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Make filename string for the HESS storage scheme.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obs_id : int</span>
+<span class="sd">        Observation ID.</span>
+<span class="sd">    filetype : {&#39;events&#39;, &#39;effective area&#39;, &#39;psf&#39;, &#39;background&#39;}</span>
+<span class="sd">        Type of file.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; _make_filename_hess_scheme(obs_id=89565, filetype=&#39;effective area&#39;)</span>
+<span class="sd">    &#39;run089400-089599/run089565/hess_aeff_2d_089565.fits.gz&#39;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">obs_id_min</span> <span class="o">=</span> <span class="n">obs_id</span> <span class="o">-</span> <span class="p">(</span><span class="n">obs_id</span> <span class="o">%</span> <span class="mi">200</span><span class="p">)</span>
+    <span class="n">obs_id_max</span> <span class="o">=</span> <span class="n">obs_id_min</span> <span class="o">+</span> <span class="mi">199</span>
+    <span class="n">group_folder</span> <span class="o">=</span> <span class="s">&#39;run{:06d}-{:06d}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_id_min</span><span class="p">,</span> <span class="n">obs_id_max</span><span class="p">)</span>
+    <span class="n">obs_folder</span> <span class="o">=</span> <span class="s">&#39;run{:06d}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_id</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s">&#39;events&#39;</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;events&#39;</span>
+    <span class="k">elif</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s">&#39;psf&#39;</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;psf_king&#39;</span>
+    <span class="k">elif</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s">&#39;effective area&#39;</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;aeff_2d&#39;</span>
+    <span class="k">elif</span> <span class="n">filetype</span> <span class="o">==</span> <span class="s">&#39;background&#39;</span><span class="p">:</span>
+        <span class="n">label</span> <span class="o">=</span> <span class="s">&#39;bkg_offruns&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Unknown filetype: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filetype</span><span class="p">))</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;hess_{}_{:06d}.fits.gz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">obs_id</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">group_folder</span><span class="p">,</span> <span class="n">obs_folder</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="DataStoreIndexTable"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStoreIndexTable.html#gammapy.obs.DataStoreIndexTable">[docs]</a><span class="k">class</span> <span class="nc">DataStoreIndexTable</span><span class="p">(</span><span class="n">Table</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Data store index table.</span>
+
+<span class="sd">    The index table is a FITS file that stores which observations</span>
+<span class="sd">    are available and what their most important parameters are.</span>
+
+<span class="sd">    This makes it possible to select observations of interest and find out</span>
+<span class="sd">    what data is available without opening up thousands of FITS files</span>
+<span class="sd">    that contain the event list and IRFs and have similar information in the</span>
+<span class="sd">    FITS header.</span>
+
+<span class="sd">    TODO: how is this different from an `gammapy.obs.ObservationTable`?</span>
+<span class="sd">    Can they be combined or code be shared?</span>
+<span class="sd">    (I think we want both, but the `DataStoreIndexTable` contains more info</span>
+<span class="sd">    like event list and IRF file names and basic info</span>
+<span class="sd">    ... maybe it should be a sub-class of `gammapy.obs.ObservationTable`?)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># For now I&#39;ve decided to not do the cleanup in `__init__`,</span>
+    <span class="c"># but instead in `read`.</span>
+    <span class="c"># See https://groups.google.com/d/msg/astropy-dev/0EaOw9peWSk/MSjH7q_7htoJ</span>
+    <span class="c"># def __init__(self, *args, **kwargs):</span>
+    <span class="c">#     super(DataStoreIndexTable, self).__init__(*args, **kwargs)</span>
+    <span class="c">#     self._fixes()</span>
+
+    <span class="nd">@classmethod</span>
+<div class="viewcode-block" id="DataStoreIndexTable.read"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStoreIndexTable.html#gammapy.obs.DataStoreIndexTable.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read from FITS file. See `~astropy.table.Table.read`.&quot;&quot;&quot;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">cls</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">_init_cleanup</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">table</span>
+</div>
+    <span class="k">def</span> <span class="nf">_init_cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Rename to canonical column names</span>
+        <span class="n">renames</span> <span class="o">=</span> <span class="p">[(</span><span class="s">&#39;RA_PNT&#39;</span><span class="p">,</span> <span class="s">&#39;RA&#39;</span><span class="p">),</span>
+                   <span class="p">(</span><span class="s">&#39;DEC_PNT&#39;</span><span class="p">,</span> <span class="s">&#39;DEC&#39;</span><span class="p">)</span>
+                   <span class="p">]</span>
+        <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">new_name</span> <span class="ow">in</span> <span class="n">renames</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rename_column</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">new_name</span><span class="p">)</span>
+
+        <span class="c"># Add useful extra columns</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">([</span><span class="s">&#39;GLON&#39;</span><span class="p">,</span> <span class="s">&#39;GLAT&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">colnames</span><span class="p">):</span>
+            <span class="n">skycoord</span> <span class="o">=</span> <span class="n">skycoord_from_table</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">galactic</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">skycoord</span><span class="o">.</span><span class="n">l</span><span class="o">.</span><span class="n">degree</span>
+            <span class="bp">self</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">skycoord</span><span class="o">.</span><span class="n">b</span><span class="o">.</span><span class="n">degree</span>
+
+<div class="viewcode-block" id="DataStoreIndexTable.summary"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStoreIndexTable.html#gammapy.obs.DataStoreIndexTable.summary">[docs]</a>    <span class="k">def</span> <span class="nf">summary</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Data store index table summary:</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Number of observations: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+        <span class="n">obs_id</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">]</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Observation IDs: {} to {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_id</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">obs_id</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Dates: {} to {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s">&#39;TODO&#39;</span><span class="p">,</span> <span class="s">&#39;TODO&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ss</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">radec</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;ICRS sky coordinates (`~astropy.coordinates.SkyCoord`)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s">&#39;RA&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s">&#39;DEC&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s">&#39;icrs&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">galactic</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Galactic sky coordinates (`~astropy.coordinates.SkyCoord`)&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">SkyCoord</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="s">&#39;GLON&#39;</span><span class="p">],</span> <span class="bp">self</span><span class="p">[</span><span class="s">&#39;GLAT&#39;</span><span class="p">],</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">,</span> <span class="n">frame</span><span class="o">=</span><span class="s">&#39;galactic&#39;</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="DataStore"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore">[docs]</a><span class="k">class</span> <span class="nc">DataStore</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Data store - convenient way to access and select data.</span>
+
+<span class="sd">    This is an ad-hoc prototype implementation for HESS of what will be the &quot;archive&quot;</span>
+<span class="sd">    and &quot;archive interface&quot; for CTA.</span>
+
+<span class="sd">    TODO: add methods to sync with remote datastore...</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dir : str</span>
+<span class="sd">        Data store directory on user machine.</span>
+<span class="sd">    scheme : {&#39;hess&#39;}</span>
+<span class="sd">        Scheme of organising and naming the files.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">dir</span><span class="p">,</span> <span class="n">scheme</span><span class="o">=</span><span class="s">&#39;hess&#39;</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dir</span> <span class="o">=</span> <span class="nb">dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_table_filename</span> <span class="o">=</span> <span class="s">&#39;runinfo.fits&#39;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_table_filename</span><span class="p">)</span>
+        <span class="k">print</span><span class="p">(</span><span class="s">&#39;Reading {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">index_table</span> <span class="o">=</span> <span class="n">DataStoreIndexTable</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span> <span class="o">=</span> <span class="n">scheme</span>
+
+<div class="viewcode-block" id="DataStore.info"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.info">[docs]</a>    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Summary info string.&quot;&quot;&quot;</span>
+        <span class="n">ss</span> <span class="o">=</span> <span class="s">&#39;Data store summary info:</span><span class="se">\n</span><span class="s">&#39;</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Directory: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Index table: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_table_filename</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="s">&#39;Scheme: {}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scheme</span><span class="p">)</span>
+        <span class="n">ss</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_table</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">ss</span>
+</div>
+<div class="viewcode-block" id="DataStore.check_integrity"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.check_integrity">[docs]</a>    <span class="k">def</span> <span class="nf">check_integrity</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check integrity, i.e. whether index table and files match.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Checking event list files&#39;</span><span class="p">)</span>
+        <span class="n">available</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_available_event_lists</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="o">~</span><span class="n">available</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;Number of missing event list files: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">invert</span><span class="p">(</span><span class="n">available</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()))</span>
+
+        <span class="c"># TODO: implement better, more complete integrity checks.</span>
+</div>
+<div class="viewcode-block" id="DataStore.make_table_of_files"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.make_table_of_files">[docs]</a>    <span class="k">def</span> <span class="nf">make_table_of_files</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">observation_table</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">filetypes</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;events&#39;</span><span class="p">]):</span>
+        <span class="sd">&quot;&quot;&quot;Make list of files in the datastore directory.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        observation_table : `~gammapy.obs.ObservationTable` or None</span>
+<span class="sd">            Observation table (``None`` means select all observations).</span>
+<span class="sd">        filetypes : list of str</span>
+<span class="sd">            File types (TODO: document in a central location and reference from here).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        table : `~gammapy.obs.ObservationTable`</span>
+<span class="sd">            Table summarising info about files.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">observation_table</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">observation_table</span> <span class="o">=</span> <span class="n">ObservationTable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">index_table</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">observation</span> <span class="ow">in</span> <span class="n">observation_table</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">filetype</span> <span class="ow">in</span> <span class="n">filetypes</span><span class="p">:</span>
+                <span class="n">row</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+                <span class="n">row</span><span class="p">[</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">observation</span><span class="p">[</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">]</span>
+                <span class="n">row</span><span class="p">[</span><span class="s">&#39;filetype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filetype</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">observation</span><span class="p">[</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">],</span> <span class="n">filetype</span><span class="o">=</span><span class="n">filetype</span><span class="p">,</span> <span class="n">abspath</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                <span class="n">row</span><span class="p">[</span><span class="s">&#39;filename&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">filename</span>
+                <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ObservationTable</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">,</span> <span class="s">&#39;filetype&#39;</span><span class="p">,</span> <span class="s">&#39;filename&#39;</span><span class="p">])</span>
+</div>
+<div class="viewcode-block" id="DataStore.make_summary_plots"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.make_summary_plots">[docs]</a>    <span class="k">def</span> <span class="nf">make_summary_plots</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make some plots summarising the available observations.</span>
+
+<span class="sd">        E.g. histograms of time, run duration, muon efficiency, zenith angle, ...</span>
+<span class="sd">        Aitoff plot showing run locations.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+</div>
+<div class="viewcode-block" id="DataStore.filename"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.filename">[docs]</a>    <span class="k">def</span> <span class="nf">filename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obs_id</span><span class="p">,</span> <span class="n">filetype</span><span class="o">=</span><span class="s">&#39;events&#39;</span><span class="p">,</span> <span class="n">abspath</span><span class="o">=</span><span class="bp">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;File name (relative to datastore `dir`).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        obs_id : int</span>
+<span class="sd">            Observation ID.</span>
+<span class="sd">        filetype : {&#39;events&#39;, &#39;effective area&#39;, &#39;psf&#39;, &#39;background&#39;}</span>
+<span class="sd">            Type of file.</span>
+<span class="sd">        abspath : bool</span>
+<span class="sd">            Absolute path (including data store dir)?</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Filename (including the directory path).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scheme</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scheme</span>
+
+        <span class="k">if</span> <span class="n">scheme</span> <span class="o">==</span> <span class="s">&#39;hess&#39;</span><span class="p">:</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">_make_filename_hess_scheme</span><span class="p">(</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">filetype</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Invalid scheme: {}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scheme</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">abspath</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dir</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">filename</span>
+</div>
+<div class="viewcode-block" id="DataStore.make_observation_table"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.make_observation_table">[docs]</a>    <span class="k">def</span> <span class="nf">make_observation_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make an observation table, applying some selection.</span>
+
+<span class="sd">        Wrapper function for `~gammapy.obs.ObservationTable.select_observations`.</span>
+<span class="sd">        For details, please refer to the doc on the mentioned function.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        selection : dict</span>
+<span class="sd">            Dictionary with a few keywords for applying selection cuts.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        table : `~gammapy.obs.ObservationTable`</span>
+<span class="sd">            Observation table after selection.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; selection = dict(type=&#39;sky_box&#39;, frame=&#39;icrs&#39;,</span>
+<span class="sd">        ...                  lon=Angle([150, 300], &#39;degree&#39;),</span>
+<span class="sd">        ...                  lat=Angle([-50, 0], &#39;degree&#39;),</span>
+<span class="sd">        ...                  border=Angle(2, &#39;degree&#39;))</span>
+<span class="sd">        &gt;&gt;&gt; run_list = data_store.make_observation_table(selection)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_table</span>
+
+        <span class="n">table</span> <span class="o">=</span> <span class="n">ObservationTable</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">selection</span><span class="p">:</span>
+            <span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">select_observations</span><span class="p">(</span><span class="n">selection</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">table</span>
+</div>
+<div class="viewcode-block" id="DataStore.check_available_event_lists"><a class="viewcode-back" href="../../../api/gammapy.obs.DataStore.html#gammapy.obs.DataStore.check_available_event_lists">[docs]</a>    <span class="k">def</span> <span class="nf">check_available_event_lists</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if all event lists are available.</span>
+
+<span class="sd">        TODO: extend this function, or combine e.g. with ``make_table_of_files``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        file_available : `~numpy.ndarray`</span>
+<span class="sd">            Boolean mask which files are available.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">observation_table</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_table</span>
+        <span class="n">file_available</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">observation_table</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="s">&#39;bool&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">observation_table</span><span class="p">)):</span>
+            <span class="n">obs_id</span> <span class="o">=</span> <span class="n">observation_table</span><span class="p">[</span><span class="s">&#39;OBS_ID&#39;</span><span class="p">][</span><span class="n">ii</span><span class="p">]</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">(</span><span class="n">obs_id</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+                <span class="n">file_available</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="bp">False</span>
+                <span class="k">if</span> <span class="n">logger</span><span class="p">:</span>
+                    <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s">&#39;For OBS_ID = {:06d} the event list file is missing: {}&#39;</span>
+                                   <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obs_id</span><span class="p">,</span> <span class="n">filename</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">file_available</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="datastore.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.3.1. &nbsp;
+    Last built 13 Aug 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

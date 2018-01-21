@@ -1,0 +1,61 @@
+
+
+DataStoreIndexTable
+===============================
+
+.. currentmodule:: gammapy.obs
+
+.. autoclass:: DataStoreIndexTable
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~DataStoreIndexTable.galactic
+      ~DataStoreIndexTable.radec
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~DataStoreIndexTable.read
+      ~DataStoreIndexTable.summary
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: galactic
+   .. autoattribute:: radec
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: read
+   .. automethod:: summary
+
+   
+   

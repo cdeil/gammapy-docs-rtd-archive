@@ -1,0 +1,8 @@
+
+
+make_ds9_region
+====================================
+
+.. currentmodule:: gammapy.utils.region
+
+.. autofunction:: make_ds9_region

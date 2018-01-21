@@ -1,0 +1,8 @@
+
+
+f_with_err
+====================================
+
+.. currentmodule:: gammapy.spectrum.powerlaw
+
+.. autofunction:: f_with_err

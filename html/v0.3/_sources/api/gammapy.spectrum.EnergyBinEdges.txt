@@ -1,0 +1,44 @@
+
+
+EnergyBinEdges
+===============================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autoclass:: EnergyBinEdges
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EnergyBinEdges.info
+      ~EnergyBinEdges.log_centers
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: info
+   .. automethod:: log_centers
+
+   
+   

@@ -1,0 +1,8 @@
+
+
+background_cube
+===============================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: background_cube

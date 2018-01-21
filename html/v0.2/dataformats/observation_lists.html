@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Observation lists &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Data Formats" href="index.html" />
+    <link rel="next" title="Source models" href="source_models.html" />
+    <link rel="prev" title="Point spread function" href="psf.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/dataformats/observation_lists.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "dataformats/observation_lists",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "dataformats/observation_lists";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="source_models.html" title="Source models">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="psf.html" title="Point spread function">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="index.html" accesskey="U">Data Formats</a> &raquo;</li>
+      
+      <li>Observation lists</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="observation-lists">
+<span id="dataformats-observation-lists"></span><h1>Observation lists<a class="headerlink" href="observation_lists.html#observation-lists" title="Permalink to this headline">¶</a></h1>
+<p>Run lists specify a list of observation runs to be processed by a given tool.</p>
+<p>In the end the tool will usually generate input and output data filenames from
+the information in the run list. These filenames can either be given directly
+or there can be naming conventions, e.g. the event list for run <tt class="docutils literal"><span class="pre">42</span></tt> could be stored
+at <tt class="docutils literal"><span class="pre">$TEV_DATA/RUN_000042/Events.fits</span></tt>.</p>
+<div class="section" id="cvs-format">
+<h2>CVS format<a class="headerlink" href="observation_lists.html#cvs-format" title="Permalink to this headline">¶</a></h2>
+<p>We use the <a class="reference external" href="http://en.wikipedia.org/wiki/Comma-separated_values">CSV</a> (comma-separated values) format for run lists.
+This has the advantage that everyone can work with whatever tool they like. Here&#8217;s some good options:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://www.libreoffice.org/discover/calc/">LibreOffice Calc</a></li>
+<li><a class="reference external" href="http://www.star.bris.ac.uk/~mbt/topcat/">TOPCAT</a> or <a class="reference external" href="http://www.star.bris.ac.uk/~mbt/stilts/">STILTS</a></li>
+<li><a class="reference external" href="https://csvkit.readthedocs.org/en/latest/">csvkit</a></li>
+<li>Your own script using e.g the <a class="reference external" href="http://docs.python.org/2/library/csv.html">Python standard library CSV module</a> or <a class="reference external" href="http://pandas.pydata.org">pandas</a></li>
+</ul>
+<p>A run list must have at least a column called <tt class="docutils literal"><span class="pre">Run</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">Run</span>
+<span class="mi">42</span>
+<span class="mi">43</span>
+</pre></div>
+</div>
+<p>Usually it has many more columns with information about each run:</p>
+<div class="highlight-python"><div class="highlight"><pre>Run,Telescope_Pattern,Date,Duration,GLON,GLAT,Target,Zenith
+1234,24,2013-03-22 14:32,1832,83.7,-5.2,Crab Nebula,32
+</pre></div>
+</div>
+<p>Special column names that the Gammapy analysis tools understand:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">Run</span></tt> &#8212; Run number (int)</li>
+<li><tt class="docutils literal"><span class="pre">Telescope_Pattern</span></tt> &#8212; Binary pattern describing which telescopes participated in the run</li>
+<li><tt class="docutils literal"><span class="pre">Date</span></tt> &#8212; Date of observation</li>
+<li><tt class="docutils literal"><span class="pre">RA</span></tt>, <tt class="docutils literal"><span class="pre">DEC</span></tt> or <tt class="docutils literal"><span class="pre">GLON</span></tt>, <tt class="docutils literal"><span class="pre">GLAT</span></tt> &#8211; Pointing position in Equatorial (ICRS) or Galactic coordinates</li>
+</ul>
+</div>
+<div class="section" id="xml-format">
+<h2>XML format<a class="headerlink" href="observation_lists.html#xml-format" title="Permalink to this headline">¶</a></h2>
+<p>GammaLib / ctools uses an &#8220;observation definition&#8221; XML format described
+<a class="reference external" href="http://gammalib.sourceforge.net/user_manual/modules/obs.html#describing-observations-using-xml">here</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="observation_lists.html#">Observation lists</a><ul>
+<li><a class="reference internal" href="observation_lists.html#cvs-format">CVS format</a></li>
+<li><a class="reference internal" href="observation_lists.html#xml-format">XML format</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/dataformats/observation_lists.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="observation_lists.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

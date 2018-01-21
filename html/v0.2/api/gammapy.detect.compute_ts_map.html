@@ -1,0 +1,265 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>compute_ts_map &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Source detection tools (gammapy.detect)" href="../detect/index.html" />
+    <link rel="next" title="compute_ts_map_multiscale" href="gammapy.detect.compute_ts_map_multiscale.html" />
+    <link rel="prev" title="compute_maximum_ts_map" href="gammapy.detect.compute_maximum_ts_map.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.detect.compute_ts_map.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.detect.compute_ts_map",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.detect.compute_ts_map";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.detect.compute_ts_map_multiscale.html" title="compute_ts_map_multiscale">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.detect.compute_maximum_ts_map.html" title="compute_maximum_ts_map">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../detect/index.html" accesskey="U">Source detection tools (<tt class="docutils literal"><span class="pre">gammapy.detect</span></tt>)</a> &raquo;</li>
+      
+      <li>compute_ts_map</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="compute-ts-map">
+<h1>compute_ts_map<a class="headerlink" href="gammapy.detect.compute_ts_map.html#compute-ts-map" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.detect.compute_ts_map">
+<tt class="descclassname">gammapy.detect.</tt><tt class="descname">compute_ts_map</tt><big>(</big><em>counts</em>, <em>background</em>, <em>exposure</em>, <em>kernel</em>, <em>mask=None</em>, <em>flux=None</em>, <em>method='root brentq'</em>, <em>optimizer='Brent'</em>, <em>parallel=True</em>, <em>threshold=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/detect/test_statistics.html#compute_ts_map"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.detect.compute_ts_map.html#gammapy.detect.compute_ts_map" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute TS map using different optimization methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>counts</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><tt class="xref py py-obj docutils literal"><span class="pre">ndarray</span></tt></a></p>
+<blockquote>
+<div><p>Count map</p>
+</div></blockquote>
+<p><strong>background</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><tt class="xref py py-obj docutils literal"><span class="pre">ndarray</span></tt></a></p>
+<blockquote>
+<div><p>Background map</p>
+</div></blockquote>
+<p><strong>exposure</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.9)"><tt class="xref py py-obj docutils literal"><span class="pre">ndarray</span></tt></a></p>
+<blockquote>
+<div><p>Exposure map</p>
+</div></blockquote>
+<p><strong>kernel</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.convolution.Kernel2D.html#astropy.convolution.Kernel2D" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">astropy.convolution.Kernel2D</span></tt></a></p>
+<blockquote>
+<div><p>Source model kernel.</p>
+</div></blockquote>
+<p><strong>flux</strong> : float (None)</p>
+<blockquote>
+<div><p>Flux map used as a starting value for the amplitude fit.</p>
+</div></blockquote>
+<p><strong>method</strong> : str (&#8216;root&#8217;)</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>The following options are available:</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">'root'</span></tt> (default)</dt>
+<dd><p class="first last">Fit amplitude finding roots of the the derivative of
+the fit statistics. Described in Appendix A in Stewart (2009).</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">'fit</span> <span class="pre">scipy'</span></tt></dt>
+<dd><p class="first last">Use <a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar" title="(in SciPy v0.15.1)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.optimize.minimize_scalar</span></tt></a> for fitting.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">'fit</span> <span class="pre">minuit'</span></tt></dt>
+<dd><p class="first last">Use minuit for fitting.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</div></blockquote>
+<p><strong>optimizer</strong> : str (&#8216;Brent&#8217;)</p>
+<blockquote>
+<div><p>Which optimizing algorithm to use from scipy. See
+<a class="reference external" href="http://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize_scalar.html#scipy.optimize.minimize_scalar" title="(in SciPy v0.15.1)"><tt class="xref py py-obj docutils literal"><span class="pre">scipy.optimize.minimize_scalar</span></tt></a> for options.</p>
+</div></blockquote>
+<p><strong>parallel</strong> : bool (True)</p>
+<blockquote>
+<div><p>Whether to use multiple cores for parallel processing.</p>
+</div></blockquote>
+<p><strong>threshold</strong> : float (None)</p>
+<blockquote>
+<div><p>If the TS value corresponding to the initial flux estimate is not above
+this threshold, the optimizing step is omitted to save computing time.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>TS</strong> : <a class="reference internal" href="gammapy.detect.TSMapResult.html#gammapy.detect.TSMapResult" title="gammapy.detect.TSMapResult"><tt class="xref py py-obj docutils literal"><span class="pre">TSMapResult</span></tt></a></p>
+<blockquote class="last">
+<div><p><a class="reference internal" href="gammapy.detect.TSMapResult.html#gammapy.detect.TSMapResult" title="gammapy.detect.TSMapResult"><tt class="xref py py-obj docutils literal"><span class="pre">TSMapResult</span></tt></a> object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Negative <img class="math" src="../_images/math/12e20f0e13df1cfd3b9e5bf92d66a70c9b2c66e4.png" alt="TS"/> values are defined as following:</p>
+<div class="math">
+<p><img src="../_images/math/5534216ff0d777826aa66327f08bde84e95266a7.png" alt="TS = \left \{
+         \begin{array}{ll}
+           -TS &amp; : \textnormal{if} \ F &lt; 0 \\
+           \ \ TS &amp; : \textnormal{else}
+         \end{array}
+       \right."/></p>
+</div><p>Where <img class="math" src="../_images/math/183421431fcc0a42e22f825a33dcc3c51607fa6e.png" alt="F"/> is the fitted flux amplitude.</p>
+<p class="rubric">References</p>
+<p><a class="reference internal" href="../references.html#stewart2009" id="id1">[Stewart2009]</a></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.detect.compute_ts_map.html#">compute_ts_map</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.detect.compute_ts_map.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.detect.compute_ts_map.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

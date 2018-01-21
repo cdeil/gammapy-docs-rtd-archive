@@ -1,0 +1,469 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>EnergyDependentTablePSF &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Instrument response function (IRF) functionality (gammapy.irf)" href="../irf/index.html" />
+    <link rel="next" title="EnergyDispersion" href="gammapy.irf.EnergyDispersion.html" />
+    <link rel="prev" title="EnergyDependentMultiGaussPSF" href="gammapy.irf.EnergyDependentMultiGaussPSF.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.irf.EnergyDependentTablePSF.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.irf.EnergyDependentTablePSF",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.irf.EnergyDependentTablePSF";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.irf.EnergyDispersion.html" title="EnergyDispersion">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.irf.EnergyDependentMultiGaussPSF.html" title="EnergyDependentMultiGaussPSF">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../irf/index.html" accesskey="U">Instrument response function (IRF) functionality (<tt class="docutils literal"><span class="pre">gammapy.irf</span></tt>)</a> &raquo;</li>
+      
+      <li>EnergyDependentTablePSF</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="energydependenttablepsf">
+<h1>EnergyDependentTablePSF<a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#energydependenttablepsf" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.irf.EnergyDependentTablePSF">
+<em class="property">class </em><tt class="descclassname">gammapy.irf.</tt><tt class="descname">EnergyDependentTablePSF</tt><big>(</big><em>energy</em>, <em>offset</em>, <em>exposure</em>, <em>psf_value</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Energy-dependent radially-symmetric table PSF (<tt class="docutils literal"><span class="pre">gtpsf</span></tt> format).</p>
+<p>TODO: add references and explanations.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy (1-dim)</p>
+</div></blockquote>
+<p><strong>offset</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Angle</span></tt></a></p>
+<blockquote>
+<div><p>Offset angle (1-dim)</p>
+</div></blockquote>
+<p><strong>exposure</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Exposure (1-dim)</p>
+</div></blockquote>
+<p><strong>psf_value</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>PSF (2-dim with axes: psf[energy_index, offset_index]</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.containment_radius" title="gammapy.irf.EnergyDependentTablePSF.containment_radius"><tt class="xref py py-obj docutils literal"><span class="pre">containment_radius</span></tt></a>(energy,&nbsp;fraction)</td>
+<td>Containment radius.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.from_fits" title="gammapy.irf.EnergyDependentTablePSF.from_fits"><tt class="xref py py-obj docutils literal"><span class="pre">from_fits</span></tt></a>(hdu_list)</td>
+<td>Create EnergyDependentTablePSF from <tt class="docutils literal"><span class="pre">gtpsf</span></tt> format HDU list.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.info" title="gammapy.irf.EnergyDependentTablePSF.info"><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt></a>()</td>
+<td>Print basic info.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.integral" title="gammapy.irf.EnergyDependentTablePSF.integral"><tt class="xref py py-obj docutils literal"><span class="pre">integral</span></tt></a>(energy,&nbsp;offset_min,&nbsp;offset_max)</td>
+<td>Containment fraction.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.plot_containment_vs_energy" title="gammapy.irf.EnergyDependentTablePSF.plot_containment_vs_energy"><tt class="xref py py-obj docutils literal"><span class="pre">plot_containment_vs_energy</span></tt></a>([filename])</td>
+<td>Plot containment versus energy.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.plot_exposure_vs_energy" title="gammapy.irf.EnergyDependentTablePSF.plot_exposure_vs_energy"><tt class="xref py py-obj docutils literal"><span class="pre">plot_exposure_vs_energy</span></tt></a>([filename])</td>
+<td>Plot exposure versus energy.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.plot_psf_vs_theta" title="gammapy.irf.EnergyDependentTablePSF.plot_psf_vs_theta"><tt class="xref py py-obj docutils literal"><span class="pre">plot_psf_vs_theta</span></tt></a>([filename,&nbsp;energies])</td>
+<td>Plot PSF vs theta.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.read" title="gammapy.irf.EnergyDependentTablePSF.read"><tt class="xref py py-obj docutils literal"><span class="pre">read</span></tt></a>(filename)</td>
+<td>Read FITS format PSF file (<tt class="docutils literal"><span class="pre">gtpsf</span></tt> output).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.table_psf_at_energy" title="gammapy.irf.EnergyDependentTablePSF.table_psf_at_energy"><tt class="xref py py-obj docutils literal"><span class="pre">table_psf_at_energy</span></tt></a>(energy,&nbsp;**kwargs)</td>
+<td>TablePSF at a given energy.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.table_psf_in_energy_band" title="gammapy.irf.EnergyDependentTablePSF.table_psf_in_energy_band"><tt class="xref py py-obj docutils literal"><span class="pre">table_psf_in_energy_band</span></tt></a>(energy_band[,&nbsp;...])</td>
+<td>Average PSF in a given energy band.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.to_fits" title="gammapy.irf.EnergyDependentTablePSF.to_fits"><tt class="xref py py-obj docutils literal"><span class="pre">to_fits</span></tt></a>()</td>
+<td>Convert to FITS HDU list format.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.write" title="gammapy.irf.EnergyDependentTablePSF.write"><tt class="xref py py-obj docutils literal"><span class="pre">write</span></tt></a>(*args,&nbsp;**kwargs)</td>
+<td>Write to FITS file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.containment_radius">
+<tt class="descname">containment_radius</tt><big>(</big><em>energy</em>, <em>fraction</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.containment_radius"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.containment_radius" title="Permalink to this definition">¶</a></dt>
+<dd><p>Containment radius.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy</p>
+</div></blockquote>
+<p><strong>fraction</strong> : float</p>
+<blockquote>
+<div><p>Containment fraction in %</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>radius</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Containment radius in deg</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.irf.EnergyDependentTablePSF.from_fits">
+<em class="property">static </em><tt class="descname">from_fits</tt><big>(</big><em>hdu_list</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.from_fits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.from_fits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create EnergyDependentTablePSF from <tt class="docutils literal"><span class="pre">gtpsf</span></tt> format HDU list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a></p>
+<blockquote>
+<div><p>HDU list with <tt class="docutils literal"><span class="pre">THETA</span></tt> and <tt class="docutils literal"><span class="pre">PSF</span></tt> extensions.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>psf</strong> : <a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF" title="gammapy.irf.EnergyDependentTablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">EnergyDependentTablePSF</span></tt></a></p>
+<blockquote class="last">
+<div><p>PSF object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.info">
+<tt class="descname">info</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print basic info.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.integral">
+<tt class="descname">integral</tt><big>(</big><em>energy</em>, <em>offset_min</em>, <em>offset_max</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.integral"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.integral" title="Permalink to this definition">¶</a></dt>
+<dd><p>Containment fraction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy</p>
+</div></blockquote>
+<p><strong>offset_min, offset_max</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Angle</span></tt></a></p>
+<blockquote>
+<div><p>Offset</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>fraction</strong> : array_like</p>
+<blockquote class="last">
+<div><p>Containment fraction (in range 0 .. 1)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.plot_containment_vs_energy">
+<tt class="descname">plot_containment_vs_energy</tt><big>(</big><em>filename=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.plot_containment_vs_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.plot_containment_vs_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot containment versus energy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.plot_exposure_vs_energy">
+<tt class="descname">plot_exposure_vs_energy</tt><big>(</big><em>filename=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.plot_exposure_vs_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.plot_exposure_vs_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot exposure versus energy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.plot_psf_vs_theta">
+<tt class="descname">plot_psf_vs_theta</tt><big>(</big><em>filename=None, energies=[10000.0, 100000.0, 1000000.0]</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.plot_psf_vs_theta"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.plot_psf_vs_theta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot PSF vs theta.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>TODO</strong></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.irf.EnergyDependentTablePSF.read">
+<em class="property">static </em><tt class="descname">read</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read FITS format PSF file (<tt class="docutils literal"><span class="pre">gtpsf</span></tt> output).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>File name</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>psf</strong> : <a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF" title="gammapy.irf.EnergyDependentTablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">EnergyDependentTablePSF</span></tt></a></p>
+<blockquote class="last">
+<div><p>PSF object.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.table_psf_at_energy">
+<tt class="descname">table_psf_at_energy</tt><big>(</big><em>energy</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.table_psf_at_energy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.table_psf_at_energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>TablePSF at a given energy.</p>
+<p>Extra <tt class="docutils literal"><span class="pre">kwargs</span></tt> are passed to the <a class="reference internal" href="gammapy.irf.TablePSF.html#gammapy.irf.TablePSF" title="gammapy.irf.TablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">TablePSF</span></tt></a> constructor.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>psf</strong> : <a class="reference internal" href="gammapy.irf.TablePSF.html#gammapy.irf.TablePSF" title="gammapy.irf.TablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">TablePSF</span></tt></a></p>
+<blockquote class="last">
+<div><p>PSF</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.table_psf_in_energy_band">
+<tt class="descname">table_psf_in_energy_band</tt><big>(</big><em>energy_band</em>, <em>spectral_index=2</em>, <em>spectrum=None</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.table_psf_in_energy_band"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.table_psf_in_energy_band" title="Permalink to this definition">¶</a></dt>
+<dd><p>Average PSF in a given energy band.</p>
+<p>Expected counts in sub energy bands given the given exposure
+and spectrum are used as weights.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy_band</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy band</p>
+</div></blockquote>
+<p><strong>spectral_index</strong> : float</p>
+<blockquote>
+<div><p>Power law spectral index (used if spectrum=None).</p>
+</div></blockquote>
+<p><strong>spectrum</strong> : callable</p>
+<blockquote>
+<div><p>Spectrum (callable with energy as parameter).</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>psf</strong> : <a class="reference internal" href="gammapy.irf.TablePSF.html#gammapy.irf.TablePSF" title="gammapy.irf.TablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">TablePSF</span></tt></a></p>
+<blockquote class="last">
+<div><p>Table PSF</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.to_fits">
+<tt class="descname">to_fits</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.to_fits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.to_fits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert to FITS HDU list format.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a></p>
+<blockquote class="last">
+<div><p>PSF in HDU list format.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.irf.EnergyDependentTablePSF.write">
+<tt class="descname">write</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="reference internal" href="../_modules/gammapy/irf/psf_table.html#EnergyDependentTablePSF.write"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF.write" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write to FITS file.</p>
+<p>Calls <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList.writeto" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">writeto</span></tt></a>, forwarding all arguments.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.irf.EnergyDependentTablePSF.html#">EnergyDependentTablePSF</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.irf.EnergyDependentTablePSF.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.irf.EnergyDependentTablePSF.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

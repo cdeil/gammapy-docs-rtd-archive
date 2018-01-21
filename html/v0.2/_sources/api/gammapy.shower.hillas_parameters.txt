@@ -1,0 +1,8 @@
+
+
+hillas_parameters
+================================
+
+.. currentmodule:: gammapy.shower
+
+.. autofunction:: hillas_parameters

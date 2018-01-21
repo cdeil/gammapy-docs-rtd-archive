@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>compute_differential_flux_points &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Spectrum estimation and modeling (gammapy.spectrum)" href="../spectrum/index.html" />
+    <link rel="next" title="cosmic_ray_flux" href="gammapy.spectrum.cosmic_ray_flux.html" />
+    <link rel="prev" title="add_spec" href="gammapy.spectrum.add_spec.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.spectrum.compute_differential_flux_points.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.spectrum.compute_differential_flux_points",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.spectrum.compute_differential_flux_points";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.spectrum.cosmic_ray_flux.html" title="cosmic_ray_flux">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.spectrum.add_spec.html" title="add_spec">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../spectrum/index.html" accesskey="U">Spectrum estimation and modeling (<tt class="docutils literal"><span class="pre">gammapy.spectrum</span></tt>)</a> &raquo;</li>
+      
+      <li>compute_differential_flux_points</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="compute-differential-flux-points">
+<h1>compute_differential_flux_points<a class="headerlink" href="gammapy.spectrum.compute_differential_flux_points.html#compute-differential-flux-points" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.spectrum.compute_differential_flux_points">
+<tt class="descclassname">gammapy.spectrum.</tt><tt class="descname">compute_differential_flux_points</tt><big>(</big><em>x_method='lafferty'</em>, <em>y_method='power_law'</em>, <em>table=None</em>, <em>model=None</em>, <em>spectral_index=None</em>, <em>energy_min=None</em>, <em>energy_max=None</em>, <em>int_flux=None</em>, <em>int_flux_err=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/spectrum/flux_point.html#compute_differential_flux_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.spectrum.compute_differential_flux_points.html#gammapy.spectrum.compute_differential_flux_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates differential flux points table from integral flux points table.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>table</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Table</span></tt></a></p>
+<blockquote>
+<div><p>Integral flux data table in energy bins, including columns
+&#8216;ENERGY_MIN&#8217;, &#8216;ENERGY_MAX&#8217;, &#8216;INT_FLUX&#8217;, &#8216;INT_FLUX_ERR&#8217;</p>
+</div></blockquote>
+<p><strong>energy_min</strong> : float, array_like</p>
+<blockquote>
+<div><p>If table not defined, minimum energy of bin(s) may be input
+directly as either a float or array.</p>
+</div></blockquote>
+<p><strong>energy_max</strong> : float, array_like</p>
+<blockquote>
+<div><p>If table not defined, maximum energy of bin(s) input directly.</p>
+</div></blockquote>
+<p><strong>int_flux</strong> : float, array_like</p>
+<blockquote>
+<div><p>If table not defined, integral flux in bin(s) input directly. If array,
+energy_min, energy_max must be either arrays of the same shape
+(for differing energy bins) or floats (for the same energy bin).</p>
+</div></blockquote>
+<p><strong>int_flux_err</strong> : float, array_like</p>
+<blockquote>
+<div><p>Type must be the same as for int_flux</p>
+</div></blockquote>
+<p><strong>x_method</strong> : {&#8216;lafferty&#8217;, &#8216;log_center&#8217;, &#8216;table&#8217;}</p>
+<blockquote>
+<div><p>Flux point energy computation method; either Lafferty &amp; Wyatt
+model-based positioning, log bin center positioning
+or user-defined <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Table</span></tt></a> positioning
+using column heading [&#8216;ENERGY&#8217;]</p>
+</div></blockquote>
+<p><strong>y_method</strong> : {&#8216;power_law&#8217;, &#8216;model&#8217;}</p>
+<blockquote>
+<div><p>Flux computation method assuming PowerLaw or user defined model function</p>
+</div></blockquote>
+<p><strong>model</strong> : callable</p>
+<blockquote>
+<div><p>User-defined model function</p>
+</div></blockquote>
+<p><strong>spectral_index</strong> : float, array_like</p>
+<blockquote>
+<div><p>Spectral index if default power law model is used. Either a float
+or array_like (in which case, energy_min, energy_max and int_flux
+must be floats to avoid ambiguity)</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>differential_flux_table</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Table</span></tt></a></p>
+<blockquote class="last">
+<div><p>Input table with appended columns &#8216;ENERGY&#8217;, &#8216;DIFF_FLUX&#8217;, &#8216;DIFF_FLUX_ERR&#8217;</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>For usage, see this tutorial: <a class="reference internal" href="../tutorials/flux_point/index.html#tutorials-flux-point"><em>Where to stick your Spectral Points?</em></a>.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.spectrum.compute_differential_flux_points.html#">compute_differential_flux_points</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.spectrum.compute_differential_flux_points.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.spectrum.compute_differential_flux_points.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gaussian_sum_moments &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Morphology and PSF methods (gammapy.morphology)" href="../morphology/index.html" />
+    <link rel="next" title="make_test_model" href="gammapy.morphology.make_test_model.html" />
+    <link rel="prev" title="ThetaCalculatorScipy" href="gammapy.morphology.ThetaCalculatorScipy.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.morphology.gaussian_sum_moments.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.morphology.gaussian_sum_moments",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.morphology.gaussian_sum_moments";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.morphology.make_test_model.html" title="make_test_model">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.morphology.ThetaCalculatorScipy.html" title="ThetaCalculatorScipy">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../morphology/index.html" accesskey="U">Morphology and PSF methods (<tt class="docutils literal"><span class="pre">gammapy.morphology</span></tt>)</a> &raquo;</li>
+      
+      <li>gaussian_sum_moments</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="gaussian-sum-moments">
+<h1>gaussian_sum_moments<a class="headerlink" href="gammapy.morphology.gaussian_sum_moments.html#gaussian-sum-moments" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.morphology.gaussian_sum_moments">
+<tt class="descclassname">gammapy.morphology.</tt><tt class="descname">gaussian_sum_moments</tt><big>(</big><em>F</em>, <em>sigma</em>, <em>x</em>, <em>y</em>, <em>cov_matrix</em>, <em>shift=0.5</em><big>)</big><a class="reference internal" href="../_modules/gammapy/morphology/gauss.html#gaussian_sum_moments"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.morphology.gaussian_sum_moments.html#gammapy.morphology.gaussian_sum_moments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute image moments with uncertainties for sum of Gaussians.</p>
+<p>The moments are computed analytically, the formulae are documented below.</p>
+<p>Calls <tt class="docutils literal"><span class="pre">uncertainties.correlated_values</span></tt> to propagate the errors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>F</strong> : array</p>
+<blockquote>
+<div><p>Integral norms of the Gaussian components.</p>
+</div></blockquote>
+<p><strong>sigmas</strong> : array</p>
+<blockquote>
+<div><p>Widths of the Gaussian components.</p>
+</div></blockquote>
+<p><strong>x</strong> : array</p>
+<blockquote>
+<div><p>x positions of the Gaussian components.</p>
+</div></blockquote>
+<p><strong>y</strong> : array</p>
+<blockquote>
+<div><p>y positions of the Gaussian components.</p>
+</div></blockquote>
+<p><strong>cov_matrix</strong> : array</p>
+<blockquote>
+<div><p>Covariance matrix of the parameters. The columns have to follow the order:
+[sigma_1, x_1, y_1, F_1, sigma_2, x_2, y_2, F_2, ..., sigma_N, x_N, y_N, F_N]</p>
+</div></blockquote>
+<p><strong>shift</strong> : float (default = 0.5)</p>
+<blockquote>
+<div><p>Depending on where the image values are given, the grid has to be
+shifted. If the values are given at the center of the pixel
+shift = 0.5.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>nominal_values</strong> : list</p>
+<blockquote>
+<div><p>List of image moment nominal values:
+[F_sum, x_sum, y_sum, x_sigma, y_sigma, sqrt(x_sigma * y_sigma)]</p>
+<p>All values are given in pixel coordinates.</p>
+</div></blockquote>
+<p><strong>std_devs</strong> : list</p>
+<blockquote class="last">
+<div><p>List of image moment standard deviations.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>The 0th moment (total flux) is given by:</p>
+<div class="math">
+<p><img src="../_images/math/2dfb94b677072a940171702e48793c7ea0d186aa.png" alt="F_{\Sigma} = \int_{-\infty}^{\infty}f_{\Sigma}(x, y)dx dy =
+\sum_i^N F_i"/></p>
+</div><p>The 1st moments (position) are given by:</p>
+<div class="math">
+<p><img src="../_images/math/a80c15fdd2635f9a1ce46590ce815668b4056202.png" alt="x_{\Sigma} = \frac{1}{F_{\Sigma}} \int_{-\infty}^{\infty}x
+f_{\Sigma}(x, y)dx dy = \frac{1}{F_{\Sigma}}\sum_i^N x_iF_i
+
+y_{\Sigma} = \frac{1}{F_{\Sigma}} \int_{-\infty}^{\infty}y
+f_{\Sigma}(x, y)dx dy = \frac{1}{F_{\Sigma}}\sum_i^N y_iF_i"/></p>
+</div><p>The 2nd moments (extension) are given by:</p>
+<div class="math">
+<p><img src="../_images/math/39882237b6210f6013c8a501e7196260d33332a1.png" alt="\sigma_{\Sigma_x}^2 = \frac{1}{F_{\Sigma}} \sum_i^N F_i
+\cdot (\sigma_i^2 + x_i^2) - x_{\Sigma}^2
+
+\sigma_{\Sigma_y}^2 = \frac{1}{F_{\Sigma}} \sum_i^N F_i
+\cdot (\sigma_i^2 + y_i^2) - y_{\Sigma}^2"/></p>
+</div><p class="rubric">Examples</p>
+<p>A simple example for an image consisting of three Gaussians
+with zero covariance matrix:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">gammapy.morphology.gauss</span> <span class="kn">import</span> <span class="n">gaussian_sum_moments</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cov_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">F</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sigma</span> <span class="o">=</span> <span class="p">[</span><span class="mi">15</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">70</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nominal_values</span><span class="p">,</span> <span class="n">std_devs</span> <span class="o">=</span> <span class="n">gaussian_sum_moments</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">sigma</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cov_matrix</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.morphology.gaussian_sum_moments.html#">gaussian_sum_moments</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.morphology.gaussian_sum_moments.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.morphology.gaussian_sum_moments.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

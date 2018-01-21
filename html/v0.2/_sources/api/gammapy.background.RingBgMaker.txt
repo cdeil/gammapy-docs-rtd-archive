@@ -1,0 +1,48 @@
+
+
+RingBgMaker
+==============================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: RingBgMaker
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~RingBgMaker.correlate
+      ~RingBgMaker.correlate_maps
+      ~RingBgMaker.info
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: correlate
+   .. automethod:: correlate_maps
+   .. automethod:: info
+
+   
+   

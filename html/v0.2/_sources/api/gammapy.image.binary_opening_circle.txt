@@ -1,0 +1,8 @@
+
+
+binary_opening_circle
+===================================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: binary_opening_circle

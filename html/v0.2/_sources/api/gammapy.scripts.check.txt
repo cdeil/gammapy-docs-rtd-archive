@@ -1,0 +1,8 @@
+
+
+check
+=====================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: check

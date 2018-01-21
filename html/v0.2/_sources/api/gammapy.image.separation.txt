@@ -1,0 +1,8 @@
+
+
+separation
+========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: separation

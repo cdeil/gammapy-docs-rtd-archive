@@ -1,0 +1,79 @@
+
+
+SpectralCube
+=========================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: SpectralCube
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~SpectralCube.solid_angle_image
+      ~SpectralCube.spatial_coordinate_images
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SpectralCube.flux
+      ~SpectralCube.integral_flux_image
+      ~SpectralCube.pix2world
+      ~SpectralCube.read
+      ~SpectralCube.read_hdu
+      ~SpectralCube.reproject_to
+      ~SpectralCube.spectral_index
+      ~SpectralCube.to_fits
+      ~SpectralCube.world2pix
+      ~SpectralCube.writeto
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: solid_angle_image
+   .. autoattribute:: spatial_coordinate_images
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: flux
+   .. automethod:: integral_flux_image
+   .. automethod:: pix2world
+   .. automethod:: read
+   .. automethod:: read_hdu
+   .. automethod:: reproject_to
+   .. automethod:: spectral_index
+   .. automethod:: to_fits
+   .. automethod:: world2pix
+   .. automethod:: writeto
+
+   
+   

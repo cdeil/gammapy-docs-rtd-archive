@@ -1,0 +1,8 @@
+
+
+get_source_by_name
+==================================
+
+.. currentmodule:: gammapy.catalog
+
+.. autofunction:: get_source_by_name

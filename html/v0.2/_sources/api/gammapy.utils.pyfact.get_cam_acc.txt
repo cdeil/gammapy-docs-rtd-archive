@@ -1,0 +1,8 @@
+
+
+get_cam_acc
+================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: get_cam_acc

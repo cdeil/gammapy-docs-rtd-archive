@@ -1,0 +1,290 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.datasets.catalogs &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/datasets/catalogs.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "_modules/gammapy/datasets/catalogs",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/datasets/catalogs";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.datasets.catalogs</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;A selection of source catalogs of interest for gamma-ray astronomers.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">..datasets</span> <span class="kn">import</span> <span class="n">get_path</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;load_catalog_atnf&#39;</span><span class="p">,</span>
+           <span class="s">&#39;load_catalog_hess_galactic&#39;</span><span class="p">,</span>
+           <span class="c"># &#39;load_catalog_hgps&#39;,</span>
+           <span class="s">&#39;load_catalog_green&#39;</span><span class="p">,</span>
+           <span class="c"># &#39;load_catalog_snrcat&#39;,</span>
+           <span class="s">&#39;load_catalog_tevcat&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<div class="viewcode-block" id="load_catalog_atnf"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_atnf.html#gammapy.datasets.load_catalog_atnf">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_atnf</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load ATNF pulsar catalog.</span>
+
+<span class="sd">    The `ATNF pulsar catalog &lt;http://www.atnf.csiro.au/people/pulsar/psrcat/&gt;`__</span>
+<span class="sd">    is **the** collection of information on all pulsars.</span>
+
+<span class="sd">    Unfortunately it&#39;s only available in a database format that can only</span>
+<span class="sd">    be read with their software.</span>
+
+<span class="sd">    This function loads a FITS copy of version 1.51 of the ATNF catalog:</span>
+<span class="sd">    http://www.atnf.csiro.au/research/pulsar/psrcat/catalogueHistory.html</span>
+
+<span class="sd">    The ``ATNF_v1.51.fits.gz`` file and ``make_atnf.py`` script are available</span>
+<span class="sd">    `here &lt;https://github.com/gammapy/gammapy-extra/blob/master/datasets/catalogs/&gt;`__.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/ATNF_v1.51.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_catalog_hess_galactic"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_hess_galactic.html#gammapy.datasets.load_catalog_hess_galactic">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_hess_galactic</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load catalog with info on HESS Galactic sources from individual publications.</span>
+
+<span class="sd">    Note that this is different from the</span>
+<span class="sd">    `official &quot;H.E.S.S. source catalog&quot; &lt;http://www.mpi-hd.mpg.de/hfm/HESS/pages/home/sources/&gt;`__.</span>
+
+<span class="sd">    The main difference is that we only include Galactic sources (and the ones</span>
+<span class="sd">    from the large Magellanic cloud) and that we collect more information</span>
+<span class="sd">    (morphological and spectral parameters, associations, paper links to ADS),</span>
+<span class="sd">    using the latest publication for each source.</span>
+
+<span class="sd">    Please drop us an email if you have any questions or find something incorrect or outdated.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/hess_galactic_catalog.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<span class="k">def</span> <span class="nf">load_catalog_hgps</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load the HESS Galactic plane survey (HGPS) catalog.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+
+<div class="viewcode-block" id="load_catalog_green"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_green.html#gammapy.datasets.load_catalog_green">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_green</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load Green&#39;s supernova remnant catalog.</span>
+
+<span class="sd">    This is the May 2014 version of the catalog, which contains 294 sources.</span>
+
+<span class="sd">    References:</span>
+
+<span class="sd">    - http://www.mrao.cam.ac.uk/surveys/snrs/</span>
+<span class="sd">    - http://vizier.u-strasbg.fr/viz-bin/VizieR?-source=VII/272</span>
+<span class="sd">    - http://adsabs.harvard.edu/abs/2014BASI...42...47G</span>
+
+<span class="sd">    The ``Green_2014-05.fits.gz`` file and ``make_green.py`` script are available</span>
+<span class="sd">    `here &lt;https://github.com/gammapy/gammapy-extra/blob/master/datasets/catalogs/&gt;`__.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/Green_2014-05.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="load_catalog_tevcat"><a class="viewcode-back" href="../../../api/gammapy.datasets.load_catalog_tevcat.html#gammapy.datasets.load_catalog_tevcat">[docs]</a><span class="k">def</span> <span class="nf">load_catalog_tevcat</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load TeVCat source catalog.</span>
+
+<span class="sd">    `TeVCat &lt;http://tevcat.uchicago.edu/&gt;`__ is an online catalog</span>
+<span class="sd">    for TeV astronomy.</span>
+
+<span class="sd">    Unfortunately the TeVCat is not available in electronic format.</span>
+
+<span class="sd">    This is a dump of TeVCat as of 2014-09-24 created by scraping their</span>
+<span class="sd">    web page using the script available</span>
+<span class="sd">    `here &lt;https://github.com/astropy/astroquery/pull/41&gt;`__.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/tevcat.fits.gz&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<span class="c"># TODO: implement properly</span></div>
+<span class="k">def</span> <span class="nf">load_catalog_snrcat</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Load SNRcat supernova remnant catalog.</span>
+
+<span class="sd">    `SNRcat &lt;http://www.physics.umanitoba.ca/snr/SNRcat/&gt;`__</span>
+<span class="sd">    is a census of high-energy observations of Galactic supernova remnants.</span>
+
+<span class="sd">    Unfortunately the SNRCat information is not available in electronic format.</span>
+
+<span class="sd">    This is a dump of http://www.physics.umanitoba.ca/snr/SNRcat/SNRlist.php?textonly from 2015-02-08.</span>
+<span class="sd">    It doesn&#39;t contain position and extension columns and is really a HTML page with lots of hidden stuff that</span>
+<span class="sd">    would have to be scraped, i.e. we can&#39;t be simply ``requests.get`` the latest version from there ... sigh.</span>
+<span class="sd">    I&#39;ve contacted them and they might provide a useful version of their catalog in the future ...</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    catalog : `~astropy.table.Table`</span>
+<span class="sd">        Source catalog</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">get_path</span><span class="p">(</span><span class="s">&#39;catalogs/SNRCat.csv&#39;</span><span class="p">,</span> <span class="n">location</span><span class="o">=</span><span class="s">&#39;remote&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">format</span><span class="o">=</span><span class="s">&#39;ascii.csv&#39;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="catalogs.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

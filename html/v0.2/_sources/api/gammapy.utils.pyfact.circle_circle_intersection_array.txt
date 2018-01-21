@@ -1,0 +1,8 @@
+
+
+circle_circle_intersection_array
+=====================================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: circle_circle_intersection_array

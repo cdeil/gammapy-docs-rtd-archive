@@ -1,0 +1,8 @@
+
+
+sex
+==================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: sex

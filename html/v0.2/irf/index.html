@@ -1,0 +1,306 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Instrument response function (IRF) functionality (gammapy.irf) &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="next" title="Effective area" href="effective_area.html" />
+    <link rel="prev" title="GalacticPlaneSurveyPanelPlot" href="../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/irf/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "irf/index",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "irf/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="effective_area.html" title="Effective area">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.image.GalacticPlaneSurveyPanelPlot.html" title="GalacticPlaneSurveyPanelPlot">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      
+      <li>Instrument response function (IRF) functionality (<tt class="docutils literal"><span class="pre">gammapy.irf</span></tt>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="instrument-response-function-irf-functionality-gammapy-irf">
+<span id="irf"></span><h1>Instrument response function (IRF) functionality (<a class="reference internal" href="index.html#module-gammapy.irf" title="gammapy.irf"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.irf</span></tt></a>)<a class="headerlink" href="index.html#instrument-response-function-irf-functionality-gammapy-irf" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-gammapy.irf" title="gammapy.irf"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.irf</span></tt></a> contains functions and classes to access and model
+instrument response functions (IRFs).</p>
+<div class="section" id="theory">
+<h3>Theory<a class="headerlink" href="index.html#theory" title="Permalink to this headline">¶</a></h3>
+<p>For high-level gamma-ray data analysis (measuring morphology and spectra of sources)
+a canonical detector model is used, where the gamma-ray detection process is simplified
+as being fully characterized by the following three &#8220;instrument response functions&#8221;:</p>
+<ul class="simple">
+<li>Effective area <img class="math" src="../_images/math/c8f182fc689fe64b80860c53fd5c67b66e9a1f61.png" alt="A(p, E)"/> (unit: <img class="math" src="../_images/math/b53ca2bca2a16b33a391413250dc59f10a51454a.png" alt="m^2"/>)</li>
+<li>Point spread function <img class="math" src="../_images/math/103e365fae1aaa96af7976ed5f5fd18578cab2ed.png" alt="PSF(p'|p, E)"/> (unit: <img class="math" src="../_images/math/ef34f9fc139ad752e796ad272497da636be656c0.png" alt="sr^{-1}"/>)</li>
+<li>Energy dispersion <img class="math" src="../_images/math/36b09fdd1a6ed1dc694746ba05bf3c25920b2f37.png" alt="D(E'|p, E)"/> (unit: <img class="math" src="../_images/math/f0ec3fb083d85e10c235c08e18e2db4682df0167.png" alt="TeV^{-1}"/>)</li>
+</ul>
+<p>The effective area represents the gamma-ray detection efficiency,
+the PSF the angular resolution and the energy dispersion the energy resolution
+of the instrument.</p>
+<p>The full instrument response is given by</p>
+<div class="math">
+<p><img src="../_images/math/b0d7d03f2c7681909d629270f5c4e4374f780a94.png" alt="R(p', E'|p, E) = A(p, E) \times PSF(p'|p, E) \times D(E'|p, E),"/></p>
+</div><p>where <img class="math" src="../_images/math/3eca8557203e86160952e1c0f735f7417f3285b1.png" alt="p"/> and <img class="math" src="../_images/math/cfd13a0f26eb7ef0093319a7669da7dd3771dbac.png" alt="E"/> are the true gamma-ray position and energy
+and <img class="math" src="../_images/math/79ab29a59f7ce2328d0c6427e49f32fb4858ee5b.png" alt="p'"/> and <img class="math" src="../_images/math/fdbdb6243522f89db716f229b94be1c028a97b8a.png" alt="E'"/> are the reconstructed gamma-ray position and energy.</p>
+<p>The instrument function relates sky flux models to expected observed counts distributions via</p>
+<div class="math">
+<p><img src="../_images/math/f3164c60c546a5de53f1460b3f5b3d4232fbeb93.png" alt="N(p', E') = t_{obs} \int_E \int_\Omega R(p', E'|p, E) \times F(p, E) dp dE,"/></p>
+</div><p>where <img class="math" src="../_images/math/183421431fcc0a42e22f825a33dcc3c51607fa6e.png" alt="F"/>, <img class="math" src="../_images/math/9d86170e7de539c0ff999de09621ee0c7b6c8ed0.png" alt="R"/>, <img class="math" src="../_images/math/0cbd841894b1b9e9b8cf5ddbc36e1787b34dc892.png" alt="t_{obs}"/> and <img class="math" src="../_images/math/75e27f04188974063be3230dca208cd495b77ce1.png" alt="N"/> are the following quantities:</p>
+<ul class="simple">
+<li>Sky flux model <img class="math" src="../_images/math/bdaeb70c018ad6b8def8081daa38192f66eb1f67.png" alt="F(p, E)"/> (unit: <img class="math" src="../_images/math/55d19d2140085a293feeca62cee23b50efe1d862.png" alt="m^{-2} s^{-1} TeV^{-1} sr^{-1}"/>)</li>
+<li>Instrument response <img class="math" src="../_images/math/f96b1693766dc150a57d98a2da672320d39c500c.png" alt="R(p', E'|p, E)"/> (unit: <img class="math" src="../_images/math/6e28f5d3b600398ddfff169014eef155ac3e17a0.png" alt="m^2 TeV^{-1} sr^{-1}"/>)</li>
+<li>Observation time: <img class="math" src="../_images/math/0cbd841894b1b9e9b8cf5ddbc36e1787b34dc892.png" alt="t_{obs}"/> (unit: <img class="math" src="../_images/math/6859317dd1b439cef34131bcd4bafee8393444e0.png" alt="s"/>)</li>
+<li>Expected observed counts model <img class="math" src="../_images/math/3d66fc86d696cfe26ad6290be9771c1fbb357b7f.png" alt="N(p', E')"/> (unit: <img class="math" src="../_images/math/2638b1d231da6d5db862ace86de0987c11370cb2.png" alt="sr^{-1} TeV^{-1}"/>)</li>
+</ul>
+<p>If you&#8217;d like to learn more about instrument response functions, have a look at the descriptions for
+<a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/analysis/documentation/Cicerone/Cicerone_LAT_IRFs/index.html">Fermi</a>,
+for <a class="reference external" href="http://inspirehep.net/record/1122589">TeV data analysis</a>
+and for <a class="reference external" href="http://gammalib.sourceforge.net/user_manual/modules/obs.html#handling-the-instrument-response">GammaLib</a>.</p>
+<p>TODO: add an overview of what is / isn&#8217;t available in Gammapy.</p>
+</div>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="index.html#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>TODO: document</p>
+</div>
+<div class="section" id="using-gammapy-image">
+<h2>Using <a class="reference internal" href="../image/index.html#module-gammapy.image" title="gammapy.image"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.image</span></tt></a><a class="headerlink" href="index.html#using-gammapy-image" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="effective_area.html">Effective area</a></li>
+<li class="toctree-l1"><a class="reference internal" href="psf.html">Point spread function</a></li>
+<li class="toctree-l1"><a class="reference internal" href="energy_dispersion.html">Energy dispersion</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.irf">
+<span id="gammapy-irf-package"></span><h3>gammapy.irf Package<a class="headerlink" href="index.html#module-gammapy.irf" title="Permalink to this headline">¶</a></h3>
+<p>Instrument response functions (IRFs)</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.abramowski_effective_area.html#gammapy.irf.abramowski_effective_area" title="gammapy.irf.abramowski_effective_area"><tt class="xref py py-obj docutils literal"><span class="pre">abramowski_effective_area</span></tt></a>(energy[,&nbsp;instrument])</td>
+<td>Simple IACT effective area parametrizations from Abramowski et al.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.irf.gauss_energy_dispersion_matrix.html#gammapy.irf.gauss_energy_dispersion_matrix" title="gammapy.irf.gauss_energy_dispersion_matrix"><tt class="xref py py-obj docutils literal"><span class="pre">gauss_energy_dispersion_matrix</span></tt></a>(ebounds[,&nbsp;sigma])</td>
+<td>Create Gaussian energy dispersion matrix.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.multi_gauss_psf_kernel.html#gammapy.irf.multi_gauss_psf_kernel" title="gammapy.irf.multi_gauss_psf_kernel"><tt class="xref py py-obj docutils literal"><span class="pre">multi_gauss_psf_kernel</span></tt></a>(psf_parameters[,&nbsp;...])</td>
+<td>Create multi-Gauss PSF kernel.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.irf.np_to_rmf.html#gammapy.irf.np_to_rmf" title="gammapy.irf.np_to_rmf"><tt class="xref py py-obj docutils literal"><span class="pre">np_to_rmf</span></tt></a>(rm,&nbsp;erange,&nbsp;ebounds,&nbsp;minprob[,&nbsp;...])</td>
+<td>Converts a 2D numpy array to an RMF FITS file.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.EffectiveAreaTable.html#gammapy.irf.EffectiveAreaTable" title="gammapy.irf.EffectiveAreaTable"><tt class="xref py py-obj docutils literal"><span class="pre">EffectiveAreaTable</span></tt></a>(energy_lo,&nbsp;energy_hi,&nbsp;...)</td>
+<td>Effective area table class.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.irf.EnergyDependentMultiGaussPSF.html#gammapy.irf.EnergyDependentMultiGaussPSF" title="gammapy.irf.EnergyDependentMultiGaussPSF"><tt class="xref py py-obj docutils literal"><span class="pre">EnergyDependentMultiGaussPSF</span></tt></a>(energy_lo,&nbsp;...)</td>
+<td>Triple Gauss analytical PSF depending on energy and theta.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.EnergyDependentTablePSF.html#gammapy.irf.EnergyDependentTablePSF" title="gammapy.irf.EnergyDependentTablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">EnergyDependentTablePSF</span></tt></a>(energy,&nbsp;offset,&nbsp;...)</td>
+<td>Energy-dependent radially-symmetric table PSF (<tt class="docutils literal"><span class="pre">gtpsf</span></tt> format).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.irf.EnergyDispersion.html#gammapy.irf.EnergyDispersion" title="gammapy.irf.EnergyDispersion"><tt class="xref py py-obj docutils literal"><span class="pre">EnergyDispersion</span></tt></a>(pdf_matrix,&nbsp;energy_true_bounds)</td>
+<td>Energy dispersion matrix.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.GaussPSF.html#gammapy.irf.GaussPSF" title="gammapy.irf.GaussPSF"><tt class="xref py py-obj docutils literal"><span class="pre">GaussPSF</span></tt></a>([sigma])</td>
+<td>Extension of Gauss2D PDF by PSF-specific functionality.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.irf.HESSMultiGaussPSF.html#gammapy.irf.HESSMultiGaussPSF" title="gammapy.irf.HESSMultiGaussPSF"><tt class="xref py py-obj docutils literal"><span class="pre">HESSMultiGaussPSF</span></tt></a>(source)</td>
+<td>Multi-Gauss PSF as represented in the HESS software.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.PositionDependentMultiGaussPSF.html#gammapy.irf.PositionDependentMultiGaussPSF" title="gammapy.irf.PositionDependentMultiGaussPSF"><tt class="xref py py-obj docutils literal"><span class="pre">PositionDependentMultiGaussPSF</span></tt></a>(hdu_list)</td>
+<td>Position-dependent multi-Gauss PSF.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.irf.SherpaMultiGaussPSF.html#gammapy.irf.SherpaMultiGaussPSF" title="gammapy.irf.SherpaMultiGaussPSF"><tt class="xref py py-obj docutils literal"><span class="pre">SherpaMultiGaussPSF</span></tt></a>(source)</td>
+<td>Multi-Gauss PSF as represented in the Sherpa software.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.irf.TablePSF.html#gammapy.irf.TablePSF" title="gammapy.irf.TablePSF"><tt class="xref py py-obj docutils literal"><span class="pre">TablePSF</span></tt></a>(offset,&nbsp;dp_domega[,&nbsp;spline_kwargs])</td>
+<td>Radially-symmetric table PSF.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Instrument response function (IRF) functionality (<tt class="docutils literal"><span class="pre">gammapy.irf</span></tt>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a><ul>
+<li><a class="reference internal" href="index.html#theory">Theory</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="index.html#using-gammapy-image">Using <tt class="docutils literal"><span class="pre">gammapy.image</span></tt></a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.irf">gammapy.irf Package</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/irf/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

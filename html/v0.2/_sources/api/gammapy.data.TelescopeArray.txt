@@ -1,0 +1,59 @@
+
+
+TelescopeArray
+===========================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: TelescopeArray
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~TelescopeArray.info
+      ~TelescopeArray.observatory_earth_location
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~TelescopeArray.plot
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: info
+   .. autoattribute:: observatory_earth_location
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: plot
+
+   
+   

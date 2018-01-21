@@ -1,0 +1,8 @@
+
+
+wcs_histogram2d
+=============================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: wcs_histogram2d

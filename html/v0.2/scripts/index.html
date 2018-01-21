@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Command line tools (gammapy.scripts) &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="next" title="background_cube" href="../api/gammapy.scripts.background_cube.html" />
+    <link rel="prev" title="Introduction" href="../introduction.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/scripts/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "scripts/index",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "scripts/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.scripts.background_cube.html" title="background_cube">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../introduction.html" title="Introduction">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      
+      <li>Command line tools  (<tt class="docutils literal"><span class="pre">gammapy.scripts</span></tt>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="command-line-tools-gammapy-scripts">
+<span id="scripts"></span><h1>Command line tools  (<a class="reference internal" href="index.html#module-gammapy.scripts" title="gammapy.scripts"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.scripts</span></tt></a>)<a class="headerlink" href="index.html#command-line-tools-gammapy-scripts" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p>Currently the <a class="reference internal" href="index.html#module-gammapy.scripts" title="gammapy.scripts"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.scripts</span></tt></a> sub-package contains the Gammapy command line tools.</p>
+<p>This might change though ... see the notes here:
+<a class="reference external" href="https://github.com/gammapy/gammapy/pull/230">https://github.com/gammapy/gammapy/pull/230</a></p>
+<p>To be able to use them you have to install Gammapy:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>pip install --user .
+</pre></div>
+</div>
+<p>For Gammapy development we recommend you run this command so that you can edit
+Gammapy and the tools and don&#8217;t have to re-install after every change.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>pip install --user --editable .
+</pre></div>
+</div>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.scripts">
+<span id="gammapy-scripts-package"></span><h3>gammapy.scripts Package<a class="headerlink" href="index.html#module-gammapy.scripts" title="Permalink to this headline">¶</a></h3>
+<p>Gammapy command line tools.</p>
+<p>TODO: document how this works and how users should write their own
+command line tools.</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.background_cube.html#gammapy.scripts.background_cube" title="gammapy.scripts.background_cube"><tt class="xref py py-obj docutils literal"><span class="pre">background_cube</span></tt></a>(run_list,&nbsp;exclusion_list,&nbsp;...)</td>
+<td>Create background model cube from off runs.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.bin_cube.html#gammapy.scripts.bin_cube" title="gammapy.scripts.bin_cube"><tt class="xref py py-obj docutils literal"><span class="pre">bin_cube</span></tt></a>(event_file,&nbsp;reference_file,&nbsp;...)</td>
+<td>Bin events into a LON-LAT-Energy cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.bin_image.html#gammapy.scripts.bin_image" title="gammapy.scripts.bin_image"><tt class="xref py py-obj docutils literal"><span class="pre">bin_image</span></tt></a>(event_file,&nbsp;reference_file,&nbsp;...)</td>
+<td>Bin events into an image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.check.html#gammapy.scripts.check" title="gammapy.scripts.check"><tt class="xref py py-obj docutils literal"><span class="pre">check</span></tt></a>(package)</td>
+<td>Run gammapy unit tests.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.coordinate_images.html#gammapy.scripts.coordinate_images" title="gammapy.scripts.coordinate_images"><tt class="xref py py-obj docutils literal"><span class="pre">coordinate_images</span></tt></a>(infile,&nbsp;outfile,&nbsp;...)</td>
+<td>Make maps that can be used to create profiles.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.derived_images.html#gammapy.scripts.derived_images" title="gammapy.scripts.derived_images"><tt class="xref py py-obj docutils literal"><span class="pre">derived_images</span></tt></a>(infile,&nbsp;outfile,&nbsp;theta,&nbsp;...)</td>
+<td>Make derived maps for a given set of basic maps.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.detect.html#gammapy.scripts.detect" title="gammapy.scripts.detect"><tt class="xref py py-obj docutils literal"><span class="pre">detect</span></tt></a>(infile,&nbsp;overwrite)</td>
+<td>Detect sources in images.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.find_obs.html#gammapy.scripts.find_obs" title="gammapy.scripts.find_obs"><tt class="xref py py-obj docutils literal"><span class="pre">find_obs</span></tt></a>(infile,&nbsp;outfile,&nbsp;x,&nbsp;y,&nbsp;pix,&nbsp;overwrite)</td>
+<td>Select a subset of observations from a given observation list.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.image_decompose_a_trous.html#gammapy.scripts.image_decompose_a_trous" title="gammapy.scripts.image_decompose_a_trous"><tt class="xref py py-obj docutils literal"><span class="pre">image_decompose_a_trous</span></tt></a>(infile,&nbsp;outfile,&nbsp;...)</td>
+<td>Apply the a trous wavelet transform on a 2D image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.info.html#gammapy.scripts.info" title="gammapy.scripts.info"><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt></a>([version,&nbsp;tools])</td>
+<td>Print various info on Gammapy to the console.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.irf_info.html#gammapy.scripts.irf_info" title="gammapy.scripts.irf_info"><tt class="xref py py-obj docutils literal"><span class="pre">irf_info</span></tt></a>(infiles,&nbsp;plot,&nbsp;thetas,&nbsp;energies,&nbsp;...)</td>
+<td>Print or plot info about instrument response function (IRF) files.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.irf_root_to_fits.html#gammapy.scripts.irf_root_to_fits" title="gammapy.scripts.irf_root_to_fits"><tt class="xref py py-obj docutils literal"><span class="pre">irf_root_to_fits</span></tt></a>(irf_root_file,&nbsp;write_output)</td>
+<td>Convert CTA IRF data from ROOT to FITS format.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.iterative_source_detect.html#gammapy.scripts.iterative_source_detect" title="gammapy.scripts.iterative_source_detect"><tt class="xref py py-obj docutils literal"><span class="pre">iterative_source_detect</span></tt></a>(scales,&nbsp;counts,&nbsp;...)</td>
+<td>Run an iterative multi-scale source detection.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.look_up_image.html#gammapy.scripts.look_up_image" title="gammapy.scripts.look_up_image"><tt class="xref py py-obj docutils literal"><span class="pre">look_up_image</span></tt></a>(infile,&nbsp;x,&nbsp;y)</td>
+<td>Look up values in a map at given positions.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.model_image.html#gammapy.scripts.model_image" title="gammapy.scripts.model_image"><tt class="xref py py-obj docutils literal"><span class="pre">model_image</span></tt></a>()</td>
+<td>Given a catalog of sources, simulate a flux image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.pfmap.html#gammapy.scripts.pfmap" title="gammapy.scripts.pfmap"><tt class="xref py py-obj docutils literal"><span class="pre">pfmap</span></tt></a>(infile,&nbsp;skymap_size,&nbsp;bin_size,&nbsp;...)</td>
+<td>Create sky maps from VHE event lists.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.pfsim.html#gammapy.scripts.pfsim" title="gammapy.scripts.pfsim"><tt class="xref py py-obj docutils literal"><span class="pre">pfsim</span></tt></a>(arf,&nbsp;exposure_time,&nbsp;flux,&nbsp;rmf_file,&nbsp;...)</td>
+<td>Simulates IACT eventlist using an ARF file.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.pfspec.html#gammapy.scripts.pfspec" title="gammapy.scripts.pfspec"><tt class="xref py py-obj docutils literal"><span class="pre">pfspec</span></tt></a>(input_file_names,&nbsp;analysis_position,&nbsp;...)</td>
+<td>Create spectra from VHE event lists in FITS format.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.reflected_regions.html#gammapy.scripts.reflected_regions" title="gammapy.scripts.reflected_regions"><tt class="xref py py-obj docutils literal"><span class="pre">reflected_regions</span></tt></a>(x_on,&nbsp;y_on,&nbsp;r_on,&nbsp;x_fov,&nbsp;...)</td>
+<td>Find off regions for a given on region and exclusion mask.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.residual_images.html#gammapy.scripts.residual_images" title="gammapy.scripts.residual_images"><tt class="xref py py-obj docutils literal"><span class="pre">residual_images</span></tt></a>(model_file,&nbsp;data_file,&nbsp;...)</td>
+<td>Compute source model residual images.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.root_to_fits.html#gammapy.scripts.root_to_fits" title="gammapy.scripts.root_to_fits"><tt class="xref py py-obj docutils literal"><span class="pre">root_to_fits</span></tt></a>()</td>
+<td>Convert ROOT files to FITS files (histograms and ntuples).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.run_cwt.html#gammapy.scripts.run_cwt" title="gammapy.scripts.run_cwt"><tt class="xref py py-obj docutils literal"><span class="pre">run_cwt</span></tt></a>(infile,&nbsp;outfile,&nbsp;overwrite,&nbsp;...)</td>
+<td>Compute filtered image using Continuous Wavelet Transform (CWT).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.sherpa_image_like.html#gammapy.scripts.sherpa_image_like" title="gammapy.scripts.sherpa_image_like"><tt class="xref py py-obj docutils literal"><span class="pre">sherpa_image_like</span></tt></a>(counts,&nbsp;exposure,&nbsp;...)</td>
+<td>Fit the morphology of a number of sources.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.sherpa_model_image.html#gammapy.scripts.sherpa_model_image" title="gammapy.scripts.sherpa_model_image"><tt class="xref py py-obj docutils literal"><span class="pre">sherpa_model_image</span></tt></a>(exposure,&nbsp;psf,&nbsp;sources,&nbsp;...)</td>
+<td>Compute source model image with Sherpa.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.significance_image.html#gammapy.scripts.significance_image" title="gammapy.scripts.significance_image"><tt class="xref py py-obj docutils literal"><span class="pre">significance_image</span></tt></a>(infile,&nbsp;outfile,&nbsp;theta,&nbsp;...)</td>
+<td>Make correlated significance image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.simulate_source_catalog.html#gammapy.scripts.simulate_source_catalog" title="gammapy.scripts.simulate_source_catalog"><tt class="xref py py-obj docutils literal"><span class="pre">simulate_source_catalog</span></tt></a>(outfile,&nbsp;nsources,&nbsp;...)</td>
+<td>Simulate a catalog of Galactic sources.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.scripts.ts_image.html#gammapy.scripts.ts_image" title="gammapy.scripts.ts_image"><tt class="xref py py-obj docutils literal"><span class="pre">ts_image</span></tt></a>(input_file,&nbsp;output_file,&nbsp;psf,&nbsp;...)</td>
+<td>Compute source model residual images.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.scripts.xspec.html#gammapy.scripts.xspec" title="gammapy.scripts.xspec"><tt class="xref py py-obj docutils literal"><span class="pre">xspec</span></tt></a>()</td>
+<td>Perform various tasks with XSPEC files (PHA, ARF, RMF).</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Command line tools  (<tt class="docutils literal"><span class="pre">gammapy.scripts</span></tt>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.scripts">gammapy.scripts Package</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/scripts/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

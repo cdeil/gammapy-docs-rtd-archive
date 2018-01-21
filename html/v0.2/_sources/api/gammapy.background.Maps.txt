@@ -1,0 +1,75 @@
+
+
+Maps
+=======================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: Maps
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~Maps.alpha
+      ~Maps.area_factor
+      ~Maps.background
+      ~Maps.flux
+      ~Maps.make_excess
+      ~Maps.significance
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Maps.get_basic
+      ~Maps.get_derived
+      ~Maps.make_correlated_basic_maps
+      ~Maps.make_derived_maps
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: alpha
+   .. autoattribute:: area_factor
+   .. autoattribute:: background
+   .. autoattribute:: flux
+   .. autoattribute:: make_excess
+   .. autoattribute:: significance
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: get_basic
+   .. automethod:: get_derived
+   .. automethod:: make_correlated_basic_maps
+   .. automethod:: make_derived_maps
+
+   
+   

@@ -1,0 +1,187 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>image_decompose_a_trous &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Command line tools (gammapy.scripts)" href="../scripts/index.html" />
+    <link rel="next" title="info" href="gammapy.scripts.info.html" />
+    <link rel="prev" title="find_obs" href="gammapy.scripts.find_obs.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.scripts.image_decompose_a_trous.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.scripts.image_decompose_a_trous",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.scripts.image_decompose_a_trous";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.scripts.info.html" title="info">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.scripts.find_obs.html" title="find_obs">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../scripts/index.html" accesskey="U">Command line tools  (<tt class="docutils literal"><span class="pre">gammapy.scripts</span></tt>)</a> &raquo;</li>
+      
+      <li>image_decompose_a_trous</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="image-decompose-a-trous">
+<h1>image_decompose_a_trous<a class="headerlink" href="gammapy.scripts.image_decompose_a_trous.html#image-decompose-a-trous" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="gammapy.scripts.image_decompose_a_trous">
+<tt class="descclassname">gammapy.scripts.</tt><tt class="descname">image_decompose_a_trous</tt><big>(</big><em>infile</em>, <em>outfile</em>, <em>n_levels</em>, <em>overwrite</em><big>)</big><a class="reference internal" href="../_modules/gammapy/scripts/image_decompose_a_trous.html#image_decompose_a_trous"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.scripts.image_decompose_a_trous.html#gammapy.scripts.image_decompose_a_trous" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the a trous wavelet transform on a 2D image.</p>
+<p>This book contains an overview of methods:
+<a class="reference external" href="http://www.amazon.de/dp/3540330240">http://www.amazon.de/dp/3540330240</a></p>
+<p>Specifically I&#8217;d like to have an a trous transform.
+Here&#8217;s a few references that look useful:
+* <a class="reference external" href="https://code.google.com/p/image-funcut/">https://code.google.com/p/image-funcut/</a></p>
+<p>I&#8217;m also interested in these transforms:
+* <a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-expand">http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-expand</a>
+* <a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-gaussian">http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-gaussian</a>
+* <a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-laplacian">http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-laplacian</a>
+* <a class="reference external" href="http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-reduce">http://scikit-image.org/docs/dev/api/skimage.transform.html#pyramid-reduce</a></p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.scripts.image_decompose_a_trous.html#">image_decompose_a_trous</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.scripts.image_decompose_a_trous.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.scripts.image_decompose_a_trous.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

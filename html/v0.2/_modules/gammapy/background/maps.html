@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.background.maps &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/background/maps.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "_modules/gammapy/background/maps",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/background/maps";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.background.maps</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">disk_correlate</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="kn">import</span> <span class="n">stats</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Maps&#39;</span><span class="p">,</span> <span class="s">&#39;BASIC_MAP_NAMES&#39;</span><span class="p">,</span> <span class="s">&#39;DERIVED_MAP_NAMES&#39;</span><span class="p">]</span>
+
+<span class="n">BASIC_MAP_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;n_on&#39;</span><span class="p">,</span> <span class="s">&#39;a_on&#39;</span><span class="p">,</span> <span class="s">&#39;n_off&#39;</span><span class="p">,</span> <span class="s">&#39;a_off&#39;</span><span class="p">,</span>
+                   <span class="s">&#39;exclusion&#39;</span><span class="p">,</span> <span class="s">&#39;exposure&#39;</span><span class="p">]</span>
+
+<span class="n">basic_map_defaults</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="n">DERIVED_MAP_NAMES</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;alpha&#39;</span><span class="p">,</span> <span class="s">&#39;area_factor&#39;</span><span class="p">,</span> <span class="s">&#39;background&#39;</span><span class="p">,</span>
+                     <span class="s">&#39;excess&#39;</span><span class="p">,</span> <span class="s">&#39;significance&#39;</span><span class="p">,</span> <span class="s">&#39;flux&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Maps"><a class="viewcode-back" href="../../../api/gammapy.background.Maps.html#gammapy.background.Maps">[docs]</a><span class="k">class</span> <span class="nc">Maps</span><span class="p">(</span><span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Maps container for basic maps and methods to compute derived maps.</span>
+
+<span class="sd">    It is simply a list of HDUs containing the maps, plus methods to</span>
+<span class="sd">    compute the derived maps.</span>
+
+<span class="sd">    These maps allow implementing all background estimation methods.</span>
+<span class="sd">    Not all maps are used for each method, unused maps are typically</span>
+<span class="sd">    filled with zeros or ones as appropriate.</span>
+
+<span class="sd">    TODO: Correlation of basic maps is done repeatedly when</span>
+<span class="sd">          computing all derived maps.</span>
+<span class="sd">          Is it worth speeding things up by writing the steps explicitly?</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    hdus : `~astropy.io.fits.HDUList` containing `~astropy.io.fits.ImageHDU` objects</span>
+<span class="sd">        Must contain at least one of the basic maps</span>
+<span class="sd">    file : str</span>
+<span class="sd">        Passed right on to HDUList constructor</span>
+<span class="sd">    rename_hdus : dict</span>
+<span class="sd">        Dictionary of HDUs to rename, e.g. rename_hdus=dict(n_on=3, exclusion=2).</span>
+<span class="sd">    is_off_correlated : bool</span>
+<span class="sd">        Flag whether the off map is already correlated</span>
+<span class="sd">    theta : float</span>
+<span class="sd">        Correlation radius (deg)</span>
+<span class="sd">    theta_pix : float</span>
+<span class="sd">        Correlation radius (pix)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hdus</span><span class="o">=</span><span class="p">[],</span> <span class="nb">file</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">rename_hdus</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span>
+                 <span class="n">is_off_correlated</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">theta</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">theta_pix</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Maps</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">__init__</span><span class="p">(</span><span class="n">hdus</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+
+        <span class="c">#import IPython; IPython.embed()</span>
+        <span class="c">#if rename_hdus is not None:</span>
+        <span class="c">#    for name, number in rename_hdus.items():</span>
+        <span class="c">#        self[number].name = name</span>
+
+        <span class="n">hdu_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">hdu</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">hdu</span> <span class="ow">in</span> <span class="bp">self</span><span class="p">]</span>
+        <span class="k">print</span><span class="p">(</span><span class="n">hdu_names</span><span class="p">)</span>
+
+        <span class="c"># Check that there is at least one of the basic_maps present.</span>
+        <span class="c"># This is required so that the map geometry is defined.</span>
+        <span class="n">existing_basic_maps</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">BASIC_MAP_NAMES</span>
+                               <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">hdu_names</span><span class="p">]</span>
+        <span class="n">nonexisting_basic_maps</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">BASIC_MAP_NAMES</span>
+                                  <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">hdu_names</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">existing_basic_maps</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;hdu_names =&#39;</span><span class="p">,</span> <span class="n">hdu_names</span><span class="p">)</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">error</span><span class="p">(</span><span class="s">&#39;BASIC_MAP_NAMES = &#39;</span><span class="p">,</span> <span class="n">BASIC_MAP_NAMES</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s">&#39;hdus must contain at least one of the BASIC_MAP_NAMES&#39;</span><span class="p">)</span>
+        <span class="c"># Declare any one of the existing basic maps the reference map.</span>
+        <span class="c"># This HDU will be used as the template when adding other hdus.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ref_hdu</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">existing_basic_maps</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+        <span class="c"># If the HDUList doesn&#39;t contain a PrimaryHDU at index x,</span>
+        <span class="c"># add an empty one because this is required by the FITS standard</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">fits</span><span class="o">.</span><span class="n">PrimaryHDU</span><span class="p">())</span>
+        <span class="c"># Add missing BASIC_MAP_NAMES with default value and</span>
+        <span class="c"># same shape and type as existing reference basic map</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Adding missing basic maps: {0}&#39;</span>
+                      <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nonexisting_basic_maps</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">nonexisting_basic_maps</span><span class="p">:</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">basic_map_defaults</span><span class="p">[</span><span class="n">BASIC_MAP_NAMES</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">name</span><span class="p">)]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ref_hdu</span><span class="o">.</span><span class="n">data</span><span class="p">)</span> <span class="o">*</span> <span class="n">value</span>
+            <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_hdu</span><span class="o">.</span><span class="n">header</span>
+            <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">header</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">is_off_correlated</span> <span class="o">=</span> <span class="n">is_off_correlated</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;is_off_correlated: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">is_off_correlated</span><span class="p">))</span>
+        <span class="c"># Set the correlation radius in pix</span>
+        <span class="k">if</span> <span class="n">theta</span> <span class="ow">and</span> <span class="s">&#39;CDELT2&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;CDELT2&#39;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">theta</span> <span class="o">=</span> <span class="n">theta_pix</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;theta: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Maps.get_basic"><a class="viewcode-back" href="../../../api/gammapy.background.Maps.html#gammapy.background.Maps.get_basic">[docs]</a>    <span class="k">def</span> <span class="nf">get_basic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the data of a basic map and disk-correlates if required.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Map name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        image : `numpy.array`</span>
+<span class="sd">            Map data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Build a list of maps requiring correlation</span>
+        <span class="n">requires_correlation</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;n_on&#39;</span><span class="p">,</span> <span class="s">&#39;a_on&#39;</span><span class="p">,</span> <span class="s">&#39;exposure&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_off_correlated</span><span class="p">:</span>
+            <span class="n">requires_correlation</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s">&#39;n_off&#39;</span><span class="p">,</span> <span class="s">&#39;a_off&#39;</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">requires_correlation</span><span class="p">:</span>
+            <span class="c"># Makes a copy</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Correlating and returning map: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">disk_correlate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c"># Doesn&#39;t make a copy, which is ok since</span>
+            <span class="c"># we only read from this array</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Returning map: {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">data</span>
+</div>
+<div class="viewcode-block" id="Maps.get_derived"><a class="viewcode-back" href="../../../api/gammapy.background.Maps.html#gammapy.background.Maps.get_derived">[docs]</a>    <span class="k">def</span> <span class="nf">get_derived</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets the data if it exists or makes it if not.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        name : str</span>
+<span class="sd">            Map name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        image : `numpy.array`</span>
+<span class="sd">            Map data</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="p">[</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Returning already existing derived map {0}&#39;</span>
+                          <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;self.{0}.data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</div>
+    <span class="k">def</span> <span class="nf">_make_hdu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Helper function to make an image HDU.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : array_like</span>
+<span class="sd">            Image data</span>
+<span class="sd">        name : str</span>
+<span class="sd">            FITS extension name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hdu : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">            Map HDU</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ref_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">alpha</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Alpha map HDU.&quot;&quot;&quot;</span>
+        <span class="n">a_on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;a_on&#39;</span><span class="p">)</span>
+        <span class="n">a_off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;a_off&#39;</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="n">a_on</span> <span class="o">/</span> <span class="n">a_off</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">alpha</span><span class="p">,</span> <span class="s">&#39;alpha&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">area_factor</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Area factor map HDU.&quot;&quot;&quot;</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_derived</span><span class="p">(</span><span class="s">&#39;alpha&#39;</span><span class="p">)</span>
+        <span class="n">area_factor</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">alpha</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">area_factor</span><span class="p">,</span> <span class="s">&#39;area_factor&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">background</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Background map HDU.&quot;&quot;&quot;</span>
+        <span class="n">n_off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;n_off&#39;</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_derived</span><span class="p">(</span><span class="s">&#39;alpha&#39;</span><span class="p">)</span>
+        <span class="n">background</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">background</span><span class="p">(</span><span class="n">n_off</span><span class="p">,</span> <span class="n">alpha</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">background</span><span class="p">,</span> <span class="s">&#39;background&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">make_excess</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Excess map HDU.&quot;&quot;&quot;</span>
+        <span class="n">n_on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;n_on&#39;</span><span class="p">)</span>
+        <span class="n">background</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_derived</span><span class="p">(</span><span class="s">&#39;background&#39;</span><span class="p">)</span>
+        <span class="n">excess</span> <span class="o">=</span> <span class="n">n_on</span> <span class="o">-</span> <span class="n">background</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">excess</span><span class="p">,</span> <span class="s">&#39;excess&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">significance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;lima&#39;</span><span class="p">,</span> <span class="n">neglect_background_uncertainty</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Significance map HDU.&quot;&quot;&quot;</span>
+        <span class="n">n_on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;n_on&#39;</span><span class="p">)</span>
+        <span class="n">n_off</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;n_off&#39;</span><span class="p">)</span>
+        <span class="n">alpha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_derived</span><span class="p">(</span><span class="s">&#39;alpha&#39;</span><span class="p">)</span>
+
+        <span class="n">significance</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">significance_on_off</span><span class="p">(</span><span class="n">n_on</span><span class="p">,</span> <span class="n">n_off</span><span class="p">,</span> <span class="n">alpha</span><span class="p">,</span> <span class="n">method</span><span class="p">,</span>
+                                                 <span class="n">neglect_background_uncertainty</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">significance</span><span class="p">,</span> <span class="s">&#39;significance&#39;</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">flux</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flux map HDU.&quot;&quot;&quot;</span>
+        <span class="n">exposure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_basic</span><span class="p">(</span><span class="s">&#39;exposure&#39;</span><span class="p">)</span>
+        <span class="n">excess</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_derived</span><span class="p">(</span><span class="s">&#39;excess&#39;</span><span class="p">)</span>
+
+        <span class="n">flux</span> <span class="o">=</span> <span class="n">excess</span> <span class="o">/</span> <span class="n">exposure</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">flux</span><span class="p">,</span> <span class="s">&#39;flux&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Maps.make_derived_maps"><a class="viewcode-back" href="../../../api/gammapy.background.Maps.html#gammapy.background.Maps.make_derived_maps">[docs]</a>    <span class="k">def</span> <span class="nf">make_derived_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make all the derived maps.&quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Making derived maps.&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">DERIVED_MAP_NAMES</span><span class="p">:</span>
+            <span class="c"># Compute the derived map</span>
+            <span class="n">hdu</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;self.make_{0}()&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="c"># Put it in the HDUList, removing an older version</span>
+            <span class="c"># of the derived map should it exist.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_of</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdu</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Replacing existing extension {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">&#39;Added extension {0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+</div>
+<div class="viewcode-block" id="Maps.make_correlated_basic_maps"><a class="viewcode-back" href="../../../api/gammapy.background.Maps.html#gammapy.background.Maps.make_correlated_basic_maps">[docs]</a>    <span class="k">def</span> <span class="nf">make_correlated_basic_maps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make correlated versions of all the basic maps.</span>
+
+<span class="sd">        @note This is mainly useful for debugging.</span>
+<span class="sd">        @note All maps are disk-correlated, even e.g. the off map</span>
+<span class="sd">        if it had been ring-correlated before already.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s">&#39;Making correlated basic maps.&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">BASIC_MAP_NAMES</span><span class="p">:</span>
+            <span class="c"># Compute the derived map</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">eval</span><span class="p">(</span><span class="s">&#39;self[&quot;{0}&quot;].data&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+            <span class="n">data_corr</span> <span class="o">=</span> <span class="n">disk_correlate</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">theta</span><span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s">&#39;{0}_corr&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">hdu</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_hdu</span><span class="p">(</span><span class="n">data_corr</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="c"># Put it in the HDUList, removing an older version</span>
+            <span class="c"># of the derived map should it exist.</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">index_of</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+                <span class="bp">self</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="o">=</span> <span class="n">hdu</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">hdu</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="maps.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

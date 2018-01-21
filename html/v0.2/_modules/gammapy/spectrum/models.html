@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.models &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/spectrum/models.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "_modules/gammapy/spectrum/models",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/spectrum/models";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.spectrum.models</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Common spectral models used in gamma-ray astronomy.</span>
+
+<span class="sd">A Model can be either a TableModel, which is represented</span>
+<span class="sd">as arrays of energies and fluxes. Or a AnalyticModel, which</span>
+<span class="sd">is represented by an analytic function flux(energy).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span><span class="p">,</span> <span class="n">exp</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">log10</span>
+<span class="kn">from</span> <span class="nn">astropy</span> <span class="kn">import</span> <span class="n">constants</span> <span class="k">as</span> <span class="n">const</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Unit</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;AnalyticModel&#39;</span><span class="p">,</span> <span class="s">&#39;BlackBody&#39;</span><span class="p">,</span> <span class="s">&#39;BrokenPowerLaw&#39;</span><span class="p">,</span> <span class="s">&#39;CompositeModel&#39;</span><span class="p">,</span>
+           <span class="s">&#39;LogParabola&#39;</span><span class="p">,</span> <span class="s">&#39;Model&#39;</span><span class="p">,</span> <span class="s">&#39;PLExpCutoff&#39;</span><span class="p">,</span> <span class="s">&#39;PowerLaw&#39;</span><span class="p">,</span> <span class="s">&#39;TableModel&#39;</span><span class="p">]</span>
+
+<span class="c"># Define some constatns</span>
+<span class="n">MeV_to_GeV</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="s">&#39;GeV&#39;</span><span class="p">))</span>
+<span class="n">MeV_to_erg</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="s">&#39;erg&#39;</span><span class="p">))</span>
+<span class="n">erg_to_eV</span> <span class="o">=</span> <span class="n">Unit</span><span class="p">(</span><span class="s">&#39;erg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">Unit</span><span class="p">(</span><span class="s">&#39;eV&#39;</span><span class="p">))</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">c</span><span class="o">.</span><span class="n">cgs</span><span class="o">.</span><span class="n">value</span>
+<span class="n">hbar</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">hbar</span><span class="o">.</span><span class="n">cgs</span><span class="o">.</span><span class="n">value</span>
+<span class="n">k_B</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">k_B</span><span class="o">.</span><span class="n">cgs</span><span class="o">.</span><span class="n">value</span>
+<span class="n">k_B_eV</span> <span class="o">=</span> <span class="n">const</span><span class="o">.</span><span class="n">k_B</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;eV/K&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+
+
+<div class="viewcode-block" id="Model"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.Model.html#gammapy.spectrum.models.Model">[docs]</a><span class="k">class</span> <span class="nc">Model</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Abstract base class for all spectra.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Model.__call__"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.Model.html#gammapy.spectrum.models.Model.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make spectrum have value 0 outside range emin &lt; e &lt; emax&quot;&quot;&quot;</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="p">(</span><span class="n">e</span> <span class="o">==</span> <span class="n">e</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emin</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">e</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">emin</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">emax</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">&amp;=</span> <span class="p">(</span><span class="n">e</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">emax</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">mask</span><span class="p">,</span> <span class="n">e</span> <span class="o">**</span> <span class="n">power</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="mi">0</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__add__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spectra can be added: s = s1 + s2&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="s">&#39;add&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__pow__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spectra can be taken to a power: s = s1 ** s2.</span>
+<span class="sd">        Really this will only be used for numbers s2.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">CompositeModel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">,</span> <span class="s">&#39;pow&#39;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_elim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">emin</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">emin</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emin</span>
+        <span class="k">if</span> <span class="n">emax</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">emax</span>
+        <span class="c"># @todo: Is this necessary?</span>
+        <span class="c"># emin = np.asarray(emin, dtype=float)</span>
+        <span class="c"># emax = np.asarray(emax, dtype=float)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">))</span>
+
+<div class="viewcode-block" id="Model.points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.Model.html#gammapy.spectrum.models.Model.points">[docs]</a>    <span class="k">def</span> <span class="nf">points</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elim</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">)</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">emin</span><span class="p">),</span> <span class="n">log10</span><span class="p">(</span><span class="n">emax</span><span class="p">),</span> <span class="n">npoints</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__call__</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">e</span><span class="p">,</span> <span class="n">y</span>
+</div>
+<div class="viewcode-block" id="Model.table_spectrum"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.Model.html#gammapy.spectrum.models.Model.table_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">table_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Make a table spectrum&quot;&quot;&quot;</span>
+        <span class="n">e</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">points</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">npoints</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TableModel</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">_log_integral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Integrate over x = log(e) instead of e for numerical precision and speed.</span>
+<span class="sd">        Try to remember your high-school calculus and transform the integral.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span> <span class="o">*</span> <span class="n">x</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">quad</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">log</span><span class="p">(</span><span class="n">emin</span><span class="p">),</span> <span class="n">log</span><span class="p">(</span><span class="n">emax</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_lin_integral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Integrate over e directly, not going to log energy scale&quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">scipy.integrate</span> <span class="kn">import</span> <span class="n">quad</span>
+        <span class="k">return</span> <span class="n">quad</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Model.integral"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.Model.html#gammapy.spectrum.models.Model.integral">[docs]</a>    <span class="k">def</span> <span class="nf">integral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">method</span><span class="o">=</span><span class="s">&#39;lin&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute integral&quot;&quot;&quot;</span>
+        <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elim</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">)</span>
+        <span class="n">integrators</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;log&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_integral</span><span class="p">,</span>
+                       <span class="s">&#39;lin&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_lin_integral</span><span class="p">}</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">integrators</span><span class="p">[</span><span class="n">method</span><span class="p">](</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="c"># quad can&#39;t handle arrays, so we do the for loop ourselves.</span>
+            <span class="c"># @todo: I&#39;m not sure what the best way to detect that case is here?</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">emin</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">result</span><span class="p">)):</span>
+                <span class="n">result</span><span class="p">[</span><span class="n">ii</span><span class="p">]</span> <span class="o">=</span> <span class="n">integrators</span><span class="p">[</span><span class="n">method</span><span class="p">](</span><span class="n">emin</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">emax</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">power</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">result</span>
+
+</div></div>
+<div class="viewcode-block" id="CompositeModel"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.CompositeModel.html#gammapy.spectrum.models.CompositeModel">[docs]</a><span class="k">class</span> <span class="nc">CompositeModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Model that is the binary composition of two other spectra.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spec1</span><span class="p">,</span> <span class="n">spec2</span><span class="p">,</span> <span class="n">op</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spec1</span> <span class="o">=</span> <span class="n">spec1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spec2</span> <span class="o">=</span> <span class="n">spec2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">=</span> <span class="n">op</span>
+
+<div class="viewcode-block" id="CompositeModel.__call__"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.CompositeModel.html#gammapy.spectrum.models.CompositeModel.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s">&#39;add&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">op</span> <span class="o">==</span> <span class="s">&#39;pow&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec1</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span> <span class="o">**</span> <span class="bp">self</span><span class="o">.</span><span class="n">spec2</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">power</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+</div></div>
+<div class="viewcode-block" id="TableModel"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.TableModel.html#gammapy.spectrum.models.TableModel">[docs]</a><span class="k">class</span> <span class="nc">TableModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A spectrum represented by numeric arrays of x and y values.</span>
+
+<span class="sd">    Internally all calculations are done on log10(x) and log10(y)</span>
+<span class="sd">    for numerical stability and accuracy.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">interp1d</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="n">emin</span> <span class="k">if</span> <span class="n">emin</span> <span class="k">else</span> <span class="n">e</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="n">emax</span> <span class="k">if</span> <span class="n">emax</span> <span class="k">else</span> <span class="n">e</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="c"># self.de = np.ediff1d(e, to_end=e[-1]-e[-2])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">e</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_y</span> <span class="o">=</span> <span class="n">interp1d</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                           <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s">&#39;cubic&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="TableModel.zeros"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.TableModel.html#gammapy.spectrum.models.TableModel.zeros">[docs]</a>    <span class="k">def</span> <span class="nf">zeros</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Factory function to create a TableModel</span>
+<span class="sd">        with all zeros&quot;&quot;&quot;</span>
+        <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">log10</span><span class="p">(</span><span class="n">emin</span><span class="p">),</span> <span class="n">log10</span><span class="p">(</span><span class="n">emax</span><span class="p">),</span> <span class="n">npoints</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">TableModel</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="TableModel.get_points"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.TableModel.html#gammapy.spectrum.models.TableModel.get_points">[docs]</a>    <span class="k">def</span> <span class="nf">get_points</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span>
+</div>
+<div class="viewcode-block" id="TableModel.integral"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.TableModel.html#gammapy.spectrum.models.TableModel.integral">[docs]</a>    <span class="k">def</span> <span class="nf">integral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elim</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">emin</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">&lt;</span> <span class="n">emax</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="n">power</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">dx</span><span class="p">)[</span><span class="n">mask</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="TableModel.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.TableModel.html#gammapy.spectrum.models.TableModel.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">**</span> <span class="n">power</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="AnalyticModel"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.AnalyticModel.html#gammapy.spectrum.models.AnalyticModel">[docs]</a><span class="k">class</span> <span class="nc">AnalyticModel</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spectrum represented by an analytic function.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&#39;{0}</span><span class="se">\n</span><span class="s">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">__class__</span><span class="o">.</span><span class="n">__name__</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">par</span><span class="o">.</span><span class="n">vary</span><span class="p">:</span>
+                <span class="n">err</span> <span class="o">=</span> <span class="s">&#39;+/- {0:.3e}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">err</span> <span class="o">=</span> <span class="s">&#39; (fixed)&#39;</span>
+            <span class="n">fmt</span> <span class="o">=</span> <span class="s">&#39;{0:20s} = {1:.3e} {2}</span><span class="se">\n</span><span class="s">&#39;</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="p">(</span><span class="n">fmt</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">err</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+<div class="viewcode-block" id="AnalyticModel.error"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.AnalyticModel.html#gammapy.spectrum.models.AnalyticModel.error">[docs]</a>    <span class="k">def</span> <span class="nf">error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_y_with_error</span><span class="p">(</span><span class="n">E</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="AnalyticModel.plot"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.AnalyticModel.html#gammapy.spectrum.models.AnalyticModel.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="n">xlim</span><span class="p">,</span> <span class="n">ylim</span><span class="p">,</span> <span class="n">npoints</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+             <span class="n">xscale</span><span class="o">=</span><span class="n">MeV_to_GeV</span><span class="p">,</span> <span class="n">xpower</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">yscale</span><span class="o">=</span><span class="n">MeV_to_erg</span><span class="p">):</span>
+        <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="kn">as</span> <span class="nn">plt</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span> <span class="n">npoints</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="c"># Scale</span>
+        <span class="n">y</span> <span class="o">*=</span> <span class="n">yscale</span> <span class="o">*</span> <span class="n">x</span> <span class="o">**</span> <span class="n">xpower</span>
+        <span class="n">x</span> <span class="o">*=</span> <span class="n">xscale</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="PowerLaw"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.PowerLaw.html#gammapy.spectrum.models.PowerLaw">[docs]</a><span class="k">class</span> <span class="nc">PowerLaw</span><span class="p">(</span><span class="n">AnalyticModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Power law model.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span>
+                 <span class="n">Pivot_Energy</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span> <span class="n">Pivot_Energy</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="n">emin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="n">emax</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">E0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">N0</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="n">E0</span><span class="p">)</span> <span class="o">**</span> <span class="n">g</span>
+
+    <span class="k">def</span> <span class="nf">_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">PowerLaw</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">E0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y_with_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">uncertainties</span> <span class="kn">import</span> <span class="n">ufloat</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">ufloat</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">PowerLaw</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">E0</span><span class="p">)</span>
+
+<div class="viewcode-block" id="PowerLaw.integral"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.PowerLaw.html#gammapy.spectrum.models.PowerLaw.integral">[docs]</a>    <span class="k">def</span> <span class="nf">integral</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute integral using analytic formula (fast and exact)&quot;&quot;&quot;</span>
+        <span class="c"># @todo: should be implemented in log for speed and stability,</span>
+        <span class="c"># but how???</span>
+        <span class="n">emin</span><span class="p">,</span> <span class="n">emax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_elim</span><span class="p">(</span><span class="n">emin</span><span class="p">,</span> <span class="n">emax</span><span class="p">)</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="n">g1</span> <span class="o">=</span> <span class="n">g</span> <span class="o">+</span> <span class="n">power</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">E0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">E0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">N0</span> <span class="o">*</span> <span class="n">E0</span><span class="p">)</span> <span class="o">/</span> <span class="n">g1</span>
+        <span class="n">upper</span> <span class="o">=</span> <span class="p">(</span><span class="n">emax</span> <span class="o">/</span> <span class="n">E0</span><span class="p">)</span> <span class="o">**</span> <span class="n">g1</span>
+        <span class="n">lower</span> <span class="o">=</span> <span class="p">(</span><span class="n">emin</span> <span class="o">/</span> <span class="n">E0</span><span class="p">)</span> <span class="o">**</span> <span class="n">g1</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">upper</span> <span class="o">-</span> <span class="n">lower</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="PowerLaw.factory"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.PowerLaw.html#gammapy.spectrum.models.PowerLaw.factory">[docs]</a>    <span class="k">def</span> <span class="nf">factory</span><span class="p">(</span><span class="n">Flux_Density</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">Pivot_Energy</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">lmfit</span> <span class="kn">import</span> <span class="n">Parameter</span>
+        <span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Flux_Density&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Flux_Density</span><span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Spectral_Index&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Spectral_Index</span><span class="p">),</span>
+                <span class="n">Parameter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s">&#39;Pivot_Energy&#39;</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="n">Pivot_Energy</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">PowerLaw</span><span class="p">(</span><span class="o">*</span><span class="n">pars</span><span class="p">)</span>
+
+</div></div>
+<div class="viewcode-block" id="PLExpCutoff"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.PLExpCutoff.html#gammapy.spectrum.models.PLExpCutoff">[docs]</a><span class="k">class</span> <span class="nc">PLExpCutoff</span><span class="p">(</span><span class="n">AnalyticModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Power law model with exponential cutoff.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span>
+                 <span class="n">Cutoff</span><span class="p">,</span> <span class="n">Pivot_Energy</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span> <span class="n">Cutoff</span><span class="p">,</span> <span class="n">Pivot_Energy</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="n">emin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="n">emax</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">Ecut</span><span class="p">,</span> <span class="n">E0</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">N0</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="n">E0</span><span class="p">)</span> <span class="o">**</span> <span class="n">g</span> <span class="o">*</span> <span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">E</span> <span class="o">/</span> <span class="n">Ecut</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">Ecut</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">PLExpCutoff</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">Ecut</span><span class="p">,</span> <span class="n">E0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y_with_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">uncertainties</span> <span class="kn">import</span> <span class="n">ufloat</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">Ecut</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">ufloat</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                           <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">PLExpCutoff</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">Ecut</span><span class="p">,</span> <span class="n">E0</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="LogParabola"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.LogParabola.html#gammapy.spectrum.models.LogParabola">[docs]</a><span class="k">class</span> <span class="nc">LogParabola</span><span class="p">(</span><span class="n">AnalyticModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Log parabola model.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span>
+                 <span class="n">beta</span><span class="p">,</span> <span class="n">Pivot_Energy</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">Pivot_Energy</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="n">emin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="n">emax</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">E0</span><span class="p">):</span>
+        <span class="n">power</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">g</span> <span class="o">+</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">log</span><span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="n">E0</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">N0</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="n">E0</span><span class="p">)</span> <span class="o">**</span> <span class="n">power</span>
+
+    <span class="k">def</span> <span class="nf">_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">LogParabola</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">E0</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y_with_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">uncertainties</span> <span class="kn">import</span> <span class="n">ufloat</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">E0</span> <span class="o">=</span> <span class="p">[</span><span class="n">ufloat</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                           <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">LogParabola</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">E0</span><span class="p">)</span>
+
+</div>
+<div class="viewcode-block" id="BrokenPowerLaw"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.BrokenPowerLaw.html#gammapy.spectrum.models.BrokenPowerLaw">[docs]</a><span class="k">class</span> <span class="nc">BrokenPowerLaw</span><span class="p">(</span><span class="n">AnalyticModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Broken power-law model.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span> <span class="n">Spectral_Index2</span><span class="p">,</span>
+                 <span class="n">Break_Energy</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pars</span> <span class="o">=</span> <span class="p">[</span><span class="n">Flux_Density</span><span class="p">,</span> <span class="n">Spectral_Index</span><span class="p">,</span> <span class="n">Spectral_Index2</span><span class="p">,</span>
+                     <span class="n">Break_Energy</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="n">emin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="n">emax</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">Eb</span><span class="p">):</span>
+        <span class="c"># @todo: I don&#39;t like the fact that Eb is used as E0!!!</span>
+        <span class="c"># Probably best to have an independent E0 in the formula?</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">E</span> <span class="o">&lt;</span> <span class="n">Eb</span><span class="p">,</span>
+                        <span class="n">N0</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="n">Eb</span><span class="p">)</span> <span class="o">**</span> <span class="n">g</span><span class="p">,</span>
+                        <span class="n">N0</span> <span class="o">*</span> <span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="n">Eb</span><span class="p">)</span> <span class="o">**</span> <span class="n">g2</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">Eb</span> <span class="o">=</span> <span class="p">[</span><span class="n">par</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">BrokenPowerLaw</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">Eb</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y_with_error</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">uncertainties</span> <span class="kn">import</span> <span class="n">ufloat</span>
+        <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">Eb</span> <span class="o">=</span> <span class="p">[</span><span class="n">ufloat</span><span class="p">(</span><span class="n">par</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span> <span class="n">par</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">par</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">pars</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">LogParabola</span><span class="o">.</span><span class="n">_formula</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">N0</span><span class="p">,</span> <span class="n">g</span><span class="p">,</span> <span class="n">g2</span><span class="p">,</span> <span class="n">Eb</span><span class="p">)</span>
+</div>
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">@uncertainties.wrap</span>
+<span class="sd">def I(e1, e2, e0, f0, g, ec = numpy.nan):</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    Compute integral flux for an exponentially cutoff power law.</span>
+
+<span class="sd">    e1, e2  = energy integration range</span>
+<span class="sd">    e0 = pivot energy</span>
+<span class="sd">    f0 = flux density (at e0 if no cutoff is present)</span>
+<span class="sd">    g  = spectral index</span>
+<span class="sd">    ec = cutoff energy (optional, no cutoff if numpy.nan is given)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<span class="sd">    return quad(lambda e: ecpl_f(e, e0, f0, g, ec), e1, e2)[0]</span>
+<span class="sd">&#39;&#39;&#39;</span>
+
+
+<div class="viewcode-block" id="BlackBody"><a class="viewcode-back" href="../../../api/gammapy.spectrum.models.BlackBody.html#gammapy.spectrum.models.BlackBody">[docs]</a><span class="k">class</span> <span class="nc">BlackBody</span><span class="p">(</span><span class="n">AnalyticModel</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Black-body model.</span>
+
+<span class="sd">    The energy density can be specified independently of the temperature.</span>
+<span class="sd">    This is sometimes called a &quot;gray body&quot; spectrum.</span>
+
+<span class="sd">    Photon number density (cm^-3 eV^-1)</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    T : float</span>
+<span class="sd">        Temperature (K)</span>
+<span class="sd">    W : float</span>
+<span class="sd">        Energy density (eV cm^-3)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mf">2.7</span><span class="p">,</span> <span class="n">W</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emin</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">emax</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emin</span> <span class="o">=</span> <span class="n">emin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">emax</span> <span class="o">=</span> <span class="n">emax</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">T</span> <span class="o">=</span> <span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">=</span> <span class="n">W</span> <span class="k">if</span> <span class="n">W</span> <span class="k">else</span> <span class="bp">self</span><span class="o">.</span><span class="n">_omega_b</span><span class="p">(</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_omega_b</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Blackbody energy density.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        T : array_like</span>
+<span class="sd">            Temperature (K).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        omega : `numpy.array`</span>
+<span class="sd">            Blackbody energy density (eV cm^-3).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">erg_to_eV</span> <span class="o">*</span>
+                <span class="p">(</span><span class="n">pi</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">k_B</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span> <span class="o">/</span>
+                <span class="p">(</span><span class="mi">15</span> <span class="o">*</span> <span class="p">(</span><span class="n">hbar</span> <span class="o">*</span> <span class="n">c</span><span class="p">)</span> <span class="o">**</span> <span class="mi">3</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_omega_g_over_b</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns: Fraction of blackbody energy density&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_omega_b</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">E</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        E : array_like</span>
+<span class="sd">            Energy (eV)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Convert (k_B * T) to eV</span>
+        <span class="k">return</span> <span class="p">((</span><span class="mi">15</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">W</span> <span class="o">/</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">**</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">k_B_eV</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">4</span><span class="p">)</span> <span class="o">*</span>
+                <span class="n">E</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">E</span> <span class="o">/</span> <span class="p">(</span><span class="n">k_B_eV</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">T</span><span class="p">))</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="models.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

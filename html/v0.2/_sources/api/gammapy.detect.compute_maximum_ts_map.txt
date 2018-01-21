@@ -1,0 +1,8 @@
+
+
+compute_maximum_ts_map
+=====================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: compute_maximum_ts_map

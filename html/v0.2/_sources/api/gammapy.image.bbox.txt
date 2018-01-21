@@ -1,0 +1,8 @@
+
+
+bbox
+==================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: bbox

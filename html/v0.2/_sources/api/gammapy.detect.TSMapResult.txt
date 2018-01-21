@@ -1,0 +1,44 @@
+
+
+TSMapResult
+==========================
+
+.. currentmodule:: gammapy.detect
+
+.. autoclass:: TSMapResult
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~TSMapResult.read
+      ~TSMapResult.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: read
+   .. automethod:: write
+
+   
+   

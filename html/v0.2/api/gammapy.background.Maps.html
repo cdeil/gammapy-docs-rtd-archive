@@ -1,0 +1,369 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Maps &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Background estimation and modeling (gammapy.background)" href="../background/index.html" />
+    <link rel="next" title="ReflectedBgMaker" href="gammapy.background.ReflectedBgMaker.html" />
+    <link rel="prev" title="IterativeKernelBackgroundEstimator" href="gammapy.background.IterativeKernelBackgroundEstimator.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.background.Maps.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.background.Maps",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.background.Maps";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.background.ReflectedBgMaker.html" title="ReflectedBgMaker">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.background.IterativeKernelBackgroundEstimator.html" title="IterativeKernelBackgroundEstimator">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../background/index.html" accesskey="U">Background estimation and modeling  (<tt class="docutils literal"><span class="pre">gammapy.background</span></tt>)</a> &raquo;</li>
+      
+      <li>Maps</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="maps">
+<h1>Maps<a class="headerlink" href="gammapy.background.Maps.html#maps" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.background.Maps">
+<em class="property">class </em><tt class="descclassname">gammapy.background.</tt><tt class="descname">Maps</tt><big>(</big><em>hdus=</em>, <span class="optional">[</span><span class="optional">]</span><em>file=None</em>, <em>rename_hdus=None</em>, <em>is_off_correlated=True</em>, <em>theta=None</em>, <em>theta_pix=0</em><big>)</big><a class="reference internal" href="../_modules/gammapy/background/maps.html#Maps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">astropy.io.fits.hdu.hdulist.HDUList</span></tt></p>
+<p>Maps container for basic maps and methods to compute derived maps.</p>
+<p>It is simply a list of HDUs containing the maps, plus methods to
+compute the derived maps.</p>
+<p>These maps allow implementing all background estimation methods.
+Not all maps are used for each method, unused maps are typically
+filled with zeros or ones as appropriate.</p>
+<dl class="docutils">
+<dt>TODO: Correlation of basic maps is done repeatedly when</dt>
+<dd>computing all derived maps.
+Is it worth speeding things up by writing the steps explicitly?</dd>
+</dl>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>hdus</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a> containing <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></tt></a> objects</p>
+<blockquote>
+<div><p>Must contain at least one of the basic maps</p>
+</div></blockquote>
+<p><strong>file</strong> : str</p>
+<blockquote>
+<div><p>Passed right on to HDUList constructor</p>
+</div></blockquote>
+<p><strong>rename_hdus</strong> : dict</p>
+<blockquote>
+<div><p>Dictionary of HDUs to rename, e.g. rename_hdus=dict(n_on=3, exclusion=2).</p>
+</div></blockquote>
+<p><strong>is_off_correlated</strong> : bool</p>
+<blockquote>
+<div><p>Flag whether the off map is already correlated</p>
+</div></blockquote>
+<p><strong>theta</strong> : float</p>
+<blockquote>
+<div><p>Correlation radius (deg)</p>
+</div></blockquote>
+<p><strong>theta_pix</strong> : float</p>
+<blockquote class="last">
+<div><p>Correlation radius (pix)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.alpha" title="gammapy.background.Maps.alpha"><tt class="xref py py-obj docutils literal"><span class="pre">alpha</span></tt></a></td>
+<td>Alpha map HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.area_factor" title="gammapy.background.Maps.area_factor"><tt class="xref py py-obj docutils literal"><span class="pre">area_factor</span></tt></a></td>
+<td>Area factor map HDU.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.background" title="gammapy.background.Maps.background"><tt class="xref py py-obj docutils literal"><span class="pre">background</span></tt></a></td>
+<td>Background map HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.flux" title="gammapy.background.Maps.flux"><tt class="xref py py-obj docutils literal"><span class="pre">flux</span></tt></a></td>
+<td>Flux map HDU.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.make_excess" title="gammapy.background.Maps.make_excess"><tt class="xref py py-obj docutils literal"><span class="pre">make_excess</span></tt></a></td>
+<td>Excess map HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.significance" title="gammapy.background.Maps.significance"><tt class="xref py py-obj docutils literal"><span class="pre">significance</span></tt></a></td>
+<td>Significance map HDU.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.get_basic" title="gammapy.background.Maps.get_basic"><tt class="xref py py-obj docutils literal"><span class="pre">get_basic</span></tt></a>(name)</td>
+<td>Gets the data of a basic map and disk-correlates if required.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.get_derived" title="gammapy.background.Maps.get_derived"><tt class="xref py py-obj docutils literal"><span class="pre">get_derived</span></tt></a>(name)</td>
+<td>Gets the data if it exists or makes it if not.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.make_correlated_basic_maps" title="gammapy.background.Maps.make_correlated_basic_maps"><tt class="xref py py-obj docutils literal"><span class="pre">make_correlated_basic_maps</span></tt></a>()</td>
+<td>Make correlated versions of all the basic maps.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.background.Maps.html#gammapy.background.Maps.make_derived_maps" title="gammapy.background.Maps.make_derived_maps"><tt class="xref py py-obj docutils literal"><span class="pre">make_derived_maps</span></tt></a>()</td>
+<td>Make all the derived maps.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.background.Maps.alpha">
+<tt class="descname">alpha</tt><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.alpha" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alpha map HDU.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.Maps.area_factor">
+<tt class="descname">area_factor</tt><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.area_factor" title="Permalink to this definition">¶</a></dt>
+<dd><p>Area factor map HDU.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.Maps.background">
+<tt class="descname">background</tt><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.background" title="Permalink to this definition">¶</a></dt>
+<dd><p>Background map HDU.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.Maps.flux">
+<tt class="descname">flux</tt><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.flux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Flux map HDU.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.Maps.make_excess">
+<tt class="descname">make_excess</tt><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.make_excess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Excess map HDU.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.background.Maps.significance">
+<tt class="descname">significance</tt><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.significance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Significance map HDU.</p>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.background.Maps.get_basic">
+<tt class="descname">get_basic</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/gammapy/background/maps.html#Maps.get_basic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.get_basic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the data of a basic map and disk-correlates if required.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Map name</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>image</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.9)"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></tt></a></p>
+<blockquote class="last">
+<div><p>Map data</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.background.Maps.get_derived">
+<tt class="descname">get_derived</tt><big>(</big><em>name</em><big>)</big><a class="reference internal" href="../_modules/gammapy/background/maps.html#Maps.get_derived"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.get_derived" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the data if it exists or makes it if not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>name</strong> : str</p>
+<blockquote>
+<div><p>Map name</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>image</strong> : <a class="reference external" href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="(in NumPy v1.9)"><tt class="xref py py-obj docutils literal"><span class="pre">numpy.array</span></tt></a></p>
+<blockquote class="last">
+<div><p>Map data</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.background.Maps.make_correlated_basic_maps">
+<tt class="descname">make_correlated_basic_maps</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/background/maps.html#Maps.make_correlated_basic_maps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.make_correlated_basic_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make correlated versions of all the basic maps.</p>
+<p>&#64;note This is mainly useful for debugging.
+&#64;note All maps are disk-correlated, even e.g. the off map
+if it had been ring-correlated before already.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.background.Maps.make_derived_maps">
+<tt class="descname">make_derived_maps</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/background/maps.html#Maps.make_derived_maps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.background.Maps.html#gammapy.background.Maps.make_derived_maps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make all the derived maps.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.background.Maps.html#">Maps</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.background.Maps.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.background.Maps.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

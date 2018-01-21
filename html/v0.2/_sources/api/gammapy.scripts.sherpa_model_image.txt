@@ -1,0 +1,8 @@
+
+
+sherpa_model_image
+==================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: sherpa_model_image

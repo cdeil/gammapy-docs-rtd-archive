@@ -1,0 +1,8 @@
+
+
+exclusion_distance
+================================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: exclusion_distance

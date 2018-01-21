@@ -1,0 +1,44 @@
+
+
+Circle
+===========================
+
+.. currentmodule:: gammapy.utils.region
+
+.. autoclass:: Circle
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~Circle.parse
+      ~Circle.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: parse
+   .. automethod:: write
+
+   
+   

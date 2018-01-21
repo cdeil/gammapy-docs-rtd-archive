@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Changelog &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="index.html" />
+    <link rel="next" title="Astrophysical source and population models (gammapy.astro)" href="astro/index.html" />
+    <link rel="prev" title="Development" href="development/index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/changelog.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "changelog",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "changelog";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="genindex.html">Index</a></li>
+    <li><a title="Module Index" href="py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="astro/index.html" title="Astrophysical source and population models (gammapy.astro)">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="development/index.html" title="Development">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      
+      <li>Changelog</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="changelog">
+<span id="id1"></span><h1>Changelog<a class="headerlink" href="changelog.html#changelog" title="Permalink to this headline">¶</a></h1>
+<p>This is the changelog for Gammapy.
+For now we use a one-line description of every pull request, roughly in chronological order.</p>
+<p>We don&#8217;t list every pull request.
+Maintenance and cleanup changes (e.g. to update astropy-helpers or fix the docs build)
+are not of interest to users and are not listed here.</p>
+<p>After the 1.0 release we will keep a more detailed changelog for users.</p>
+<div class="section" id="august-24-2015">
+<h2>1.0 (August 24, 2015)<a class="headerlink" href="changelog.html#august-24-2015" title="Permalink to this headline">¶</a></h2>
+<p>Gammapy 1.0 will be released on August 24, 2015.</p>
+<p>For plans and progress see <a class="reference external" href="https://github.com/gammapy/gammapy/milestones/1.0">https://github.com/gammapy/gammapy/milestones/1.0</a></p>
+</div>
+<div class="section" id="june-11-2015">
+<h2>0.4 (June 11, 2015)<a class="headerlink" href="changelog.html#june-11-2015" title="Permalink to this headline">¶</a></h2>
+<p>Gammapy 0.4 will be released on June 11, 2015.</p>
+<p>For plans and progress see <a class="reference external" href="https://github.com/gammapy/gammapy/milestones/0.4">https://github.com/gammapy/gammapy/milestones/0.4</a></p>
+<div class="section" id="pull-requests">
+<h3>Pull requests<a class="headerlink" href="changelog.html#pull-requests" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="may-18-2015">
+<span id="gammapy-0p3-release"></span><h2>0.3 (May 18 , 2015)<a class="headerlink" href="changelog.html#may-18-2015" title="Permalink to this headline">¶</a></h2>
+<p>Gammapy 0.3 will be released on April 13, 2015.</p>
+<p>For plans and progress see <a class="reference external" href="https://github.com/gammapy/gammapy/milestones/0.3">https://github.com/gammapy/gammapy/milestones/0.3</a></p>
+</div>
+<div class="section" id="april-13-2015">
+<span id="gammapy-0p2-release"></span><h2>0.2 (April 13, 2015)<a class="headerlink" href="changelog.html#april-13-2015" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="release-notes">
+<h3>Release notes<a class="headerlink" href="changelog.html#release-notes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Will be released on April 13, 2015 (<a class="reference external" href="https://pypi.python.org/pypi/gammapy/0.2">Gammapy 0.2 on PyPI</a>)</li>
+<li>Contributors: Manuel Paz Arribas (new), Axel Donath, Ellis Owen, Christoph Deil</li>
+<li>8 months of work (from August 25, 2014 to April 13, 2015)</li>
+<li>40 pull requests, 4 authors</li>
+<li>Requires Astropy version 1.0 or later.</li>
+<li>Gammapy now uses <a class="reference external" href="http://cython.org/">Cython</a>,
+i.e. requires a C compiler for end-users and in addition Cython for developers.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h3>Pull requests<a class="headerlink" href="changelog.html#id2" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Add iterative kernel background estimator [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/186">#186</a>] (Ellis Owen)</li>
+<li>Fix bugs in spectral cube class [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/187">#187</a>] (Ellis Owen)</li>
+<li>Add tests for spectral_cube.integral_flux_image [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/188">#188</a>] (Ellis Owen)</li>
+<li>Add Fermi PSF dataset and example [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/191">#191</a>] (Ellis Owen)</li>
+<li>Bundle TeVCat in gammapy.datasets [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/194">#194</a>] (Christoph Deil)</li>
+<li>Fix quantity errors from astro source models [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/200">#200</a>] (Christoph Deil)</li>
+<li>Remove healpix_to_image function (moved to reproject repo) [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/205">#205</a>] (Christoph Deil)</li>
+<li>Restructure image measurement functions [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/210">#210</a>] (Axel Donath)</li>
+<li>Bundle xmltodict.py in gammapy/extern [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/212">#212</a>] (Christoph Deil)</li>
+<li>Restructure TS map computation [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/215">#215</a>] (Axel Donath)</li>
+<li>TS map calculation update and docs [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/221">#221</a>] (Axel Donath)</li>
+<li>Misc cleanup [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/225">#225</a>] (Christoph Deil)</li>
+<li>Use setuptools entry_points for scripts [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/230">#230</a>] (Christoph Deil)</li>
+<li>Add observatory and data classes [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/231">#231</a>] (Christoph Deil)</li>
+<li>Add multi-scale TS image computation [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/234">#234</a>] (Axel Donath)</li>
+<li>Add some catalog utilities [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/235">#235</a>] (Christoph Deil)</li>
+<li>Add likelihood converter function [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/236">#236</a>] (Christoph Deil)</li>
+<li>Add 3FGL to dataset fetch functions [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/244">#244</a>] (Manuel Paz Arribas)</li>
+<li>Add colormap and PSF inset plotting functions [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/245">#245</a>] (Axel Donath)</li>
+<li>Add catalog and plotting utils [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/246">#246</a>] (Axel Donath)</li>
+<li>Various fixes to image utils docstrings [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/247">#247</a>] (Manuel Paz Arribas)</li>
+<li>Add function to fill acceptance image from curve [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/248">#248</a>] (Manuel Paz Arribas)</li>
+<li>Add data store and observation table classes, improve event list classes [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/249">#249</a>] (Christoph Deil)</li>
+<li>Implement TS map computation in Cython [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/252">#252</a>] (Axel Donath)</li>
+<li>Add changelog for Gammapy [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/254">#254</a>] (Christoph Deil)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="august-25-2014">
+<span id="gammapy-0p1-release"></span><h2>0.1 (August 25, 2014)<a class="headerlink" href="changelog.html#august-25-2014" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>Release notes<a class="headerlink" href="changelog.html#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Released on August 25, 2014 (<a class="reference external" href="https://pypi.python.org/pypi/gammapy/0.1">Gammapy 0.1 on PyPI</a>)</li>
+<li>Contributors: Axel Donath, Ellis Owen, Regis Terrier, Rolf Bühler, Christoph Deil</li>
+<li>15 months of work (from May 15, 2013 to August 25, 2014)</li>
+<li>82 pull requests, 5 authors</li>
+<li>Requires Astropy version 0.4 or later.</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>Pull requests<a class="headerlink" href="changelog.html#id4" title="Permalink to this headline">¶</a></h3>
+<p>Note that Gammapy development started out directly in the master branch,
+i.e. for some things there is no pull request we can list here.</p>
+<ul class="simple">
+<li>Start tevpy repo with <a class="reference external" href="https://github.com/gammapy/gammapy/commit/11af4c7436bb79f8e2cae8d0441693232eebe1ba">commit 11af4c</a> (Christoph Deil)</li>
+<li>Rename tevpy to Gammapy in <a class="reference external" href="https://github.com/cdeil/gammapy/commit/7e955ffae71353f7b10c9de4a69b977e7c036c6d">commit 7e955f</a> on Aug 19, 2013 (Christoph Deil)</li>
+<li>Add blob detection [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/11">#11</a>] (Axel Donath)</li>
+<li>Add coverage reports to continuous integration on coveralls [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/12">#12</a>] (Christoph Deil)</li>
+<li>Add continuous wavelet transform class [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/25">#25</a>] (Regis Terrier)</li>
+<li>Rename tevpy to gammapy [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/34">#34</a>] (Christoph Deil)</li>
+<li>Add sphere and power-law sampling functions [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/48">#48</a>] (Christoph Deil)</li>
+<li>Add per-pixel solid angle function in image utils [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/58">#58</a>] (Ellis Owen)</li>
+<li>Add coordinate string IAU designation format [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/64">#64</a>] (Christoph Deil)</li>
+<li>Add model image and image measurement functionality [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/65">#65</a>] (Axel Donath)</li>
+<li>Add plotting module and HESS colormap [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/66">#66</a>] (Axel Donath)</li>
+<li>Add image measure methods [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/67">#67</a>] (Christoph Deil)</li>
+<li>Integrate PyFACT functionality in Gammapy [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/68">#68</a>] (Christoph Deil)</li>
+<li>Add TablePSF and Fermi PSF [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/84">#84</a>] (Christoph Deil)</li>
+<li>Add block reduce function for HDUs [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/88">#88</a>] (Ellis Owen)</li>
+<li>Add wstat likelihood function for spectra and images [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/96">#96</a>] (Christoph Deil)</li>
+<li>Add image plotting routines [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/100">#100</a>] (Christoph Deil)</li>
+<li>Add datasets functions to fetch Fermi catalogs [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/103">#103</a>] (Ellis Owen)</li>
+<li>Python 2 / 3 compatibility with a single codebase [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/109">#109</a>] (Christoph Deil)</li>
+<li>Add Galactic source catalog simulation methods [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/116">#116</a>] (Christoph Deil)</li>
+<li>Improve synthetic Milky Way modeling [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/117">#117</a>] (Christoph Deil)</li>
+<li>Add morphology models as Astropy models [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/122">#122</a>] (Axel Donath)</li>
+<li>Add flux point computation using Lafferty &amp; Wyatt (1995) [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/128">#128</a>] (Ellis Owen)</li>
+<li>Add Crab flux point dataset [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/138">#138</a>] (Rolf Bühler)</li>
+<li>Add EffectiveAreaTable and EnergyDependentMultiGaussPSF classes [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/142">#142</a>] (Axel Donath)</li>
+<li>Add npred cube computation [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/150">#150</a>] (Christoph Deil and Ellis Owen)</li>
+<li>Improve npred cube functionality [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/151">#151</a>] (Ellis Owen)</li>
+<li>Add Fermi PSF convolution method [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/154">#154</a>] (Ellis Owen)</li>
+<li>Add PSF convolve function [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/155">#155</a>] (Ellis Owen)</li>
+<li>Add Fermi Vela dataset [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/156">#156</a>] (Ellis Owen)</li>
+<li>Re-write Galaxy modelling code [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/157">#157</a>] (Axel Donath)</li>
+<li>Add code to make model images from a source catalog [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/160">#160</a>] (Ellis Owen)</li>
+<li>Add SED from Cube function [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/166">#166</a>] (Ellis Owen)</li>
+<li>Add image profile function [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/167">#167</a>] (Ellis Owen)</li>
+<li>Add new gammapy.data sub-package [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/176">#176</a>] (Christoph Deil)</li>
+<li>Misc code and docs cleanup [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/177">#177</a>] (Christoph Deil)</li>
+<li>Clean up datasets code and docs [<a class="reference external" href="https://github.com/gammapy/gammapy/issues/180">#180</a>] (Christoph Deil)</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="changelog.html#">Changelog</a><ul>
+<li><a class="reference internal" href="changelog.html#august-24-2015">1.0 (August 24, 2015)</a></li>
+<li><a class="reference internal" href="changelog.html#june-11-2015">0.4 (June 11, 2015)</a><ul>
+<li><a class="reference internal" href="changelog.html#pull-requests">Pull requests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="changelog.html#may-18-2015">0.3 (May 18 , 2015)</a></li>
+<li><a class="reference internal" href="changelog.html#april-13-2015">0.2 (April 13, 2015)</a><ul>
+<li><a class="reference internal" href="changelog.html#release-notes">Release notes</a></li>
+<li><a class="reference internal" href="changelog.html#id2">Pull requests</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="changelog.html#august-25-2014">0.1 (August 25, 2014)</a><ul>
+<li><a class="reference internal" href="changelog.html#id3">Release notes</a></li>
+<li><a class="reference internal" href="changelog.html#id4">Pull requests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="_sources/changelog.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="changelog.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

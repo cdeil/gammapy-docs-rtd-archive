@@ -1,0 +1,8 @@
+
+
+ring_correlate
+============================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: ring_correlate

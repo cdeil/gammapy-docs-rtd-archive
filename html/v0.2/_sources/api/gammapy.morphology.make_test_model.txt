@@ -1,0 +1,8 @@
+
+
+make_test_model
+==================================
+
+.. currentmodule:: gammapy.morphology
+
+.. autofunction:: make_test_model

@@ -1,0 +1,27 @@
+
+
+CountsCubeDataset
+==============================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: CountsCubeDataset
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

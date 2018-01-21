@@ -1,0 +1,56 @@
+
+
+EnergyDependentMultiGaussPSF
+========================================
+
+.. currentmodule:: gammapy.irf
+
+.. autoclass:: EnergyDependentMultiGaussPSF
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~EnergyDependentMultiGaussPSF.from_fits
+      ~EnergyDependentMultiGaussPSF.info
+      ~EnergyDependentMultiGaussPSF.plot_containment
+      ~EnergyDependentMultiGaussPSF.psf_at_energy_and_theta
+      ~EnergyDependentMultiGaussPSF.read
+      ~EnergyDependentMultiGaussPSF.to_fits
+      ~EnergyDependentMultiGaussPSF.write
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: from_fits
+   .. automethod:: info
+   .. automethod:: plot_containment
+   .. automethod:: psf_at_energy_and_theta
+   .. automethod:: read
+   .. automethod:: to_fits
+   .. automethod:: write
+
+   
+   

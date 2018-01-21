@@ -1,0 +1,300 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Skymaps with gammapy-pfmap and Sherpa &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../index.html" />
+    <link rel="up" title="Tutorials and Examples" href="../index.html" />
+    <link rel="next" title="Spectra with gammapy-pfspec and Sherpa" href="../gammapy-pfspec/index.html" />
+    <link rel="prev" title="Where to stick your Spectral Points?" href="../flux_point/index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/tutorials/gammapy-pfmap/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "tutorials/gammapy-pfmap/index",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "tutorials/gammapy-pfmap/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../gammapy-pfspec/index.html" title="Spectra with gammapy-pfspec and Sherpa">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../flux_point/index.html" title="Where to stick your Spectral Points?">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../index.html" accesskey="U">Tutorials and Examples</a> &raquo;</li>
+      
+      <li>Skymaps with <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> and Sherpa</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="skymaps-with-gammapy-pfmap-and-sherpa">
+<span id="tutorials-gammapy-pfmap"></span><h1>Skymaps with <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> and Sherpa<a class="headerlink" href="index.html#skymaps-with-gammapy-pfmap-and-sherpa" title="Permalink to this headline">¶</a></h1>
+<p>The script <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> is used to create binned skymaps from FITS event lists.
+It calculates background maps using the ring and the template background method
+(if a corresponding template background eventlist is provided)
+and produces signal, background, excess, and significance maps.
+These maps can be written to fits files and then viewed and analyzed with standard fits tools, e.g., fv, ds9, or sherpa.</p>
+<div class="section" id="running-gammapy-pfmap">
+<h2>Running <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt><a class="headerlink" href="index.html#running-gammapy-pfmap" title="Permalink to this headline">¶</a></h2>
+<p>Using <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> is straight forward.
+To create skymaps from a file <tt class="docutils literal"><span class="pre">data.fits</span></tt> using the object position from the header of the file
+as center of skymap and writing the skymaps to FITS files (option: <tt class="docutils literal"><span class="pre">-w</span></tt>), use:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>gammapy-pfmap data.fits -w
+</pre></div>
+</div>
+<p><tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> can also handle compressed files (gzip).</p>
+<p>If you want to analyse several files together,
+you need to create an ASCII file containing the filenames
+(first string per row is used; bankfile), e.g.,:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>ls *.fits.gz &gt; my.bnk
+<span class="nv">$ </span>python scripts/pfmap.py my.bnk -w
+</pre></div>
+</div>
+<p>You can change the parameters of the skymap via command line options, e.g.,:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>gammapy-pfmap my.bnk -w -s 4. -b 0.1 -r 0.1 -c <span class="s2">&quot;(83.633, 22.0145)&quot;</span>
+</pre></div>
+</div>
+<p>creating a skymap of size 4 deg (<tt class="docutils literal"><span class="pre">-s</span></tt>) with a bin size 0.1 deg (<tt class="docutils literal"><span class="pre">-c</span></tt>)
+and correlation radius for the oversampled skymap of 0.1 deg (<tt class="docutils literal"><span class="pre">-r</span></tt>).
+The center of the map is set to RA=83.633 deg, Dec=22.0145 deg (J2000; -).
+Check the <tt class="docutils literal"><span class="pre">--help</span></tt> option for more details on the different command line options.</p>
+<p>After running <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> with the option <tt class="docutils literal"><span class="pre">-w</span></tt> you will find a couple of new FITS files
+in you working directory starting with <tt class="docutils literal"><span class="pre">skymap_ring</span></tt> (or <tt class="docutils literal"><span class="pre">skymap_templ</span></tt>).
+Files containing the string overs contain correlated/oversampled maps.</p>
+<p>The other string identifier are as follows:</p>
+<ul class="simple">
+<li>ac = Acceptance</li>
+<li>al = Alpha factor</li>
+<li>bg = Background</li>
+<li>ev = Events</li>
+<li>ex = Excess</li>
+<li>si = Significance</li>
+</ul>
+<p>You can view the files with  with standard FITS tools, e.g., fv or ds9.</p>
+</div>
+<div class="section" id="morphology-fitting-with-sherpa">
+<h2>Morphology fitting with Sherpa<a class="headerlink" href="index.html#morphology-fitting-with-sherpa" title="Permalink to this headline">¶</a></h2>
+<p>Find below an example python script, which shows to fit an excess skymap with a 2D double gaussian function with Sherpa.
+For this to work it is assumed that you have the python packages sherpa, pyfits, and kapteyn installed on your machine.</p>
+<div class="highlight-python"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38</pre></div></td><td class="code"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Fit gamma-ray images with Sherpa.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">sherpa.astro.ui</span> <span class="kn">as</span> <span class="nn">ui</span>
+<span class="kn">from</span> <span class="nn">kapteyn</span> <span class="kn">import</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">positions</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pyfits</span> <span class="kn">as</span> <span class="nn">fits</span>
+
+<span class="n">filename</span> <span class="o">=</span> <span class="s">&#39;skymap_ex.fits&#39;</span>
+<span class="n">nomposstr</span> <span class="o">=</span> <span class="s">&#39;05h34m31.94s 22d00m52.2s&#39;</span>
+<span class="n">header</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">proj</span> <span class="o">=</span> <span class="n">wcs</span><span class="o">.</span><span class="n">Projection</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+<span class="n">xc</span><span class="p">,</span> <span class="n">yc</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;NAXIS1&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;NAXIS2&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">load_image</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">notice2d</span><span class="p">(</span><span class="s">&#39;circle({0}, {1}, {2})&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;NAXIS2&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">4.</span><span class="p">))</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">set_source</span><span class="p">(</span><span class="n">ui</span><span class="o">.</span><span class="n">gauss2d</span><span class="o">.</span><span class="n">g1</span> <span class="o">+</span> <span class="n">ui</span><span class="o">.</span><span class="n">gauss2d</span><span class="o">.</span><span class="n">g2</span><span class="p">)</span>
+<span class="n">g1</span><span class="o">.</span><span class="n">xpos</span> <span class="o">=</span> <span class="n">xc</span>
+<span class="n">g1</span><span class="o">.</span><span class="n">ypos</span> <span class="o">=</span> <span class="n">yc</span>
+<span class="n">g2</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="n">g1</span><span class="o">.</span><span class="n">fwhm</span> <span class="o">=</span> <span class="mf">3.</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">g2</span><span class="o">.</span><span class="n">xpos</span><span class="p">,</span> <span class="n">g1</span><span class="o">.</span><span class="n">xpos</span><span class="p">)</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">g2</span><span class="o">.</span><span class="n">ypos</span><span class="p">,</span> <span class="n">g1</span><span class="o">.</span><span class="n">ypos</span><span class="p">)</span>
+<span class="n">g2</span><span class="o">.</span><span class="n">ampl</span> <span class="o">=</span> <span class="mf">50.</span>
+<span class="n">g1</span><span class="o">.</span><span class="n">ampl</span> <span class="o">=</span> <span class="mf">50.</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">guess</span><span class="p">()</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">image_fit</span><span class="p">()</span>
+<span class="n">ui</span><span class="o">.</span><span class="n">covar</span><span class="p">()</span>
+<span class="n">conf</span> <span class="o">=</span> <span class="n">ui</span><span class="o">.</span><span class="n">get_covar_results</span><span class="p">()</span>
+<span class="n">conf_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">([(</span><span class="n">n</span><span class="p">,(</span><span class="n">v</span><span class="p">,</span> <span class="n">l</span><span class="p">,</span> <span class="n">h</span><span class="p">))</span> <span class="k">for</span> <span class="n">n</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">l</span><span class="p">,</span><span class="n">h</span> <span class="ow">in</span>
+                   <span class="nb">zip</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">parnames</span><span class="p">,</span> <span class="n">conf</span><span class="o">.</span><span class="n">parvals</span><span class="p">,</span> <span class="n">conf</span><span class="o">.</span><span class="n">parmins</span><span class="p">,</span> <span class="n">conf</span><span class="o">.</span><span class="n">parmaxes</span><span class="p">)])</span>
+<span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">toworld</span><span class="p">((</span><span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.xpos&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.ypos&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">xmin</span><span class="p">,</span> <span class="n">ymin</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">toworld</span><span class="p">((</span><span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.xpos&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.xpos&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">],</span>
+                           <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.ypos&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.ypos&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+<span class="n">xmax</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="n">proj</span><span class="o">.</span><span class="n">toworld</span><span class="p">((</span><span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.xpos&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.xpos&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">],</span>
+                           <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.ypos&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">conf_dict</span><span class="p">[</span><span class="s">&#39;g1.ypos&#39;</span><span class="p">][</span><span class="mi">2</span><span class="p">]))</span>
+<span class="n">nompos</span> <span class="o">=</span> <span class="n">positions</span><span class="o">.</span><span class="n">str2pos</span><span class="p">(</span><span class="n">nomposstr</span><span class="p">,</span> <span class="n">proj</span><span class="p">)</span>    
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;{0} ({1}-{2}) vs {3}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="n">nompos</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]))</span>
+<span class="k">print</span><span class="p">(</span><span class="s">&#39;{0} ({1}-{2}) vs {3}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="n">nompos</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]))</span>
+</pre></div>
+</td></tr></table></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Skymaps with <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt> and Sherpa</a><ul>
+<li><a class="reference internal" href="index.html#running-gammapy-pfmap">Running <tt class="docutils literal"><span class="pre">gammapy-pfmap</span></tt></a></li>
+<li><a class="reference internal" href="index.html#morphology-fitting-with-sherpa">Morphology fitting with Sherpa</a></li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../../_sources/tutorials/gammapy-pfmap/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

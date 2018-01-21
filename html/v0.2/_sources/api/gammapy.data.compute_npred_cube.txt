@@ -1,0 +1,8 @@
+
+
+compute_npred_cube
+===============================
+
+.. currentmodule:: gammapy.data
+
+.. autofunction:: compute_npred_cube

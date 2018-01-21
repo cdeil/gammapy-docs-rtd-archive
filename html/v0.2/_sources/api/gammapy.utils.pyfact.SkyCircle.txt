@@ -1,0 +1,46 @@
+
+
+SkyCircle
+==============================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autoclass:: SkyCircle
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyCircle.contains
+      ~SkyCircle.intersects
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: contains
+   .. automethod:: intersects
+
+   
+   

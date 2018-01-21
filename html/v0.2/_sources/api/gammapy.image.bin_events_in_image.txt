@@ -1,0 +1,8 @@
+
+
+bin_events_in_image
+=================================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: bin_events_in_image

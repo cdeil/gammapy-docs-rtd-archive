@@ -1,0 +1,60 @@
+
+
+EventList
+======================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: EventList
+   :show-inheritance:
+
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~EventList.altaz
+      ~EventList.energy
+      ~EventList.galactic
+      ~EventList.info
+      ~EventList.observation_dead_time_fraction
+      ~EventList.observation_live_time_duration
+      ~EventList.observation_time_duration
+      ~EventList.observatory_earth_location
+      ~EventList.radec
+      ~EventList.time
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: altaz
+   .. autoattribute:: energy
+   .. autoattribute:: galactic
+   .. autoattribute:: info
+   .. autoattribute:: observation_dead_time_fraction
+   .. autoattribute:: observation_live_time_duration
+   .. autoattribute:: observation_time_duration
+   .. autoattribute:: observatory_earth_location
+   .. autoattribute:: radec
+   .. autoattribute:: time
+
+   
+   
+
+   
+   
+   

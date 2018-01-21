@@ -1,0 +1,44 @@
+
+
+SkyCoord
+=============================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autoclass:: SkyCoord
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~SkyCoord.dist
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: dist
+
+   
+   

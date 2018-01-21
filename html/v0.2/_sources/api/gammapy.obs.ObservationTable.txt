@@ -1,0 +1,44 @@
+
+
+ObservationTable
+============================
+
+.. currentmodule:: gammapy.obs
+
+.. autoclass:: ObservationTable
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ObservationTable.info
+      ~ObservationTable.select_linspace_subset
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: info
+   .. automethod:: select_linspace_subset
+
+   
+   

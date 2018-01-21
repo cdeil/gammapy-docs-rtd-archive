@@ -1,0 +1,8 @@
+
+
+cube_to_spec
+==========================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: cube_to_spec

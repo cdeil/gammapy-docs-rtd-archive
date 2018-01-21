@@ -1,0 +1,27 @@
+
+
+CountsImageDataset
+===============================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: CountsImageDataset
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

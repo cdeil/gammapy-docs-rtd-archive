@@ -1,0 +1,574 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>SpectralCube &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Data classes (gammapy.data)" href="../data/index.html" />
+    <link rel="next" title="TelescopeArray" href="gammapy.data.TelescopeArray.html" />
+    <link rel="prev" title="InvalidDataError" href="gammapy.data.InvalidDataError.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.data.SpectralCube.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.data.SpectralCube",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.data.SpectralCube";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.data.TelescopeArray.html" title="TelescopeArray">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.data.InvalidDataError.html" title="InvalidDataError">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../data/index.html" accesskey="U">Data classes (<tt class="docutils literal"><span class="pre">gammapy.data</span></tt>)</a> &raquo;</li>
+      
+      <li>SpectralCube</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="spectralcube">
+<h1>SpectralCube<a class="headerlink" href="gammapy.data.SpectralCube.html#spectralcube" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.data.SpectralCube">
+<em class="property">class </em><tt class="descclassname">gammapy.data.</tt><tt class="descname">SpectralCube</tt><big>(</big><em>data</em>, <em>wcs</em>, <em>energy</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="http://docs.python.org/3/library/functions.html#object" title="(in Python v3.4)"><tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></a></p>
+<p>Spectral cube for gamma-ray astronomy.</p>
+<p>Can be used e.g. for Fermi or GALPROP diffuse model cubes.</p>
+<p>Note that there is a very nice <tt class="docutils literal"><span class="pre">SpectralCube</span></tt> implementation here:
+<a class="reference external" href="http://spectral-cube.readthedocs.org/en/latest/index.html">http://spectral-cube.readthedocs.org/en/latest/index.html</a></p>
+<p>Here is some discussion if / how it could be used:
+<a class="reference external" href="https://github.com/radio-astro-tools/spectral-cube/issues/110">https://github.com/radio-astro-tools/spectral-cube/issues/110</a></p>
+<p>For now we re-implement what we need here.</p>
+<p>The order of the spectral cube axes can be very confusing ... this should help:</p>
+<ul class="simple">
+<li>The <tt class="docutils literal"><span class="pre">data</span></tt> array axis order is <tt class="docutils literal"><span class="pre">(energy,</span> <span class="pre">lat,</span> <span class="pre">lon)</span></tt>.</li>
+<li>The <tt class="docutils literal"><span class="pre">wcs</span></tt> object axis order is <tt class="docutils literal"><span class="pre">(lon,</span> <span class="pre">lat,</span> <span class="pre">energy)</span></tt>.</li>
+<li>Methods use the <tt class="docutils literal"><span class="pre">wcs</span></tt> order of <tt class="docutils literal"><span class="pre">(lon,</span> <span class="pre">lat,</span> <span class="pre">energy)</span></tt>,
+but internally when accessing the data often the reverse order is used.
+We use <tt class="docutils literal"><span class="pre">(xx,</span> <span class="pre">yy,</span> <span class="pre">zz)</span></tt> as pixel coordinates for <tt class="docutils literal"><span class="pre">(lon,</span> <span class="pre">lat,</span> <span class="pre">energy)</span></tt>,
+as that matches the common definition of <tt class="docutils literal"><span class="pre">x</span></tt> and <tt class="docutils literal"><span class="pre">y</span></tt> in image viewers.</li>
+</ul>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>data</strong> : array_like</p>
+<blockquote>
+<div><p>Data array (3-dim)</p>
+</div></blockquote>
+<p><strong>wcs</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.wcs.WCS.html#astropy.wcs.WCS" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">WCS</span></tt></a></p>
+<blockquote>
+<div><p>Word coordinate system transformation</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Energy array</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<p>Diffuse model files in this format are distributed with the Fermi Science tools
+software and can also be downloaded at
+<a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html">http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html</a></p>
+<p>E.g. the 2-year diffuse model that was used in the 2FGL catalog production is at
+<a class="reference external" href="http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits">http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits</a></p>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.solid_angle_image" title="gammapy.data.SpectralCube.solid_angle_image"><tt class="xref py py-obj docutils literal"><span class="pre">solid_angle_image</span></tt></a></td>
+<td>Solid angle image.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.spatial_coordinate_images" title="gammapy.data.SpectralCube.spatial_coordinate_images"><tt class="xref py py-obj docutils literal"><span class="pre">spatial_coordinate_images</span></tt></a></td>
+<td>Spatial coordinate images.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.flux" title="gammapy.data.SpectralCube.flux"><tt class="xref py py-obj docutils literal"><span class="pre">flux</span></tt></a>(lon,&nbsp;lat,&nbsp;energy)</td>
+<td>Differential flux (linear interpolation).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.integral_flux_image" title="gammapy.data.SpectralCube.integral_flux_image"><tt class="xref py py-obj docutils literal"><span class="pre">integral_flux_image</span></tt></a>(energy_band[,&nbsp;energy_bins])</td>
+<td>Integral flux image for a given energy band.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.pix2world" title="gammapy.data.SpectralCube.pix2world"><tt class="xref py py-obj docutils literal"><span class="pre">pix2world</span></tt></a>(x,&nbsp;y,&nbsp;z)</td>
+<td>Convert world to pixel coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.read" title="gammapy.data.SpectralCube.read"><tt class="xref py py-obj docutils literal"><span class="pre">read</span></tt></a>(filename)</td>
+<td>Read spectral cube from FITS file.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.read_hdu" title="gammapy.data.SpectralCube.read_hdu"><tt class="xref py py-obj docutils literal"><span class="pre">read_hdu</span></tt></a>(hdu_list)</td>
+<td>Read spectral cube from HDU.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.reproject_to" title="gammapy.data.SpectralCube.reproject_to"><tt class="xref py py-obj docutils literal"><span class="pre">reproject_to</span></tt></a>(reference_cube[,&nbsp;projection_type])</td>
+<td>Spatially reprojects a <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a> onto a reference cube.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.spectral_index" title="gammapy.data.SpectralCube.spectral_index"><tt class="xref py py-obj docutils literal"><span class="pre">spectral_index</span></tt></a>(lon,&nbsp;lat,&nbsp;energy[,&nbsp;dz])</td>
+<td>Power law spectral index.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.to_fits" title="gammapy.data.SpectralCube.to_fits"><tt class="xref py py-obj docutils literal"><span class="pre">to_fits</span></tt></a>()</td>
+<td>Writes SpectralCube to fits hdu_list.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.world2pix" title="gammapy.data.SpectralCube.world2pix"><tt class="xref py py-obj docutils literal"><span class="pre">world2pix</span></tt></a>(lon,&nbsp;lat,&nbsp;energy[,&nbsp;combine])</td>
+<td>Convert world to pixel coordinates.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.writeto" title="gammapy.data.SpectralCube.writeto"><tt class="xref py py-obj docutils literal"><span class="pre">writeto</span></tt></a>(filename[,&nbsp;overwrite])</td>
+<td>Writes SpectralCube to fits file.</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.data.SpectralCube.solid_angle_image">
+<tt class="descname">solid_angle_image</tt><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.solid_angle_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solid angle image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>solid_angle_image</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Solid angle image (steradian)</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.SpectralCube.spatial_coordinate_images">
+<tt class="descname">spatial_coordinate_images</tt><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.spatial_coordinate_images" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatial coordinate images.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>lon, lat</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Arrays of longitude and latitude pixel coordinates.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p class="rubric">Methods Documentation</p>
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.flux">
+<tt class="descname">flux</tt><big>(</big><em>lon</em>, <em>lat</em>, <em>energy</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.flux"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.flux" title="Permalink to this definition">¶</a></dt>
+<dd><p>Differential flux (linear interpolation).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>lon</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Angle</span></tt></a></p>
+<blockquote>
+<div><p>Longitude</p>
+</div></blockquote>
+<p><strong>lat</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Angle</span></tt></a></p>
+<blockquote>
+<div><p>Latitude</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>flux</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Differential flux (1 / (cm2 MeV s sr))</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.integral_flux_image">
+<tt class="descname">integral_flux_image</tt><big>(</big><em>energy_band</em>, <em>energy_bins=10</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.integral_flux_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.integral_flux_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Integral flux image for a given energy band.</p>
+<p>A local power-law approximation in small energy bins is
+used to compute the integral.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>energy_band</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Tuple <tt class="docutils literal"><span class="pre">(energy_min,</span> <span class="pre">energy_max)</span></tt></p>
+</div></blockquote>
+<p><strong>energy_bins</strong> : int or <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy bin definition.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>image</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></tt></a></p>
+<blockquote class="last">
+<div><p>Integral flux image (1 / (cm^2 s sr))</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.pix2world">
+<tt class="descname">pix2world</tt><big>(</big><em>x</em>, <em>y</em>, <em>z</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.pix2world"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.pix2world" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert world to pixel coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>x, y, z</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">lon, lat, energy</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.data.SpectralCube.read">
+<em class="property">static </em><tt class="descname">read</tt><big>(</big><em>filename</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.read"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.read" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read spectral cube from FITS file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : str</p>
+<blockquote>
+<div><p>File name</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectral_cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a></p>
+<blockquote class="last">
+<div><p>Spectral cube</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="staticmethod">
+<dt id="gammapy.data.SpectralCube.read_hdu">
+<em class="property">static </em><tt class="descname">read_hdu</tt><big>(</big><em>hdu_list</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.read_hdu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.read_hdu" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read spectral cube from HDU.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>object_hdu</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></tt></a></p>
+<blockquote>
+<div><p>Image HDU object to be read</p>
+</div></blockquote>
+<p><strong>energy_table_hdu</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.TableHDU" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">TableHDU</span></tt></a></p>
+<blockquote>
+<div><p>Table HDU object giving energies of each slice
+of the Image HDU object_hdu</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectral_cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a></p>
+<blockquote class="last">
+<div><p>Spectral cube</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.reproject_to">
+<tt class="descname">reproject_to</tt><big>(</big><em>reference_cube</em>, <em>projection_type=u'bicubic'</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.reproject_to"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.reproject_to" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spatially reprojects a <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a> onto a reference cube.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>reference_cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a></p>
+<blockquote>
+<div><p>Reference cube with the desired spatial projection.</p>
+</div></blockquote>
+<p><strong>projection_type</strong> : {&#8216;nearest-neighbor&#8217;, &#8216;bilinear&#8217;,</p>
+<blockquote>
+<div><p>&#8216;biquadratic&#8217;, &#8216;bicubic&#8217;, &#8216;flux-conserving&#8217;}
+Specify method of reprojection. Default: &#8216;bilinear&#8217;.</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>reprojected_cube</strong> : <a class="reference internal" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube" title="gammapy.data.SpectralCube"><tt class="xref py py-obj docutils literal"><span class="pre">SpectralCube</span></tt></a></p>
+<blockquote class="last">
+<div><p>Cube spatially reprojected to the reference cube.</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.spectral_index">
+<tt class="descname">spectral_index</tt><big>(</big><em>lon</em>, <em>lat</em>, <em>energy</em>, <em>dz=0.001</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.spectral_index"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.spectral_index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Power law spectral index.</p>
+<p>A forward finite difference method with step <tt class="docutils literal"><span class="pre">dz</span></tt> is used along
+the <tt class="docutils literal"><span class="pre">z</span> <span class="pre">=</span> <span class="pre">log10(energy)</span></tt> axis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>lon</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Angle</span></tt></a></p>
+<blockquote>
+<div><p>Longitude</p>
+</div></blockquote>
+<p><strong>lat</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.Angle.html#astropy.coordinates.Angle" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Angle</span></tt></a></p>
+<blockquote>
+<div><p>Latitude</p>
+</div></blockquote>
+<p><strong>energy</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote>
+<div><p>Energy</p>
+</div></blockquote>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>spectral_index</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a></p>
+<blockquote class="last">
+<div><p>Spectral index</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.to_fits">
+<tt class="descname">to_fits</tt><big>(</big><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.to_fits"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.to_fits" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SpectralCube to fits hdu_list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><p class="first"><strong>hdu_list</strong> : <a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/hdulists.html#astropy.io.fits.HDUList" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">HDUList</span></tt></a></p>
+<blockquote class="last">
+<div><ul>
+<li><dl class="first docutils">
+<dt>hdu_list[0] <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/images.html#astropy.io.fits.ImageHDU" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">ImageHDU</span></tt></a></span></dt>
+<dd><p class="first last">Image array of data</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>hdu_list[1] <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://docs.astropy.org/en/latest/io/fits/api/tables.html#astropy.io.fits.BinTableHDU" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">BinTableHDU</span></tt></a></span></dt>
+<dd><p class="first last">Table of energies</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.world2pix">
+<tt class="descname">world2pix</tt><big>(</big><em>lon</em>, <em>lat</em>, <em>energy</em>, <em>combine=False</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.world2pix"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.world2pix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert world to pixel coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>lon, lat, energy</strong></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">x, y, z or array with (x, y, z) as columns</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="gammapy.data.SpectralCube.writeto">
+<tt class="descname">writeto</tt><big>(</big><em>filename</em>, <em>overwrite=False</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/spectral_cube.html#SpectralCube.writeto"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.writeto" title="Permalink to this definition">¶</a></dt>
+<dd><p>Writes SpectralCube to fits file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>filename</strong> : string</p>
+<blockquote>
+<div><p>Name of output file (.fits)</p>
+</div></blockquote>
+<p><strong>overwrite</strong> : bool</p>
+<blockquote class="last">
+<div><p>Overwrite existing output file?</p>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.data.SpectralCube.html#">SpectralCube</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.data.SpectralCube.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.data.SpectralCube.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+
+
+ModelThetaCalculator
+=======================================
+
+.. currentmodule:: gammapy.morphology
+
+.. autoclass:: ModelThetaCalculator
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

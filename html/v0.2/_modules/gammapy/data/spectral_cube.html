@@ -1,0 +1,685 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.data.spectral_cube &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../../index.html" />
+    <link rel="up" title="gammapy.data" href="../data.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/data/spectral_cube.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "_modules/gammapy/data/spectral_cube",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/data/spectral_cube";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" >Module code</a> &raquo;</li>
+      <li><a href="../data.html" accesskey="U">gammapy.data</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.data.spectral_cube</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Gamma-ray spectral cube: longitude, latitude and spectral axis.</span>
+
+<span class="sd">TODO: split `SpectralCube` into a base class ``SpectralCube`` and a few sub-classes:</span>
+
+<span class="sd">* ``SpectralCube`` to represent functions evaluated at grid points (diffuse model format ... what is there now).</span>
+<span class="sd">* ``ExposureCube`` should also be supported (same semantics, but different units / methods as ``SpectralCube`` (``gtexpcube`` format)</span>
+<span class="sd">* ``SpectralCubeHistogram`` to represent model or actual counts in energy bands (``gtbin`` format)</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="p">(</span><span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span><span class="p">,</span> <span class="n">print_function</span><span class="p">,</span>
+                        <span class="n">unicode_literals</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+<span class="kn">import</span> <span class="nn">astropy.units</span> <span class="kn">as</span> <span class="nn">u</span>
+<span class="kn">from</span> <span class="nn">astropy.units</span> <span class="kn">import</span> <span class="n">Quantity</span>
+<span class="kn">from</span> <span class="nn">astropy.table</span> <span class="kn">import</span> <span class="n">Table</span>
+<span class="kn">from</span> <span class="nn">astropy.wcs</span> <span class="kn">import</span> <span class="n">WCS</span>
+<span class="kn">from</span> <span class="nn">astropy.coordinates</span> <span class="kn">import</span> <span class="n">Angle</span>
+<span class="kn">from</span> <span class="nn">..spectrum</span> <span class="kn">import</span> <span class="p">(</span><span class="n">LogEnergyAxis</span><span class="p">,</span>
+                        <span class="n">energy_bounds_equal_log_spacing</span><span class="p">,</span>
+                        <span class="n">energy_bin_centers_log_spacing</span><span class="p">,</span>
+                        <span class="n">powerlaw</span>
+                        <span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..image</span> <span class="kn">import</span> <span class="n">coordinates</span><span class="p">,</span> <span class="n">cube_to_image</span><span class="p">,</span> <span class="n">solid_angle</span>
+
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;SpectralCube&#39;</span><span class="p">,</span> <span class="s">&#39;compute_npred_cube&#39;</span><span class="p">,</span> <span class="s">&#39;convolve_cube&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="SpectralCube"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube">[docs]</a><span class="k">class</span> <span class="nc">SpectralCube</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Spectral cube for gamma-ray astronomy.</span>
+
+<span class="sd">    Can be used e.g. for Fermi or GALPROP diffuse model cubes.</span>
+
+<span class="sd">    Note that there is a very nice ``SpectralCube`` implementation here:</span>
+<span class="sd">    http://spectral-cube.readthedocs.org/en/latest/index.html</span>
+
+<span class="sd">    Here is some discussion if / how it could be used:</span>
+<span class="sd">    https://github.com/radio-astro-tools/spectral-cube/issues/110</span>
+
+<span class="sd">    For now we re-implement what we need here.</span>
+
+<span class="sd">    The order of the spectral cube axes can be very confusing ... this should help:</span>
+
+<span class="sd">    * The ``data`` array axis order is ``(energy, lat, lon)``.</span>
+<span class="sd">    * The ``wcs`` object axis order is ``(lon, lat, energy)``.</span>
+<span class="sd">    * Methods use the ``wcs`` order of ``(lon, lat, energy)``,</span>
+<span class="sd">      but internally when accessing the data often the reverse order is used.</span>
+<span class="sd">      We use ``(xx, yy, zz)`` as pixel coordinates for ``(lon, lat, energy)``,</span>
+<span class="sd">      as that matches the common definition of ``x`` and ``y`` in image viewers.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : array_like</span>
+<span class="sd">        Data array (3-dim)</span>
+<span class="sd">    wcs : `~astropy.wcs.WCS`</span>
+<span class="sd">        Word coordinate system transformation</span>
+<span class="sd">    energy : `~astropy.units.Quantity`</span>
+<span class="sd">        Energy array</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Diffuse model files in this format are distributed with the Fermi Science tools</span>
+<span class="sd">    software and can also be downloaded at</span>
+<span class="sd">    http://fermi.gsfc.nasa.gov/ssc/data/access/lat/BackgroundModels.html</span>
+
+<span class="sd">    E.g. the 2-year diffuse model that was used in the 2FGL catalog production is at</span>
+<span class="sd">    http://fermi.gsfc.nasa.gov/ssc/data/analysis/software/aux/gal_2yearp7v6_v0.fits</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="c"># TODO: check validity of inputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span> <span class="o">=</span> <span class="n">wcs</span>
+
+        <span class="c"># TODO: decide whether we want to use an EnergyAxis object or just use the array directly.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span> <span class="o">=</span> <span class="n">LogEnergyAxis</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span> <span class="o">=</span> <span class="bp">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">_interpolate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
+            <span class="c"># Initialise the interpolator</span>
+            <span class="c"># This doesn&#39;t do any computations ... I&#39;m not sure if it allocates extra arrays.</span>
+            <span class="kn">from</span> <span class="nn">scipy.interpolate</span> <span class="kn">import</span> <span class="n">RegularGridInterpolator</span>
+            <span class="n">points</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span> <span class="o">=</span> <span class="n">RegularGridInterpolator</span><span class="p">(</span><span class="n">points</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                                              <span class="n">fill_value</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">bounds_error</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate_cache</span>
+
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SpectralCube.read_hdu"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.read_hdu">[docs]</a>    <span class="k">def</span> <span class="nf">read_hdu</span><span class="p">(</span><span class="n">hdu_list</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read spectral cube from HDU.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        object_hdu : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">            Image HDU object to be read</span>
+<span class="sd">        energy_table_hdu : `~astropy.io.fits.TableHDU`</span>
+<span class="sd">            Table HDU object giving energies of each slice</span>
+<span class="sd">            of the Image HDU object_hdu</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectral_cube : `SpectralCube`</span>
+<span class="sd">            Spectral cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">object_hdu</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">energy_table_hdu</span> <span class="o">=</span> <span class="n">hdu_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">object_hdu</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;1 / (cm2 MeV s sr)&#39;</span><span class="p">)</span>
+        <span class="c"># Note: the energy axis of the FITS cube is unusable.</span>
+        <span class="c"># We only use proj for LON, LAT and call ENERGY from the table extension</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">object_hdu</span><span class="o">.</span><span class="n">header</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">energy_table_hdu</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s">&#39;Energy&#39;</span><span class="p">]</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="s">&#39;MeV&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+</div>
+    <span class="nd">@staticmethod</span>
+<div class="viewcode-block" id="SpectralCube.read"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.read">[docs]</a>    <span class="k">def</span> <span class="nf">read</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read spectral cube from FITS file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            File name</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectral_cube : `SpectralCube`</span>
+<span class="sd">            Spectral cube</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;1 / (cm2 MeV s sr)&#39;</span><span class="p">)</span>
+        <span class="c"># Note: the energy axis of the FITS cube is unusable.</span>
+        <span class="c"># We only use proj for LON, LAT and do ENERGY ourselves</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">wcs</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Table</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s">&#39;ENERGIES&#39;</span><span class="p">)[</span><span class="s">&#39;Energy&#39;</span><span class="p">]</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="s">&#39;MeV&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">wcs</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.world2pix"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.world2pix">[docs]</a>    <span class="k">def</span> <span class="nf">world2pix</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert world to pixel coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lon, lat, energy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x, y, z or array with (x, y, z) as columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">lon</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;deg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">lat</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;deg&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># convention for gammapy</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs_world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+
+        <span class="n">z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span>
+
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">y</span> <span class="o">*</span> <span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">combine</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span>
+            <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">.</span><span class="n">flat</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">z</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.pix2world"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.pix2world">[docs]</a>    <span class="k">def</span> <span class="nf">pix2world</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Convert world to pixel coordinates.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        x, y, z</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        lon, lat, energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">origin</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c"># convention for gammapy</span>
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs_pix2world</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">origin</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span><span class="o">.</span><span class="n">pix2world</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+        <span class="n">lon</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="s">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">lat</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">lat</span><span class="p">,</span> <span class="s">&#39;deg&#39;</span><span class="p">)</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span>
+</div>
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">spatial_coordinate_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Spatial coordinate images.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        lon, lat : `~astropy.units.Quantity`</span>
+<span class="sd">            Arrays of longitude and latitude pixel coordinates.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">n_lon</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">n_lat</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">i_lat</span><span class="p">,</span> <span class="n">i_lon</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">indices</span><span class="p">((</span><span class="n">n_lat</span><span class="p">,</span> <span class="n">n_lon</span><span class="p">))</span>
+        <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">pix2world</span><span class="p">(</span><span class="n">i_lon</span><span class="p">,</span> <span class="n">i_lat</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">solid_angle_image</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Solid angle image.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        solid_angle_image : `~astropy.units.Quantity`</span>
+<span class="sd">            Solid angle image (steradian)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cube_hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span>
+        <span class="n">image_hdu</span> <span class="o">=</span> <span class="n">cube_to_image</span><span class="p">(</span><span class="n">cube_hdu</span><span class="p">)</span>
+        <span class="n">image_hdu</span><span class="o">.</span><span class="n">header</span><span class="p">[</span><span class="s">&#39;WCSAXES&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="k">return</span> <span class="n">solid_angle</span><span class="p">(</span><span class="n">image_hdu</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;sr&#39;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="SpectralCube.flux"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.flux">[docs]</a>    <span class="k">def</span> <span class="nf">flux</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Differential flux (linear interpolation).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lon : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Longitude</span>
+<span class="sd">        lat : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Latitude</span>
+<span class="sd">        energy : `~astropy.units.Quantity`</span>
+<span class="sd">            Energy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        flux : `~astropy.units.Quantity`</span>
+<span class="sd">            Differential flux (1 / (cm2 MeV s sr))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c"># Determine output shape by creating some array via broadcasting</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="n">lon</span> <span class="o">*</span> <span class="n">lat</span> <span class="o">*</span> <span class="n">energy</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="n">pix_coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coord</span><span class="p">)</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">values</span><span class="p">,</span> <span class="s">&#39;1 / (cm2 MeV s sr)&#39;</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.spectral_index"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.spectral_index">[docs]</a>    <span class="k">def</span> <span class="nf">spectral_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">dz</span><span class="o">=</span><span class="mf">1e-3</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Power law spectral index.</span>
+
+<span class="sd">        A forward finite difference method with step ``dz`` is used along</span>
+<span class="sd">        the ``z = log10(energy)`` axis.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        lon : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Longitude</span>
+<span class="sd">        lat : `~astropy.coordinates.Angle`</span>
+<span class="sd">            Latitude</span>
+<span class="sd">        energy : `~astropy.units.Quantity`</span>
+<span class="sd">            Energy</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectral_index : `~astropy.units.Quantity`</span>
+<span class="sd">            Spectral index</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+        <span class="c"># Compute flux at `z = log(energy)`</span>
+        <span class="n">pix_coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">combine</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">flux1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coord</span><span class="p">)</span>
+
+        <span class="c"># Compute flux at `z + dz`</span>
+        <span class="n">pix_coord</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="n">dz</span>
+        <span class="c"># pixel_coordinates += np.zeros(pixel_coordinates.shape)</span>
+        <span class="n">flux2</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coord</span><span class="p">)</span>
+
+        <span class="c"># Power-law spectral index through these two flux points</span>
+        <span class="c"># d_log_flux = np.log(flux2 / flux1)</span>
+        <span class="c"># spectral_index = d_log_flux / dz</span>
+        <span class="n">energy1</span> <span class="o">=</span> <span class="n">energy</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span> <span class="o">+</span> <span class="n">dz</span><span class="p">)</span> <span class="o">*</span> <span class="n">energy</span>
+        <span class="n">spectral_index</span> <span class="o">=</span> <span class="n">powerlaw</span><span class="o">.</span><span class="n">g_from_points</span><span class="p">(</span><span class="n">energy1</span><span class="p">,</span> <span class="n">energy2</span><span class="p">,</span> <span class="n">flux1</span><span class="p">,</span> <span class="n">flux2</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">spectral_index</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.integral_flux_image"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.integral_flux_image">[docs]</a>    <span class="k">def</span> <span class="nf">integral_flux_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy_band</span><span class="p">,</span> <span class="n">energy_bins</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Integral flux image for a given energy band.</span>
+
+<span class="sd">        A local power-law approximation in small energy bins is</span>
+<span class="sd">        used to compute the integral.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy_band : `~astropy.units.Quantity`</span>
+<span class="sd">            Tuple ``(energy_min, energy_max)``</span>
+<span class="sd">        energy_bins : int or `~astropy.units.Quantity`</span>
+<span class="sd">            Energy bin definition.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        image : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">            Integral flux image (1 / (cm^2 s sr))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">energy_bins</span> <span class="o">=</span> <span class="n">energy_bounds_equal_log_spacing</span><span class="p">(</span><span class="n">energy_band</span><span class="p">,</span> <span class="n">energy_bins</span><span class="p">)</span>
+
+        <span class="n">energy1</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;MeV&#39;</span><span class="p">)</span>
+
+        <span class="c"># Compute differential flux at energy bin edges of all pixels</span>
+        <span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">zz</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy_axis</span><span class="o">.</span><span class="n">world2pix</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span>
+
+        <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">zz</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">xx</span><span class="p">,</span> <span class="n">indexing</span><span class="o">=</span><span class="s">&#39;ij&#39;</span><span class="p">)</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">xx</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="n">pix_coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">xx</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">yy</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">zz</span><span class="o">.</span><span class="n">flat</span><span class="p">])</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_interpolate</span><span class="p">(</span><span class="n">pix_coords</span><span class="p">)</span>
+        <span class="n">flux</span> <span class="o">=</span> <span class="n">flux</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="c"># Compute integral flux using power-law approximation in each bin</span>
+        <span class="n">flux1</span> <span class="o">=</span> <span class="n">flux</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">flux2</span> <span class="o">=</span> <span class="n">flux</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:,</span> <span class="p">:]</span>
+        <span class="n">energy1</span> <span class="o">=</span> <span class="n">energy1</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">energy2</span> <span class="o">=</span> <span class="n">energy2</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">integral_flux</span> <span class="o">=</span> <span class="n">powerlaw</span><span class="o">.</span><span class="n">I_from_points</span><span class="p">(</span><span class="n">energy1</span><span class="p">,</span> <span class="n">energy2</span><span class="p">,</span> <span class="n">flux1</span><span class="p">,</span> <span class="n">flux2</span><span class="p">)</span>
+
+        <span class="n">integral_flux</span> <span class="o">=</span> <span class="n">integral_flux</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c"># TODO: get rid of the `str` calls once this `WCS.sub` issue is fixed:</span>
+        <span class="c"># https://github.com/astropy/astropy/issues/3356</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="s">&#39;longitude&#39;</span><span class="p">),</span> <span class="nb">str</span><span class="p">(</span><span class="s">&#39;latitude&#39;</span><span class="p">)]</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+
+        <span class="n">hdu</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">integral_flux</span><span class="p">,</span>
+                            <span class="n">header</span><span class="o">=</span><span class="n">header</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;integral_flux&#39;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">hdu</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.reproject_to"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.reproject_to">[docs]</a>    <span class="k">def</span> <span class="nf">reproject_to</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">reference_cube</span><span class="p">,</span> <span class="n">projection_type</span><span class="o">=</span><span class="s">&#39;bicubic&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Spatially reprojects a `SpectralCube` onto a reference cube.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        reference_cube : `SpectralCube`</span>
+<span class="sd">            Reference cube with the desired spatial projection.</span>
+<span class="sd">        projection_type : {&#39;nearest-neighbor&#39;, &#39;bilinear&#39;,</span>
+<span class="sd">            &#39;biquadratic&#39;, &#39;bicubic&#39;, &#39;flux-conserving&#39;}</span>
+<span class="sd">            Specify method of reprojection. Default: &#39;bilinear&#39;.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        reprojected_cube : `SpectralCube`</span>
+<span class="sd">            Cube spatially reprojected to the reference cube.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">from</span> <span class="nn">reproject</span> <span class="kn">import</span> <span class="n">reproject</span>
+
+        <span class="n">reference</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">shape_out</span> <span class="o">=</span> <span class="n">reference</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wcs_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">dropaxis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">wcs_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">wcs_out</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">dropaxis</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">wcs_out</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">wcs</span>
+        <span class="n">energy</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span>
+
+        <span class="n">cube</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">reference</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+                             <span class="n">reference</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+        <span class="n">energy_slices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="c"># TODO: Re-implement to reproject cubes directly without needing</span>
+        <span class="c"># to loop over energies here. Errors with reproject when doing this</span>
+        <span class="c"># first need to be understood and fixed.</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">energy_slices</span><span class="p">:</span>
+            <span class="n">array</span> <span class="o">=</span> <span class="n">cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+            <span class="n">data_in</span> <span class="o">=</span> <span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">wcs_in</span><span class="p">)</span>
+            <span class="n">new_cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">reproject</span><span class="p">(</span><span class="n">data_in</span><span class="p">,</span> <span class="n">wcs_out</span><span class="p">,</span> <span class="n">shape_out</span><span class="p">,</span> <span class="n">projection_type</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">new_cube</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">array</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="c"># Create new wcs</span>
+        <span class="n">header_in</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+        <span class="n">header_out</span> <span class="o">=</span> <span class="n">reference_cube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">()</span>
+        <span class="c"># Keep output energy info the same as input, but changes spatial information</span>
+        <span class="c"># So need to restore energy parameters to input values here</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s">&#39;CRPIX3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s">&#39;CRPIX3&#39;</span><span class="p">]</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s">&#39;CDELT3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s">&#39;CDELT3&#39;</span><span class="p">]</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s">&#39;CTYPE3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s">&#39;CTYPE3&#39;</span><span class="p">]</span>
+            <span class="n">header_out</span><span class="p">[</span><span class="s">&#39;CRVAL3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">header_in</span><span class="p">[</span><span class="s">&#39;CRVAL3&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="n">wcs_out</span> <span class="o">=</span> <span class="n">WCS</span><span class="p">(</span><span class="n">header_out</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">SpectralCube</span><span class="p">(</span><span class="n">new_cube</span><span class="p">,</span> <span class="n">wcs_out</span><span class="p">,</span> <span class="n">energy</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.to_fits"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.to_fits">[docs]</a>    <span class="k">def</span> <span class="nf">to_fits</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes SpectralCube to fits hdu_list.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        hdu_list : `~astropy.io.fits.HDUList`</span>
+<span class="sd">            * hdu_list[0] : `~astropy.io.fits.ImageHDU`</span>
+<span class="sd">                Image array of data</span>
+<span class="sd">            * hdu_list[1] : `~astropy.io.fits.BinTableHDU`</span>
+<span class="sd">                Table of energies</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">ImageHDU</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">to_header</span><span class="p">())</span>
+        <span class="n">energies</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">BinTableHDU</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">,</span> <span class="s">&#39;ENERGY&#39;</span><span class="p">)</span>
+
+        <span class="n">hdu_list</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">HDUList</span><span class="p">([</span><span class="n">image</span><span class="p">,</span> <span class="n">energies</span><span class="p">])</span>
+
+        <span class="k">return</span> <span class="n">hdu_list</span>
+</div>
+<div class="viewcode-block" id="SpectralCube.writeto"><a class="viewcode-back" href="../../../api/gammapy.data.SpectralCube.html#gammapy.data.SpectralCube.writeto">[docs]</a>    <span class="k">def</span> <span class="nf">writeto</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Writes SpectralCube to fits file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : string</span>
+<span class="sd">            Name of output file (.fits)</span>
+<span class="sd">        overwrite : bool</span>
+<span class="sd">            Overwrite existing output file?</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">to_fits</span><span class="o">.</span><span class="n">writeto</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">overwrite</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c"># Copied from `spectral-cube` package</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="s">&quot;SpectralCube with shape={0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">unit</span> <span class="ow">is</span> <span class="n">u</span><span class="o">.</span><span class="n">dimensionless_unscaled</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot;:</span><span class="se">\n</span><span class="s">&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot; and unit={0}:</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot; n_x: {0:5d}  type_x: {1:15s}  unit_x: {2}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot; n_y: {0:5d}  type_y: {1:15s}  unit_y: {2}</span><span class="se">\n</span><span class="s">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">s</span> <span class="o">+=</span> <span class="s">&quot; n_s: {0:5d}  type_s: {1:15s}  unit_s: {2}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">ctype</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cunit</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">s</span>
+
+</div>
+<div class="viewcode-block" id="compute_npred_cube"><a class="viewcode-back" href="../../../api/gammapy.data.compute_npred_cube.html#gammapy.data.compute_npred_cube">[docs]</a><span class="k">def</span> <span class="nf">compute_npred_cube</span><span class="p">(</span><span class="n">flux_cube</span><span class="p">,</span> <span class="n">exposure_cube</span><span class="p">,</span> <span class="n">energy_bins</span><span class="p">,</span>
+                       <span class="n">integral_resolution</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Computes predicted counts cube in energy bins.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    flux_cube : `SpectralCube`</span>
+<span class="sd">        Differential flux cube.</span>
+<span class="sd">    exposure_cube : `SpectralCube`</span>
+<span class="sd">        Instrument exposure cube.</span>
+<span class="sd">    energy_bins : `~astropy.units.Quantity`</span>
+<span class="sd">        An array of Quantities specifying the edges of the energy band</span>
+<span class="sd">        required for the predicted counts cube.</span>
+<span class="sd">    integral_resolution : int (optional)</span>
+<span class="sd">        Number of integration steps in energy bin when computing integral flux.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    npred_cube : `SpectralCube`</span>
+<span class="sd">        Predicted counts cube in energy bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">flux_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">!=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;flux_cube and exposure cube must have the same shape!</span><span class="se">\n</span><span class="s">&#39;</span>
+                         <span class="s">&#39;flux_cube: {0}</span><span class="se">\n</span><span class="s">exposure_cube: {1}&#39;</span>
+                         <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flux_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+
+    <span class="n">energy_centers</span> <span class="o">=</span> <span class="n">energy_bin_centers_log_spacing</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span>
+    <span class="n">wcs</span> <span class="o">=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">wcs</span>
+    <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span> <span class="o">=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">spatial_coordinate_images</span>
+    <span class="n">solid_angle</span> <span class="o">=</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">solid_angle_image</span>
+    <span class="n">npred_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span>
+                           <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">exposure_cube</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energy_bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">energy_bound</span> <span class="o">=</span> <span class="n">energy_bins</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">flux_cube</span><span class="o">.</span><span class="n">integral_flux_image</span><span class="p">(</span><span class="n">energy_bound</span><span class="p">,</span> <span class="n">integral_resolution</span><span class="p">)</span>
+        <span class="n">int_flux</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">int_flux</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s">&#39;1 / (cm2 s sr)&#39;</span><span class="p">)</span>
+        <span class="n">exposure</span> <span class="o">=</span> <span class="n">Quantity</span><span class="p">(</span><span class="n">exposure_cube</span><span class="o">.</span><span class="n">flux</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span>
+                                               <span class="n">energy_centers</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="s">&#39;cm2 s&#39;</span><span class="p">)</span>
+        <span class="n">npred_image</span> <span class="o">=</span> <span class="n">int_flux</span> <span class="o">*</span> <span class="n">exposure</span> <span class="o">*</span> <span class="n">solid_angle</span>
+        <span class="n">npred_cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">npred_image</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+    <span class="n">npred_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan_to_num</span><span class="p">(</span><span class="n">npred_cube</span><span class="p">)</span>
+
+    <span class="n">npred_cube</span> <span class="o">=</span> <span class="n">SpectralCube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">npred_cube</span><span class="p">,</span>
+                              <span class="n">wcs</span><span class="o">=</span><span class="n">wcs</span><span class="p">,</span>
+                              <span class="n">energy</span><span class="o">=</span><span class="n">energy_bins</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">npred_cube</span>
+
+</div>
+<div class="viewcode-block" id="convolve_cube"><a class="viewcode-back" href="../../../api/gammapy.data.convolve_cube.html#gammapy.data.convolve_cube">[docs]</a><span class="k">def</span> <span class="nf">convolve_cube</span><span class="p">(</span><span class="n">cube</span><span class="p">,</span> <span class="n">psf</span><span class="p">,</span> <span class="n">offset_max</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convolves a predicted counts cube in energy bins with the an</span>
+<span class="sd">    energy-dependent PSF.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    cube : `SpectralCube`</span>
+<span class="sd">        Counts cube in energy bins.</span>
+<span class="sd">    psf : `~gammapy.irf.EnergyDependentTablePSF`</span>
+<span class="sd">        Energy dependent PSF.</span>
+<span class="sd">    offset_max : `~astropy.units.Quantity`</span>
+<span class="sd">        Maximum offset in degrees of the PSF convolution kernel from its center.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    convolved_cube : `SpectralCube`</span>
+<span class="sd">        PSF convolved predicted counts cube in energy bins.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">scipy.ndimage</span> <span class="kn">import</span> <span class="n">convolve</span>
+    <span class="n">energy</span> <span class="o">=</span> <span class="n">cube</span><span class="o">.</span><span class="n">energy</span>
+    <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">convolved_cube</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+    <span class="n">pixel_size</span> <span class="o">=</span> <span class="n">Angle</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">wcs</span><span class="o">.</span><span class="n">cdelt</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="s">&#39;deg&#39;</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+        <span class="n">energy_band</span> <span class="o">=</span> <span class="n">energy</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span> <span class="o">+</span> <span class="mi">2</span><span class="p">]</span>
+        <span class="n">psf_at_energy</span> <span class="o">=</span> <span class="n">psf</span><span class="o">.</span><span class="n">table_psf_in_energy_band</span><span class="p">(</span><span class="n">energy_band</span><span class="p">)</span>
+        <span class="n">kernel_image</span> <span class="o">=</span> <span class="n">psf_at_energy</span><span class="o">.</span><span class="n">kernel</span><span class="p">(</span><span class="n">pixel_size</span><span class="p">,</span> <span class="n">offset_max</span><span class="p">,</span> <span class="n">normalize</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+        <span class="n">convolved_cube</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">convolve</span><span class="p">(</span><span class="n">cube</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">kernel_image</span><span class="p">,</span>
+                                     <span class="n">mode</span><span class="o">=</span><span class="s">&#39;mirror&#39;</span><span class="p">)</span>
+    <span class="n">convolved_cube</span> <span class="o">=</span> <span class="n">SpectralCube</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">convolved_cube</span><span class="p">,</span> <span class="n">wcs</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">wcs</span><span class="p">,</span>
+                                  <span class="n">energy</span><span class="o">=</span><span class="n">cube</span><span class="o">.</span><span class="n">energy</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">convolved_cube</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="spectral_cube.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

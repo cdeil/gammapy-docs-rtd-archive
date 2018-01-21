@@ -1,0 +1,46 @@
+
+
+ReflectedRegionMaker
+=======================================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: ReflectedRegionMaker
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~ReflectedRegionMaker.compute
+      ~ReflectedRegionMaker.write_off_regions
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: compute
+   .. automethod:: write_off_regions
+
+   
+   

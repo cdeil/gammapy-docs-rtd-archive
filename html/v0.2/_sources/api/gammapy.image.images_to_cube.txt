@@ -1,0 +1,8 @@
+
+
+images_to_cube
+============================
+
+.. currentmodule:: gammapy.image
+
+.. autofunction:: images_to_cube

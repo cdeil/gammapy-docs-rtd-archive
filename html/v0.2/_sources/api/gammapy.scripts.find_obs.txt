@@ -1,0 +1,8 @@
+
+
+find_obs
+========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: find_obs

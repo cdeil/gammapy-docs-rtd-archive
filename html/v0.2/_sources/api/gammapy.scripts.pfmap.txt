@@ -1,0 +1,8 @@
+
+
+pfmap
+=====================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: pfmap

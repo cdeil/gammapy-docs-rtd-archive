@@ -1,0 +1,8 @@
+
+
+plot_model
+=========================================
+
+.. currentmodule:: gammapy.spectrum.fitting_utils
+
+.. autofunction:: plot_model

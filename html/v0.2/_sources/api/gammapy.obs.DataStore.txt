@@ -1,0 +1,56 @@
+
+
+DataStore
+=====================
+
+.. currentmodule:: gammapy.obs
+
+.. autoclass:: DataStore
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~DataStore.check_available_event_lists
+      ~DataStore.check_integrity
+      ~DataStore.filename
+      ~DataStore.info
+      ~DataStore.make_observation_table
+      ~DataStore.make_summary_plots
+      ~DataStore.make_table_of_files
+
+   
+   
+
+   
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: check_available_event_lists
+   .. automethod:: check_integrity
+   .. automethod:: filename
+   .. automethod:: info
+   .. automethod:: make_observation_table
+   .. automethod:: make_summary_plots
+   .. automethod:: make_table_of_files
+
+   
+   

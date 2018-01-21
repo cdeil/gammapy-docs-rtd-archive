@@ -1,0 +1,8 @@
+
+
+pfspec
+======================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: pfspec

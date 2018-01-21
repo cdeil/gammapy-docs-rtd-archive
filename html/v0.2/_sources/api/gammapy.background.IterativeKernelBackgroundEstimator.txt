@@ -1,0 +1,67 @@
+
+
+IterativeKernelBackgroundEstimator
+=====================================================
+
+.. currentmodule:: gammapy.background
+
+.. autoclass:: IterativeKernelBackgroundEstimator
+   :show-inheritance:
+
+   
+     
+   
+
+   
+   
+
+   .. rubric:: Attributes Summary
+
+   .. autosummary::
+   
+      ~IterativeKernelBackgroundEstimator.background_image_hdu
+      ~IterativeKernelBackgroundEstimator.mask_image_hdu
+      ~IterativeKernelBackgroundEstimator.significance_image_hdu
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Summary
+
+   .. autosummary::
+   
+      ~IterativeKernelBackgroundEstimator.run
+      ~IterativeKernelBackgroundEstimator.run_iteration
+      ~IterativeKernelBackgroundEstimator.save_files
+
+   
+   
+
+   
+   
+
+   .. rubric:: Attributes Documentation
+
+   
+   .. autoattribute:: background_image_hdu
+   .. autoattribute:: mask_image_hdu
+   .. autoattribute:: significance_image_hdu
+
+   
+   
+
+   
+   
+
+   .. rubric:: Methods Documentation
+
+   
+   .. automethod:: run
+   .. automethod:: run_iteration
+   .. automethod:: save_files
+
+   
+   

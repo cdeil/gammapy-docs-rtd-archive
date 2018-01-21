@@ -1,0 +1,8 @@
+
+
+get_sky_mask_ring
+======================================
+
+.. currentmodule:: gammapy.utils.pyfact
+
+.. autofunction:: get_sky_mask_ring

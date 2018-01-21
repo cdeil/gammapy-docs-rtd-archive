@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Background estimation and modeling (gammapy.background) &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="next" title="fill_acceptance_image" href="../api/gammapy.background.fill_acceptance_image.html" />
+    <link rel="prev" title="YusifovKucuk2004B" href="../api/gammapy.astro.population.YusifovKucuk2004B.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/background/" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "background/index",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "background/index";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="../api/gammapy.background.fill_acceptance_image.html" title="fill_acceptance_image">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="../api/gammapy.astro.population.YusifovKucuk2004B.html" title="YusifovKucuk2004B">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      
+      <li>Background estimation and modeling  (<tt class="docutils literal"><span class="pre">gammapy.background</span></tt>)</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="background-estimation-and-modeling-gammapy-background">
+<span id="background"></span><h1>Background estimation and modeling  (<a class="reference internal" href="index.html#module-gammapy.background" title="gammapy.background"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.background</span></tt></a>)<a class="headerlink" href="index.html#background-estimation-and-modeling-gammapy-background" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="index.html#introduction" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="index.html#module-gammapy.background" title="gammapy.background"><tt class="xref py py-obj docutils literal"><span class="pre">gammapy.background</span></tt></a> contains methods to estimate and model background.</p>
+<p>The central data structure is the <a class="reference internal" href="../api/gammapy.background.Maps.html#gammapy.background.Maps" title="gammapy.background.Maps"><tt class="xref py py-obj docutils literal"><span class="pre">Maps</span></tt></a> container.
+TODO: describe</p>
+<p>Most of the methods implemented are described in <a class="reference internal" href="../references.html#berge2007" id="id1">[Berge2007]</a>.
+Section 7.3 &#8220;Background subtraction&#8221;
+and Section 7.4 &#8220;Acceptance determination and predicted background&#8221;
+in <a class="reference internal" href="../references.html#naurois2012" id="id2">[Naurois2012]</a> describe mostly the same methods as <a class="reference internal" href="../references.html#berge2007" id="id3">[Berge2007]</a>,
+except for the &#8220;2D acceptance model&#8221; described in Section 7.4.3.</p>
+</div>
+<div class="section" id="getting-started">
+<h2>Getting Started<a class="headerlink" href="index.html#getting-started" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+<p>Hello World.</p>
+</div>
+<div class="section" id="reference-api">
+<h2>Reference/API<a class="headerlink" href="index.html#reference-api" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-gammapy.background">
+<span id="gammapy-background-package"></span><h3>gammapy.background Package<a class="headerlink" href="index.html#module-gammapy.background" title="Permalink to this headline">¶</a></h3>
+<p>Background estimation and modeling methods.</p>
+<div class="section" id="functions">
+<h4>Functions<a class="headerlink" href="index.html#functions" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.fill_acceptance_image.html#gammapy.background.fill_acceptance_image" title="gammapy.background.fill_acceptance_image"><tt class="xref py py-obj docutils literal"><span class="pre">fill_acceptance_image</span></tt></a>(image,&nbsp;center,&nbsp;offset,&nbsp;...)</td>
+<td>Generate a 2D image of a radial acceptance curve.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.background.ring_alpha.html#gammapy.background.ring_alpha" title="gammapy.background.ring_alpha"><tt class="xref py py-obj docutils literal"><span class="pre">ring_alpha</span></tt></a>(theta,&nbsp;r_in,&nbsp;r_out)</td>
+<td>Compute ring alpha, the inverse area factor.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.ring_area_factor.html#gammapy.background.ring_area_factor" title="gammapy.background.ring_area_factor"><tt class="xref py py-obj docutils literal"><span class="pre">ring_area_factor</span></tt></a>(theta,&nbsp;r_in,&nbsp;r_out)</td>
+<td>Compute ring area factor.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.background.ring_correlate_off_maps.html#gammapy.background.ring_correlate_off_maps" title="gammapy.background.ring_correlate_off_maps"><tt class="xref py py-obj docutils literal"><span class="pre">ring_correlate_off_maps</span></tt></a>(maps,&nbsp;r_in,&nbsp;r_out)</td>
+<td>Ring-correlate the basic off maps.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.ring_r_out.html#gammapy.background.ring_r_out" title="gammapy.background.ring_r_out"><tt class="xref py py-obj docutils literal"><span class="pre">ring_r_out</span></tt></a>(theta,&nbsp;r_in,&nbsp;area_factor)</td>
+<td>Compute ring outer radius.</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="classes">
+<h4>Classes<a class="headerlink" href="index.html#classes" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.GammaImages.html#gammapy.background.GammaImages" title="gammapy.background.GammaImages"><tt class="xref py py-obj docutils literal"><span class="pre">GammaImages</span></tt></a>(counts[,&nbsp;background,&nbsp;mask,&nbsp;header])</td>
+<td>TODO: implement a more general images container class that can be re-used in other places as well.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.background.IterativeKernelBackgroundEstimator.html#gammapy.background.IterativeKernelBackgroundEstimator" title="gammapy.background.IterativeKernelBackgroundEstimator"><tt class="xref py py-obj docutils literal"><span class="pre">IterativeKernelBackgroundEstimator</span></tt></a>(images,&nbsp;...)</td>
+<td>Iteratively estimate a background model.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.Maps.html#gammapy.background.Maps" title="gammapy.background.Maps"><tt class="xref py py-obj docutils literal"><span class="pre">Maps</span></tt></a>([hdus,&nbsp;file,&nbsp;rename_hdus,&nbsp;...])</td>
+<td>Maps container for basic maps and methods to compute derived maps.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.background.ReflectedBgMaker.html#gammapy.background.ReflectedBgMaker" title="gammapy.background.ReflectedBgMaker"><tt class="xref py py-obj docutils literal"><span class="pre">ReflectedBgMaker</span></tt></a></td>
+<td>Compute background using the reflected background method</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.ReflectedRegionMaker.html#gammapy.background.ReflectedRegionMaker" title="gammapy.background.ReflectedRegionMaker"><tt class="xref py py-obj docutils literal"><span class="pre">ReflectedRegionMaker</span></tt></a>(exclusion,&nbsp;fov[,&nbsp;...])</td>
+<td>Finds reflected regions.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../api/gammapy.background.RingBgMaker.html#gammapy.background.RingBgMaker" title="gammapy.background.RingBgMaker"><tt class="xref py py-obj docutils literal"><span class="pre">RingBgMaker</span></tt></a>(r_in,&nbsp;r_out[,&nbsp;pixscale])</td>
+<td>Ring background method for cartesian coordinates.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="module-gammapy.background.models">
+<span id="gammapy-background-models-module"></span><h3>gammapy.background.models Module<a class="headerlink" href="index.html#module-gammapy.background.models" title="Permalink to this headline">¶</a></h3>
+<p>Background models.</p>
+<div class="section" id="id4">
+<h4>Classes<a class="headerlink" href="index.html#id4" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="../api/gammapy.background.models.GaussianBand2D.html#gammapy.background.models.GaussianBand2D" title="gammapy.background.models.GaussianBand2D"><tt class="xref py py-obj docutils literal"><span class="pre">GaussianBand2D</span></tt></a>(table[,&nbsp;spline_kwargs])</td>
+<td>Gaussian band model.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="index.html#">Background estimation and modeling  (<tt class="docutils literal"><span class="pre">gammapy.background</span></tt>)</a><ul>
+<li><a class="reference internal" href="index.html#introduction">Introduction</a></li>
+<li><a class="reference internal" href="index.html#getting-started">Getting Started</a></li>
+<li><a class="reference internal" href="index.html#reference-api">Reference/API</a><ul>
+<li><a class="reference internal" href="index.html#module-gammapy.background">gammapy.background Package</a><ul>
+<li><a class="reference internal" href="index.html#functions">Functions</a></li>
+<li><a class="reference internal" href="index.html#classes">Classes</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="index.html#module-gammapy.background.models">gammapy.background.models Module</a><ul>
+<li><a class="reference internal" href="index.html#id4">Classes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/background/index.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="index.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

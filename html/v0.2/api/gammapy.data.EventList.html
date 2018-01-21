@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>EventList &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../index.html" />
+    <link rel="up" title="Data classes (gammapy.data)" href="../data/index.html" />
+    <link rel="next" title="EventListDataset" href="gammapy.data.EventListDataset.html" />
+    <link rel="prev" title="CountsSpectrumDataset" href="gammapy.data.CountsSpectrumDataset.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/api/gammapy.data.EventList.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "api/gammapy.data.EventList",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "api/gammapy.data.EventList";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li class="right">
+	<a href="gammapy.data.EventListDataset.html" title="EventListDataset">
+	  next &raquo;
+	</a>
+      </li>
+      <li class="right">
+	<a href="gammapy.data.CountsSpectrumDataset.html" title="CountsSpectrumDataset">
+	  &laquo; previous
+	</a>
+	 |
+      </li>
+      <li>
+	<a href="../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../data/index.html" accesskey="U">Data classes (<tt class="docutils literal"><span class="pre">gammapy.data</span></tt>)</a> &raquo;</li>
+      
+      <li>EventList</li> 
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="eventlist">
+<h1>EventList<a class="headerlink" href="gammapy.data.EventList.html#eventlist" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="gammapy.data.EventList">
+<em class="property">class </em><tt class="descclassname">gammapy.data.</tt><tt class="descname">EventList</tt><big>(</big><em>data=None</em>, <em>masked=None</em>, <em>names=None</em>, <em>dtype=None</em>, <em>meta=None</em>, <em>copy=True</em>, <em>rows=None</em><big>)</big><a class="reference internal" href="../_modules/gammapy/data/event_list.html#EventList"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="astropy.table.Table"><tt class="docutils literal"><span class="pre">astropy.table.Table</span></tt></a></p>
+<p>Event list <a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.table.Table.html#astropy.table.Table" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Table</span></tt></a>.</p>
+<p>The most important reconstructed event parameters
+are available as the following columns:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">TIME</span></tt> - Mission elapsed time (sec)</li>
+<li><tt class="docutils literal"><span class="pre">RA</span></tt>, <tt class="docutils literal"><span class="pre">DEC</span></tt> - FK5 J2000 (or ICRS?) position (deg)</li>
+<li><tt class="docutils literal"><span class="pre">ENERGY</span></tt> - Energy (usually MeV for Fermi and TeV for IACTs)</li>
+</ul>
+<p>Other optional (columns) that are sometimes useful for high-level analysis:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">GLON</span></tt>, <tt class="docutils literal"><span class="pre">GLAT</span></tt> - Galactic coordinates (deg)</li>
+<li><tt class="docutils literal"><span class="pre">DETX</span></tt>, <tt class="docutils literal"><span class="pre">DETY</span></tt> - Field of view coordinates (radian?)</li>
+</ul>
+<p>Note that when reading data for analysis you shouldn&#8217;t use those
+values directly, but access them via properties which create objects
+of the appropriate class and convert to 64 bit:</p>
+<ul class="simple">
+<li><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.time" title="gammapy.data.EventList.time"><tt class="xref py py-obj docutils literal"><span class="pre">time</span></tt></a> for <tt class="docutils literal"><span class="pre">TIME</span></tt></li>
+<li><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.radec" title="gammapy.data.EventList.radec"><tt class="xref py py-obj docutils literal"><span class="pre">radec</span></tt></a> for <tt class="docutils literal"><span class="pre">RA</span></tt>, <tt class="docutils literal"><span class="pre">DEC</span></tt></li>
+<li><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.energy" title="gammapy.data.EventList.energy"><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></a> for <tt class="docutils literal"><span class="pre">ENERGY</span></tt></li>
+<li><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.galactic" title="gammapy.data.EventList.galactic"><tt class="xref py py-obj docutils literal"><span class="pre">galactic</span></tt></a> for <tt class="docutils literal"><span class="pre">GLON</span></tt>, <tt class="docutils literal"><span class="pre">GLAT</span></tt></li>
+</ul>
+<p class="rubric">Attributes Summary</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.altaz" title="gammapy.data.EventList.altaz"><tt class="xref py py-obj docutils literal"><span class="pre">altaz</span></tt></a></td>
+<td>Event horizontal sky coordinates (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></tt></a>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.energy" title="gammapy.data.EventList.energy"><tt class="xref py py-obj docutils literal"><span class="pre">energy</span></tt></a></td>
+<td>Event energies (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a>).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.galactic" title="gammapy.data.EventList.galactic"><tt class="xref py py-obj docutils literal"><span class="pre">galactic</span></tt></a></td>
+<td>Event Galactic sky coordinates (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></tt></a>).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.info" title="gammapy.data.EventList.info"><tt class="xref py py-obj docutils literal"><span class="pre">info</span></tt></a></td>
+<td>Summary info string.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.observation_dead_time_fraction" title="gammapy.data.EventList.observation_dead_time_fraction"><tt class="xref py py-obj docutils literal"><span class="pre">observation_dead_time_fraction</span></tt></a></td>
+<td>Dead-time fraction.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.observation_live_time_duration" title="gammapy.data.EventList.observation_live_time_duration"><tt class="xref py py-obj docutils literal"><span class="pre">observation_live_time_duration</span></tt></a></td>
+<td>Live-time duration in seconds (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a>).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.observation_time_duration" title="gammapy.data.EventList.observation_time_duration"><tt class="xref py py-obj docutils literal"><span class="pre">observation_time_duration</span></tt></a></td>
+<td>Observation time duration in seconds (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a>).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.observatory_earth_location" title="gammapy.data.EventList.observatory_earth_location"><tt class="xref py py-obj docutils literal"><span class="pre">observatory_earth_location</span></tt></a></td>
+<td>Observatory location (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.EarthLocation.html#astropy.coordinates.EarthLocation" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">EarthLocation</span></tt></a>)</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.radec" title="gammapy.data.EventList.radec"><tt class="xref py py-obj docutils literal"><span class="pre">radec</span></tt></a></td>
+<td>Event RA / DEC sky coordinates (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></tt></a>)</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="gammapy.data.EventList.html#gammapy.data.EventList.time" title="gammapy.data.EventList.time"><tt class="xref py py-obj docutils literal"><span class="pre">time</span></tt></a></td>
+<td>Event times (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.time.Time.html#astropy.time.Time" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Time</span></tt></a>)</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Attributes Documentation</p>
+<dl class="attribute">
+<dt id="gammapy.data.EventList.altaz">
+<tt class="descname">altaz</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.altaz" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event horizontal sky coordinates (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.energy">
+<tt class="descname">energy</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.energy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event energies (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.galactic">
+<tt class="descname">galactic</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.galactic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event Galactic sky coordinates (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></tt></a>).</p>
+<p>Note: uses the <tt class="docutils literal"><span class="pre">GLON</span></tt> and <tt class="docutils literal"><span class="pre">GLAT</span></tt> columns.
+If only <tt class="docutils literal"><span class="pre">RA</span></tt> and <tt class="docutils literal"><span class="pre">DEC</span></tt> are present use the explicit
+<tt class="docutils literal"><span class="pre">event_list.radec.to('galactic')</span></tt> instead.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.info">
+<tt class="descname">info</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Summary info string.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.observation_dead_time_fraction">
+<tt class="descname">observation_dead_time_fraction</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.observation_dead_time_fraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dead-time fraction.</p>
+<p>Defined as dead-time over observation time.</p>
+<p>Dead-time is defined as the time during the observation
+where the detector didn&#8217;t record events:
+<a class="reference external" href="http://en.wikipedia.org/wiki/Dead_time">http://en.wikipedia.org/wiki/Dead_time</a>
+<a class="reference external" href="http://adsabs.harvard.edu/abs/2004APh....22..285F">http://adsabs.harvard.edu/abs/2004APh....22..285F</a></p>
+<p>The dead-time fraction is used in the live-time computation,
+which in turn is used in the exposure and flux computation.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.observation_live_time_duration">
+<tt class="descname">observation_live_time_duration</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.observation_live_time_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Live-time duration in seconds (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a>).</p>
+<p>The dead-time-corrected observation time.</p>
+<p>Computed as <tt class="docutils literal"><span class="pre">t_live</span> <span class="pre">=</span> <span class="pre">t_observation</span> <span class="pre">*</span> <span class="pre">(1</span> <span class="pre">-</span> <span class="pre">f_dead)</span></tt>
+where <tt class="docutils literal"><span class="pre">f_dead</span></tt> is the dead-time fraction.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.observation_time_duration">
+<tt class="descname">observation_time_duration</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.observation_time_duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>Observation time duration in seconds (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.units.Quantity.html#astropy.units.Quantity" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Quantity</span></tt></a>).</p>
+<p>The wall time, including dead-time.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.observatory_earth_location">
+<tt class="descname">observatory_earth_location</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.observatory_earth_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>Observatory location (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.EarthLocation.html#astropy.coordinates.EarthLocation" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">EarthLocation</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.radec">
+<tt class="descname">radec</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.radec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event RA / DEC sky coordinates (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.coordinates.SkyCoord.html#astropy.coordinates.SkyCoord" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">SkyCoord</span></tt></a>)</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="gammapy.data.EventList.time">
+<tt class="descname">time</tt><a class="headerlink" href="gammapy.data.EventList.html#gammapy.data.EventList.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Event times (<a class="reference external" href="http://docs.astropy.org/en/latest/api/astropy.time.Time.html#astropy.time.Time" title="(in Astropy v1.1.dev12316)"><tt class="xref py py-obj docutils literal"><span class="pre">Time</span></tt></a>)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+<ul>
+<li><a class="reference internal" href="gammapy.data.EventList.html#">EventList</a></li>
+</ul>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right">
+    <a href="../_sources/api/gammapy.data.EventList.txt"
+       rel="nofollow">Page Source</a> &nbsp;
+    <a href="gammapy.data.EventList.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+
+
+CountsLightCurveDataset
+====================================
+
+.. currentmodule:: gammapy.data
+
+.. autoclass:: CountsLightCurveDataset
+   :show-inheritance:
+
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   
+
+   
+   
+   

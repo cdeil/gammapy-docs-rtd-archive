@@ -1,0 +1,8 @@
+
+
+irf_root_to_fits
+================================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: irf_root_to_fits

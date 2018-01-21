@@ -1,0 +1,8 @@
+
+
+bin_cube
+========================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: bin_cube

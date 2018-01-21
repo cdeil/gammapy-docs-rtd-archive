@@ -1,0 +1,281 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.spectrum.isrf &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../../index.html" />
+    <link rel="up" title="Module code" href="../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/spectrum/isrf.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "_modules/gammapy/spectrum/isrf",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/spectrum/isrf";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.spectrum.isrf</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Galactic interstellar radiation field (ISRF) models&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span>
+<span class="kn">from</span> <span class="nn">astropy.io</span> <span class="kn">import</span> <span class="n">fits</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Galprop&#39;</span><span class="p">,</span> <span class="s">&#39;Schlickeiser&#39;</span><span class="p">]</span>
+
+
+<div class="viewcode-block" id="Schlickeiser"><a class="viewcode-back" href="../../../api/gammapy.spectrum.Schlickeiser.html#gammapy.spectrum.Schlickeiser">[docs]</a><span class="k">class</span> <span class="nc">Schlickeiser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;ISRF model for the solar neighborhood.</span>
+
+<span class="sd">    Reference: Book by Schlickeiser &quot;Cosmic Ray Astrophysics&quot;, Section 2.3</span>
+
+<span class="sd">    Note: component 1 (spectral type B) from Schlickeiser</span>
+<span class="sd">    is not very important and was ignored so that there is a 1:1 match</span>
+<span class="sd">    to the three Galprop ISRF components.</span>
+
+<span class="sd">    Note: the form of the ISRF component spectra is like a</span>
+<span class="sd">    blackbody, which is characterized by only one number,</span>
+<span class="sd">    the temperature T.</span>
+<span class="sd">    But the energy density of the ISRF infrared component</span>
+<span class="sd">    is different than the corresponding energy density of the blackbody,</span>
+<span class="sd">    so each component has one more energy density parameter W</span>
+<span class="sd">    and is called a &quot;greybody&quot; distribution by Schlickeiser.&quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Optical&#39;</span><span class="p">,</span> <span class="s">&#39;Infrared&#39;</span><span class="p">,</span> <span class="s">&#39;CMB&#39;</span><span class="p">]</span>
+    <span class="c"># Temperature (K) and energy density (eV cm^-3)</span>
+    <span class="c"># of the greybody components</span>
+    <span class="n">component_infos</span> <span class="o">=</span> <span class="p">{</span><span class="s">&#39;Optical&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;T&#39;</span><span class="p">:</span> <span class="mi">5000</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">:</span> <span class="s">&#39;blue&#39;</span><span class="p">},</span>
+                       <span class="s">&#39;Infrared&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;T&#39;</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">:</span> <span class="s">&#39;green&#39;</span><span class="p">},</span>
+                       <span class="s">&#39;CMB&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;T&#39;</span><span class="p">:</span> <span class="mf">2.7</span><span class="p">,</span> <span class="s">&#39;W&#39;</span><span class="p">:</span> <span class="mf">0.25</span><span class="p">,</span> <span class="s">&#39;color&#39;</span><span class="p">:</span> <span class="s">&#39;red&#39;</span><span class="p">},</span>
+                       <span class="s">&#39;Total&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s">&#39;color&#39;</span><span class="p">:</span> <span class="s">&#39;black&#39;</span><span class="p">}}</span>
+
+    <span class="k">def</span> <span class="nf">_get_component_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="n">T</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_infos</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;T&#39;</span><span class="p">]</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">component_infos</span><span class="p">[</span><span class="n">component</span><span class="p">][</span><span class="s">&#39;W&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">T</span><span class="p">,</span> <span class="n">W</span>
+
+<div class="viewcode-block" id="Schlickeiser.__call__"><a class="viewcode-back" href="../../../api/gammapy.spectrum.Schlickeiser.html#gammapy.spectrum.Schlickeiser.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s">&#39;Total&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy : float or array</span>
+<span class="sd">            Photon energy (eV)</span>
+<span class="sd">        component : {&#39;Optical&#39;, &#39;Infrared&#39;, &#39;CMB&#39;, &#39;Total&#39;}</span>
+<span class="sd">            Radiation field component</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Photon number density of a given component (cm^-3 eV^-1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&#39;Total&#39;</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">total</span>
+        <span class="k">elif</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s">&#39;Component {0} not available.&#39;</span>
+                             <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">component</span><span class="p">))</span>
+</div>
+    <span class="k">def</span> <span class="nf">_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+
+</div>
+<div class="viewcode-block" id="Galprop"><a class="viewcode-back" href="../../../api/gammapy.spectrum.Galprop.html#gammapy.spectrum.Galprop">[docs]</a><span class="k">class</span> <span class="nc">Galprop</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;A cylindrically symmetric model for the distribution</span>
+<span class="sd">    of the optical and infrared ISRF in the Milky Way.</span>
+
+<span class="sd">    The CMB component is isotropic, so it&#39;s implementation</span>
+<span class="sd">    is different from the two non-isotropic components.</span>
+
+<span class="sd">    http://vizier.cfa.harvard.edu/vizier/ftp/cats/J/A+A/534/A54/galprop_v54.pdf</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">components</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;Optical&#39;</span><span class="p">,</span> <span class="s">&#39;Infrared&#39;</span><span class="p">,</span> <span class="s">&#39;CMB&#39;</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize the lookup&quot;&quot;&quot;</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__read_lookup__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Read lookup table from FITS file.&quot;&quot;&quot;</span>
+        <span class="c"># TODO: use astropy, not kapteyn here</span>
+        <span class="kn">from</span> <span class="nn">kapteyn.maputils</span> <span class="kn">import</span> <span class="n">FITSimage</span>
+        <span class="n">dirname</span> <span class="o">=</span> <span class="s">&#39;/Users/deil/work/workspace/galpop/data/GALPROP&#39;</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">dirname</span><span class="p">,</span> <span class="s">&#39;MilkyWay_DR0.5_DZ0.1_DPHI10_RMAX20_ZMAX5_galprop_format.fits&#39;</span><span class="p">)</span>
+        <span class="c"># The FITS header is missing the CRPIX keywords, so FITSimage would complain.</span>
+        <span class="c"># That&#39;s why we read it with pyfits, add the keywords, and then create the FITSimage.</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getdata</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">header</span> <span class="o">=</span> <span class="n">fits</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">axis</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]:</span>
+            <span class="n">header</span><span class="p">[</span><span class="s">&#39;CRPIX{0}&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">axis</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lookup</span> <span class="o">=</span> <span class="n">FITSimage</span><span class="p">(</span><span class="n">externaldata</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="n">externalheader</span><span class="o">=</span><span class="n">header</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_density</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">component</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This method is wrapped by __call__. See description there.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&#39;CMB&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Schlickeiser</span><span class="p">()(</span><span class="n">energy</span><span class="p">,</span> <span class="s">&#39;CMB&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="ne">NotImplementedError</span>
+
+<div class="viewcode-block" id="Galprop.__call__"><a class="viewcode-back" href="../../../api/gammapy.spectrum.Galprop.html#gammapy.spectrum.Galprop.__call__">[docs]</a>    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">energy</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">component</span><span class="o">=</span><span class="s">&#39;Total&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Evaluate model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        energy : float or array</span>
+<span class="sd">            Photon energy (eV)</span>
+<span class="sd">        R : float</span>
+<span class="sd">            Galactic radius (kpc)</span>
+<span class="sd">        z : float</span>
+<span class="sd">            Galactic height (kpc)</span>
+<span class="sd">        component : {&#39;Optical&#39;, &#39;Infrared&#39;, &#39;CMB&#39;, &#39;Total&#39;}</span>
+<span class="sd">            Radiation field component</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Photon number density of a given component (cm^-3 eV^-1)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">component</span> <span class="o">==</span> <span class="s">&#39;Total&#39;</span><span class="p">:</span>
+            <span class="n">total</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">for</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+                <span class="n">total</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">total</span>
+        <span class="k">elif</span> <span class="n">component</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">components</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_density</span><span class="p">(</span><span class="n">energy</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s">&#39;Component {0} not available.&#39;</span>
+                             <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">component</span><span class="p">))</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="isrf.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

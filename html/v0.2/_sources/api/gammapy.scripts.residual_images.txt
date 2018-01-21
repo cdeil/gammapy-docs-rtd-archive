@@ -1,0 +1,8 @@
+
+
+residual_images
+===============================
+
+.. currentmodule:: gammapy.scripts
+
+.. autofunction:: residual_images

@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>gammapy.utils.coordinates.celestial &mdash; gammapy v0.2</title>
+    
+    <link rel="stylesheet" href="../../../../_static/gammapy.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/badge_only.css" type="text/css" />
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../../../',
+        VERSION:     '0.2',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+    <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+    <script type="text/javascript" src="../../../../_static/sidebar.js"></script>
+    <link rel="shortcut icon" href="../../../../_static/astropy_logo.ico"/>
+    <link rel="top" title="gammapy v0.2" href="../../../../index.html" />
+    <link rel="up" title="Module code" href="../../../index.html" />
+
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../../../../_static/copybutton.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+
+
+<!-- 
+Read the Docs is acting as the canonical URL for your project. 
+If you want to change it, more info is available in our docs:
+  http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://gammapy.readthedocs.org/en/latest/_modules/gammapy/utils/coordinates/celestial.html" />
+
+<script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "gammapy",
+    version: "v0.2",
+    language: "en",
+    page: "_modules/gammapy/utils/coordinates/celestial",
+    builder: "sphinx",
+    theme: "bootstrap-astropy",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org",
+    commit: "9738ffd45cc7ff63ec8b846e4288f5212b4717db"
+  }
+  // Old variables
+  var doc_version = "v0.2";
+  var doc_slug = "gammapy";
+  var page_name = "_modules/gammapy/utils/coordinates/celestial";
+  var html_theme = "bootstrap-astropy";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+  </head>
+  <body>
+<div class="topbar">
+  <a class="brand" title="Documentation Home" href="../../../../index.html"><span id="logotext1">gamma</span><span id="logotext2">py</span><span id="logotext3">:docs</span></a>
+  <ul>
+    <li><a class="homelink" title="Astropy Homepage" href="http://www.astropy.org"></a></li>
+    <li><a title="General Index" href="../../../../genindex.html">Index</a></li>
+    <li><a title="Module Index" href="../../../../py-modindex.html">Modules</a></li>
+    <li>
+      
+      
+<form action="http://gammapy.readthedocs.io/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+      
+    </li>
+  </ul>
+</div>
+
+<div class="related">
+    <h3>Navigation</h3>
+    <ul>
+      <li>
+	<a href="../../../../index.html">gammapy v0.2</a>
+	 &raquo;
+      </li>
+      <li><a href="../../../index.html" accesskey="U">Module code</a> &raquo;</li>
+      
+       
+    </ul>
+</div>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for gammapy.utils.coordinates.celestial</h1><div class="highlight"><pre>
+<span class="c"># Licensed under a 3-clause BSD style license - see LICENSE.rst</span>
+<span class="sd">&quot;&quot;&quot;Celestial coordinate utility functions.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">arccos</span><span class="p">,</span> <span class="n">arcsin</span><span class="p">,</span>
+                   <span class="n">arctan2</span><span class="p">,</span> <span class="n">radians</span><span class="p">,</span> <span class="n">degrees</span><span class="p">,</span> <span class="n">pi</span><span class="p">)</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;galactic_to_radec&#39;</span><span class="p">,</span>
+           <span class="s">&#39;radec_to_galactic&#39;</span><span class="p">,</span>
+           <span class="s">&#39;separation&#39;</span><span class="p">,</span>
+           <span class="s">&#39;minimum_separation&#39;</span><span class="p">,</span>
+           <span class="s">&#39;pair_correlation&#39;</span><span class="p">,</span>
+           <span class="p">]</span>
+
+
+<div class="viewcode-block" id="galactic_to_radec"><a class="viewcode-back" href="../../../../api/gammapy.utils.coordinates.galactic_to_radec.html#gammapy.utils.coordinates.galactic_to_radec">[docs]</a><span class="k">def</span> <span class="nf">galactic_to_radec</span><span class="p">(</span><span class="n">glon</span><span class="p">,</span> <span class="n">glat</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert Galactic to Equatorial J2000 coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    glon, glat : array_like</span>
+<span class="sd">        Galactic coordinates</span>
+<span class="sd">    unit : {&#39;deg&#39;, &#39;rad&#39;}</span>
+<span class="sd">        Units of input and output coordinates</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    ra, dec : array_like</span>
+<span class="sd">        Equatorial coordinates.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This is a standalone implementation that only uses ``numpy`` for testing.</span>
+<span class="sd">    Use `~astropy.coordinates.SkyCoord` instead.</span>
+<span class="sd">    Only accurate to ~ 3 digits.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">&#39;deg&#39;</span><span class="p">:</span>
+        <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="n">glon</span><span class="p">),</span> <span class="n">radians</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span>
+
+    <span class="n">ra_gp</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">192.85948</span><span class="p">)</span>
+    <span class="n">de_gp</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">27.12825</span><span class="p">)</span>
+    <span class="n">lcp</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">122.932</span><span class="p">)</span>
+
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">lcp</span> <span class="o">-</span> <span class="n">glon</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span> <span class="o">-</span> <span class="n">sin</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lcp</span> <span class="o">-</span> <span class="n">glon</span><span class="p">)</span>
+    <span class="n">ramragp</span> <span class="o">=</span> <span class="n">arctan2</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="p">)</span>
+    <span class="n">ra</span> <span class="o">=</span> <span class="p">(</span><span class="n">ramragp</span> <span class="o">+</span> <span class="n">ra_gp</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span>
+
+    <span class="n">sin_d</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lcp</span> <span class="o">-</span> <span class="n">glon</span><span class="p">)</span>
+    <span class="n">dec</span> <span class="o">=</span> <span class="n">arcsin</span><span class="p">(</span><span class="n">sin_d</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">&#39;deg&#39;</span><span class="p">:</span>
+        <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">ra</span><span class="p">),</span> <span class="n">degrees</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span>
+
+</div>
+<div class="viewcode-block" id="radec_to_galactic"><a class="viewcode-back" href="../../../../api/gammapy.utils.coordinates.radec_to_galactic.html#gammapy.utils.coordinates.radec_to_galactic">[docs]</a><span class="k">def</span> <span class="nf">radec_to_galactic</span><span class="p">(</span><span class="n">ra</span><span class="p">,</span> <span class="n">dec</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Convert Equatorial J2000 to Galactic coordinates.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ra, dec : array_like</span>
+<span class="sd">        Equatorial coordinates.</span>
+<span class="sd">    unit : {&#39;deg&#39;, &#39;rad&#39;}</span>
+<span class="sd">        Units of input and output coordinates</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    glon, glat : array_like</span>
+<span class="sd">        Galactic coordinates</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    This is a standalone implementation that only uses ``numpy`` for testing.</span>
+<span class="sd">    Use `~astropy.coordinates.SkyCoord` instead.</span>
+<span class="sd">    Only accurate to ~ 3 digits.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">&#39;deg&#39;</span><span class="p">:</span>
+        <span class="n">ra</span><span class="p">,</span> <span class="n">dec</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="n">ra</span><span class="p">),</span> <span class="n">radians</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span>
+
+    <span class="n">ra_gp</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">192.85948</span><span class="p">)</span>
+    <span class="n">de_gp</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">27.12825</span><span class="p">)</span>
+    <span class="n">lcp</span> <span class="o">=</span> <span class="n">radians</span><span class="p">(</span><span class="mf">122.932</span><span class="p">)</span>
+
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">ra</span> <span class="o">-</span> <span class="n">ra_gp</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">-</span> <span class="n">sin</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">ra</span> <span class="o">-</span> <span class="n">ra_gp</span><span class="p">)</span>
+    <span class="n">lcpml</span> <span class="o">=</span> <span class="n">arctan2</span><span class="p">(</span><span class="n">term1</span><span class="p">,</span> <span class="n">term2</span><span class="p">)</span>
+    <span class="n">glon</span> <span class="o">=</span> <span class="p">(</span><span class="n">lcp</span> <span class="o">-</span> <span class="n">lcpml</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span> <span class="o">%</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">pi</span><span class="p">)</span>
+
+    <span class="n">sin_b</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">+</span> <span class="n">cos</span><span class="p">(</span><span class="n">de_gp</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">dec</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">ra</span> <span class="o">-</span> <span class="n">ra_gp</span><span class="p">)</span>
+    <span class="n">glat</span> <span class="o">=</span> <span class="n">arcsin</span><span class="p">(</span><span class="n">sin_b</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">&#39;deg&#39;</span><span class="p">:</span>
+        <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">glon</span><span class="p">),</span> <span class="n">degrees</span><span class="p">(</span><span class="n">glat</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">glon</span><span class="p">,</span> <span class="n">glat</span>
+
+</div>
+<div class="viewcode-block" id="separation"><a class="viewcode-back" href="../../../../api/gammapy.utils.coordinates.separation.html#gammapy.utils.coordinates.separation">[docs]</a><span class="k">def</span> <span class="nf">separation</span><span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Angular separation between points on the sphere.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lon1, lat1, lon2, lat2 : array_like</span>
+<span class="sd">        Coordinates of the two points</span>
+<span class="sd">    unit : {&#39;deg&#39;, &#39;rad&#39;}</span>
+<span class="sd">        Units of input and output coordinates</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    separation : array_like</span>
+<span class="sd">        Angular separation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">&#39;deg&#39;</span><span class="p">:</span>
+        <span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">radians</span><span class="p">,</span> <span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span><span class="p">))</span>
+
+    <span class="n">term1</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lon1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lon2</span><span class="p">)</span>
+    <span class="n">term2</span> <span class="o">=</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">lon1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cos</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">lon2</span><span class="p">)</span>
+    <span class="n">term3</span> <span class="o">=</span> <span class="n">sin</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span> <span class="o">*</span> <span class="n">sin</span><span class="p">(</span><span class="n">lat2</span><span class="p">)</span>
+    <span class="n">mu</span> <span class="o">=</span> <span class="n">term1</span> <span class="o">+</span> <span class="n">term2</span> <span class="o">+</span> <span class="n">term3</span>
+    <span class="n">separation</span> <span class="o">=</span> <span class="n">arccos</span><span class="p">(</span><span class="n">mu</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">unit</span> <span class="o">==</span> <span class="s">&#39;deg&#39;</span><span class="p">:</span>
+        <span class="n">separation</span> <span class="o">=</span> <span class="n">degrees</span><span class="p">(</span><span class="n">separation</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">separation</span>
+
+</div>
+<div class="viewcode-block" id="minimum_separation"><a class="viewcode-back" href="../../../../api/gammapy.utils.coordinates.minimum_separation.html#gammapy.utils.coordinates.minimum_separation">[docs]</a><span class="k">def</span> <span class="nf">minimum_separation</span><span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">lat1</span><span class="p">,</span> <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute minimum distance of each (lon1, lat1) to any (lon2, lat2).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lon1, lat1 : array_like</span>
+<span class="sd">        Primary coordinates of interest</span>
+<span class="sd">    lon2, lat2 : array_like</span>
+<span class="sd">        Counterpart coordinate array</span>
+<span class="sd">    unit : {&#39;deg&#39;, &#39;rad&#39;}</span>
+<span class="sd">        Units of input and output coordinates</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    theta_min : array</span>
+<span class="sd">        Minimum distance</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">lon1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">lon1</span><span class="p">)</span>
+    <span class="n">lat1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asanyarray</span><span class="p">(</span><span class="n">lat1</span><span class="p">)</span>
+
+    <span class="n">theta_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">lon1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float64</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i1</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">lon1</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="n">thetas</span> <span class="o">=</span> <span class="n">separation</span><span class="p">(</span><span class="n">lon1</span><span class="p">[</span><span class="n">i1</span><span class="p">],</span> <span class="n">lat1</span><span class="p">[</span><span class="n">i1</span><span class="p">],</span>
+                            <span class="n">lon2</span><span class="p">,</span> <span class="n">lat2</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">theta_min</span><span class="p">[</span><span class="n">i1</span><span class="p">]</span> <span class="o">=</span> <span class="n">thetas</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">theta_min</span>
+
+</div>
+<div class="viewcode-block" id="pair_correlation"><a class="viewcode-back" href="../../../../api/gammapy.utils.coordinates.pair_correlation.html#gammapy.utils.coordinates.pair_correlation">[docs]</a><span class="k">def</span> <span class="nf">pair_correlation</span><span class="p">(</span><span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">theta_bins</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="s">&#39;deg&#39;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute pair correlation function for points on the sphere.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    lon, lat : array_like</span>
+<span class="sd">        Coordinate arrays</span>
+<span class="sd">    theta_bins : array_like</span>
+<span class="sd">        Array defining the ``theta`` binning.</span>
+<span class="sd">        ``theta`` is the angular offset between positions.</span>
+<span class="sd">    unit : {&#39;deg&#39;, &#39;rad&#39;}</span>
+<span class="sd">        Units of input and output coordinates</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    counts : array</span>
+<span class="sd">        Array of point separations per ``theta`` bin.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c"># TODO: Implement speedups:</span>
+    <span class="c"># - use radians</span>
+    <span class="c"># - avoid processing each pair twice (distance a to b and b to a)</span>
+    <span class="n">counts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">theta_bins</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+    <span class="c"># If there are many points this should have acceptable performance</span>
+    <span class="c"># because the inner loop is in np.histogram, not in Python</span>
+    <span class="k">for</span> <span class="n">ii</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lon</span><span class="p">)):</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="n">separation</span><span class="p">(</span><span class="n">lon</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">lat</span><span class="p">[</span><span class="n">ii</span><span class="p">],</span> <span class="n">lon</span><span class="p">,</span> <span class="n">lat</span><span class="p">,</span> <span class="n">unit</span><span class="o">=</span><span class="n">unit</span><span class="p">)</span>
+        <span class="n">hist</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">theta</span><span class="p">,</span> <span class="n">theta_bins</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">counts</span> <span class="o">+=</span> <span class="n">hist</span>
+
+    <span class="k">return</span> <span class="n">counts</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper"><h3>Page Contents</h3>
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+<footer class="footer">
+  <p class="pull-right"> &nbsp;
+    <a href="celestial.html#">Back to Top</a></p>
+  <p>
+    &copy; Copyright 2015, The Gammapy developers.<br/>
+    Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.2.2. &nbsp;
+    Last built 13 Apr 2015. <br/>
+  </p>
+</footer>
+  </body>
+</html>

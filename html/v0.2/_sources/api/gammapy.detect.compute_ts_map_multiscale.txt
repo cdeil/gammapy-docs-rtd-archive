@@ -1,0 +1,8 @@
+
+
+compute_ts_map_multiscale
+========================================
+
+.. currentmodule:: gammapy.detect
+
+.. autofunction:: compute_ts_map_multiscale

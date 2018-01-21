@@ -1,0 +1,8 @@
+
+
+energy_bin_centers_log_spacing
+===============================================
+
+.. currentmodule:: gammapy.spectrum
+
+.. autofunction:: energy_bin_centers_log_spacing
